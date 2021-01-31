@@ -1,0 +1,10 @@
+template:
+  params:
+    bootswatch: cerulean
+reference:
+- title: "someCategory"
+  contents:
+  - myFunction
+- title: "other"
+  contents:
+  - matches(".*")

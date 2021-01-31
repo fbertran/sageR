@@ -2,3 +2,11 @@
 ^\.Rproj\.user$
 HowToCheck.R
 .gitignore
+^codecov\.yml$
+^revdep$
+^README\.Rmd$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^doc$
+^Meta$
