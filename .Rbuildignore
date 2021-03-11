@@ -1,12 +1,34 @@
-^.*\.Rproj$
-^\.Rproj\.user$
 HowToCheck.R
+genlogo.R
 .gitignore
 ^codecov\.yml$
 ^revdep$
-^README\.Rmd$
 ^_pkgdown\.yml$
-^docs$
+^figure$
 ^pkgdown$
-^doc$
 ^Meta$
+^doc$
+#All packages
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.gitignore$
+^NEWS$
+#For the pkgdown website
+^docs*$
+#For the cached chunks of README.Rmd
+^cache*$
+^README_cache*$
+#If README too big, not on CRAN but only on git
+#^man/figures*$
+^README\.Rmd$
+#^README\.md$
+#Specific
+^articles*$
+#Vignette cache
+^cran-comments[.].*$
+^vignettes/.*[.](pdf|PDF)$
+^vignettes/.*[.](r|R)$
+^vignettes/[.]install_extras$
+^vignettes/.*_cache$
+^vignettes/.*_files$
+

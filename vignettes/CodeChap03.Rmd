@@ -1,0 +1,2014 @@
+---
+title: "Chapitre 03.	Statistiques descriptives et visualisation des données bivariables ou multivariables"
+subtitle: "Tout le code avec R. <img src='../man/figures/logo.png' align='right' width='200'/>"
+author: "F. Bertrand et M. Maumy"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Chapitre 03.	Statistiques descriptives et visualisation des données bivariables ou multivariables}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo=FALSE}
+#file.edit(normalizePath("~/.Renviron"))
+LOCAL <- identical(Sys.getenv("LOCAL"), "true")
+knitr::opts_chunk$set(purl = LOCAL)
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+knitr::opts_chunk$set(purl = NOT_CRAN)
+SAVE_GRAPHS=FALSE
+```
+
+# Sources des données
+
+## Statistique Canada
+
+Données libres d'utilisation, commerciale ou non, sur Statistique Canada. [https://www.statcan.gc.ca/fra/reference/droit-auteur](https://www.statcan.gc.ca/fra/reference/droit-auteur)
+
+* répartition en classes d’âge de la population du Canada en 2020. Statistique Canada. Tableau 17-10-0005-01  Estimations de la population au 1er juillet, par âge et sexe
+[DOI : https://doi.org/10.25318/1710000501-fra](https://doi.org/10.25318/1710000501-fra)
+
+* population des dix provinces et trois territoires du Canada au quatrième trimestre 2020. Source : Statistique Canada. Tableau 17-10-0009-01. Estimations de la population, trimestrielles.
+[DOI : https://doi.org/10.25318/1710000901-fra](https://doi.org/10.25318/1710000901-fra)
+
+
+## Statistique de l'OCDE.
+
+* Taux d'emploi en % de la classe d'age 
+
+Taux d'emploi par groupe d'âge (indicateur). OCDE (2021). [doi: 10.1787/b01db125-fr](https://doi.org/10.1787/b01db125-fr) (Consulté le 11 février 2021)
+
+Le taux d'emploi d'une classe d'âge se mesure en fonction du nombre des actifs occupés d'un âge donné rapporté à l'effectif total de cette classe d'âge. Les actifs occupés sont les personnes de 15 ans et plus qui, durant la semaine de référence, déclarent avoir effectué un travail rémunéré pendant une heure au moins ou avoir occupé un emploi dont elles étaient absentes. Les taux d'emploi sont présentés pour quatre classes d'âge : les personnes âgées de 15 à 64 ans (personnes en âge de travailler); les personnes âgées de 15 à 24 ans sont celles qui font leur entrée sur le marché du travail à l'issue de leur scolarité, les personnes âgées de 25 à 54 ans sont celles qui sont au plus fort de leur activité professionnelle, et les personnes âgées de 55 à 64 ans sont celles qui ont dépassé le pic de leur carrière professionnelle et approchent de l'âge de la retraite. Cet indicateur est désaisonnalisé et est mesuré en pourcentage de l'effectif total de la classe d'âge.
+
+* Par secteur dans les pays de l'OCDE en 2020-Q3. 
+
+Emploi par activité (indicateur). OCDE (2021). [doi: 10.1787/6b2fff89-fr](https://doi.org/10.1787/6b2fff89-fr) (Consulté le 11 février 2021)
+
+* Emploi par niveau d'études en % des 25-64 ans
+
+Emploi par niveau d’études (indicateur). OCDE (2021) [doi: 10.1787/6e3d44f3-fr](https://doi.org/10.1787/6e3d44f3-fr) (Consulté le 11 février 2021)
+
+Cet indicateur fournit les taux d’emploi selon le niveau d’études : premier cycle du second degré, deuxième cycle du second degré, supérieur. Le taux d’emploi est le pourcentage d’actifs occupés dans la population en âge de travailler. Les actifs occupés sont les personnes qui travaillent au moins une heure par semaine en tant que salarié ou à titre lucratif, ou qui ont un emploi mais sont temporairement absentes de leur travail pour maladie, congé ou conflit social. Cet indicateur donne le pourcentage des actifs occupés âgés de 25 à 64 ans dans la population des individus âgés de 25 à 64 ans.
+
+## INSEE
+
+* Ménages par taille du ménage,
+
+MEN4 - Ménages par taille du ménage, sexe et âge de la personne de référence en 2017. France métropolitaine. Insee.
+
+
+```{r}
+if(!("SEGR" %in% installed.packages())){install.packages("SEGR")}
+library(SEGR)
+```
+
+
+# Distribution conjointe
+```{r, cache=TRUE}
+data(Europe)
+Europe
+```
+
+## Salariés*Non-salariés
+```{r, cache=TRUE}
+SalXNsal=table(cut(Europe$Salariés,c(35,40,45)),cut(Europe$NonSalariés,c(35,40,45,50,55)))
+prop.table(SalXNsal)
+
+tabSXNs1=margin.table(SalXNsal,1)
+round(tabSXNs1,digits=2)
+tabSXNs2=margin.table(SalXNsal,2)
+round(tabSXNs2,digits=2)
+tabSXNs3=margin.table(SalXNsal,1)/sum(SalXNsal)
+round(tabSXNs3,digits=2)
+tabSXNs4=margin.table(SalXNsal,2)/sum(SalXNsal)
+round(tabSXNs4,digits=2)
+tabSXNs5=prop.table(SalXNsal,1)
+round(tabSXNs5,digits=2)
+
+tabSXNs7=prop.table(SalXNsal,2)
+round(tabSXNs7,digits=2)
+```
+
+
+
+
+## Temps partiel Hommes*Femmes
+```{r, cache=TRUE}
+HomXFem=table(cut(Europe$Partiel_H,c(0,10,20,30)),cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80)))
+HomXFem
+prop.table(HomXFem)
+
+tabHXFs1=margin.table(HomXFem,1)
+round(tabHXFs1,digits=2)
+tabHXFs2=margin.table(HomXFem,2)
+round(tabHXFs2,digits=2)
+tabHXFs3=margin.table(HomXFem,1)/sum(HomXFem)
+round(tabHXFs3,digits=2)
+tabHXFs4=margin.table(HomXFem,2)/sum(HomXFem)
+round(tabHXFs4,digits=2)
+tabHXFs5=prop.table(HomXFem,1)
+round(tabHXFs5,digits=2)
+
+tabHXFs7=prop.table(HomXFem,2)
+round(tabHXFs7,digits=2)
+```
+
+# Représentation série double
+## OCDE Secteur (Quali-Quali)
+
+```{r, cache=TRUE}
+data(Secteur)
+
+rownames(Secteur) <- Secteur$PAYS
+Secteur <- as.table(as.matrix(round(Secteur[,-1]*1000)))
+
+margin.table(Secteur)
+margin.table(Secteur,1)
+margin.table(Secteur,2)
+```
+
+
+```{r, cache=TRUE}
+oldpar <- par()
+margX <- margin.table(Secteur,1)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(margX, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25) # default
+```
+
+
+```{r, cache=TRUE}
+margY <- margin.table(Secteur,2)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(margY, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25) # default
+```
+
+
+```{r, cache=TRUE}
+layout((1:2))
+margX <- margin.table(Secteur,1)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(margX, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25,las=2) # default
+margY <- margin.table(Secteur,2)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(margY, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25) # default
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "effmargX.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+layout((1:2))
+margX <- margin.table(Secteur,1)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(margX, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25,las=2) # default
+margY <- margin.table(Secteur,2)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(margY, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25) # default
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+layout(1)
+freqcondY <- prop.table(Secteur,2) #Y|X
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(freqcondY, beside=TRUE, legend = rownames(Secteur), ylim = c(0, .5), args.legend=list(x="top", ncol=7)) # default
+```
+
+
+```{r, cache=TRUE}
+freqcondX <- prop.table(Secteur,1) #Y|X
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(t(freqcondX), beside=TRUE, legend = colnames(Secteur), ylim = c(0, 1.05), args.legend=list(x="top", ncol=3),las=2) # default
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "frecondBesideY.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+layout(1)
+freqcondY <- prop.table(Secteur,2) #Y|X
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(freqcondY, beside=TRUE, legend = rownames(Secteur), ylim = c(0, .4), args.legend=list(x="top", ncol=7)) # default
+dev.off()
+
+pdf(file = "frecondBesideX.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+layout(1)
+freqcondX <- prop.table(Secteur,1) #Y|X
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(t(freqcondX), beside=TRUE, legend = colnames(Secteur), ylim = c(0, 0.95), args.legend=list(x="top", ncol=3),las=2) # default
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+layout(1)
+freqcondY <- prop.table(Secteur,2) #Y|X
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(freqcondY, beside=FALSE, legend = rownames(Secteur), ylim = c(0, 1.6), args.legend=list(x="top", ncol=7),yaxt="n") # default
+axis(2, at=0:5*.2)
+```
+
+
+```{r, cache=TRUE}
+freqcondX <- prop.table(Secteur,1) #Y|X
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(t(freqcondX), beside=FALSE, legend = colnames(Secteur), ylim = c(0, 1.3), args.legend=list(x="top", ncol=3),yaxt="n",las=2) # default
+axis(2, at=0:5*.2)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "frecondStacked_Y.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+layout(1)
+freqcondY <- prop.table(Secteur,2) #Y|X
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(freqcondY, beside=FALSE, legend = rownames(Secteur), ylim = c(0, 1.4), args.legend=list(x="top", ncol=7),yaxt="n") # default
+axis(2, at=0:5*.2)
+
+pdf(file = "frecondStacked_X.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+freqcondX <- prop.table(Secteur,1) #Y|X
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(t(freqcondX), beside=FALSE, legend = colnames(Secteur), ylim = c(0, 1.2), args.legend=list(x="top", ncol=3),yaxt="n",las=2) # default
+axis(2, at=0:5*.2)
+dev.off()
+```
+
+
+
+## Salariés*Non-salariés (Quanti-Quanti)
+
+```{r, cache=TRUE}
+data(Europe)
+table(cut(Europe$Salariés,c(35,40,45,50)))
+table(cut(Europe$NonSalariés,c(35,40,45,50,55)))
+```
+
+### Distribution conditionnelle
+```{r, cache=TRUE}
+ff=table(cut(Europe$Salariés,c(35,40,45,50)),
+cut(Europe$NonSalariés,c(35,40,45,50,55)))/sum(table(cut(Europe$Salariés,c(35,40,45,50)),cut(Europe$NonSalariés,c(35,40,45,50,55))))
+```
+
+
+```{r}
+if(!("lattice" %in% installed.packages())){install.packages("lattice")}
+library(lattice)
+```
+
+
+```{r, cache=TRUE}
+freqcondX <- prop.table(ff,1) #Y|X
+freqcondY <- prop.table(ff,2) #Y|X
+ensemble.df <- make.groups(freqcondX)
+colnames(ensemble.df) <- c("Taux","ClasseX")
+ensemble.df$ClasseX <- rep(colnames(ff),rep(3,length(colnames(ff))))
+ensemble.df$ClasseY <- rep(rownames(ff),length(colnames(ff)))
+ensemble.df
+```
+
+### freqmargtempspartiel.pdf
+```{r, cache=TRUE}
+Salariés<-Europe$Partiel_H
+NonSalariés<-Europe$Partiel_F
+Ensemble.df <- make.groups(Salariés,NonSalariés)
+colnames(Ensemble.df) <- c("Taux","Genre")
+```
+
+#### Séparément
+```{r, cache=TRUE}
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(Salariés,xlab="Temps partiels (% emploi total)",breaks=c(0,10,20,30,40,50,60,70,80))
+```
+
+```{r, cache=TRUE}
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(NonSalariés,xlab="Temps partiels (% emploi total)",breaks=c(0,10,20,30,40,50,60,70,80))
+```
+
+#### Les deux ensemble
+```{r, cache=TRUE}
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(~Taux|Genre,xlab="Temps partiels (% emploi total)",data=Ensemble.df,breaks=c(0,10,20,30,40,50,60,70,80),layout=c(1,2))
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "SNSfreqmargtempspartiel.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(~Taux|Genre,xlab="Temps partiels (% emploi total)",data=Ensemble.df,breaks=c(0,10,20,30,40,50,60,70,80),layout=c(1,2))
+dev.off()
+```
+
+### tfreqmargtempspartiel.pdf
+```{r, cache=TRUE}
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(~Taux|Genre,xlab="Temps partiels (% emploi total)",data=Ensemble.df,breaks=c(0,10,20,30,40,50,60,70,80))
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "SNStfreqmargtempspartiel.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(~Taux|Genre,xlab="Temps partiels (% emploi total)",data=Ensemble.df,breaks=c(0,10,20,30,40,50,60,70,80))
+dev.off()
+```
+
+### freqcondX.pdf
+```{r, cache=TRUE}
+#mp <- barplot(t(freqcondX),legend = rownames(freqcondX), ylim = c(0, 1)) # default
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(t(freqcondX), beside=TRUE, legend = colnames(freqcondX), ylim = c(0, 1), args.legend=list(x="topleft",ncol=2,title="Non-salariés"),ylab="Pourcentage du total",xlab="Salariés") # default
+#text(mp, t(freqcondX)+.05, format(freqcondX,digits=2), xpd = TRUE, col = "blue")
+mtext(0:4*20,at=c(1+2*0:4),side=1)
+mtext(0:4*20,at=c(10+2*0:4),side=1)
+mtext(0:4*20,at=c(19+2*0:4),side=1)
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "SNSfreqcondX.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(t(freqcondX), beside=TRUE, legend = colnames(freqcondX), ylim = c(0, 1), args.legend=list(x="topleft",ncol=2,title="Non-salariés"),ylab="Pourcentage du total",xlab="Salariés") # default
+#text(mp, t(freqcondX)+.05, format(freqcondX,digits=2), xpd = TRUE, col = "blue")
+mtext(0:4*20,at=c(1+2*0:4),side=1)
+mtext(0:4*20,at=c(10+2*0:4),side=1)
+mtext(0:4*20,at=c(19+2*0:4),side=1)
+dev.off()
+```
+
+### freqcondY.pdf
+```{r, cache=TRUE}
+#mp <- barplot(t(freqcondX),legend = rownames(freqcondX), ylim = c(0, 1)) # default
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(freqcondY, beside=TRUE, legend = rownames(freqcondY), ylim = c(0, 1), args.legend=list(x="top",ncol=3,title="Salariés"),ylab="Pourcentage du total",xlab="Non-salariés") # default
+#text(mp, t(freqcondX)+.05, format(freqcondX,digits=2), xpd = TRUE, col = "blue")
+mtext(0:1*20,at=c(1+2*0:1),side=1)
+mtext(0:1*20,at=c(5+2*0:1),side=1)
+mtext(0:1*20,at=c(9+2*0:1),side=1)
+mtext(0:1*20,at=c(13+2*0:1),side=1)
+mtext(0:1*20,at=c(17+2*0:1),side=1)
+mtext(0:1*20,at=c(21+2*0:1),side=1)
+mtext(0:1*20,at=c(25+2*0:1),side=1)
+mtext(0:1*20,at=c(29+2*0:1),side=1)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "SNSfreqcondY.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+#mp <- barplot(t(freqcondX),legend = rownames(freqcondX), ylim = c(0, 1)) # default
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(freqcondY, beside=TRUE, legend = rownames(freqcondY), ylim = c(0, 1), args.legend=list(x="top",ncol=3,title="Salariés"),ylab="Pourcentage du total",xlab="Non-salariés")  # default
+#text(mp, t(freqcondX)+.05, format(freqcondX,digits=2), xpd = TRUE, col = "blue")
+mtext(0:1*20,at=c(1+2*0:1),side=1)
+mtext(0:1*20,at=c(5+2*0:1),side=1)
+mtext(0:1*20,at=c(9+2*0:1),side=1)
+mtext(0:1*20,at=c(13+2*0:1),side=1)
+mtext(0:1*20,at=c(17+2*0:1),side=1)
+mtext(0:1*20,at=c(21+2*0:1),side=1)
+mtext(0:1*20,at=c(25+2*0:1),side=1)
+mtext(0:1*20,at=c(29+2*0:1),side=1)
+dev.off()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### disptempspartiel.pdf
+```{r, cache=TRUE}
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+plot(Europe$Salariés,Europe$NonSalariés,xlab="Salariés",ylab="Non-salariés",pch=19)
+colmodel="cmyk"
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "SNSdisptempspartiel.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+plot(Europe$Salariés,Europe$NonSalariés,xlab="Salariés",ylab="Non-salariés",pch=19)
+dev.off()
+```
+
+### stereotempspartiel.pdf
+```{r, cache=TRUE}
+ff=table(cut(Europe$Partiel_H,c(0,10,20,30)),cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80)))/sum(table(cut(Europe$Partiel_H,c(0,10,20,30)),cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80))))
+plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Salariés",yaxe="Non-salariés",theme="0")
+plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Salariés",yaxe="Non-salariés",theme="1")
+plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Salariés",yaxe="Non-salariés",theme="2")
+plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Salariés",yaxe="Non-salariés",theme="cyan")
+plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Salariés",yaxe="Non-salariés",theme="cyan",border=TRUE)
+plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Salariés",yaxe="Non-salariés",theme="bw")
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "SNSstereotempspartiel.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Salariés",yaxe="Non-salariés",theme="cyan")
+dev.off()
+```
+
+## Temps partiel Hommes*Femmes (Quanti-Quanti)
+```{r, cache=TRUE}
+data(Europe)
+table(cut(Europe$Partiel_Ens,c(0,10,20,30,40,50,60,70,80)))
+table(cut(Europe$Partiel_H,c(0,10,20,30,40,50,60,70,80)))
+table(cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80)))
+```
+
+### Distribution conditionnelle
+```{r, cache=TRUE}
+ff=table(cut(Europe$Partiel_H,c(0,10,20,30)),cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80)))/sum(table(cut(Europe$Partiel_H,c(0,10,20,30)),cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80))))
+
+freqcondX <- prop.table(ff,1) #Y|X
+freqcondY <- prop.table(ff,2) #Y|X
+ensemble.df <- make.groups(freqcondX)
+colnames(ensemble.df) <- c("Taux","ClasseX")
+ensemble.df$ClasseX <- rep(colnames(ff),rep(3,length(colnames(ff))))
+ensemble.df$ClasseY <- rep(rownames(ff),length(colnames(ff)))
+ensemble.df
+```
+
+### freqmargtempspartiel.pdf
+```{r, cache=TRUE}
+Hommes<-Europe$Partiel_H
+Femmes<-Europe$Partiel_F
+Ensemble.df <- make.groups(Hommes,Femmes)
+colnames(Ensemble.df) <- c("Taux","Genre")
+```
+
+#### Séparément
+```{r, cache=TRUE}
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(Hommes,xlab="Temps partiels (% emploi total)",breaks=c(0,10,20,30,40,50,60,70,80))
+```
+
+```{r, cache=TRUE}
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(Femmes,xlab="Temps partiels (% emploi total)",breaks=c(0,10,20,30,40,50,60,70,80))
+```
+
+#### Les deux ensemble
+```{r, cache=TRUE}
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(~Taux|Genre,xlab="Temps partiels (% emploi total)",data=Ensemble.df,breaks=c(0,10,20,30,40,50,60,70,80),layout=c(1,2))
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "HFfreqmargtempspartiel.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(~Taux|Genre,xlab="Temps partiels (% emploi total)",data=Ensemble.df,breaks=c(0,10,20,30,40,50,60,70,80),layout=c(1,2))
+dev.off()
+```
+
+### tfreqmargtempspartiel.pdf
+```{r, cache=TRUE}
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(~Taux|Genre,xlab="Temps partiels (% emploi total)",data=Ensemble.df,breaks=c(0,10,20,30,40,50,60,70,80))
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "HFtfreqmargtempspartiel.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(~Taux|Genre,xlab="Temps partiels (% emploi total)",data=Ensemble.df,breaks=c(0,10,20,30,40,50,60,70,80))
+dev.off()
+```
+
+### freqcondX.pdf
+```{r, cache=TRUE}
+#mp <- barplot(t(freqcondX),legend = rownames(freqcondX), ylim = c(0, 1)) # default
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(t(freqcondX), beside=TRUE, legend = colnames(freqcondX), ylim = c(0, 1), args.legend=list(x="topleft",ncol=2,title="Femmes"),ylab="Pourcentage du total",xlab="Hommes") # default
+#text(mp, t(freqcondX)+.05, format(freqcondX,digits=2), xpd = TRUE, col = "blue")
+mtext(0:4*20,at=c(1+2*0:4),side=1)
+mtext(0:4*20,at=c(10+2*0:4),side=1)
+mtext(0:4*20,at=c(19+2*0:4),side=1)
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "HFfreqcondX.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(t(freqcondX), beside=TRUE, legend = colnames(freqcondX), ylim = c(0, 1), args.legend=list(x="topleft",ncol=2,title="Femmes"),ylab="Pourcentage du total",xlab="Hommes") # default
+#text(mp, t(freqcondX)+.05, format(freqcondX,digits=2), xpd = TRUE, col = "blue")
+mtext(0:4*20,at=c(1+2*0:4),side=1)
+mtext(0:4*20,at=c(10+2*0:4),side=1)
+mtext(0:4*20,at=c(19+2*0:4),side=1)
+dev.off()
+```
+
+### freqcondY.pdf
+```{r, cache=TRUE}
+#mp <- barplot(t(freqcondX),legend = rownames(freqcondX), ylim = c(0, 1)) # default
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(freqcondY, beside=TRUE, legend = rownames(freqcondY), ylim = c(0, 1), args.legend=list(x="top",ncol=3,title="Hommes"),ylab="Pourcentage du total",xlab="Femmes") # default
+#text(mp, t(freqcondX)+.05, format(freqcondX,digits=2), xpd = TRUE, col = "blue")
+mtext(0:1*20,at=c(1+2*0:1),side=1)
+mtext(0:1*20,at=c(5+2*0:1),side=1)
+mtext(0:1*20,at=c(9+2*0:1),side=1)
+mtext(0:1*20,at=c(13+2*0:1),side=1)
+mtext(0:1*20,at=c(17+2*0:1),side=1)
+mtext(0:1*20,at=c(21+2*0:1),side=1)
+mtext(0:1*20,at=c(25+2*0:1),side=1)
+mtext(0:1*20,at=c(29+2*0:1),side=1)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "HFfreqcondY.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+#mp <- barplot(t(freqcondX),legend = rownames(freqcondX), ylim = c(0, 1)) # default
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(freqcondY, beside=TRUE, legend = rownames(freqcondY), ylim = c(0, 1), args.legend=list(x="top",ncol=3,title="Hommes"),ylab="Pourcentage du total",xlab="Femmes")  # default
+#text(mp, t(freqcondX)+.05, format(freqcondX,digits=2), xpd = TRUE, col = "blue")
+mtext(0:1*20,at=c(1+2*0:1),side=1)
+mtext(0:1*20,at=c(5+2*0:1),side=1)
+mtext(0:1*20,at=c(9+2*0:1),side=1)
+mtext(0:1*20,at=c(13+2*0:1),side=1)
+mtext(0:1*20,at=c(17+2*0:1),side=1)
+mtext(0:1*20,at=c(21+2*0:1),side=1)
+mtext(0:1*20,at=c(25+2*0:1),side=1)
+mtext(0:1*20,at=c(29+2*0:1),side=1)
+dev.off()
+```
+
+
+### disptempspartiel.pdf
+```{r, cache=TRUE}
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+plot(Europe$Partiel_H,Europe$Partiel_F,xlab="Hommes",ylab="Femmes",pch=19)
+colmodel="cmyk"
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "HFdisptempspartiel.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+plot(Europe$Partiel_H,Europe$Partiel_F,xlab="Hommes",ylab="Femmes",pch=19)
+dev.off()
+```
+
+```{r, cache=TRUE}
+ff=table(cut(Europe$Partiel_H,c(0,10,20,30)),cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80)))/sum(table(cut(Europe$Partiel_H,c(0,10,20,30)),cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80))))
+plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Hommes",yaxe="Femmes",theme="0")
+plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Hommes",yaxe="Femmes",theme="1")
+plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Hommes",yaxe="Femmes",theme="2")
+plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Hommes",yaxe="Femmes",theme="cyan")
+plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Hommes",yaxe="Femmes",theme="cyan",border=TRUE)
+plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Hommes",yaxe="Femmes",theme="bw")
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "HFstereotempspartiel.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Hommes",yaxe="Femmes",theme="cyan")
+dev.off()
+```
+
+
+
+
+
+
+
+
+
+## Provinces et territoires vs Sexe Canada (Quali-Quali)
+
+```{r, cache=TRUE}
+data(ProtervsSexe_Canada)
+```
+
+### Distribution conditionnelle
+```{r, cache=TRUE}
+ff=as.table(as.matrix(ProtervsSexe_Canada))/sum(as.table(as.matrix(ProtervsSexe_Canada)))
+
+freqcondX <- prop.table(ff,1) #Y|X
+freqcondY <- prop.table(ff,2) #Y|X
+ensemble.df <- make.groups(freqcondX)
+colnames(ensemble.df) <- c("Taux","ClasseX")
+ensemble.df$ClasseX <- rep(colnames(ff),rep(length(rownames(ff)),length(colnames(ff))))
+ensemble.df$ClasseY <- rep(rownames(ff),length(colnames(ff)))
+ensemble.df
+```
+
+### freqmargtempspartiel.pdf
+```{r, cache=TRUE}
+Hommes<-ProtervsSexe_Canada$Hommes
+Femmes<-ProtervsSexe_Canada$Femmes
+Ensemble.df <- make.groups(Hommes,Femmes)
+colnames(Ensemble.df) <- c("Taux","Genre")
+```
+
+```{r, cache=TRUE}
+dotchart(rowSums(as.table(as.matrix(ProtervsSexe_Canada))),labels = rownames(ProtervsSexe_Canada))
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "CanPSmargcondX.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+dotchart(rowSums(as.table(as.matrix(ProtervsSexe_Canada))),labels = rownames(ProtervsSexe_Canada))
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+dotchart(colSums(as.table(as.matrix(ProtervsSexe_Canada))),labels = colnames(ProtervsSexe_Canada))
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "CanPSmargcondY.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+dotchart(colSums(as.table(as.matrix(ProtervsSexe_Canada))),labels = colnames(ProtervsSexe_Canada))
+dev.off()
+```
+
+
+### freqcondX.pdf
+```{r, cache=TRUE}
+par(mar = c(7.5, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(t(freqcondX), beside=TRUE, legend = colnames(freqcondX), ylim = c(0, .65), las=2, srt=60, xaxt="n", args.legend=list(x="topleft",ncol=2),ylab="Pourcentage du total") 
+text(colMeans(mp), par("usr")[3], labels = rownames(freqcondX), srt = 60, adj = c(1.1,1.1), xpd = TRUE, cex=.8)
+# default
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "CanPSfreqcondX.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(7.5, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(t(freqcondX), beside=TRUE, legend = colnames(freqcondX), ylim = c(0, .6), las=2, srt=60, xaxt="n", args.legend=list(x="topleft",ncol=2),ylab="Pourcentage du total") 
+text(colMeans(mp), par("usr")[3], labels = rownames(freqcondX), srt = 60, adj = c(1.1,1.1), xpd = TRUE, cex=.7)
+# default
+dev.off()
+```
+
+### freqcondY.pdf
+```{r, cache=TRUE}
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(freqcondX, beside=TRUE, legend = rownames(freqcondX), ylim = c(0, .85), las=2, srt=60, xaxt="n", args.legend=list(x="topleft",ncol=3,cex=.9),ylab="Pourcentage du total") 
+text(colMeans(mp), par("usr")[3], labels = colnames(freqcondX), srt = 60, adj = c(1.1,1.1), xpd = TRUE, cex=.8)
+# default
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "CanPSfreqcondY.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(freqcondX, beside=TRUE, legend = rownames(freqcondX), ylim = c(0, .65), las=2, srt=60, xaxt="n", args.legend=list(x="topleft",ncol=3,cex=.9),ylab="Pourcentage du total") 
+text(colMeans(mp), par("usr")[3], labels = colnames(freqcondX), srt = 60, adj = c(1.1,1.1), xpd = TRUE, cex=.8)
+# default
+dev.off()
+```
+
+
+
+
+
+
+
+
+```{r}
+if(!("vcd" %in% installed.packages())){install.packages("vcd")}
+library(vcd)
+```
+
+
+```{r, cache=TRUE}
+mosaic(t(as.table(as.matrix(ProtervsSexe_Canada))), legend=TRUE, 
+   direction = "v", labeling= labeling_border(rot_labels = c(0,0,0,0), 
+   just_labels = c("center", "center", "center", "center"), varnames =  FALSE,offset_labels=c(0,0,0,4),gp_labels = gpar(fontsize = 6)))
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "CanPSXY.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mosaic(t(as.table(as.matrix(ProtervsSexe_Canada))), legend=TRUE, 
+   direction = "v", labeling= labeling_border(rot_labels = c(0,0,0,0), 
+   just_labels = c("center", "center", "center", "center"), varnames =  FALSE,offset_labels=c(0,0,0,4),gp_labels = gpar(fontsize = 6)))
+dev.off()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Classe age vs Homme-Femme Canada (Quali-Quanti)
+
+
+```{r, cache=TRUE}
+data(AgevsSexe_Canada_full)
+AgevsSexe_Canada <- AgevsSexe_Canada_full[-nrow(AgevsSexe_Canada_full),]
+AgevsSexe_Canada
+```
+
+### Distribution conditionnelle
+```{r, cache=TRUE}
+donnees = data.frame(
+  Taux=c(AgevsSexe_Canada$Hommes,AgevsSexe_Canada$Femmes),
+  Type=factor(c(rep("Hommes",nrow(AgevsSexe_Canada)),rep("Femmes",nrow(AgevsSexe_Canada)))))
+tapply(donnees$Taux,donnees$Type,mean)
+```
+
+```{r, cache=TRUE}
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+pie(colSums(AgevsSexe_Canada),labels=levels(donnees$Type),col=c("white","#00FFFF","black","#00FFFF"),border=c("black","#00FFFF","black","#00FFFF"),density=25,cex=1.2)
+```
+
+
+```{r, cache=TRUE}
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+dotplot(colSums(AgevsSexe_Canada),labels=levels(donnees$Type),col=c("black","black","black","black"),border=c("black","black","black","black"),density=25,cex=1.2, xlab = "Effectifs")
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "ASCpieqqualimarg.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+pie(colSums(AgevsSexe_Canada),labels=levels(donnees$Type),col=c("white","#00FFFF","black","#00FFFF"),border=c("black","#00FFFF","black","#00FFFF"),density=25,cex=1.2)
+dev.off()
+
+pdf(file = "ASCqqualimarg.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+dotplot(colSums(AgevsSexe_Canada),labels=levels(donnees$Type),col=c("black","black","black","black"),border=c("black","black","black","black"),density=25,cex=1.2, xlab = "Effectifs")
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+sumdat<-data.frame(Âge=rep((0:19)*5+2.5,rowSums(AgevsSexe_Canada)))
+histogram(~Âge,data=sumdat,breaks=(0:20)*5)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "ASCqquantimarg.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(~Âge,data=sumdat,breaks=(0:20)*5)
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+fulldat<-data.frame(Âge=c(rep((0:19)*5+2.5,AgevsSexe_Canada[,1]),
+                          rep((0:19)*5+2.5,AgevsSexe_Canada[,2])
+                          ),
+                  Type=factor(c(rep("Homme",sum(AgevsSexe_Canada[,1])),rep("Femme",sum(AgevsSexe_Canada[,2]))))
+)
+#summary(fulldat)
+histogram(~Âge|Type,data=fulldat,breaks=(0:20)*5)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "ASCqquanticond.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(~Âge|Type,data=fulldat,breaks=(0:20)*5)
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+TauxQuali <- cut(fulldat$Âge,breaks=(0:20)*5)
+#split(fulldat$Type,TauxQuali)
+sapply(split(fulldat$Type,TauxQuali),table)
+
+regroup <- sapply(split(fulldat$Type,TauxQuali),table)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+barplot(regroup,beside=TRUE, legend=levels(donnees$Type), args.legend=list(x="topright", ncol=1),las=2)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "ASCqqualicond.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(4.5, 4.5, 1, 1) + 0.1, mgp = c(2, 1, 0))
+barplot(regroup,beside=TRUE, legend=levels(donnees$Type), args.legend=list(x="topright", ncol=1),las=2)
+dev.off()
+```
+
+## Classe age vs Provinces et territoires Canada (Quali-Quanti)
+
+```{r, cache=TRUE}
+data(AgevsProter_Canada_full)
+AgevsProter_Canada <- AgevsProter_Canada_full[-nrow(AgevsProter_Canada_full),]
+AgevsProter_Canada
+```
+
+### Distribution conditionnelle
+```{r, cache=TRUE}
+donnees = data.frame(
+  Âge=c(AgevsProter_Canada$Terre.Neuve.et.Labrador,AgevsProter_Canada$Île.du.Prince.Édouard,AgevsProter_Canada$Nouvelle.Écosse,AgevsProter_Canada$Nouveau.Brunswick,AgevsProter_Canada$Québec,AgevsProter_Canada$Ontario,AgevsProter_Canada$Manitoba,AgevsProter_Canada$Saskatchewan,AgevsProter_Canada$Alberta,AgevsProter_Canada$Colombie.Britannique,AgevsProter_Canada$Yukon,AgevsProter_Canada$TerritoiresduNord.Ouest,AgevsProter_Canada$Nunavut),
+  Type=factor(
+    c(rep("Terre Neuve et Labrador",nrow(AgevsProter_Canada)),
+      rep("Île du Prince Édouard",nrow(AgevsProter_Canada)),
+      rep("Nouvelle Écosse",nrow(AgevsProter_Canada)),
+      rep("Nouveau Brunswick",nrow(AgevsProter_Canada)),
+      rep("Québec",nrow(AgevsProter_Canada)),
+      rep("Ontario",nrow(AgevsProter_Canada)),
+      rep("Manitoba",nrow(AgevsProter_Canada)),
+      rep("Saskatchewan",nrow(AgevsProter_Canada)),
+      rep("Alberta",nrow(AgevsProter_Canada)),
+      rep("Colombie Britannique",nrow(AgevsProter_Canada)),
+      rep("Yukon",nrow(AgevsProter_Canada)),
+      rep("Territoires du Nord Ouest",nrow(AgevsProter_Canada)),
+      rep("Nunavut",nrow(AgevsProter_Canada))
+      )))
+tapply(donnees$Âge,donnees$Type,mean)
+```
+
+```{r, cache=TRUE}
+nameXlit <- c("Terre Neuve et Labrador",
+  "Île du Prince Édouard",
+  "Nouvelle Écosse",
+  "Nouveau Brunswick",
+  "Québec",
+  "Ontario",
+  "Manitoba",
+  "\nSaskatchewan",
+  "Alberta",
+  "Colombie Britannique",
+  "\nYukon",
+  "\n\n\nTerritoires du Nord Ouest",
+  "Nunavut")
+```
+
+
+```{r, cache=TRUE}
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+pie(colSums(AgevsProter_Canada),labels=nameXlit,col=c("white","#00FFFF","black","#00FFFF"),border=c("black","#00FFFF","black","#00FFFF"),density=25,cex=.6)
+```
+
+
+```{r, cache=TRUE}
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+dotplot(colSums(AgevsProter_Canada),labels=levels(donnees$Type),col=c("black","black","black","black"),border=c("black","black","black","black"),density=25,cex=1.2)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "ATPCpieqqualimarg.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+pie(colSums(AgevsProter_Canada),labels=nameXlit,col=c("white","#00FFFF","black","#00FFFF"),border=c("black","#00FFFF","black","#00FFFF"),density=25,cex=.6)
+dev.off()
+
+pdf(file = "ATPCqqualimarg.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+dotplot(colSums(AgevsProter_Canada),labels=levels(donnees$Type),col=c("black","black","black","black"),border=c("black","black","black","black"),density=25,cex=1.2,xlab = "Effectifs")
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+sumdat<-data.frame(Âge=rep((0:19)*5+2.5,rowSums(AgevsProter_Canada)))
+histogram(~Âge,data=sumdat,breaks=(0:20)*5)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "ATPCqquantimarg.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(~Âge,data=sumdat,breaks=(0:20)*5)
+dev.off()
+```
+
+
+
+
+```{r, cache=TRUE}
+fulldat<-data.frame(Âge=c(rep((0:19)*5+2.5,AgevsProter_Canada[,1]),
+                          rep((0:19)*5+2.5,AgevsProter_Canada[,2]),
+                          rep((0:19)*5+2.5,AgevsProter_Canada[,3]),
+                          rep((0:19)*5+2.5,AgevsProter_Canada[,4]),
+                          rep((0:19)*5+2.5,AgevsProter_Canada[,5]),
+                          rep((0:19)*5+2.5,AgevsProter_Canada[,6]),
+                          rep((0:19)*5+2.5,AgevsProter_Canada[,7]),
+                          rep((0:19)*5+2.5,AgevsProter_Canada[,8]),
+                          rep((0:19)*5+2.5,AgevsProter_Canada[,9]),
+                          rep((0:19)*5+2.5,AgevsProter_Canada[,10]),
+                          rep((0:19)*5+2.5,AgevsProter_Canada[,11]),
+                          rep((0:19)*5+2.5,AgevsProter_Canada[,12]),
+                          rep((0:19)*5+2.5,AgevsProter_Canada[,13])
+                          ),
+                  Type=factor(
+    c(rep("T. Neuve et Lab.",sum(AgevsProter_Canada[,1])),
+      rep("Île Pr Édouard",sum(AgevsProter_Canada[,2])),
+      rep("Nouv. Écosse",sum(AgevsProter_Canada[,3])),
+      rep("Nouv. Brunswick",sum(AgevsProter_Canada[,4])),
+      rep("Québec",sum(AgevsProter_Canada[,5])),
+      rep("Ontario",sum(AgevsProter_Canada[,6])),
+      rep("Manitoba",sum(AgevsProter_Canada[,7])),
+      rep("Saskatch.",sum(AgevsProter_Canada[,8])),
+      rep("Alberta",sum(AgevsProter_Canada[,9])),
+      rep("Col. Brit.",sum(AgevsProter_Canada[,10])),
+      rep("Yukon",sum(AgevsProter_Canada[,11])),
+      rep("T. du Nord Ouest",sum(AgevsProter_Canada[,12])),
+      rep("Nunavut",sum(AgevsProter_Canada[,13]))
+      ))
+)
+#summary(fulldat)
+histogram(~Âge|Type,data=fulldat,breaks=(0:20)*5)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "ATPCqquanticond.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(~Âge|Type,data=fulldat,breaks=(0:20)*5)
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+TauxQuali <- cut(fulldat$Âge,breaks=(0:20)*5)
+#split(fulldat$Type,TauxQuali)
+sapply(split(fulldat$Type,TauxQuali),table)
+
+regroup <- sapply(split(fulldat$Type,TauxQuali),table)
+par(mar = c(4.5, 4, 1, 1) + 0.1, mgp = c(2, 1, 0))
+barplot(regroup,beside=TRUE, legend=levels(donnees$Type), args.legend=list(x="topright", ncol=4,cex=.6),las=2,ylim=c(0,1.4e6))
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "ATPCqqualicond.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(4.5, 4.5, 1, 1) + 0.1, mgp = c(2, 1, 0))
+barplot(regroup,beside=TRUE, legend=levels(donnees$Type), args.legend=list(x="topright", ncol=4,cex=.6),las=2,ylim=c(0,1.25e6))
+dev.off()
+```
+
+
+## Bonus Europe Siège-Voix
+```{r, cache=TRUE}
+data(Sieges_Voix)
+
+str(Sieges_Voix)
+summary(Sieges_Voix)
+```
+
+
+```{r, cache=TRUE}
+NameX <- Sieges_Voix$Etats.Membres
+NombreSieges <- Sieges_Voix$Sièges.au.parlement
+NombreVoix <- Sieges_Voix$Voix.au.conseil
+NameXX <- names(table(Sieges_Voix$Date.entrée))
+NombreAnnees <- as.vector(table(Sieges_Voix$Date.entrée))
+
+names(NombreSieges) <- NameX
+NombreSieges
+```
+
+
+```{r, cache=TRUE}
+Année <- Sieges_Voix$Date.entrée
+Pays <- NameX 
+Europ <- rbind(NombreSieges,NombreVoix)
+colnames(Europ) <- Pays
+```
+
+
+```{r, cache=TRUE}
+margin.table(Europ)
+margin.table(Europ,1)
+margin.table(Europ,2)
+```
+
+
+```{r, cache=TRUE}
+margX <- margin.table(Europ,1)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(margX, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25) # default
+```
+
+```{r, cache=TRUE}
+margY <- margin.table(Europ,2)
+par(mar = c(9.1, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(margY, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25,las=3) # default
+```
+
+```{r, cache=TRUE}
+layout((1:2))
+margX <- margin.table(Europ,1)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(margX, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25) # default
+margY <- margin.table(Europ,2)
+par(mar = c(9.1, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(margY, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25,las=3) # default
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "SVeffmarg.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+layout((1:2))
+margX <- margin.table(Europ,1)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(margX, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25) # default
+margY <- margin.table(Europ,2)
+par(mar = c(9.1, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(margY, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25,las=3) # default
+dev.off()
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "SVeffmargX.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+margX <- margin.table(Europ,1)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(margX, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25) # default
+dev.off()
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "SVeffmargY.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+margY <- margin.table(Europ,2)
+par(mar = c(9.1, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(margY, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25,las=3) # default
+dev.off()
+```
+
+```{r, cache=TRUE}
+freqcondX <- prop.table(Europ,1) #Y|X
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(t(freqcondX), beside=TRUE, legend = colnames(Europ), ylim = c(0, .35), args.legend=list(x="top", ncol=3)) # default
+```
+
+```{r, cache=TRUE}
+freqcondY <- prop.table(Europ,2) #Y|X
+par(mar = c(9.1, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(freqcondY, beside=TRUE, legend = rownames(Europ), ylim = c(0, .95), args.legend=list(x="top", ncol=2),las=3) # default
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "SVfrecondBesideX.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+freqcondX <- prop.table(Europ,1) #Y|X
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(t(freqcondX), beside=TRUE, legend = colnames(Europ), ylim = c(0, .22), args.legend=list(x="top", ncol=3)) # default
+dev.off()
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "SVfrecondBesideY.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+freqcondY <- prop.table(Europ,2) #Y|X
+par(mar = c(9.1, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(freqcondY, beside=TRUE, legend = rownames(Europ), ylim = c(0, .85), args.legend=list(x="top", ncol=2),las=3) # default
+dev.off()
+```
+
+```{r, cache=TRUE}
+freqcondX <- prop.table(Europ,1) #Y|X
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(t(freqcondX), beside=FALSE, legend = colnames(Europ), ylim = c(0, 1.6), args.legend=list(x="top", ncol=3),yaxt="n") # default
+axis(2, at=0:5*.2)
+```
+
+```{r, cache=TRUE}
+freqcondY <- prop.table(Europ,2) #Y|X
+par(mar = c(9.1, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(freqcondY, beside=FALSE, legend = rownames(Europ), ylim = c(0, 1.3), args.legend=list(x="top", ncol=4),yaxt="n",las=3) # default
+axis(2, at=0:5*.2)
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "SVfrecondStackedX.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+freqcondX <- prop.table(Europ,1) #Y|X
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(t(freqcondX), beside=FALSE, legend = colnames(Europ), ylim = c(0, 1.6), args.legend=list(x="top", ncol=3),yaxt="n") # default
+axis(2, at=0:5*.2)
+dev.off()
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "SVfrecondStackedY.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+freqcondY <- prop.table(Europ,2) #Y|X
+par(mar = c(9.1, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+mp <- barplot(freqcondY, beside=FALSE, legend = rownames(Europ), ylim = c(0, 1.3), args.legend=list(x="top", ncol=4),yaxt="n",las=3) # default
+axis(2, at=0:5*.2)
+dev.off()
+```
+
+
+
+# Muldimensionnel
+
+## ggpairs
+```{r}
+if(!("GGally" %in% installed.packages())){install.packages("GGally")}
+library(GGally)
+```
+
+
+```{r, cache=TRUE}
+ggpairs(iris, progress = FALSE)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+ggsave(filename = paste(Chemin,"Iris_ggpairs.pdf",sep=""),
+       width = 16, height = 10, onefile = TRUE, family = "Helvetica", title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+```
+
+```{r, cache=TRUE}
+data(Europe)
+ggpairs(Europe[,-1], progress = FALSE)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+ggsave(filename = paste(Chemin,"Europe_ggpairs.pdf",sep=""),
+       width = 16, height = 10, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+```
+
+```{r, cache=TRUE}
+data(HospitFull)
+
+ggpairs(HospitFull[,-c(1,2)], progress = FALSE)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+ggsave(filename = paste(Chemin,"Hospit_ggpairs.pdf",sep=""),
+       width = 16, height = 10, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+```
+
+
+```{r, cache=TRUE}
+ggpairs(HospitFull[,-c(1,2)]/HospitFull[,2], progress = FALSE)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+ggsave(filename = paste(Chemin,"Hospit_Norm_ggpairs.pdf",sep=""),
+       width = 16, height = 10, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+```
+
+```{r, cache=TRUE}
+data(ReaFull)
+
+ggpairs(ReaFull[,-c(1,2)], progress = FALSE)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+ggsave(filename = paste(Chemin,"Rea_ggpairs.pdf",sep=""),
+       width = 16, height = 10, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+```
+
+
+```{r, cache=TRUE}
+ggpairs(ReaFull[,-c(1,2)]/ReaFull[,2], progress = FALSE)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+ggsave(filename = paste(Chemin,"Rea_Norm_ggpairs.pdf",sep=""),
+       width = 16, height = 10, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+```
+
+
+## Radar Plots
+```{r}
+if(!("ggplot2" %in% installed.packages())){install.packages("ggplot2")}
+library(ggplot2)
+if(!("ggradar" %in% installed.packages())){
+install.packages("extrafont")
+download.file("https://dl.dropboxusercontent.com/u/2364714/airbnb_ttf_fonts/Circular Air-Light 3.46.45 PM.ttf", "/Library/Fonts/Circular Air-Light 3.46.45 PM.ttf", method="curl")
+extrafont::font_import(pattern = 'Circular', prompt=FALSE)
+devtools::install_github("ricardo-bion/ggradar", dependencies=TRUE)
+library(ggradar)
+}
+library(ggradar)
+if(!("dplyr" %in% installed.packages())){install.packages("dplyr")}
+suppressPackageStartupMessages(library(dplyr))
+if(!("scales" %in% installed.packages())){install.packages("scales")}
+library(scales)
+```
+
+```{r, cache=TRUE}
+ggradar(data.frame(levels(iris[,5]),t(simplify2array(lapply(split(iris[,-5],iris[,5]),colMeans))/apply(simplify2array(lapply(split(iris[,-5],iris[,5]),colMeans)),1,max))),axis.labels = c("Sepal Length","Sepal\nWidth","Petal Length","Petal\nWidth"))
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+ggsave(filename = paste(Chemin,"Iris_ggradar.pdf",sep=""),
+       width = 8, height = 7, onefile = TRUE, family = "Helvetica", title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+```
+
+```{r, cache=TRUE}
+data(Europe)
+
+Europe_rad <- Europe[,-1]
+rownames(Europe_rad) <- Europe[,1]
+
+Europe_radar <- Europe_rad %>% 
+  as_tibble(rownames = "group") %>% 
+  mutate_at(vars(-group), rescale)
+Europe_radar
+ggradar(Europe_radar,axis.labels = c("Partiel Ens.", "Partiel\nHommes",   "Partiel\nFemmes",   "Salariés","Non\nSalariés"), legend.text.size=10)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+ggsave(filename = paste(Chemin,"Europe_ggradar.pdf",sep=""),
+       width = 16, height = 10, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+```
+
+
+```{r, cache=TRUE}
+data(HospitFull)
+Hospit=cbind(Région=(HospitFull$Région)[-nrow(HospitFull)],HospitFull[-nrow(ReaFull),-c(1,2)])
+summary(Hospit)
+
+Hospit_rad <- Hospit[,-1]
+rownames(Hospit_rad) <- Hospit[,1]
+
+Hospit_radar <- Hospit_rad %>% 
+  as_tibble(rownames = "group") %>% 
+  mutate_at(vars(-group), rescale)
+Hospit_radar
+ggradar(Hospit_radar, legend.text.size=12)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+ggsave(filename = paste(Chemin,"Hospit_ggradar.pdf",sep=""),
+       width = 16, height = 10, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+```
+
+
+```{r, cache=TRUE}
+data(ReaFull)
+Rea=cbind(Région=(ReaFull$Région)[-nrow(ReaFull)],ReaFull[-nrow(ReaFull),-c(1,2)])
+summary(Rea)
+
+Rea_rad <- Rea[,-1]
+rownames(Rea_rad) <- Rea[,1]
+
+Rea_radar <- Rea_rad %>% 
+  as_tibble(rownames = "group") %>% 
+  mutate_at(vars(-group), rescale)
+Rea_radar
+ggradar(Rea_radar, legend.text.size=12)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+ggsave(filename = paste(Chemin,"Rea_ggradar.pdf",sep=""),
+       width = 16, height = 10, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+```
+
+
+
+## Chernov Faces
+```{r}
+if(!("DescTools" %in% installed.packages())){install.packages("DescTools")}
+library(DescTools)
+```
+
+```{r, cache=TRUE}
+PlotFaces(rbind(1:3,5:3,3:5,5:7))
+```
+
+
+```{r, cache=TRUE}
+data(longley)
+PlotFaces(longley[1:9,])
+```
+
+
+```{r, cache=TRUE}
+set.seed(17)
+PlotFaces(matrix(sample(1:1000,128,), 16, 8), main="random faces")
+```
+
+
+```{r, cache=TRUE}
+means <- lapply(iris[,-5], tapply, iris$Species, mean)
+m <- t(do.call(rbind, means))
+m <- cbind(m, matrix(rep(1, 11*3), nrow=3))
+
+# define the colors, first for all faces the same
+col <- replicate(3, c("orchid1", "olivedrab", "goldenrod4",
+                      "peachpuff", "darksalmon", "peachpuff3"))
+rownames(col) <- c("nose","eyes","hair","face","lips","ears")
+# change haircolor individually for each face
+col[3, ] <- c("lightgoldenrod", "coral3", "sienna4")
+
+z <- PlotFaces(m, nr=1, nc=3, col=col)
+
+# print the used coding
+print(z$info, right=FALSE)
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "IrisChernoff.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+PlotFaces(m, nr=1, nc=3, col=col)
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+data(Europe)
+
+means <- lapply(Europe[,-1], tapply, Europe$Etats.membres, mean)
+m1 <- t(do.call(rbind, means))
+# Complétion car au plus 15 variables
+m <- cbind(m1, matrix(rep(1, (15-ncol(m1))*nrow(m1)), nrow=nrow(m1)))
+
+# define the colors, first for all faces the same
+col <- replicate(nrow(m1), c("orchid1", "olivedrab", "goldenrod4", "peachpuff", "darksalmon", "peachpuff3"))
+rownames(col) <- c("nose","eyes","hair","face","lips","ears")
+# change haircolor individually for each face
+# col[3, ] <- c("lightgoldenrod", "coral3", "sienna4")
+set.seed(4669)
+col[3, ] <- sample(colors(),nrow(m1))
+z <- PlotFaces(m, nr=6, nc=6, col=col)
+
+# print the used coding
+print(z$info, right=FALSE)
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "EuropeChernoff.pdf",
+    width = 14, height = 10, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+PlotFaces(m, nr=6, nc=6, col=col)
+dev.off()
+```
+
+```{r, cache=TRUE}
+data(ReaFull)
+Rea=cbind(Région=(ReaFull$Région)[-nrow(ReaFull)],ReaFull[-nrow(ReaFull),-c(1,2)])
+summary(Rea)
+
+means <- lapply(Rea[,-1], tapply, Rea$Région, mean)
+m1 <- t(do.call(rbind, means))
+# Complétion car au plus 15 variables
+m <- cbind(m1, matrix(rep(1, (15-ncol(m1))*nrow(m1)), nrow=nrow(m1)))
+
+namesXReg <- Rea$Région
+namesXReg[3] <- "Auv.-Rhône-Alpes"
+namesXReg[8] <- "Bourg.-Fr.-Comté"
+namesXReg[2] <- "Prov.-Alpes-C. d’Azur"
+
+# define the colors, first for all faces the same
+col <- replicate(nrow(m1), c("orchid1", "olivedrab", "goldenrod4", "peachpuff", "darksalmon", "peachpuff3"))
+rownames(col) <- c("nose","eyes","hair","face","lips","ears")
+# change haircolor individually for each face
+# col[3, ] <- c("lightgoldenrod", "coral3", "sienna4")
+set.seed(4669)
+col[3, ] <- sample(colors(),nrow(m1))
+z <- PlotFaces(m, nr=5, nc=4, col=col,labels = namesXReg)
+
+# print the used coding
+print(z$info, right=FALSE)
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "ReaEffChernoff.pdf",
+    width = 10, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+PlotFaces(m, nr=5, nc=4, col=col,labels = namesXReg)
+dev.off()
+```
+
+
+
+```{r, cache=TRUE}
+data(ReaFull)
+Rea=cbind(Région=(ReaFull$Région)[-nrow(ReaFull)],ReaFull[-nrow(ReaFull),-c(1,2)]/((ReaFull$Tous.âges)[-nrow(ReaFull)]))
+summary(Rea)
+
+means <- lapply(Rea[,-1], tapply, Rea$Région, mean)
+m1 <- t(do.call(rbind, means))
+# Complétion car au plus 15 variables
+m <- cbind(m1, matrix(rep(1, (15-ncol(m1))*nrow(m1)), nrow=nrow(m1)))
+
+namesXReg <- Rea$Région
+namesXReg[3] <- "Auv.-Rhône-Alpes"
+namesXReg[8] <- "Bourg.-Fr.-Comté"
+namesXReg[2] <- "Prov.-Alpes-C. d’Azur"
+
+# define the colors, first for all faces the same
+col <- replicate(nrow(m1), c("orchid1", "olivedrab", "goldenrod4", "peachpuff", "darksalmon", "peachpuff3"))
+rownames(col) <- c("nose","eyes","hair","face","lips","ears")
+# change haircolor individually for each face
+# col[3, ] <- c("lightgoldenrod", "coral3", "sienna4")
+set.seed(4669)
+col[3, ] <- sample(colors(),nrow(m1))
+z <- PlotFaces(m, nr=5, nc=4, col=col,labels = namesXReg)
+
+# print the used coding
+print(z$info, right=FALSE)
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "ReaFreLignesChernoff.pdf",
+    width = 10, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+PlotFaces(m, nr=5, nc=4, col=col,labels = namesXReg)
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+data(HospitFull)
+Hospit=cbind(Région=(HospitFull$Région)[-nrow(HospitFull)],HospitFull[-nrow(HospitFull),-c(1,2)])
+summary(Hospit)
+
+means <- lapply(Hospit[,-1], tapply, Hospit$Région, mean)
+m1 <- t(do.call(rbind, means))
+# Complétion car au plus 15 variables
+m <- cbind(m1, matrix(rep(1, (15-ncol(m1))*nrow(m1)), nrow=nrow(m1)))
+
+namesXReg <- Rea$Région
+namesXReg[3] <- "Auv.-Rhône-Alpes"
+namesXReg[8] <- "Bourg.-Fr.-Comté"
+namesXReg[2] <- "Prov.-Alpes-C. d’Azur"
+
+# define the colors, first for all faces the same
+col <- replicate(nrow(m1), c("orchid1", "olivedrab", "goldenrod4", "peachpuff", "darksalmon", "peachpuff3"))
+rownames(col) <- c("nose","eyes","hair","face","lips","ears")
+# change haircolor individually for each face
+# col[3, ] <- c("lightgoldenrod", "coral3", "sienna4")
+set.seed(4669)
+col[3, ] <- sample(colors(),nrow(m1))
+z <- PlotFaces(m, nr=5, nc=4, col=col,labels = namesXReg)
+
+# print the used coding
+print(z$info, right=FALSE)
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "HospitEffChernoff.pdf",
+    width = 10, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+PlotFaces(m, nr=5, nc=4, col=col,labels = namesXReg)
+dev.off()
+```
+
+
+
+```{r, cache=TRUE}
+data(HospitFull)
+Hospit=cbind(Région=(HospitFull$Région)[-nrow(HospitFull)],HospitFull[-nrow(HospitFull),-c(1,2)]/((HospitFull$Tous.âges)[-nrow(HospitFull)]))
+summary(Hospit)
+
+means <- lapply(Hospit[,-1], tapply, Hospit$Région, mean)
+m1 <- t(do.call(rbind, means))
+# Complétion car au plus 15 variables
+m <- cbind(m1, matrix(rep(1, (15-ncol(m1))*nrow(m1)), nrow=nrow(m1)))
+
+namesXReg <- Rea$Région
+namesXReg[3] <- "Auv.-Rhône-Alpes"
+namesXReg[8] <- "Bourg.-Fr.-Comté"
+namesXReg[2] <- "Prov.-Alpes-C. d’Azur"
+
+# define the colors, first for all faces the same
+col <- replicate(nrow(m1), c("orchid1", "olivedrab", "goldenrod4", "peachpuff", "darksalmon", "peachpuff3"))
+rownames(col) <- c("nose","eyes","hair","face","lips","ears")
+# change haircolor individually for each face
+# col[3, ] <- c("lightgoldenrod", "coral3", "sienna4")
+set.seed(4669)
+col[3, ] <- sample(colors(),nrow(m1))
+z <- PlotFaces(m, nr=5, nc=4, col=col,labels = namesXReg)
+
+# print the used coding
+print(z$info, right=FALSE)
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "HospitFreLignesChernoff.pdf",
+    width = 10, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(9.1, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+PlotFaces(m, nr=5, nc=4, col=col,labels = namesXReg)
+dev.off()
+```
+
+
+
+# Mesures de liaison
+## Salariés*Non-salariés (Quanti-Quanti)
+```{r, cache=TRUE}
+data(Europe)
+
+sum((Europe$Salariés-mean(Europe$Salariés))*(Europe$NonSalariés-mean(Europe$NonSalariés)))/nrow(Europe)
+cov(Europe$Salariés,Europe$NonSalariés)*(nrow(Europe)-1)/nrow(Europe)
+var(Europe$Salariés)*(nrow(Europe)-1)/nrow(Europe)
+var(Europe$NonSalariés)*(nrow(Europe)-1)/nrow(Europe)
+sum((Europe$Salariés-mean(Europe$Salariés))*(Europe$Salariés-mean(Europe$Salariés)))/nrow(Europe)
+sum((Europe$NonSalariés-mean(Europe$NonSalariés))*(Europe$NonSalariés-mean(Europe$NonSalariés)))/nrow(Europe)
+
+sqrt(sum((Europe$Salariés-mean(Europe$Salariés))*(Europe$Salariés-mean(Europe$Salariés)))/nrow(Europe))
+sqrt(sum((Europe$NonSalariés-mean(Europe$NonSalariés))*(Europe$NonSalariés-mean(Europe$NonSalariés)))/nrow(Europe))
+
+cov(Europe$Salariés,Europe$NonSalariés)*(nrow(Europe)-1)/nrow(Europe)/(sqrt(sum((Europe$Salariés-mean(Europe$Salariés))*(Europe$Salariés-mean(Europe$Salariés)))/nrow(Europe))*sqrt(sum((Europe$NonSalariés-mean(Europe$NonSalariés))*(Europe$NonSalariés-mean(Europe$NonSalariés)))/nrow(Europe)))
+cor(Europe$Salariés,Europe$NonSalariés)
+```
+
+```{r, cache=TRUE}
+
+c(Europe$Partiel_Ens,Europe$Partiel_H,Europe$Partiel_F)
+factor(c(rep("Ensemble",length(Europe$Partiel_Ens)),rep("Hommes",length(Europe$Partiel_H)),rep("Femmes",length(Europe$Partiel_F))))
+
+donnees = data.frame(Taux=c(Europe$Partiel_Ens,Europe$Partiel_H,Europe$Partiel_F),Type=factor(c(rep("Ensemble",length(Europe$Partiel_Ens)),rep("Hommes",length(Europe$Partiel_H)),rep("Femmes",length(Europe$Partiel_F)))))
+tapply(donnees$Taux,donnees$Type,mean)
+
+var(tapply(donnees$Taux,donnees$Type,mean))*(nlevels(donnees$Type)-1)/nlevels(donnees$Type)
+mean(tapply(donnees$Taux,donnees$Type,var)*(length(Europe$Partiel_Ens)-1)/length(Europe$Partiel_Ens))
+
+
+var(tapply(donnees$Taux,donnees$Type,mean))*(nlevels(donnees$Type)-1)/nlevels(donnees$Type)+mean(tapply(donnees$Taux,donnees$Type,var))*(length(Europe$Partiel_Ens)-1)/length(Europe$Partiel_Ens)
+var(donnees$Taux)*(nlevels(donnees$Type)*length(Europe$Partiel_Ens)-1)/nlevels(donnees$Type)/length(Europe$Partiel_Ens)
+
+var(tapply(donnees$Taux,donnees$Type,mean))*(nlevels(donnees$Type)-1)/nlevels(donnees$Type)/(var(donnees$Taux)*(nlevels(donnees$Type)*length(Europe$Partiel_F)-1)/nlevels(donnees$Type)/length(Europe$Partiel_Ens))
+```
+
+
+
+## Provinces et territoires vs Sexe Canada (Quali-Quali)
+```{r, cache=TRUE}
+data(ProtervsSexe_Canada)
+```
+
+### Association
+```{r, cache=TRUE}
+ProtervsSexe_Canada.table <- as.table(as.matrix(ProtervsSexe_Canada))
+aaa=chisq.test(ProtervsSexe_Canada.table)
+aaa$expected
+aaa$statistic
+aaa$statistic/(sum(ProtervsSexe_Canada.table))
+```
+
+## OCDE Secteur (Quali-Quali)
+```{r, cache=TRUE}
+data(Secteur)
+
+rownames(Secteur) <- Secteur$PAYS
+Secteur <- as.table(as.matrix(round(Secteur[,-1]*1000)))
+
+Secteur.table <- as.table(as.matrix(Secteur))
+bbb=chisq.test(Secteur.table)
+bbb$expected
+bbb$statistic
+bbb$statistic/(sum(Secteur.table))
+```
+
+
+
+
+
+
+
+## Taux partiel ANOVA (Quali-Quanti)
+```{r, cache=TRUE}
+data(Europe)
+
+donnees = data.frame(Taux=c(Europe$Partiel_Ens,Europe$Partiel_H,Europe$Partiel_F),Type=factor(c(rep("Ensemble",nrow(Europe)),rep("Hommes",nrow(Europe)),rep("Femmes",nrow(Europe)))))
+```
+
+
+```{r, cache=TRUE}
+tapply(donnees$Taux,donnees$Type,mean)
+
+var(tapply(donnees$Taux,donnees$Type,mean))*(nlevels(donnees$Type)-1)/nlevels(donnees$Type)
+mean(tapply(donnees$Taux,donnees$Type,var)*(nrow(Europe)-1)/nrow(Europe))
+
+
+var(tapply(donnees$Taux,donnees$Type,mean))*(nlevels(donnees$Type)-1)/nlevels(donnees$Type)+mean(tapply(donnees$Taux,donnees$Type,var)*(nrow(Europe)-1)/nrow(Europe))
+var(donnees$Taux)*(nlevels(donnees$Type)*nrow(Europe)-1)/nlevels(donnees$Type)/nrow(Europe)
+
+var(tapply(donnees$Taux,donnees$Type,mean))*(nlevels(donnees$Type)-1)/nlevels(donnees$Type)/(var(donnees$Taux)*(nlevels(donnees$Type)*nrow(Europe)-1)/nlevels(donnees$Type)/nrow(Europe))
+
+summary(lm(Taux~Type,data=donnees))
+
+```
+
+
+```{r, cache=TRUE}
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+pie(table(donnees$Type),labels=levels(donnees$Type),col=c("white","#00FFFF","black","#00FFFF"),border=c("black","#00FFFF","black","#00FFFF"),density=25,cex=1.2)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "TauxEHF_qqualimarg_pie.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+pie(table(donnees$Type),labels=levels(donnees$Type),col=c("white","#00FFFF","black","#00FFFF"),border=c("black","#00FFFF","black","#00FFFF"),density=25,cex=1.2)
+dev.off()
+
+pdf(file = "TauxEHF_qqualimarg.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+dotplot(table(donnees$Type),labels=levels(donnees$Type),col=c("#00FFFF","#00FFFF","#00FFFF","#00FFFF"),border=c("#00FFFF","#00FFFF","#00FFFF","#00FFFF"),density=25,cex=1.2)
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+histogram(~Taux,data=donnees,breaks=c(0,10,20,30,40,50,60,70,80))
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "TauxEHF_qquantimarg.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(~Taux,data=donnees,breaks=c(0,10,20,30,40,50,60,70,80))
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+histogram(~Taux|Type,data=donnees,breaks=c(0,10,20,30,40,50,60,70,80))
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "TauxEHF_qquanticond.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(~Taux|Type,data=donnees,breaks=c(0,10,20,30,40,50,60,70,80))
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+TauxQuali <- cut(donnees$Taux,c(0,10,20,30,40,50,60,70,80))
+split(donnees$Type,TauxQuali)
+sapply(split(donnees$Type,TauxQuali),table)
+
+regroup <- sapply(split(donnees$Type,TauxQuali),table)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+barplot(regroup,beside=TRUE, legend=levels(donnees$Type), args.legend=list(x="topright", ncol=1))
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "TauxEHF_qqualicond.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+barplot(regroup,beside=TRUE, legend=levels(donnees$Type), args.legend=list(x="topright", ncol=1))
+dev.off()
+```
+
+
+
+## Iris Fisher (Quali-Quanti)
+```{r, cache=TRUE}
+data(iris)
+colmodel="cmyk"
+
+donnees = iris[,c(1,5)]
+```
+
+
+```{r, cache=TRUE}
+tapply(donnees$Sepal.Length,donnees$Species,mean)
+
+var(tapply(donnees$Sepal.Length,donnees$Species,mean))*(nlevels(donnees$Species)-1)/nlevels(donnees$Species)
+mean(tapply(donnees$Sepal.Length,donnees$Species,var)*(nrow(Europe)-1)/nrow(Europe))
+
+
+var(tapply(donnees$Sepal.Length,donnees$Species,mean))*(nlevels(donnees$Species)-1)/nlevels(donnees$Species)+mean(tapply(donnees$Sepal.Length,donnees$Species,var)*(nrow(Europe)-1)/nrow(Europe))
+var(donnees$Sepal.Length)*(nlevels(donnees$Species)*nrow(Europe)-1)/nlevels(donnees$Species)/nrow(Europe)
+
+var(tapply(donnees$Sepal.Length,donnees$Species,mean))*(nlevels(donnees$Species)-1)/nlevels(donnees$Species)/(var(donnees$Sepal.Length)*(nlevels(donnees$Species)*nrow(Europe)-1)/nlevels(donnees$Species)/nrow(Europe))
+
+summary(lm(Sepal.Length~Species,data=donnees))
+
+```
+
+
+```{r, cache=TRUE}
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+pie(table(donnees$Species),labels=levels(donnees$Species),col=c("white","#00FFFF","black","#00FFFF"),border=c("black","#00FFFF","black","#00FFFF"),density=25,cex=1.2)
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "Sepal.Length_iris_qqualimarg_pie.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+pie(table(donnees$Species),labels=levels(donnees$Species),col=c("white","#00FFFF","black","#00FFFF"),border=c("black","#00FFFF","black","#00FFFF"),density=25,cex=1.2)
+dev.off()
+
+pdf(file = "Sepal.Length_iris_qqualimarg.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+dotplot(table(donnees$Species),labels=levels(donnees$Species),col=c("#00FFFF","#00FFFF","#00FFFF","#00FFFF"),border=c("#00FFFF","#00FFFF","#00FFFF","#00FFFF"),density=25,cex=1.2)
+dev.off()
+```
+
+```{r, cache=TRUE}
+histogram(~Sepal.Length,data=donnees,breaks=c(4.3,4.75,5.2,5.65,6.1,6.55,7,7.45,7.9))
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "Sepal.Length_iris_qquantimarg.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(~Sepal.Length,data=donnees,breaks=c(4.3,4.75,5.2,5.65,6.1,6.55,7,7.45,7.9))
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+histogram(~Sepal.Length|Species,data=donnees,breaks=c(4.3,4.75,5.2,5.65,6.1,6.55,7,7.45,7.9))
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "Sepal.Length_iris_qquanticond.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
+histogram(~Sepal.Length|Species,data=donnees,breaks=c(4.3,4.75,5.2,5.65,6.1,6.55,7,7.45,7.9))
+dev.off()
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Sepal.LengthQuali <- cut(donnees$Sepal.Length,c(4.3,4.75,5.2,5.65,6.1,6.55,7,7.45,7.9))
+split(donnees$Species,Sepal.LengthQuali)
+sapply(split(donnees$Species,Sepal.LengthQuali),table)
+
+regroup <- sapply(split(donnees$Species,Sepal.LengthQuali),table)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+barplot(regroup,beside=TRUE, legend=levels(donnees$Species), args.legend=list(x="topright", ncol=1))
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/"
+colmodel="cmyk"
+pdf(file = "Sepal.Length_iris_qqualicond.pdf",
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
+barplot(regroup,beside=TRUE, legend=levels(donnees$Species), args.legend=list(x="topright", ncol=1))
+dev.off()
+```
+
+
+

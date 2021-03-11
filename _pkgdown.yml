@@ -1,10 +1,57 @@
+home:
+  title: Statistiques pour l’économie et la gestion
+  description: >
+    L'objectif du package `SEGR` est de fournir le code des illustrations et des exemples,
+    ainsi que du matériel additionnel, pour le livre *Statistiques pour l’économie et la
+    gestion*, De Boeck Supérieure, 2021.
+url: https://fbertran.github.io/SEGR/
 template:
   params:
     bootswatch: cerulean
+  opengraph:
+    image:
+      src: man/figures/logo.png
+      alt: "Statistiques pour l’économie et la gestion"
+    twitter:
+      creator: "@BertrandFrdric2"
+      site: "@deboeck"
+      card: summary_large_image
 reference:
-- title: "someCategory"
-  contents:
-  - myFunction
-- title: "other"
-  contents:
+- title: "Statistiques pour l’économie et la gestion"
+  desc: >
+    L'objectif du package `SEGR` est de fournir le code des illustrations et
+    des exemples, ainsi que du matériel additionnel, pour le livre
+    *Statistiques pour l’économie et la gestion*, écrit par
+    Frédéric Bertrand, Christian Derquenne, Gilles Dufrénot, Fredj Jawadi,
+    Myriam Maumy-Bertrand, dirigés par Claire Borsenberger,
+    De Boeck Supérieure, 2021.
+- title: "Jeux de données"
+  desc: "Jeux de données accompagnant le package."
+- contents:
+  - AgevsProter_Canada_full
+  - AgevsSexe_Canada_full
+  - Europe
+  - HospitFull
+  - Marque.Valeur.large
+  - Marque.Valeur
+  - Personnes_Foyer
+  - ProtervsSexe_Canada
+  - ReaFull
+  - Richesse
+  - Secteur
+  - Sieges_Voix
+  - Total_Pays
+  - Total_Secteur
+- title: "Fonctions"
+  desc: "Fonctions accompagnant le package."
+- contents:
+  - dotchart3
+  - plotcdf3
+- title: "All"
+  desc: >
+    Tous les objets.
+- contents:
+  - starts_with("Agevs")
   - matches(".*")
+
+

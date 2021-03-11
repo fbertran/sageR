@@ -1,0 +1,17 @@
+---
+title: "Introduction à la statistique et à son environnement."
+subtitle: "Tout le code avec R. <img src='../man/figures/logo.png' align='right' width='200'/>"
+author: "F. Bertrand, Cl. Borsenberger, Ch. Derquenne, G. Dufrénot, F. Jawadi, M. Maumy-Bertrand"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: vignette
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Mettre ici une introduction aux compléments en ligne.

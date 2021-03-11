@@ -1,23 +1,65 @@
 Package: SEGR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Statistics for Economics and Management with R
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <frederic.bertrand@utt.fr>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
-Encoding: UTF-8
-LazyData: true
+Date: 2021-03-08
+Depends: R (>= 3.5.0)
 Suggests: 
     testthat (>= 3.0.0),
     covr,
     knitr,
     rmarkdown,
     learnr,
-    spelling
+    spelling,
+    lattice,
+    spatstat.data,
+    Matrix,
+    mgcv,
+    PMCMR,
+    PMCMRplus,
+    devtools,
+    extrafont,
+    DescTools,
+    GGally,
+    VGAM,
+    car,
+    dplyr,
+    ggiraphExtra,
+    ggplot2,
+    ggradar,
+    scales,
+    spatstat,
+    vcd
+Authors@R: c(
+	person(given = "Frederic", family= "Bertrand", role = c("cre", "aut"), email = "frederic.bertrand@utt.fr", comment = c(ORCID = "0000-0002-0837-8281")),
+	person(given = "Claire", family= "Borsenberger", role = c("ctb"), email = "claire.borsenberger@sfr.fr"),
+	person(given = "Christian", family= "Derquenne", role = c("ctb"), email = "chris.emr@wanadoo.fr"),
+	person(given = "Gilles", family= "Dufrénot", role = c("ctb"), email = "gilles.dufrenot@univ-amu.fr"),
+	person(given = "Fredj", family= "Jawadi", role = c("ctb"), email = "fredj.jawadi@univ-lille.fr"),
+	person(given = "Myriam", family= "Maumy", role = c("aut"), email = "myriam.maumy@utt.fr", comment = c(ORCID = "0000-0002-4615-1512")))
+Author: Frederic Bertrand [cre, aut] (<https://orcid.org/0000-0002-0837-8281>), Claire Borsenberger [ctb], Christian Derquenne [ctb], Gilles Dufrénot [ctb], Fredj Jawadi [ctb], Myriam Maumy-Bertrand [aut] (<https://orcid.org/0000-0002-4615-1512>)
+Maintainer: Frederic Bertrand <frederic.bertrand@utt.fr>
+Description: Datasets and functions for the book "Statistiques pour l’économie et la gestion", F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy, C. Borsenberger editor, (2021, ISBN: , De Boeck Supérieur, Paris). 
+    The first chapter of the book is dedicated to an introduction to statistics and their world. 
+    The second chapter deals with univariate exploratory statistics and graphics. 
+    The third chapter deals with bivariate and multivariate exploratory statistics and graphics. 
+    The fourth chapter is dedicated to data exploration with Principal Component Analysis. 
+    The fifth chapter is dedicated to data exploration with Correspondance Analysis.
+    The sixth chapter is dedicated to data exploration with Multiple Correspondance Analysis. 
+    The seventh chapter is dedicated to data exploration with automatic clustering. 
+    The eighth chapter is dedicated to an introduction to probability theory and classical probability distributions.
+    The ninth chapter is dedicated to an estimation theory, one-sample and two-sample tests.
+    The tenth chapter is dedicated to an Gaussian linear model.
+    The eleventh chapter is dedicated to an introduction to time series.
+    The twelfth chapter is dedicated to an introduction to probit and logit models.
+    Various example datasets are shipped with the package as well as some new functions.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
 Config/testthat/edition: 3
-VignetteBuilder: knitr
-Language: en-US
+VignetteBuilder: knitr, rmarkdown
+Language: fr-FR
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+URL: https://fbertran.github.io/homepage/, https://github.com/fbertran/SEGR
+BugReports: https://github.com/fbertran/SEGR/issues

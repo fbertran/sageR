@@ -1,0 +1,24 @@
+---
+title: "Chapitre 01. Introduction à la statistique et à son environnement."
+subtitle: "Tout le code avec R. <img src='../man/figures/logo.png' align='right' width='200'/>"
+author: "F. Bertrand et M. Maumy"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Chapitre 01. Introduction à la statistique et à son environnement.}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+# Section 1
+```{r}
+set.seed(4669)
+aaa <- rnorm(10)
+boxplot(aaa)
+```
+

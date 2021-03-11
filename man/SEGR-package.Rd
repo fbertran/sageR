@@ -4,11 +4,49 @@
 \name{SEGR-package}
 \alias{SEGR}
 \alias{SEGR-package}
-\title{SEGR: What the Package Does (Title Case)}
+\title{SEGR: Statistics for Economics and Management with R}
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Datasets and functions for the book "Statistiques pour l’économie et la gestion", F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy, C. Borsenberger editor, (2021, ISBN: , De Boeck Supérieur, Paris). 
+    The first chapter of the book is dedicated to an introduction to statistics and their world. 
+    The second chapter deals with univariate exploratory statistics and graphics. 
+    The third chapter deals with bivariate and multivariate exploratory statistics and graphics. 
+    The fourth chapter is dedicated to data exploration with Principal Component Analysis. 
+    The fifth chapter is dedicated to data exploration with Correspondance Analysis.
+    The sixth chapter is dedicated to data exploration with Multiple Correspondance Analysis. 
+    The seventh chapter is dedicated to data exploration with automatic clustering. 
+    The eighth chapter is dedicated to an introduction to probability theory and classical probability distributions.
+    The ninth chapter is dedicated to an estimation theory, one-sample and two-sample tests.
+    The tenth chapter is dedicated to an Gaussian linear model.
+    The eleventh chapter is dedicated to an introduction to time series.
+    The twelfth chapter is dedicated to an introduction to probit and logit models.
+    Various example datasets are shipped with the package as well as some new functions.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://fbertran.github.io/homepage/}
+  \item \url{https://github.com/fbertran/SEGR}
+  \item Report bugs at \url{https://github.com/fbertran/SEGR/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Frederic Bertrand \email{frederic.bertrand@utt.fr} (\href{https://orcid.org/0000-0002-0837-8281}{ORCID})
+
+Authors:
+\itemize{
+  \item Myriam Maumy \email{myriam.maumy@utt.fr} (\href{https://orcid.org/0000-0002-4615-1512}{ORCID})
+}
+
+Other contributors:
+\itemize{
+  \item Claire Borsenberger \email{claire.borsenberger@sfr.fr} [contributor]
+  \item Christian Derquenne \email{chris.emr@wanadoo.fr} [contributor]
+  \item Gilles Dufrénot \email{gilles.dufrenot@univ-amu.fr} [contributor]
+  \item Fredj Jawadi \email{fredj.jawadi@univ-lille.fr} [contributor]
+}
+
 }
 \keyword{internal}

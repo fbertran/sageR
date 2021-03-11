@@ -1,66 +1,82 @@
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# SEGR
+
+
+# Statistiques pour l’économie et la gestion <img src="man/figures/logo.png" align="right" width="200"/>
 
 <!-- badges: start -->
-
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/SEGR)](https://CRAN.R-project.org/package=SEGR)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![CRAN status](https://www.r-pkg.org/badges/version/SEGR)](https://CRAN.R-project.org/package=SEGR)
 <!-- badges: end -->
 
-The goal of SEGR is to …
+
+L'objectif du package `SEGR` est de fournir le code des illustrations et des exemples, ainsi que du matériel additionnel, pour le livre *Statistiques pour l’économie et la gestion*, écrit par Frédéric Bertrand, Christian Derquenne, Gilles Dufrénot, Fredj Jawadi, Myriam Maumy-Bertrand, dirigés par Claire Borsenberger, De Boeck Supérieure, 2021.
+
 
 ## Installation
 
-You can install the released version of SEGR from
-[CRAN](https://CRAN.R-project.org) with:
+Pour installer la dernière version du package qui a été publiée sur le [CRAN](https://CRAN.R-project.org), il suffit d'exécuter la commande suivante :
 
 ``` r
 install.packages("SEGR")
 ```
 
-And the development version from [GitHub](https://github.com/) with:
+Pour installer la version de développement du package depuis [GitHub](https://github.com/), il suffit d'exécuter la commande suivante :
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("fbertran/SEGR")
 ```
 
-## Example
+## Table des matières
 
-This is a basic example which shows you how to solve a common problem:
+1. Introduction à la statistique et à son petit monde.
+2. Statistique exploratoire et représentations graphiques de séries univariées. 
+3. Statistique exploratoire et représentations graphiques de séries bivariées et multivariées. 
+4. Exploration des données avec l'analyse en composantes principales.
+5. Exploration des données avec l'analyse factorielle des correspondances.
+6. Exploration des données avec l'analyse des correspondances multiples.
+7. Exploration des données avec la classification automatique.
+8. Introduction à la théorie des probabilités aux distributions statistiques classiques.
+9. Théorie de l'estimation, tests à un ou deux échantillons.
+10. Modèle linéaire gaussien.
+11. Introduction aux séries temporelles.
+12. Introduction aux modèles logit et probit.
 
-``` r
-library(SEGR)
-## basic example code
+
+# Statistics for Economics and Management (English version)
+
+The goal of the `SEGR` package is to provide code and additionnal material for the book *Statistiques pour l’économie et la gestion*, written by Frédéric Bertrand, Christian Derquenne, Gilles Dufrénot, Fredj Jawadi, Myriam Maumy-Bertrand, edited by Claire Borsenberger and published by De Boeck Supérieur, 2021.
+
+## Installation
+
+You can install the released version of SEGR from [CRAN](https://CRAN.R-project.org) with:
+
+
+```r
+install.packages("SEGR")
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+You can install the development version of SelectBoost from [github](https://github.com) with:
 
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+
+```r
+devtools::install_github("fbertran/SEGR")
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/master/examples>.
+## Contents
 
-You can also embed plots, for example:
+1. Introduction to statistics and their world. 
+2. Univariate exploratory statistics and graphics. 
+3. Bivariate and multivariate exploratory statistics and graphics. 
+4. Data exploration with Principal Component Analysis. 
+5. Data exploration with Correspondence Analysis.
+6. Data exploration with Multiple Correspondence Analysis. 
+7. Data exploration with automatic clustering. 
+8. Introduction to probability theory and classical probability distributions.
+9. Estimation theory, one-sample and two-sample tests.
+10. Gaussian linear model.
+11. Introduction to time series.
+12. Introduction to probit and logit models.
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.

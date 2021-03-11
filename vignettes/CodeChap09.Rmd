@@ -1,0 +1,415 @@
+---
+title: "Chapitre 09. Inférence statistique."
+subtitle: "Tout le code avec R. <img src='../man/figures/logo.png' align='right' width='200'/>"
+author: "F. Bertrand et M. Maumy"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Chapitre 09. Inférence statistique.}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo=FALSE}
+#file.edit(normalizePath("~/.Renviron"))
+LOCAL <- identical(Sys.getenv("LOCAL"), "true")
+knitr::opts_chunk$set(purl = LOCAL)
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+knitr::opts_chunk$set(purl = NOT_CRAN)
+SAVE_GRAPHS=FALSE
+```
+
+```{r}
+if(!("SEGR" %in% installed.packages())){install.packages("SEGR")}
+library(SEGR)
+```
+
+# Test $t$ pour deux échantillons indépendants.
+
+```{r, cache=TRUE}
+pipit <- c(17.0 , 16.9 , 16.9 , 17.3 , 16.8 , 16.8 , 17.0 , 16.5 , 16.9 , 16.5 , 17.0 , 17.0 , 16.8 , 17.0 , 16.9 , 17.0 , 17.0 , 17.3 , 16.8 , 17.1 , 16.9 , 16.8 , 17.1 , 17.0 , 17.1 , 17.2 , 16.7 , 16.6 , 17.2 , 17.0 , 17.0)
+fauvette <- c(16.0 , 16.1 , 16.3 , 16.5 , 16.2 , 15.2 , 15.6 , 15.6 , 16.6 , 16.0 , 16.2 , 16.8 , 16.0 , 17.0 , 17.9 , 16.0 , 16.4 , 16.3 , 16.9 , 17.1 , 17.0 , 16.1 , 16.5 , 16.5 , 16.1 , 16.5 , 17.9 , 16.5 , 16.7 , 16.8)
+```
+
+```{r, cache=TRUE}
+shapiro.test(pipit)
+```
+
+```{r, cache=TRUE}
+shapiro.test(fauvette)
+```
+
+```{r, cache=TRUE}
+var.test(pipit,fauvette)
+```
+
+# Analyse de la variance à un facteur
+
+```{r, eval=FALSE, include=FALSE, echo=FALSE}
+set.seed(4669)
+Marque.Valeur <- data.frame(Marque=as.factor(rep(paste("Marque",1:3),rep(rep(30,3)))),Valeur=round(c(rnorm(30,1.5),rnorm(30,3),rnorm(30,4)),2))
+res.model.MV <- residuals(lm(Valeur~Marque,data=Marque.Valeur))
+shapiro.test(res.model.MV)
+bartlett.test(res.model.MV,Marque.Valeur$Marque)
+leveneTest(res.model.MV,Marque.Valeur$Marque)
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Donnees/"
+write.csv(x = Marque.Valeur, file = paste(Chemin,"Marque.Valeur.csv",sep=""))
+str(Marque.Valeur)
+Marque.Valeur.large<-data.frame(simplify2array(split(Marque.Valeur$Valeur,Marque.Valeur$Marque)))
+str(Marque.Valeur.large)
+write.csv(x = Marque.Valeur.large, file = paste(Chemin,"Marque.Valeur.large.csv",sep=""))
+```
+
+```{r, cache=TRUE}
+library(SEGR)
+data(Marque.Valeur)
+str(Marque.Valeur)
+```
+
+```{r}
+data(Marque.Valeur.large)
+str(Marque.Valeur.large)
+```
+
+
+```{r, cache=TRUE}
+round(with(Marque.Valeur,tapply(Valeur,Marque,mean)),3)
+```
+
+
+```{r, cache=TRUE}
+round(with(Marque.Valeur,tapply(Valeur,Marque,sd)),3)
+```
+
+
+```{r, cache=TRUE}
+round(with(Marque.Valeur,tapply(Valeur,Marque,var)),3)
+```
+
+
+```{r, cache=TRUE}
+library(ggplot2)
+ggplot(data=Marque.Valeur,aes(x=Marque,y=Valeur)) + geom_boxplot() + xlab("")
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Donnees/"
+colmodel="cmyk"
+ggsave(filename = paste(Chemin,"MarqueValeur_boxplot.pdf",sep=""),
+       width = 10, height = 7, onefile = TRUE, family = "Helvetica", title = "Boxplot", paper = "special", colormodel = colmodel)
+```
+
+
+```{r, cache=TRUE}
+options(contrasts = c("contr.sum","contr.sum"))
+lm.Marque.Valeur <- lm(Valeur~Marque,data=Marque.Valeur)
+anova(lm.Marque.Valeur)
+```
+
+
+```{r, cache=TRUE}
+-sum(coef(lm.Marque.Valeur)[2:3])
+```
+
+
+```{r, cache=TRUE}
+res.model.MV <- residuals(lm.Marque.Valeur)
+shapiro.test(res.model.MV)
+```
+
+
+```{r, cache=TRUE}
+bartlett.test(res.model.MV,Marque.Valeur$Marque)
+```
+
+
+
+
+
+```{r, cache=TRUE}
+if(!("ggiraphExtra" %in% installed.packages())){install.packages("ggiraphExtra")}
+library(ggiraphExtra)
+Marque.Valeur$Marque<-as.factor(rep(paste("M",1:3),rep(rep(30,3))))
+oav.Marque.Valeur <- aov(Valeur~Marque,data=Marque.Valeur)
+resHSD <- TukeyHSD(oav.Marque.Valeur)
+resHSD
+```
+
+
+```{r, cache=TRUE}
+ggHSD(resHSD) + ylab("Differences entre les niveaux moyens de Marque") + ggtitle("Intervalles de confiance globale 95%")
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Donnees/"
+colmodel="cmyk"
+ggsave(filename = paste(Chemin,"MarqueValeur_Tukey.pdf",sep=""),
+       width = 10, height = 7, onefile = TRUE, family = "Helvetica", title = "Boxplot", paper = "special", colormodel = colmodel)
+```
+
+```{r, cache=TRUE}
+C1=1+1/(3*(nlevels(Marque.Valeur$Marque)-1))*(sum(1/(table(Marque.Valeur$Marque)-1))-1/(nrow(Marque.Valeur)-nlevels(Marque.Valeur$Marque)))
+C1
+```
+
+```{r, cache=TRUE}
+1/C1*((nrow(Marque.Valeur)-nlevels(Marque.Valeur$Marque))*log(summary(oav.Marque.Valeur)[[1]]$`Mean Sq`[2])-sum((table(Marque.Valeur$Marque)-1)*log(with(Marque.Valeur,tapply(Valeur,Marque,var)))))
+```
+```{r, cache=TRUE}
+bartlett.test(res.model.MV,Marque.Valeur$Marque)
+```
+
+# Test de Krukal-Wallis
+
+## Egalité des variances
+```{r, cache=TRUE}
+fligner.test(res.model.MV,Marque.Valeur$Marque)
+```
+
+
+```{r, cache=TRUE}
+library(car)
+leveneTest(res.model.MV,Marque.Valeur$Marque)
+```
+
+
+## Mise en oeuvre du test
+```{r, cache=TRUE}
+if(!("PMCMRplus" %in%  installed.packages())){install.packages("PMCMRplus")}
+library(PMCMRplus)
+PMCMRplus::kruskalTest(Marque.Valeur$Valeur,Marque.Valeur$Marque)
+
+kruskal.test(Marque.Valeur$Valeur,Marque.Valeur$Marque)
+```
+
+## Test post-hoc
+### Basé sur la méthode de Scheffé
+```{r, cache=TRUE}
+if(!("PMCMR" %in%  installed.packages())){install.packages("PMCMR")}
+library(PMCMR)
+PMCMR::posthoc.kruskal.nemenyi.test(Valeur~Marque, data=Marque.Valeur, dist="Chisquare")
+```
+
+### z+Bonferroni
+```{r, cache=TRUE}
+PMCMR::posthoc.kruskal.dunn.test(Valeur~Marque, data=Marque.Valeur, dist="Tukey", p.adjust="bonf")
+```
+
+### Post-hoc (z+Holm-Bonferron) Dunn
+```{r, cache=TRUE}
+PMCMR::posthoc.kruskal.dunn.test(Valeur~Marque, data=Marque.Valeur, dist="Tukey")
+```
+
+### Post-hoc (Tukey-Kramer)
+```{r, cache=TRUE}
+PMCMR::posthoc.kruskal.nemenyi.test(Valeur~Marque, data=Marque.Valeur, dist="Tukey")
+```
+
+## ???
+
+```{r, cache=TRUE}
+AAAA = function (x, g, dist = c("Chisquare", "KruskalWallis", "FDist"), 
+    ...) 
+{
+    if (is.list(x)) {
+        if (length(x) < 2L) 
+            stop("'x' must be a list with at least 2 elements")
+        DNAME <- deparse(substitute(x))
+        x <- lapply(x, function(u) u <- u[complete.cases(u)])
+        k <- length(x)
+        l <- sapply(x, "length")
+        if (any(l == 0)) 
+            stop("all groups must contain data")
+        g <- factor(rep(1:k, l))
+        if (is.null(x$dist)) {
+            dist <- "Chisquare"
+        }
+        else {
+            dist <- x$dist
+        }
+        x <- unlist(x)
+    }
+    else {
+        if (length(x) != length(g)) 
+            stop("'x' and 'g' must have the same length")
+        DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(g)))
+        OK <- complete.cases(x, g)
+        x <- x[OK]
+        g <- g[OK]
+        if (!all(is.finite(g))) 
+            stop("all group levels must be finite")
+        g <- factor(g)
+        k <- nlevels(g)
+        if (k < 2) 
+            stop("all observations are in the same group")
+    }
+    dist <- match.arg(dist)
+    x.rank <- rank(x)
+    R.bar <- tapply(x.rank, g, mean, na.rm = T)
+    R.n <- tapply(!is.na(x), g, length)
+    k <- nlevels(g)
+    n <- sum(R.n)
+    H <- PMCMRplus:::HStat(x.rank, g)
+    return(H)
+}
+AAAA(Marque.Valeur$Valeur,Marque.Valeur$Marque)
+```
+
+# QQplots
+
+```{r, eval=FALSE}
+# QQplot
+
+```{r, cache=TRUE}
+oldpar <- par()
+
+Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/"
+colmodel="cmyk"
+library(VGAM)
+
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+ech_norm <- rnorm(100)
+qqnorm(ech_norm, ylab="",main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="(a)",cex=2,bty="n")
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+pdf(file = paste(Chemin,"qqplota.pdf",sep=""),
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "QQplot", paper = "special")
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+qqnorm(ech_norm, ylab="",main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="",cex=2,bty="n")
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+ech_laplace <- rlaplace(100,1/sqrt(2))
+qqnorm(ech_laplace, ylab="",main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="(b)",cex=2,bty="n")
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+pdf(file = paste(Chemin,"qqplotb.pdf",sep=""),
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "QQplot ", paper = "special")
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+qqnorm(ech_laplace, ylab="",main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="",cex=2,bty="n")
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+ech_unif <- runif(100,-2,2)
+qqnorm(ech_unif, ylab="(c)",main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="(c)",cex=2,bty="n")
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+pdf(file = paste(Chemin,"qqplotc.pdf",sep=""),
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "QQplot ", paper = "special")
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+qqnorm(ech_unif, ylab="",main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="",cex=2,bty="n")
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+ech_exp <- rexp(100,1)
+qqnorm(ech_exp, ylab="",main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="(d)",cex=2,bty="n")
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+pdf(file = paste(Chemin,"qqplotd.pdf",sep=""),
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "QQplot ", paper = "special")
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+qqnorm(ech_exp, ylab="",main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="",cex=2,bty="n")
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+ech_mel <- c(rnorm(50,0,1),rnorm(50,5,1))
+qqnorm(ech_mel, ylab="", main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="(e)",cex=2,bty="n")
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+pdf(file = paste(Chemin,"qqplote.pdf",sep=""),
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "QQplot ", paper = "special")
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+qqnorm(ech_mel, ylab="", main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="",cex=2,bty="n")
+dev.off()
+```
+
+
+```{r, cache=TRUE}
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+ech_ext <- c(rnorm(99,0),5)
+qqnorm(ech_ext, ylab="",main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="(f)",cex=2,bty="n")
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+pdf(file = paste(Chemin,"qqplotf.pdf",sep=""),
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "QQplot ", paper = "special")
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+qqnorm(ech_ext, ylab="",main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="",cex=2,bty="n")
+dev.off()
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+pdf(file = paste(Chemin,"qqplotall.pdf",sep=""),
+    width = 8, height = 7, onefile = TRUE, family = "Helvetica",
+    title = "QQplot ", paper = "special")
+layout(matrix(1:6,nrow=2,byrow=T))
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+qqnorm(ech_norm, ylab="",main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="(a)",cex=2,bty="n")
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+qqnorm(ech_laplace, ylab="",main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="(b)",cex=2,bty="n")
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+qqnorm(ech_unif, ylab="",main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="(c)",cex=2,bty="n")
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+qqnorm(ech_exp, ylab="",main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="(d)",cex=2,bty="n")
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+qqnorm(ech_mel, ylab="", main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="(e)",cex=2,bty="n")
+par(mar = c(0.2, 0.2, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
+qqnorm(ech_ext, ylab="",main="", xaxt="n", yaxt="n")
+legend("bottomright",legend="(f)",cex=2,bty="n")
+dev.off()
+```
+
+
