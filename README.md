@@ -11,7 +11,8 @@
 [![Codecov test coverage](https://codecov.io/gh/fbertran/SEGR/branch/master/graph/badge.svg)](https://codecov.io/gh/fbertran/SEGR?branch=master)
 [![CRAN status](https://www.r-pkg.org/badges/version/SEGR)](https://CRAN.R-project.org/package=SEGR)
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/SEGR)](https://cran.r-project.org/package=SEGR)
-[![GitHub Repo stars](https://img.shields.io/github/stars/fbertran/plsRglm?style=social)](https://github.com/github/fbertran/)
+[![GitHub Repo stars](https://img.shields.io/github/stars/fbertran/SEGR?style=social)](https://github.com/github/fbertran/SEGR)
+[![DOI](https://zenodo.org/badge/204068588.svg)](https://zenodo.org/badge/latestdoi/204068588)
 <!-- badges: end -->
 
 

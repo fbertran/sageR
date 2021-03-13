@@ -31,6 +31,4 @@ genlogo.R
 ^vignettes/[.]install_extras$
 ^vignettes/.*_cache$
 ^vignettes/.*_files$
-
-^appveyor\.yml$
 ^\.github$
