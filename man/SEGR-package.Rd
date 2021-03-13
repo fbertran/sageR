@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-Datasets and functions for the book "Statistiques pour l’économie et la gestion", F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy, C. Borsenberger editor, (2021, ISBN: , De Boeck Supérieur, Paris). 
+Datasets and functions for the book "Statistiques pour l’économie et la gestion", F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy-Bertrand, C. Borsenberger editor, (2021, ISBN: , De Boeck Supérieur, Paris). 
     The first chapter of the book is dedicated to an introduction to statistics and their world. 
     The second chapter deals with univariate exploratory statistics and graphics. 
     The third chapter deals with bivariate and multivariate exploratory statistics and graphics. 
@@ -37,7 +37,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Myriam Maumy \email{myriam.maumy@utt.fr} (\href{https://orcid.org/0000-0002-4615-1512}{ORCID})
+  \item Myriam Maumy-Bertrand \email{myriam.maumy@utt.fr} (\href{https://orcid.org/0000-0002-4615-1512}{ORCID})
 }
 
 Other contributors:

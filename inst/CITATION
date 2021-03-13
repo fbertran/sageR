@@ -11,12 +11,12 @@ citEntry(entry="Manual",
                              as.person("Ch. Derquenne"),
                              as.person("G. Dufrénot"),
                              as.person("F. Jawadi"),
-                             as.person("M. Maumy-Bertrand")),
+                             as.person("M. Maumy")),
          publisher = "manual",
          year         = year,
          note         = vers,
          url          = "https://fbertran.github.io/homepage/SEGR/",
-         textVersion  = paste("F. Bertrand, Cl. Borsenberger, Ch. Derquenne, G. Dufrénot, F. Jawadi, M. Maumy-Bertrand (",year ,"). ",
+         textVersion  = paste("F. Bertrand, Cl. Borsenberger, Ch. Derquenne, G. Dufrénot, F. Jawadi, M. Maumy (",year ,"). ",
                  titl, ", ", vers, ".", sep=""
            )
 )
@@ -29,9 +29,9 @@ citEntry(entry="Book",
                              as.person("Ch. Derquenne"),
                              as.person("G. Dufrénot"),
                              as.person("F. Jawadi"),
-                             as.person("M. Maumy-Bertrand")),
+                             as.person("M. Maumy")),
          year         = 2021,
          publisher = "De Boeck Supérieure",
          textVersion =
-           paste("F. Bertrand, Cl. Borsenberger, Ch. Derquenne, G. Dufrénot, F. Jawadi, M. Maumy-Bertrand (2021).", "Statistiques pour l’économie et la gestion.", "De Boeck Supérieure,", "VILLE." )
+           paste("F. Bertrand, Cl. Borsenberger, Ch. Derquenne, G. Dufrénot, F. Jawadi, M. Maumy (2021).", "Statistiques pour l’économie et la gestion.", "De Boeck Supérieure,", "VILLE." )
 )

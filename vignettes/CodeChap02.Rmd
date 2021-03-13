@@ -3,11 +3,7 @@ title: "Chapitre 02. Statistiques descriptives et visualisation des données uni
 subtitle: "Tout le code avec R. <img src='../man/figures/logo.png' align='right' width='200'/>"
 author: "F. Bertrand et M. Maumy"
 date: "`r Sys.Date()`"
-output:
-  prettydoc::html_pretty:
-    theme: architect
-    highlight: github
-    toc: true
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapitre 02. Statistiques descriptives et visualisation des données univariables}
   %\VignetteEngine{knitr::rmarkdown}
@@ -16,15 +12,20 @@ vignette: >
 
 ```{r, echo=FALSE}
 #file.edit(normalizePath("~/.Renviron"))
-LOCAL <- identical(Sys.getenv("LOCAL"), "true")
+LOCAL <- identical(Sys.getenv("LOCAL"), "TRUE")
 #, eval = LOCAL for skip on CRAN test
 #LOCAL=FALSE
 #knitr::opts_chunk$set(purl = LOCAL, eval=LOCAL)
 knitr::opts_chunk$set(purl = LOCAL)
-NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "TRUE")
 knitr::opts_chunk$set(purl = NOT_CRAN)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
 SAVE_GRAPHS=FALSE
 ```
+
 
 # Sources des données
 
@@ -64,7 +65,7 @@ Cet indicateur fournit les taux d’emploi selon le niveau d’études : premier
 MEN4 - Ménages par taille du ménage, sexe et âge de la personne de référence en 2017. France métropolitaine. Insee.
 
 
-```{r}
+```{r, eval=LOCAL}
 if(!("SEGR" %in% installed.packages())){install.packages("SEGR")}
 library(SEGR)
 ```
@@ -73,14 +74,14 @@ library(SEGR)
 # Effectifs
 
 ## Nombre de personnes dans un foyer
-```{r}
+```{r, eval=LOCAL}
 data(Personnes_Foyer)
 xi <- Personnes_Foyer$xi
 ni <- Personnes_Foyer$ni
 ```
 
 ### Position
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 weighted.mean(xi,ni)
 cumsum(ni/sum(ni))
 
@@ -89,7 +90,7 @@ print(cumsum(ni/sum(ni)),digits=2)
 
 
 ### Dispersion
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 sqrt(weighted.mean((xi-weighted.mean(xi,ni))^2,ni))
 sqrt(weighted.mean((xi-weighted.mean(xi,ni))^2,ni))/weighted.mean(xi,ni)*100
 
@@ -103,7 +104,7 @@ mad(rrr,constant = 1)
 
 
 ## Population provinces et territoires Canada
-```{r}
+```{r, eval=LOCAL}
 data(ProtervsSexe_Canada)
 ProTer <- margin.table(as.matrix(ProtervsSexe_Canada),1)
 
@@ -116,7 +117,7 @@ length(ProTer)
 
 
 ## Population classes d'age Canada
-```{r}
+```{r, eval=LOCAL}
 data(AgevsProter_Canada_full)
 Age <- margin.table(as.matrix(AgevsProter_Canada_full),1)
 
@@ -131,7 +132,7 @@ class(x)
 ```
 
 ### Quantiles
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 sum(njall)
 sum(njall[1:12])
 njall[5]/sum(njall)
@@ -140,7 +141,7 @@ sum(njall[1:10])/sum(njall)
 
 
 ### Position
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 mean(x)
 quantile(x)
 sum(nj*centres)/sum(nj)
@@ -159,7 +160,7 @@ centres
 ```
 
 ### Dispersion
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 59.79-22.74
 
 #Centres
@@ -177,7 +178,7 @@ sqrt(weighted.mean(((x[,1][-1]+x[,1][-length(x[,1])])/2-mean(x))^2,x[,2])-1/12*w
 # Concentration
 ## Lorentz
 
-```{r}
+```{r, eval=LOCAL}
 if(!("ggplot2" %in% installed.packages())){install.packages("ggplot2")}
 library(ggplot2)
 if(!("gglorenz" %in% installed.packages())){install.packages("gglorenz")}
@@ -185,7 +186,7 @@ library(gglorenz)
 ```
 
 ### Jeu de données d'exemple du package `gglorenz`
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 ggplot(billionaires, aes(TNW)) +
     stat_lorenz()
 
@@ -198,11 +199,11 @@ ggplot(billionaires, aes(TNW)) +
 
 ### Répartition de la richesse dans les pays de l'OCDE
 
-```{r}
+```{r, eval=LOCAL}
 data(Richesse)
 ```
 
-```{r}
+```{r, eval=LOCAL}
 if(!("ggplot2" %in% installed.packages())){install.packages("ggplot2")}
 library(ggplot2)
 ggplot(Richesse, aes(Belgique)) +
@@ -223,7 +224,7 @@ ggsave(filename = paste(Chemin,"Lorenz_Belgique.pdf",sep=""),
     title = "Lorenz curve", paper = "special", colormodel = colmodel)
 ```
 
-```{r}
+```{r, eval=LOCAL}
 ggplot(Richesse, aes(France)) +
     stat_lorenz() +
     coord_fixed() +
@@ -243,19 +244,19 @@ ggsave(filename = paste(Chemin,"Lorenz_France.pdf",sep=""),
 # Représentations graphiques univariés
 
 ## Histogramme
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data3 <- rep(c(2,3.5,4.75,5.75,7,9,10.5,11.75),c(4,8,10,14,20,12,9,3))
 table(data3)
 data4 <-rnorm(25,8,3)
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 layout(1:2)
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofre <- hist(data4,breaks=c(min(c(data4,1)),3,4,5.5,6,8,10,11,max(12.5,data4)),main="",freq=F,xlab="",ylab="",lwd=2)
 histofre <- hist(data4,main="",breaks=8,freq=F,xlab="",ylab="",lwd=2,xlim=c(min(data4),max(data4)))
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -268,23 +269,23 @@ oldpar <- par()
 par(mar = c(0.2, 3, 0.2, 0.2) + 0.1, mgp = c(2, 1, 0))
 histofre <- hist(data4,main="",breaks=8,freq=F,xlab="",ylab="",lwd=2,xlim=c(min(data4),max(data4)))
 histofre <- hist(data4,breaks=c(min(c(data4,1)),3,4,5.5,6,8,10,11,max(12.5,data4)),main="",freq=F,xlab="",ylab="",lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 dev.off()
 ```
 
 Avec le package MASS.
-```{r}
+```{r, eval=LOCAL}
 library(MASS)
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 layout(1:2)
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 truehist(data4,breaks=c(min(c(data4,1)),3,4,5.5,6,8,10,11,max(12.5,data4)),main="",freq=F,xlab="",ylab="",lwd=2)
 truehist(data4,main="",nbins=8,h=diff(range(data4))/7,xlab="",ylab="",lwd=2,xlim=c(min(data4),max(data4)))
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -297,25 +298,25 @@ oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 truehist(data4,breaks=c(min(c(data4,1)),3,4,5.5,6,8,10,11,max(12.5,data4)),main="",freq=F,xlab="",ylab="",lwd=2)
 truehist(data4,main="",nbins=8,h=diff(range(data4))/7,xlab="",ylab="",lwd=2,xlim=c(min(data4),max(data4)))
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 dev.off()
 ```
 
 
 ## Par secteur de l'OCDE en 2020-Q3
-```{r}
+```{r, eval=LOCAL}
 data(Total_Secteur)
 Total_Secteur
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 NameX <- Total_Secteur$NameX
 Effectif <- Total_Secteur$Effectif
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 dotchart3(Effectif,labels=NameX,pch=19,col="#00FFFF",cex=1.6,cex.axis=1.2)
 dotchart3(Effectif,labels=NameX,pch=19,col="#00FFFF")
@@ -341,7 +342,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 pie(Effectif,labels=NameX,col=c("black","#00FFFF","black","#00FFFF"),density = c(rep(10,4),15),border=c("black","#00FFFF","black","#00FFFF"),cex=1.2)#,density = c(4*(4:1))
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
@@ -369,7 +370,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 NameXbar <- NameX
 par(mar = c(8.1, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 barplot(Effectif,names.arg=NameXbar,col=c("black","#00FFFF","black","#00FFFF"),cex.axis=1.2,cex.names=1.2)
@@ -407,7 +408,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 NameXbar <- NameX
 par(mar = c(2, 8.1, 1, 1) + 0.1, mgp = c(2, 1, 0))
 barplot(Effectif,names.arg=NameXbar,col=c("black","#00FFFF","black","#00FFFF"),cex.axis=1.2,cex.names=1.2,horiz=TRUE,las=1)
@@ -443,24 +444,24 @@ par(mar = c(2, 8.1, 1, 1) + 0.1, mgp = c(2, 1, 0))
 barplot(Effectif/sum(Effectif),names.arg=NameXbar,col=c("black","#00FFFF","black","#00FFFF"),density = 10,border=c("black","#00FFFF","black","#00FFFF"),cex.axis=1.2,horiz=TRUE,las=1)
 dev.off()
 
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 ## Par pays de l'OCDE en 2020-Q3
 
-```{r}
+```{r, eval=LOCAL}
 data(Total_Pays)
 Total_Pays
 ```
 
-```{r}
+```{r, eval=LOCAL}
 Effectif<-Total_Pays$Effectif
 NameX<-Total_Pays$NameX
 NameX2<-Total_Pays$NameX
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 dotchart3(Effectif,labels=NameX2,pch=19,col="#00FFFF",cex=1.6,cex.axis=1.2)
 dotchart3(Effectif,labels=NameX2,pch=19,col="#00FFFF")
@@ -487,13 +488,13 @@ dev.off()
 ```
 
 
-```{r}
+```{r, eval=LOCAL}
 if(!("dplyr" %in% installed.packages())){install.packages("dplyr")}
 library(dplyr)
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 df <- data.frame(NameX2=rev(NameX2), 
                  Effectif=rev(Effectif))
 df <- df %>% 
@@ -502,13 +503,13 @@ df
 ```
 
 
-```{r}
+```{r, eval=LOCAL}
 if(!("ggrepel" %in% installed.packages())){install.packages("ggrepel")}
 library(ggrepel)
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 theme_set(theme_void())
 p1 <- ggplot(data = df, aes(x = "", y = Effectif, fill = NameX2)) +
   geom_bar(stat = "identity")+ 
@@ -521,7 +522,7 @@ p1
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 p1 + scale_fill_manual(values=rep(c(grey.colors(4)[c(2,4)]),17))
 ```
 
@@ -533,7 +534,7 @@ ggsave(filename = paste(Chemin,"diagcircu_app2_ggplot2.pdf",sep=""),
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 pie(Effectif,labels=NameX2,col=c("black","#00FFFF","black","#00FFFF"),border=c("black","#00FFFF","black","#00FFFF"),cex=1.2)
 ```
@@ -549,7 +550,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 pie(Effectif,labels=NameX2,col=c("black","#00FFFF","black","#00FFFF"),density = 10,border=c("black","#00FFFF","black","#00FFFF"),cex=1.2)#,density = c(4*(4:1))
 ```
@@ -565,7 +566,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(6.3, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 NameXbar <- NameX2
 barplot(Effectif,names.arg=NameXbar,col=c("black","#00FFFF","black","#00FFFF"),cex.axis=1.2,cex.names=1.2,las=3)
@@ -603,12 +604,12 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(2, 7, 1, 1) + 0.1, mgp = c(2, 1, 0))
 NameXbar <- NameX2
 barplot(Effectif,names.arg=NameXbar,col=c("black","#00FFFF","black","#00FFFF"),cex.axis=1.2,cex.names=1.2,las=1,horiz=TRUE)
 
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -648,7 +649,7 @@ dev.off()
 
 
 ## Nombre de personnes par famille en 
-```{r}
+```{r, eval=LOCAL}
 data(Personnes_Foyer)
 ni <- Personnes_Foyer$ni
 xi <- Personnes_Foyer$xi
@@ -657,17 +658,17 @@ oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,xaxt="n")
 axis(1, at = 1:6, labels = c(1:5,6))
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 if(!("ggplot2" %in% installed.packages())){install.packages("ggplot2")}
 library(ggplot2)
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 p1 <- ggplot(Personnes_Foyer) +
   geom_col(aes(y = ni, x = xi),width = .05)+
   xlab( expression(paste(x[i])))+
@@ -688,7 +689,7 @@ ggsave(paste(Chemin,"batoneffnew.pdf",sep=""),
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 p1 <- ggplot(Personnes_Foyer) +
   geom_col(aes(y = ni/sum(ni), x = xi),width = .05)+
@@ -697,7 +698,7 @@ p1 <- ggplot(Personnes_Foyer) +
   scale_x_discrete(name =expression(paste(x[i])), 
                    limits=c("1","2","3","4","5","6"))
 p1
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -709,7 +710,7 @@ ggsave(paste(Chemin,"batonfrenew.pdf",sep=""),
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 ggplot(Personnes_Foyer, aes(x = xi)) +
   geom_ribbon(aes(ymin=0,ymax=ni,group=""),fill=I("gray80"))+
@@ -719,7 +720,7 @@ ggplot(Personnes_Foyer, aes(x = xi)) +
   ylab( expression(paste(n[i])))+
   scale_x_discrete(name =expression(paste(x[i])), 
                    limits=c("1","2","3","4","5","6"))
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -731,7 +732,7 @@ ggsave(paste(Chemin,"polyeffnew.pdf",sep=""),
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 ggplot(Personnes_Foyer, aes(x = xi)) +
   geom_ribbon(aes(ymin=0,ymax=ni/sum(ni),group=""),fill=I("gray80"))+
@@ -741,7 +742,7 @@ ggplot(Personnes_Foyer, aes(x = xi)) +
   ylab( expression(paste(n[i])))+
   scale_x_discrete(name =expression(paste(x[i])), 
                    limits=c("1","2","3","4","5","6"))
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -753,7 +754,7 @@ ggsave(paste(Chemin,"polyfrenew.pdf",sep=""),
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 nisum <- rep(ni[1],length(ni))
 for (iii in 2:length(ni))
 {
@@ -770,7 +771,7 @@ ggplot(data3, aes(x = xi)) +
   ylab( expression(paste(n[i])))+
   scale_x_discrete(name =expression(paste(x[i])), 
                    limits=c("1","2","3","4","5","6"))
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -784,7 +785,7 @@ ggsave(paste(Chemin,"polyeffcumnew.svg",sep=""),device="svg",
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data4<-data.frame(xi=xi,nifre=nisum/sum(ni))
 
 oldpar <- par()
@@ -796,7 +797,7 @@ ggplot(data4, aes(x = xi)) +
   ylab( expression(paste(n[i])))+
   scale_x_discrete(name =expression(paste(x[i])), 
                    limits=c("1","2","3","4","5","6"))
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -808,7 +809,7 @@ ggsave(paste(Chemin,"frecumnew.pdf",sep=""),
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 p1 <- ggplot(data3) +
   geom_col(aes(y = nisum, x = xi),width = .05)+
   xlab( expression(paste(x[i])))+
@@ -827,7 +828,7 @@ ggsave(paste(Chemin,"effcumnew.pdf",sep=""),
 ```
 
 ## Population du Canada
-```{r}
+```{r, eval=LOCAL}
 data(AgevsProter_Canada_full)
 valeursall <- margin.table(as.matrix(AgevsProter_Canada_full[,-1]),1)
 valeurs <- valeursall[-length(valeursall)]
@@ -835,7 +836,7 @@ valeurs
 ```
 
 
-```{r}
+```{r, eval=LOCAL}
 centres <- c(5*(0:19)+2.5)
 limites <- 5*(0:20)
 
@@ -849,7 +850,7 @@ table(data3)
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofre <- hist(data3,breaks=limites,main="",freq=T,xlab="",ylab="",lwd=2,density=10)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -865,11 +866,11 @@ dev.off()
 ```
 
 
-```{r}
+```{r, eval=LOCAL}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofre <- hist(data3,breaks=limites,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -883,12 +884,12 @@ dev.off()
 ```
 
 
-```{r}
+```{r, eval=LOCAL}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofre <- hist(data3,breaks=limites,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
 segments(histofre$mids[-length(histofre$mids)],histofre$density[-length(histofre$density)],histofre$mids[-1],histofre$density[-1],lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -903,7 +904,7 @@ dev.off()
 ```
 
 
-```{r}
+```{r, eval=LOCAL}
 nihistsum <- rep(0,length(valeurs))
 for (iii in 2:(length(valeurs)+1))
 {
@@ -917,7 +918,7 @@ oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofrecum <- hist(data4,breaks=limites,main="",freq=T,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$counts),labels=format(c(0,.2,.4,.6,.8,1)*max(histofrecum$counts),scientific = TRUE,digits = 3),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -937,7 +938,7 @@ oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofrecum <- hist(data4,breaks=limites,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -952,13 +953,13 @@ dev.off()
 ```
 
 
-```{r}
+```{r, eval=LOCAL}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofrecum <- hist(data4,breaks=limites,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 segments(histofrecum$mids[-length(histofrecum$mids)],histofrecum$density[-length(histofrecum$mids)],histofrecum$mids[-1],histofrecum$density[-1],lwd=2,col="#00FFFF")
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -975,7 +976,7 @@ dev.off()
 
 ## Bonus : Sièges Voix
 
-```{r}
+```{r, eval=LOCAL}
 data(Sieges_Voix)
 
 str(Sieges_Voix)
@@ -1012,7 +1013,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 dotchart3(NombreVoix,labels=NameX,pch=19,col="#00FFFF",cex=1.6,cex.axis=1.2)
 dotchart3(NombreVoix,labels=NameX,pch=19,col="#00FFFF")
@@ -1029,7 +1030,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 dotchart3(NombreAnnees,labels=NameXX,pch=19,col="#00FFFF",cex=1.6,cex.axis=1.2)
 dotchart3(NombreAnnees,labels=NameXX,pch=19,col="#00FFFF")
@@ -1046,7 +1047,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 NameXbar <- NameX
 par(mar = c(9.1, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 barplot(NombreSieges/sum(NombreSieges),names.arg=NameXbar,col=c("black","#00FFFF","black","#00FFFF"),density = 10,border=c("black","#00FFFF","black","#00FFFF"),cex.axis=1.2,las=3)
@@ -1063,7 +1064,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 NameXbar <- NameX
 par(mar = c(9.1, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 barplot(NombreVoix/sum(NombreVoix),names.arg=NameXbar,col=c("black","#00FFFF","black","#00FFFF"),density = 10,border=c("black","#00FFFF","black","#00FFFF"),cex.axis=1.2,las=3)
@@ -1080,7 +1081,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 NameXbar <- NameXX
 par(mar = c(3.1, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 barplot(NombreAnnees/sum(NombreAnnees),names.arg=NameXbar,col=c("black","#00FFFF","black","#00FFFF"),density = 10,border=c("black","#00FFFF","black","#00FFFF"),cex.axis=1.2,las=3)
@@ -1097,7 +1098,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 NameX[22] <- "République\nTchèque"
 
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
@@ -1115,7 +1116,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 NameX <- Sieges_Voix$Etats.Membres
 
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
@@ -1133,7 +1134,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 pie(NombreAnnees,labels=NameXX,col=c("black","#00FFFF","black","#00FFFF"),init.angle = 0,density = 10,border=c("black","#00FFFF","black","#00FFFF"),cex=1)#,density = c(4*(4:1))
 ```
@@ -1159,7 +1160,7 @@ dev.off()
 
 
 ## Europe Emploi Salariés
-```{r}
+```{r, eval=LOCAL}
 data(Europe)
 
 europe <- vector("list",1)
@@ -1167,7 +1168,7 @@ europe$Durée <- Europe$Salariés
 ```
 
 ### BàM
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 head(europe)
 str(europe)
 summary(europe$Durée)
@@ -1205,11 +1206,11 @@ bxp(list(stats=t(t(c(lms[1],qts,lms[2]))),n=sum(!is.na(europe$Durée)),conf=matr
 points(1,mean(europe$Durée),pch=2,lwd=2.5,cex=1.25)
 points(rep(1,length(extremes)),extremes,pch=8,cex=1.25,lwd=2.5)
 dev.off()
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 ### Stats descp
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 mean(europe$Durée)
 quantile(europe$Durée,probs=c(.25,.5,.75),type=6)
 range(europe$Durée)
@@ -1236,14 +1237,14 @@ mean(sort(abs(europe$Durée-mean(sort(europe$Durée)[c(14)])))[c(14)])
 
 
 ## Europe Emploi Non-Salariés
-```{r}
+```{r, eval=LOCAL}
 data(Europe)
 europe <- vector("list",1)
 europe$Durée <- Europe$NonSalariés
 ```
 
 ### BàM
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 head(europe)
 str(europe)
 summary(europe$Durée)
@@ -1280,11 +1281,11 @@ bxp(list(stats=t(t(c(lms[1],qts,lms[2]))),n=sum(!is.na(europe$Durée)),conf=matr
 points(1,mean(europe$Durée),pch=2,lwd=2.5,cex=1.25)
 points(rep(1,length(extremes)),extremes,pch=8,cex=1.25,lwd=2.5)
 dev.off()
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 ### Stats descp
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 mean(europe$Durée)
 quantile(europe$Durée,probs=c(.25,.5,.75),type=6)
 range(europe$Durée)
@@ -1308,7 +1309,7 @@ mean(sort(abs(europe$Durée-mean(sort(europe$Durée)[c(14)])))[c(14)])
 
 
 ## Europe Emploi Partiel_Ens
-```{r}
+```{r, eval=LOCAL}
 data(Europe)
 europe <- vector("list",1)
 europe$Durée <- Europe$Partiel_Ens
@@ -1330,7 +1331,7 @@ max(rangePartiel_Ens[2,]))
 ```
 
 ### BàM
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 qts <- quantile(europe$Durée,c(.25,.5,.75),type=6)
 ltms <- c(qts[1]-3/2*(qts[3]-qts[1]),qts[3]+3/2*(qts[3]-qts[1]))
 lms <- c(min(europe$Durée[europe$Durée>=qts[1]-3/2*(qts[3]-qts[1])]),max(europe$Durée[europe$Durée<=qts[3]+3/2*(qts[3]-qts[1])]))
@@ -1385,7 +1386,7 @@ dev.off()
 ```
 
 ### Stat Desc
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 mean(europe$Durée)
 quantile(europe$Durée,probs=c(.25,.5,.75),type=6)
 range(europe$Durée)
@@ -1409,7 +1410,7 @@ mean(sort(abs(europe$Durée-mean(sort(europe$Durée)[c(14)])))[c(14)])
 
 
 ## Europe Emploi Partiel_H
-```{r}
+```{r, eval=LOCAL}
 data(Europe)
 
 europe <- vector("list",1)
@@ -1423,7 +1424,7 @@ sd(europe$Durée)
 ```
 
 ### BàM
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 qts <- quantile(europe$Durée,c(.25,.5,.75),type=6)
 ltms <- c(qts[1]-3/2*(qts[3]-qts[1]),qts[3]+3/2*(qts[3]-qts[1]))
 lms <- c(min(europe$Durée[europe$Durée>=qts[1]-3/2*(qts[3]-qts[1])]),max(europe$Durée[europe$Durée<=qts[3]+3/2*(qts[3]-qts[1])]))
@@ -1476,7 +1477,7 @@ dev.off()
 ```
 
 ### Stat Desc
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 mean(europe$Durée)
 quantile(europe$Durée,probs=c(.25,.5,.75),type=6)
 range(europe$Durée)
@@ -1500,7 +1501,7 @@ mean(sort(abs(europe$Durée-mean(sort(europe$Durée)[c(14)])))[c(14)])
 
 
 ## Europe Emploi Partiel_F
-```{r}
+```{r, eval=LOCAL}
 data(Europe)
 
 europe <- vector("list",1)
@@ -1514,7 +1515,7 @@ sd(europe$Durée)
 ```
 
 ### BàM
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 qts <- quantile(europe$Durée,c(.25,.5,.75),type=6)
 ltms <- c(qts[1]-3/2*(qts[3]-qts[1]),qts[3]+3/2*(qts[3]-qts[1]))
 lms <- c(min(europe$Durée[europe$Durée>=qts[1]-3/2*(qts[3]-qts[1])]),max(europe$Durée[europe$Durée<=qts[3]+3/2*(qts[3]-qts[1])]))
@@ -1570,7 +1571,7 @@ dev.off()
 
 
 ### Stat Desc
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 mean(europe$Durée)
 quantile(europe$Durée,probs=c(.25,.5,.75),type=6)
 range(europe$Durée)
@@ -1593,7 +1594,7 @@ mean(sort(abs(europe$Durée-mean(sort(europe$Durée)[c(14)])))[c(14)])
 ```
 
 ## Partiel Ensemble
-```{r}
+```{r, eval=LOCAL}
 data(Europe)
 
 var1<- Europe$Partiel_Ens
@@ -1606,13 +1607,13 @@ data2 <- cbind(xi,ni)
 ```
 
 ### batoneffnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 #axis(1, at = 1:6, labels = c(1:5,6))
 #axis(1, at = 1:6, labels = c(1:5,"6 et plus"))
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -1628,11 +1629,11 @@ dev.off()
 ```
 
 ### batonfrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))   #,xaxt="n"
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -1646,12 +1647,12 @@ dev.off()
 ```
 
 ### polyeffnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 segments(xi[-length(xi)],ni[-length(xi)],xi[-1],ni[-1],lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -1666,12 +1667,12 @@ dev.off()
 ```
 
 ### polyfrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))
 segments(xi[-length(xi)],ni[-length(xi)]/sum(ni),xi[-1],ni[-1]/sum(ni),lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -1686,7 +1687,7 @@ dev.off()
 ```
 
 ### polyeffcumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 nisum <- rep(ni[1],length(ni))
 for (iii in 2:length(ni))
 {
@@ -1697,7 +1698,7 @@ oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 segments(xi[-length(xi)],nisum[-length(xi)],xi[-1],nisum[-1],lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -1712,11 +1713,11 @@ dev.off()
 ```
 
 ### frecumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,nisum/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum/sum(ni))))  #,xaxt="n"
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -1730,11 +1731,11 @@ dev.off()
 ```
 
 ### effcumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -1748,7 +1749,7 @@ dev.off()
 ```
 
 
-```{r}
+```{r, eval=LOCAL}
 data(Europe)
 
 var1 <- Europe$Partiel_Ens
@@ -1760,11 +1761,11 @@ table(data3)
 ```
 
 ### histofrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -1780,12 +1781,12 @@ dev.off()
 ```
 
 ### histopolfrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
 segments(histofre$mids[-(length(breaks0)-1)],histofre$density[-(length(breaks0)-1)],histofre$mids[-1],histofre$density[-1],lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -1802,7 +1803,7 @@ dev.off()
 ```
 
 ### histofrecumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data4 <- rep((breaks0[-length(breaks0)]+diff(breaks0)/2),cumsum(table(cut(var1,breaks0))))
 table(data4)
 
@@ -1810,7 +1811,7 @@ oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -1827,13 +1828,13 @@ dev.off()
 ```
 
 ### histopolfrecumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 segments(histofrecum$mids[-(length(breaks0)-1)],histofrecum$density[-(length(breaks0)-1)],histofrecum$mids[-1],histofrecum$density[-1],lwd=2,col="#00FFFF")
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -1849,13 +1850,13 @@ dev.off()
 ```
 
 ### histopoleffcumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histoeffcum <- hist(data4,breaks=breaks0,main="",freq=T,xlab="",ylab="",lwd=2,density=10)   #,yaxt="n"
 segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(breaks0)-1)],histoeffcum$mids[-1],histoeffcum$counts[-1],lwd=2,col="#00FFFF")
 #axis(2,at=c(0,.2,.4,.6,.8,1)*length(data3),labels=c(0,.2,.4,.6,.8,1)*length(data3),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -1871,7 +1872,7 @@ dev.off()
 ```
 
 ## Partiel Hommes
-```{r}
+```{r, eval=LOCAL}
 data(Europe)
 
 var1<- Europe$Partiel_H
@@ -1884,13 +1885,13 @@ data2 <- cbind(xi,ni)
 ```
 
 ### batoneffnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 #axis(1, at = 1:6, labels = c(1:5,6))
 #axis(1, at = 1:6, labels = c(1:5,"6 et plus"))
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -1906,11 +1907,11 @@ dev.off()
 ```
 
 ### batonfrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))   #,xaxt="n"
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -1924,12 +1925,12 @@ dev.off()
 ```
 
 ### polyeffnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 segments(xi[-length(xi)],ni[-length(xi)],xi[-1],ni[-1],lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -1944,12 +1945,12 @@ dev.off()
 ```
 
 ### polyfrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))
 segments(xi[-length(xi)],ni[-length(xi)]/sum(ni),xi[-1],ni[-1]/sum(ni),lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -1964,7 +1965,7 @@ dev.off()
 ```
 
 ### polyeffcumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 nisum <- rep(ni[1],length(ni))
 for (iii in 2:length(ni))
 {
@@ -1975,7 +1976,7 @@ oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 segments(xi[-length(xi)],nisum[-length(xi)],xi[-1],nisum[-1],lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -1990,11 +1991,11 @@ dev.off()
 ```
 
 ### frecumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,nisum/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum/sum(ni))))  #,xaxt="n"
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2008,11 +2009,11 @@ dev.off()
 ```
 
 ### effcumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2025,7 +2026,7 @@ plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 dev.off()
 ```
 
-```{r}
+```{r, eval=LOCAL}
 data(Europe)
 
 var1 <- Europe$Partiel_H
@@ -2037,11 +2038,11 @@ table(data3)
 ```
 
 ### histofrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2057,12 +2058,12 @@ dev.off()
 ```
 
 ### histopolfrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
 segments(histofre$mids[-(length(breaks0)-1)],histofre$density[-(length(breaks0)-1)],histofre$mids[-1],histofre$density[-1],lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2077,18 +2078,18 @@ dev.off()
 ```
 
 ### histofrecumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data4 <- rep((breaks0[-length(breaks0)]+diff(breaks0)/2)
              ,cumsum(table(cut(var1,breaks0))))
 table(data4)
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2103,13 +2104,13 @@ dev.off()
 ```
 
 ### histopolfrecumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 segments(histofrecum$mids[-(length(breaks0)-1)],histofrecum$density[-(length(breaks0)-1)],histofrecum$mids[-1],histofrecum$density[-1],lwd=2,col="#00FFFF")
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2125,13 +2126,13 @@ dev.off()
 ```
 
 ### histopoleffcumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histoeffcum <- hist(data4,breaks=breaks0,main="",freq=T,xlab="",ylab="",lwd=2,density=10)   #,yaxt="n"
 segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(breaks0)-1)],histoeffcum$mids[-1],histoeffcum$counts[-1],lwd=2,col="#00FFFF")
 #axis(2,at=c(0,.2,.4,.6,.8,1)*length(data3),labels=c(0,.2,.4,.6,.8,1)*length(data3),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2147,7 +2148,7 @@ dev.off()
 ```
 
 ## Partiel Femmes
-```{r}
+```{r, eval=LOCAL}
 data(Europe)
 
 var1<- Europe$Partiel_F
@@ -2160,13 +2161,13 @@ data2 <- cbind(xi,ni)
 ```
 
 ### batoneffnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 #axis(1, at = 1:6, labels = c(1:5,6))
 #axis(1, at = 1:6, labels = c(1:5,"6 et plus"))
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2182,11 +2183,11 @@ dev.off()
 ```
 
 ### batonfrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))   #,xaxt="n"
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2200,12 +2201,12 @@ dev.off()
 ```
 
 ### polyeffnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 segments(xi[-length(xi)],ni[-length(xi)],xi[-1],ni[-1],lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2220,12 +2221,12 @@ dev.off()
 ```
 
 ### polyfrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))
 segments(xi[-length(xi)],ni[-length(xi)]/sum(ni),xi[-1],ni[-1]/sum(ni),lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2240,7 +2241,7 @@ dev.off()
 ```
 
 ### polyeffcumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 nisum <- rep(ni[1],length(ni))
 for (iii in 2:length(ni))
 {
@@ -2251,7 +2252,7 @@ oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 segments(xi[-length(xi)],nisum[-length(xi)],xi[-1],nisum[-1],lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2266,11 +2267,11 @@ dev.off()
 ```
 
 ### frecumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,nisum/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum/sum(ni))))  #,xaxt="n"
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2284,11 +2285,11 @@ dev.off()
 ```
 
 ### effcumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2301,7 +2302,7 @@ plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 dev.off()
 ```
 
-```{r}
+```{r, eval=LOCAL}
 data(Europe)
 
 var1 <- Europe$Partiel_F
@@ -2313,11 +2314,11 @@ table(data3)
 ```
 
 ### histofrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2333,12 +2334,12 @@ dev.off()
 ```
 
 ### histopolfrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
 segments(histofre$mids[-(length(breaks0)-1)],histofre$density[-(length(breaks0)-1)],histofre$mids[-1],histofre$density[-1],lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2353,7 +2354,7 @@ dev.off()
 ```
 
 ### histofrecumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data4 <- rep((breaks0[-length(breaks0)]+diff(breaks0)/2)
              ,cumsum(table(cut(var1,breaks0))))
 table(data4)
@@ -2362,7 +2363,7 @@ oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2377,13 +2378,13 @@ dev.off()
 ```
 
 ### histopolfrecumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 segments(histofrecum$mids[-(length(breaks0)-1)],histofrecum$density[-(length(breaks0)-1)],histofrecum$mids[-1],histofrecum$density[-1],lwd=2,col="#00FFFF")
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2399,13 +2400,13 @@ dev.off()
 ```
 
 ### histopoleffcumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histoeffcum <- hist(data4,breaks=breaks0,main="",freq=T,xlab="",ylab="",lwd=2,density=10)   #,yaxt="n"
 segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(breaks0)-1)],histoeffcum$mids[-1],histoeffcum$counts[-1],lwd=2,col="#00FFFF")
 #axis(2,at=c(0,.2,.4,.6,.8,1)*length(data3),labels=c(0,.2,.4,.6,.8,1)*length(data3),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2421,7 +2422,7 @@ dev.off()
 ```
 
 ## Europe Salariés
-```{r}
+```{r, eval=LOCAL}
 data(Europe)
 var1<- Europe$Salariés
 varN <- "_Sal"
@@ -2433,13 +2434,13 @@ data2 <- cbind(xi,ni)
 ```
 
 ### batoneffnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 #axis(1, at = 1:6, labels = c(1:5,6))
 #axis(1, at = 1:6, labels = c(1:5,"6 et plus"))
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2455,11 +2456,11 @@ dev.off()
 ```
 
 ### batonfrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))   #,xaxt="n"
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2473,12 +2474,12 @@ dev.off()
 ```
 
 ### polyeffnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 segments(xi[-length(xi)],ni[-length(xi)],xi[-1],ni[-1],lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2493,12 +2494,12 @@ dev.off()
 ```
 
 ### polyfrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))
 segments(xi[-length(xi)],ni[-length(xi)]/sum(ni),xi[-1],ni[-1]/sum(ni),lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2513,7 +2514,7 @@ dev.off()
 ```
 
 ### polyeffcumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 nisum <- rep(ni[1],length(ni))
 for (iii in 2:length(ni))
 {
@@ -2524,7 +2525,7 @@ oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 segments(xi[-length(xi)],nisum[-length(xi)],xi[-1],nisum[-1],lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2539,11 +2540,11 @@ dev.off()
 ```
 
 ### frecumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,nisum/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum/sum(ni))))  #,xaxt="n"
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2557,11 +2558,11 @@ dev.off()
 ```
 
 ### effcumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2574,7 +2575,7 @@ plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 dev.off()
 ```
 
-```{r}
+```{r, eval=LOCAL}
 data(Europe)
 
 var1 <- Europe$Salariés
@@ -2586,11 +2587,11 @@ table(data3)
 ```
 
 ### histofrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2606,12 +2607,12 @@ dev.off()
 ```
 
 ### histopolfrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
 segments(histofre$mids[-(length(breaks0)-1)],histofre$density[-(length(breaks0)-1)],histofre$mids[-1],histofre$density[-1],lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2626,18 +2627,18 @@ dev.off()
 ```
 
 ### histofrecumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data4 <- rep((breaks0[-length(breaks0)]+diff(breaks0)/2)
              ,cumsum(table(cut(var1,breaks0))))
 table(data4)
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2652,13 +2653,13 @@ dev.off()
 ```
 
 ### histopolfrecumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 segments(histofrecum$mids[-(length(breaks0)-1)],histofrecum$density[-(length(breaks0)-1)],histofrecum$mids[-1],histofrecum$density[-1],lwd=2,col="#00FFFF")
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
@@ -2673,13 +2674,13 @@ dev.off()
 ```
 
 ### histopoleffcumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histoeffcum <- hist(data4,breaks=breaks0,main="",freq=T,xlab="",ylab="",lwd=2,density=10)   #,yaxt="n"
 segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(breaks0)-1)],histoeffcum$mids[-1],histoeffcum$counts[-1],lwd=2,col="#00FFFF")
 #axis(2,at=c(0,.2,.4,.6,.8,1)*length(data3),labels=c(0,.2,.4,.6,.8,1)*length(data3),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
@@ -2697,7 +2698,7 @@ dev.off()
 
 
 ## Europe Non-salariés
-```{r}
+```{r, eval=LOCAL}
 data(Europe)
 
 var1<- Europe$NonSalariés
@@ -2710,13 +2711,13 @@ data2 <- cbind(xi,ni)
 ```
 
 ### batoneffnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 #axis(1, at = 1:6, labels = c(1:5,6))
 #axis(1, at = 1:6, labels = c(1:5,"6 et plus"))
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2732,11 +2733,11 @@ dev.off()
 ```
 
 ### batonfrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))   #,xaxt="n"
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2750,12 +2751,12 @@ dev.off()
 ```
 
 ### polyeffnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 segments(xi[-length(xi)],ni[-length(xi)],xi[-1],ni[-1],lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2770,12 +2771,12 @@ dev.off()
 ```
 
 ### polyfrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))
 segments(xi[-length(xi)],ni[-length(xi)]/sum(ni),xi[-1],ni[-1]/sum(ni),lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2790,7 +2791,7 @@ dev.off()
 ```
 
 ### polyeffcumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 nisum <- rep(ni[1],length(ni))
 for (iii in 2:length(ni))
 {
@@ -2801,7 +2802,7 @@ oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 segments(xi[-length(xi)],nisum[-length(xi)],xi[-1],nisum[-1],lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2816,11 +2817,11 @@ dev.off()
 ```
 
 ### frecumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,nisum/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum/sum(ni))))  #,xaxt="n"
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2834,11 +2835,11 @@ dev.off()
 ```
 
 ### effcumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2851,7 +2852,7 @@ plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 dev.off()
 ```
 
-```{r}
+```{r, eval=LOCAL}
 data(Europe)
 
 var1 <- Europe$NonSalariés
@@ -2863,11 +2864,11 @@ table(data3)
 ```
 
 ### histofrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2883,12 +2884,12 @@ dev.off()
 ```
 
 ### histopolfrenew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
 segments(histofre$mids[-(length(breaks0)-1)],histofre$density[-(length(breaks0)-1)],histofre$mids[-1],histofre$density[-1],lwd=2,col="#00FFFF")
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2903,13 +2904,13 @@ dev.off()
 ```
 
 ### histopoleffcumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histoeffcum <- hist(data4,breaks=breaks0,main="",freq=T,xlab="",ylab="",lwd=2,density=10)   #,yaxt="n"
 segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(breaks0)-1)],histoeffcum$mids[-1],histoeffcum$counts[-1],lwd=2,col="#00FFFF")
 #axis(2,at=c(0,.2,.4,.6,.8,1)*length(data3),labels=c(0,.2,.4,.6,.8,1)*length(data3),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2925,7 +2926,7 @@ dev.off()
 ```
 
 ### histofrecumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data4 <- rep((breaks0[-length(breaks0)]+diff(breaks0)/2)
              ,cumsum(table(cut(var1,breaks0))))
 table(data4)
@@ -2934,7 +2935,7 @@ oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2949,13 +2950,13 @@ dev.off()
 ```
 
 ### histopolfrecumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 segments(histofrecum$mids[-(length(breaks0)-1)],histofrecum$density[-(length(breaks0)-1)],histofrecum$mids[-1],histofrecum$density[-1],lwd=2,col="#00FFFF")
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -2971,13 +2972,13 @@ dev.off()
 ```
 
 ### histopoleffcumnew
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
 histoeffcum <- hist(data4,breaks=breaks0,main="",freq=T,xlab="",ylab="",lwd=2,density=10)   #,yaxt="n"
 segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(breaks0)-1)],histoeffcum$mids[-1],histoeffcum$counts[-1],lwd=2,col="#00FFFF")
 #axis(2,at=c(0,.2,.4,.6,.8,1)*length(data3),labels=c(0,.2,.4,.6,.8,1)*length(data3),lwd=2)
-suppressWarnings(par(oldpar))
+#suppressWarnings(par(oldpar))
 ```
 
 
@@ -3035,12 +3036,12 @@ dev.off()
 
 
 ## Analyse du tableau Europe emploi
-```{r}
+```{r, eval=LOCAL}
 data(Europe)
 ```
 
 ### Position
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 format(cbind(Moy=colMeans(Europe[,c(2,3,4,6,5)]), Q1=
                c(quantile(Europe[,2],type=6)[2],quantile(Europe[,3],type=6)[2],quantile(Europe[,4],type=6)[2],quantile(Europe[,6],type=6)[2],quantile(Europe[,5],type=6)[2]), Q2=
                c(quantile(Europe[,2],type=6)[3],quantile(Europe[,3],type=6)[3],quantile(Europe[,4],type=6)[3],quantile(Europe[,6],type=6)[3],quantile(Europe[,5],type=6)[3]), Q3=
@@ -3048,7 +3049,7 @@ format(cbind(Moy=colMeans(Europe[,c(2,3,4,6,5)]), Q1=
 ```
 
 ### Dispersion
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 tab2=cbind(
     sd=c(sqrt(1/length(Europe[,2])*sum((Europe[,2]-mean(Europe[,2]))^2)),
          sqrt(1/length(Europe[,3])*sum((Europe[,3]-mean(Europe[,3]))^2)),
@@ -3081,7 +3082,7 @@ round(tab2,digits=3)
 ```
 
 ### Forme
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 nn=length(Europe[,2])
 tab5=
   cbind(
@@ -3125,7 +3126,7 @@ tab5=
 
 ## Analyse du tableau Europe emploi après regroupement des données
 ### Création naïve des classes
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 distg1<-table(cut(Europe$Partiel_Ens,c(0,10,20,30,40,50,60,70,80)))
 distg2<-table(cut(Europe$Partiel_H,c(0,10,20,30,40,50,60,70,80)))
 distg3<-table(cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80)))
@@ -3146,13 +3147,13 @@ distg5
 vald45<-(c(35,40,45,50,55,60)[-6]+c(35,40,45,50,55,60)[-1])/2
 ```
 ### Utilisation du package actuar
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 if(!("actuar" %in% installed.packages())){install.packages("actuar")}
 library(actuar)
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 x1 <- grouped.data(Partiel_Ens=Europe$Partiel_Ens,breaks=c(0,10,20,30,40,50,60,70,80))
 x2 <- grouped.data(Partiel_Ens=Europe$Partiel_H,breaks=c(0,10,20,30,40,50,60,70,80))
 x3 <- grouped.data(Partiel_Ens=Europe$Partiel_F,breaks=c(0,10,20,30,40,50,60,70,80))
@@ -3164,7 +3165,7 @@ cbind(x4,x5)
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 c(
   weighted.mean(vald123,distg1),
   weighted.mean(vald123,distg2),

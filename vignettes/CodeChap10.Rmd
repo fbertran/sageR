@@ -3,20 +3,32 @@ title: "Chapitre 10. Modèle linéaire gaussien."
 subtitle: "Tout le code avec R. <img src='../man/figures/logo.png' align='right' width='200'/>"
 author: "Christian Derquenne"
 date: "`r Sys.Date()`"
-output:
-  prettydoc::html_pretty:
-    theme: architect
-    highlight: github
-    toc: true
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapitre 10. Modèle linéaire gaussien.}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, echo=FALSE}
+#file.edit(normalizePath("~/.Renviron"))
+LOCAL <- identical(Sys.getenv("LOCAL"), "TRUE")
+#, eval = LOCAL for skip on CRAN test
+#LOCAL=FALSE
+#knitr::opts_chunk$set(purl = LOCAL, eval=LOCAL)
+knitr::opts_chunk$set(purl = LOCAL)
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "TRUE")
+knitr::opts_chunk$set(purl = NOT_CRAN)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+SAVE_GRAPHS=FALSE
+```
+
 
 # Section 1
-```{r}
+```{r, eval=LOCAL, cache=TRUE}
 set.seed(4669)
 aaa <- rnorm(10)
 boxplot(aaa)

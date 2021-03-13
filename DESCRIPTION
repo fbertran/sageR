@@ -1,9 +1,11 @@
 Package: SEGR
 Type: Package
 Title: Statistics for Economics and Management with R
-Version: 0.1.0
+Version: 0.2.0
 Date: 2021-03-08
 Depends: R (>= 3.5.0)
+Imports:
+    ggplot2
 Suggests: 
     testthat (>= 3.0.0),
     covr,
@@ -25,8 +27,6 @@ Suggests:
     car,
     dplyr,
     ggiraphExtra,
-    ggplot2,
-    ggradar,
     scales,
     spatstat,
     vcd
@@ -36,10 +36,10 @@ Authors@R: c(
 	person(given = "Christian", family= "Derquenne", role = c("ctb"), email = "chris.emr@wanadoo.fr"),
 	person(given = "Gilles", family= "Dufrénot", role = c("ctb"), email = "gilles.dufrenot@univ-amu.fr"),
 	person(given = "Fredj", family= "Jawadi", role = c("ctb"), email = "fredj.jawadi@univ-lille.fr"),
-	person(given = "Myriam", family= "Maumy", role = c("aut"), email = "myriam.maumy@utt.fr", comment = c(ORCID = "0000-0002-4615-1512")))
+	person(given = "Myriam", family= "Maumy-Bertrand", role = c("aut"), email = "myriam.maumy@utt.fr", comment = c(ORCID = "0000-0002-4615-1512")))
 Author: Frederic Bertrand [cre, aut] (<https://orcid.org/0000-0002-0837-8281>), Claire Borsenberger [ctb], Christian Derquenne [ctb], Gilles Dufrénot [ctb], Fredj Jawadi [ctb], Myriam Maumy-Bertrand [aut] (<https://orcid.org/0000-0002-4615-1512>)
 Maintainer: Frederic Bertrand <frederic.bertrand@utt.fr>
-Description: Datasets and functions for the book "Statistiques pour l’économie et la gestion", F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy, C. Borsenberger editor, (2021, ISBN: , De Boeck Supérieur, Paris). 
+Description: Datasets and functions for the book "Statistiques pour l’économie et la gestion", F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy-Bertrand, C. Borsenberger editor, (2021, ISBN: , De Boeck Supérieur, Paris). 
     The first chapter of the book is dedicated to an introduction to statistics and their world. 
     The second chapter deals with univariate exploratory statistics and graphics. 
     The third chapter deals with bivariate and multivariate exploratory statistics and graphics. 

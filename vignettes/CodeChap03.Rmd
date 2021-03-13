@@ -3,11 +3,7 @@ title: "Chapitre 03.	Statistiques descriptives et visualisation des données biv
 subtitle: "Tout le code avec R. <img src='../man/figures/logo.png' align='right' width='200'/>"
 author: "F. Bertrand et M. Maumy"
 date: "`r Sys.Date()`"
-output:
-  prettydoc::html_pretty:
-    theme: architect
-    highlight: github
-    toc: true
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapitre 03.	Statistiques descriptives et visualisation des données bivariables ou multivariables}
   %\VignetteEngine{knitr::rmarkdown}
@@ -16,12 +12,20 @@ vignette: >
 
 ```{r, echo=FALSE}
 #file.edit(normalizePath("~/.Renviron"))
-LOCAL <- identical(Sys.getenv("LOCAL"), "true")
+LOCAL <- identical(Sys.getenv("LOCAL"), "TRUE")
+#, eval = LOCAL for skip on CRAN test
+#LOCAL=FALSE
+#knitr::opts_chunk$set(purl = LOCAL, eval=LOCAL)
 knitr::opts_chunk$set(purl = LOCAL)
-NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "TRUE")
 knitr::opts_chunk$set(purl = NOT_CRAN)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
 SAVE_GRAPHS=FALSE
 ```
+
 
 # Sources des données
 
@@ -61,20 +65,20 @@ Cet indicateur fournit les taux d’emploi selon le niveau d’études : premier
 MEN4 - Ménages par taille du ménage, sexe et âge de la personne de référence en 2017. France métropolitaine. Insee.
 
 
-```{r}
+```{r, eval=LOCAL}
 if(!("SEGR" %in% installed.packages())){install.packages("SEGR")}
 library(SEGR)
 ```
 
 
 # Distribution conjointe
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(Europe)
 Europe
 ```
 
 ## Salariés*Non-salariés
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 SalXNsal=table(cut(Europe$Salariés,c(35,40,45)),cut(Europe$NonSalariés,c(35,40,45,50,55)))
 prop.table(SalXNsal)
 
@@ -97,7 +101,7 @@ round(tabSXNs7,digits=2)
 
 
 ## Temps partiel Hommes*Femmes
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 HomXFem=table(cut(Europe$Partiel_H,c(0,10,20,30)),cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80)))
 HomXFem
 prop.table(HomXFem)
@@ -120,7 +124,7 @@ round(tabHXFs7,digits=2)
 # Représentation série double
 ## OCDE Secteur (Quali-Quali)
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(Secteur)
 
 rownames(Secteur) <- Secteur$PAYS
@@ -132,7 +136,7 @@ margin.table(Secteur,2)
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 margX <- margin.table(Secteur,1)
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
@@ -140,14 +144,14 @@ mp <- barplot(margX, beside=FALSE, args.legend=list(x="topright"),col=c("black",
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 margY <- margin.table(Secteur,2)
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 mp <- barplot(margY, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25) # default
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 layout((1:2))
 margX <- margin.table(Secteur,1)
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
@@ -175,7 +179,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 layout(1)
 freqcondY <- prop.table(Secteur,2) #Y|X
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
@@ -183,7 +187,7 @@ mp <- barplot(freqcondY, beside=TRUE, legend = rownames(Secteur), ylim = c(0, .5
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 freqcondX <- prop.table(Secteur,1) #Y|X
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 mp <- barplot(t(freqcondX), beside=TRUE, legend = colnames(Secteur), ylim = c(0, 1.05), args.legend=list(x="top", ncol=3),las=2) # default
@@ -213,7 +217,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 layout(1)
 freqcondY <- prop.table(Secteur,2) #Y|X
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
@@ -222,7 +226,7 @@ axis(2, at=0:5*.2)
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 freqcondX <- prop.table(Secteur,1) #Y|X
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 mp <- barplot(t(freqcondX), beside=FALSE, legend = colnames(Secteur), ylim = c(0, 1.3), args.legend=list(x="top", ncol=3),yaxt="n",las=2) # default
@@ -256,26 +260,26 @@ dev.off()
 
 ## Salariés*Non-salariés (Quanti-Quanti)
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(Europe)
 table(cut(Europe$Salariés,c(35,40,45,50)))
 table(cut(Europe$NonSalariés,c(35,40,45,50,55)))
 ```
 
 ### Distribution conditionnelle
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 ff=table(cut(Europe$Salariés,c(35,40,45,50)),
 cut(Europe$NonSalariés,c(35,40,45,50,55)))/sum(table(cut(Europe$Salariés,c(35,40,45,50)),cut(Europe$NonSalariés,c(35,40,45,50,55))))
 ```
 
 
-```{r}
+```{r, eval=LOCAL}
 if(!("lattice" %in% installed.packages())){install.packages("lattice")}
 library(lattice)
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 freqcondX <- prop.table(ff,1) #Y|X
 freqcondY <- prop.table(ff,2) #Y|X
 ensemble.df <- make.groups(freqcondX)
@@ -286,7 +290,7 @@ ensemble.df
 ```
 
 ### freqmargtempspartiel.pdf
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 Salariés<-Europe$Partiel_H
 NonSalariés<-Europe$Partiel_F
 Ensemble.df <- make.groups(Salariés,NonSalariés)
@@ -294,18 +298,18 @@ colnames(Ensemble.df) <- c("Taux","Genre")
 ```
 
 #### Séparément
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histogram(Salariés,xlab="Temps partiels (% emploi total)",breaks=c(0,10,20,30,40,50,60,70,80))
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histogram(NonSalariés,xlab="Temps partiels (% emploi total)",breaks=c(0,10,20,30,40,50,60,70,80))
 ```
 
 #### Les deux ensemble
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histogram(~Taux|Genre,xlab="Temps partiels (% emploi total)",data=Ensemble.df,breaks=c(0,10,20,30,40,50,60,70,80),layout=c(1,2))
 ```
@@ -322,7 +326,7 @@ dev.off()
 ```
 
 ### tfreqmargtempspartiel.pdf
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histogram(~Taux|Genre,xlab="Temps partiels (% emploi total)",data=Ensemble.df,breaks=c(0,10,20,30,40,50,60,70,80))
 ```
@@ -340,7 +344,7 @@ dev.off()
 ```
 
 ### freqcondX.pdf
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 #mp <- barplot(t(freqcondX),legend = rownames(freqcondX), ylim = c(0, 1)) # default
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 mp <- barplot(t(freqcondX), beside=TRUE, legend = colnames(freqcondX), ylim = c(0, 1), args.legend=list(x="topleft",ncol=2,title="Non-salariés"),ylab="Pourcentage du total",xlab="Salariés") # default
@@ -366,7 +370,7 @@ dev.off()
 ```
 
 ### freqcondY.pdf
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 #mp <- barplot(t(freqcondX),legend = rownames(freqcondX), ylim = c(0, 1)) # default
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 mp <- barplot(freqcondY, beside=TRUE, legend = rownames(freqcondY), ylim = c(0, 1), args.legend=list(x="top",ncol=3,title="Salariés"),ylab="Pourcentage du total",xlab="Non-salariés") # default
@@ -430,7 +434,7 @@ dev.off()
 
 
 ### disptempspartiel.pdf
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(Europe$Salariés,Europe$NonSalariés,xlab="Salariés",ylab="Non-salariés",pch=19)
 colmodel="cmyk"
@@ -448,7 +452,7 @@ dev.off()
 ```
 
 ### stereotempspartiel.pdf
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 ff=table(cut(Europe$Partiel_H,c(0,10,20,30)),cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80)))/sum(table(cut(Europe$Partiel_H,c(0,10,20,30)),cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80))))
 plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Salariés",yaxe="Non-salariés",theme="0")
 plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Salariés",yaxe="Non-salariés",theme="1")
@@ -470,7 +474,7 @@ dev.off()
 ```
 
 ## Temps partiel Hommes*Femmes (Quanti-Quanti)
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(Europe)
 table(cut(Europe$Partiel_Ens,c(0,10,20,30,40,50,60,70,80)))
 table(cut(Europe$Partiel_H,c(0,10,20,30,40,50,60,70,80)))
@@ -478,7 +482,7 @@ table(cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80)))
 ```
 
 ### Distribution conditionnelle
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 ff=table(cut(Europe$Partiel_H,c(0,10,20,30)),cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80)))/sum(table(cut(Europe$Partiel_H,c(0,10,20,30)),cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80))))
 
 freqcondX <- prop.table(ff,1) #Y|X
@@ -491,7 +495,7 @@ ensemble.df
 ```
 
 ### freqmargtempspartiel.pdf
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 Hommes<-Europe$Partiel_H
 Femmes<-Europe$Partiel_F
 Ensemble.df <- make.groups(Hommes,Femmes)
@@ -499,18 +503,18 @@ colnames(Ensemble.df) <- c("Taux","Genre")
 ```
 
 #### Séparément
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histogram(Hommes,xlab="Temps partiels (% emploi total)",breaks=c(0,10,20,30,40,50,60,70,80))
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histogram(Femmes,xlab="Temps partiels (% emploi total)",breaks=c(0,10,20,30,40,50,60,70,80))
 ```
 
 #### Les deux ensemble
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histogram(~Taux|Genre,xlab="Temps partiels (% emploi total)",data=Ensemble.df,breaks=c(0,10,20,30,40,50,60,70,80),layout=c(1,2))
 ```
@@ -527,7 +531,7 @@ dev.off()
 ```
 
 ### tfreqmargtempspartiel.pdf
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histogram(~Taux|Genre,xlab="Temps partiels (% emploi total)",data=Ensemble.df,breaks=c(0,10,20,30,40,50,60,70,80))
 ```
@@ -545,7 +549,7 @@ dev.off()
 ```
 
 ### freqcondX.pdf
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 #mp <- barplot(t(freqcondX),legend = rownames(freqcondX), ylim = c(0, 1)) # default
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 mp <- barplot(t(freqcondX), beside=TRUE, legend = colnames(freqcondX), ylim = c(0, 1), args.legend=list(x="topleft",ncol=2,title="Femmes"),ylab="Pourcentage du total",xlab="Hommes") # default
@@ -571,7 +575,7 @@ dev.off()
 ```
 
 ### freqcondY.pdf
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 #mp <- barplot(t(freqcondX),legend = rownames(freqcondX), ylim = c(0, 1)) # default
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 mp <- barplot(freqcondY, beside=TRUE, legend = rownames(freqcondY), ylim = c(0, 1), args.legend=list(x="top",ncol=3,title="Hommes"),ylab="Pourcentage du total",xlab="Femmes") # default
@@ -610,7 +614,7 @@ dev.off()
 
 
 ### disptempspartiel.pdf
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(Europe$Partiel_H,Europe$Partiel_F,xlab="Hommes",ylab="Femmes",pch=19)
 colmodel="cmyk"
@@ -628,7 +632,7 @@ plot(Europe$Partiel_H,Europe$Partiel_F,xlab="Hommes",ylab="Femmes",pch=19)
 dev.off()
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 ff=table(cut(Europe$Partiel_H,c(0,10,20,30)),cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80)))/sum(table(cut(Europe$Partiel_H,c(0,10,20,30)),cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80))))
 plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Hommes",yaxe="Femmes",theme="0")
 plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),f=ff,xaxe="Hommes",yaxe="Femmes",theme="1")
@@ -659,12 +663,12 @@ dev.off()
 
 ## Provinces et territoires vs Sexe Canada (Quali-Quali)
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(ProtervsSexe_Canada)
 ```
 
 ### Distribution conditionnelle
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 ff=as.table(as.matrix(ProtervsSexe_Canada))/sum(as.table(as.matrix(ProtervsSexe_Canada)))
 
 freqcondX <- prop.table(ff,1) #Y|X
@@ -677,14 +681,14 @@ ensemble.df
 ```
 
 ### freqmargtempspartiel.pdf
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 Hommes<-ProtervsSexe_Canada$Hommes
 Femmes<-ProtervsSexe_Canada$Femmes
 Ensemble.df <- make.groups(Hommes,Femmes)
 colnames(Ensemble.df) <- c("Taux","Genre")
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 dotchart(rowSums(as.table(as.matrix(ProtervsSexe_Canada))),labels = rownames(ProtervsSexe_Canada))
 ```
 
@@ -700,7 +704,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 dotchart(colSums(as.table(as.matrix(ProtervsSexe_Canada))),labels = colnames(ProtervsSexe_Canada))
 ```
 
@@ -716,7 +720,7 @@ dev.off()
 
 
 ### freqcondX.pdf
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(7.5, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 mp <- barplot(t(freqcondX), beside=TRUE, legend = colnames(freqcondX), ylim = c(0, .65), las=2, srt=60, xaxt="n", args.legend=list(x="topleft",ncol=2),ylab="Pourcentage du total") 
 text(colMeans(mp), par("usr")[3], labels = rownames(freqcondX), srt = 60, adj = c(1.1,1.1), xpd = TRUE, cex=.8)
@@ -737,7 +741,7 @@ dev.off()
 ```
 
 ### freqcondY.pdf
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 mp <- barplot(freqcondX, beside=TRUE, legend = rownames(freqcondX), ylim = c(0, .85), las=2, srt=60, xaxt="n", args.legend=list(x="topleft",ncol=3,cex=.9),ylab="Pourcentage du total") 
 text(colMeans(mp), par("usr")[3], labels = colnames(freqcondX), srt = 60, adj = c(1.1,1.1), xpd = TRUE, cex=.8)
@@ -765,13 +769,13 @@ dev.off()
 
 
 
-```{r}
+```{r, eval=LOCAL}
 if(!("vcd" %in% installed.packages())){install.packages("vcd")}
 library(vcd)
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 mosaic(t(as.table(as.matrix(ProtervsSexe_Canada))), legend=TRUE, 
    direction = "v", labeling= labeling_border(rot_labels = c(0,0,0,0), 
    just_labels = c("center", "center", "center", "center"), varnames =  FALSE,offset_labels=c(0,0,0,4),gp_labels = gpar(fontsize = 6)))
@@ -824,27 +828,27 @@ dev.off()
 ## Classe age vs Homme-Femme Canada (Quali-Quanti)
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(AgevsSexe_Canada_full)
 AgevsSexe_Canada <- AgevsSexe_Canada_full[-nrow(AgevsSexe_Canada_full),]
 AgevsSexe_Canada
 ```
 
 ### Distribution conditionnelle
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 donnees = data.frame(
   Taux=c(AgevsSexe_Canada$Hommes,AgevsSexe_Canada$Femmes),
   Type=factor(c(rep("Hommes",nrow(AgevsSexe_Canada)),rep("Femmes",nrow(AgevsSexe_Canada)))))
 tapply(donnees$Taux,donnees$Type,mean)
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 pie(colSums(AgevsSexe_Canada),labels=levels(donnees$Type),col=c("white","#00FFFF","black","#00FFFF"),border=c("black","#00FFFF","black","#00FFFF"),density=25,cex=1.2)
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 dotplot(colSums(AgevsSexe_Canada),labels=levels(donnees$Type),col=c("black","black","black","black"),border=c("black","black","black","black"),density=25,cex=1.2, xlab = "Effectifs")
 ```
@@ -869,7 +873,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 sumdat<-data.frame(Âge=rep((0:19)*5+2.5,rowSums(AgevsSexe_Canada)))
 histogram(~Âge,data=sumdat,breaks=(0:20)*5)
 ```
@@ -887,7 +891,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 fulldat<-data.frame(Âge=c(rep((0:19)*5+2.5,AgevsSexe_Canada[,1]),
                           rep((0:19)*5+2.5,AgevsSexe_Canada[,2])
                           ),
@@ -910,7 +914,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 TauxQuali <- cut(fulldat$Âge,breaks=(0:20)*5)
 #split(fulldat$Type,TauxQuali)
 sapply(split(fulldat$Type,TauxQuali),table)
@@ -934,14 +938,14 @@ dev.off()
 
 ## Classe age vs Provinces et territoires Canada (Quali-Quanti)
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(AgevsProter_Canada_full)
 AgevsProter_Canada <- AgevsProter_Canada_full[-nrow(AgevsProter_Canada_full),]
 AgevsProter_Canada
 ```
 
 ### Distribution conditionnelle
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 donnees = data.frame(
   Âge=c(AgevsProter_Canada$Terre.Neuve.et.Labrador,AgevsProter_Canada$Île.du.Prince.Édouard,AgevsProter_Canada$Nouvelle.Écosse,AgevsProter_Canada$Nouveau.Brunswick,AgevsProter_Canada$Québec,AgevsProter_Canada$Ontario,AgevsProter_Canada$Manitoba,AgevsProter_Canada$Saskatchewan,AgevsProter_Canada$Alberta,AgevsProter_Canada$Colombie.Britannique,AgevsProter_Canada$Yukon,AgevsProter_Canada$TerritoiresduNord.Ouest,AgevsProter_Canada$Nunavut),
   Type=factor(
@@ -962,7 +966,7 @@ donnees = data.frame(
 tapply(donnees$Âge,donnees$Type,mean)
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 nameXlit <- c("Terre Neuve et Labrador",
   "Île du Prince Édouard",
   "Nouvelle Écosse",
@@ -979,13 +983,13 @@ nameXlit <- c("Terre Neuve et Labrador",
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 pie(colSums(AgevsProter_Canada),labels=nameXlit,col=c("white","#00FFFF","black","#00FFFF"),border=c("black","#00FFFF","black","#00FFFF"),density=25,cex=.6)
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 dotplot(colSums(AgevsProter_Canada),labels=levels(donnees$Type),col=c("black","black","black","black"),border=c("black","black","black","black"),density=25,cex=1.2)
 ```
@@ -1010,7 +1014,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 sumdat<-data.frame(Âge=rep((0:19)*5+2.5,rowSums(AgevsProter_Canada)))
 histogram(~Âge,data=sumdat,breaks=(0:20)*5)
 ```
@@ -1030,7 +1034,7 @@ dev.off()
 
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 fulldat<-data.frame(Âge=c(rep((0:19)*5+2.5,AgevsProter_Canada[,1]),
                           rep((0:19)*5+2.5,AgevsProter_Canada[,2]),
                           rep((0:19)*5+2.5,AgevsProter_Canada[,3]),
@@ -1078,7 +1082,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 TauxQuali <- cut(fulldat$Âge,breaks=(0:20)*5)
 #split(fulldat$Type,TauxQuali)
 sapply(split(fulldat$Type,TauxQuali),table)
@@ -1102,7 +1106,7 @@ dev.off()
 
 
 ## Bonus Europe Siège-Voix
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(Sieges_Voix)
 
 str(Sieges_Voix)
@@ -1110,7 +1114,7 @@ summary(Sieges_Voix)
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 NameX <- Sieges_Voix$Etats.Membres
 NombreSieges <- Sieges_Voix$Sièges.au.parlement
 NombreVoix <- Sieges_Voix$Voix.au.conseil
@@ -1122,7 +1126,7 @@ NombreSieges
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 Année <- Sieges_Voix$Date.entrée
 Pays <- NameX 
 Europ <- rbind(NombreSieges,NombreVoix)
@@ -1130,30 +1134,33 @@ colnames(Europ) <- Pays
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 margin.table(Europ)
 margin.table(Europ,1)
 margin.table(Europ,2)
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 margX <- margin.table(Europ,1)
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 mp <- barplot(margX, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25) # default
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 margY <- margin.table(Europ,2)
 par(mar = c(9.1, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 mp <- barplot(margY, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25,las=3) # default
 ```
 
-```{r, cache=TRUE}
-layout((1:2))
+```{r, eval=LOCAL, cache=TRUE}
 margX <- margin.table(Europ,1)
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
-mp <- barplot(margX, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25) # default
+mp <- barplot(margX, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25) 
+```
+
+
+```{r, eval=LOCAL, cache=TRUE}
 margY <- margin.table(Europ,2)
 par(mar = c(9.1, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 mp <- barplot(margY, beside=FALSE, args.legend=list(x="topright"),col=c("black","cyan","black","cyan"),density=25,las=3) # default
@@ -1199,13 +1206,13 @@ mp <- barplot(margY, beside=FALSE, args.legend=list(x="topright"),col=c("black",
 dev.off()
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 freqcondX <- prop.table(Europ,1) #Y|X
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 mp <- barplot(t(freqcondX), beside=TRUE, legend = colnames(Europ), ylim = c(0, .35), args.legend=list(x="top", ncol=3)) # default
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 freqcondY <- prop.table(Europ,2) #Y|X
 par(mar = c(9.1, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 mp <- barplot(freqcondY, beside=TRUE, legend = rownames(Europ), ylim = c(0, .95), args.legend=list(x="top", ncol=2),las=3) # default
@@ -1235,14 +1242,14 @@ mp <- barplot(freqcondY, beside=TRUE, legend = rownames(Europ), ylim = c(0, .85)
 dev.off()
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 freqcondX <- prop.table(Europ,1) #Y|X
 par(mar = c(3, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 mp <- barplot(t(freqcondX), beside=FALSE, legend = colnames(Europ), ylim = c(0, 1.6), args.legend=list(x="top", ncol=3),yaxt="n") # default
 axis(2, at=0:5*.2)
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 freqcondY <- prop.table(Europ,2) #Y|X
 par(mar = c(9.1, 3, 1, 1) + 0.1, mgp = c(2, 1, 0))
 mp <- barplot(freqcondY, beside=FALSE, legend = rownames(Europ), ylim = c(0, 1.3), args.legend=list(x="top", ncol=4),yaxt="n",las=3) # default
@@ -1280,13 +1287,13 @@ dev.off()
 # Muldimensionnel
 
 ## ggpairs
-```{r}
+```{r, eval=LOCAL}
 if(!("GGally" %in% installed.packages())){install.packages("GGally")}
 library(GGally)
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 ggpairs(iris, progress = FALSE)
 ```
 
@@ -1298,7 +1305,7 @@ ggsave(filename = paste(Chemin,"Iris_ggpairs.pdf",sep=""),
        width = 16, height = 10, onefile = TRUE, family = "Helvetica", title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(Europe)
 ggpairs(Europe[,-1], progress = FALSE)
 ```
@@ -1312,7 +1319,7 @@ ggsave(filename = paste(Chemin,"Europe_ggpairs.pdf",sep=""),
     title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(HospitFull)
 
 ggpairs(HospitFull[,-c(1,2)], progress = FALSE)
@@ -1328,7 +1335,7 @@ ggsave(filename = paste(Chemin,"Hospit_ggpairs.pdf",sep=""),
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 ggpairs(HospitFull[,-c(1,2)]/HospitFull[,2], progress = FALSE)
 ```
 
@@ -1341,7 +1348,7 @@ ggsave(filename = paste(Chemin,"Hospit_Norm_ggpairs.pdf",sep=""),
     title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(ReaFull)
 
 ggpairs(ReaFull[,-c(1,2)], progress = FALSE)
@@ -1357,7 +1364,7 @@ ggsave(filename = paste(Chemin,"Rea_ggpairs.pdf",sep=""),
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 ggpairs(ReaFull[,-c(1,2)]/ReaFull[,2], progress = FALSE)
 ```
 
@@ -1372,15 +1379,30 @@ ggsave(filename = paste(Chemin,"Rea_Norm_ggpairs.pdf",sep=""),
 
 
 ## Radar Plots
-```{r}
+
+```{r, eval=LOCAL}
+if(!("ggplot2" %in% installed.packages())){install.packages("ggplot2")}
+library(ggplot2)
+if(!("ggiraphExtra" %in% installed.packages())){install.packages("ggiraphExtra")}
+library(ggiraphExtra)
+ggiraphExtra::ggRose(rose,ggplot2::aes(x=Month,fill=group,y=value),stat="identity",interactive=TRUE)
+```
+
+```{r, eval=LOCAL}
+if(!("moonBook" %in% installed.packages())){install.packages("moonBook")}
+library(moonBook)
+ggiraphExtra::ggRose(acs,ggplot2::aes(x=Dx,fill=smoking),interactive=TRUE)
+```
+
+```{r, eval=LOCAL}
+ggiraphExtra::ggRadar(iris,aes(group=Species),rescale=TRUE)
+```
+
+```{r, eval=LOCAL}
 if(!("ggplot2" %in% installed.packages())){install.packages("ggplot2")}
 library(ggplot2)
 if(!("ggradar" %in% installed.packages())){
-install.packages("extrafont")
-download.file("https://dl.dropboxusercontent.com/u/2364714/airbnb_ttf_fonts/Circular Air-Light 3.46.45 PM.ttf", "/Library/Fonts/Circular Air-Light 3.46.45 PM.ttf", method="curl")
-extrafont::font_import(pattern = 'Circular', prompt=FALSE)
 devtools::install_github("ricardo-bion/ggradar", dependencies=TRUE)
-library(ggradar)
 }
 library(ggradar)
 if(!("dplyr" %in% installed.packages())){install.packages("dplyr")}
@@ -1389,7 +1411,8 @@ if(!("scales" %in% installed.packages())){install.packages("scales")}
 library(scales)
 ```
 
-```{r, cache=TRUE}
+
+```{r, eval=LOCAL, cache=TRUE}
 ggradar(data.frame(levels(iris[,5]),t(simplify2array(lapply(split(iris[,-5],iris[,5]),colMeans))/apply(simplify2array(lapply(split(iris[,-5],iris[,5]),colMeans)),1,max))),axis.labels = c("Sepal Length","Sepal\nWidth","Petal Length","Petal\nWidth"))
 ```
 
@@ -1401,7 +1424,7 @@ ggsave(filename = paste(Chemin,"Iris_ggradar.pdf",sep=""),
        width = 8, height = 7, onefile = TRUE, family = "Helvetica", title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(Europe)
 
 Europe_rad <- Europe[,-1]
@@ -1424,7 +1447,7 @@ ggsave(filename = paste(Chemin,"Europe_ggradar.pdf",sep=""),
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(HospitFull)
 Hospit=cbind(Région=(HospitFull$Région)[-nrow(HospitFull)],HospitFull[-nrow(ReaFull),-c(1,2)])
 summary(Hospit)
@@ -1449,7 +1472,7 @@ ggsave(filename = paste(Chemin,"Hospit_ggradar.pdf",sep=""),
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(ReaFull)
 Rea=cbind(Région=(ReaFull$Région)[-nrow(ReaFull)],ReaFull[-nrow(ReaFull),-c(1,2)])
 summary(Rea)
@@ -1476,29 +1499,29 @@ ggsave(filename = paste(Chemin,"Rea_ggradar.pdf",sep=""),
 
 
 ## Chernov Faces
-```{r}
+```{r, eval=LOCAL}
 if(!("DescTools" %in% installed.packages())){install.packages("DescTools")}
 library(DescTools)
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 PlotFaces(rbind(1:3,5:3,3:5,5:7))
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(longley)
 PlotFaces(longley[1:9,])
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 set.seed(17)
 PlotFaces(matrix(sample(1:1000,128,), 16, 8), main="random faces")
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 means <- lapply(iris[,-5], tapply, iris$Species, mean)
 m <- t(do.call(rbind, means))
 m <- cbind(m, matrix(rep(1, 11*3), nrow=3))
@@ -1528,7 +1551,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(Europe)
 
 means <- lapply(Europe[,-1], tapply, Europe$Etats.membres, mean)
@@ -1560,7 +1583,7 @@ PlotFaces(m, nr=6, nc=6, col=col)
 dev.off()
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(ReaFull)
 Rea=cbind(Région=(ReaFull$Région)[-nrow(ReaFull)],ReaFull[-nrow(ReaFull),-c(1,2)])
 summary(Rea)
@@ -1601,7 +1624,7 @@ dev.off()
 
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(ReaFull)
 Rea=cbind(Région=(ReaFull$Région)[-nrow(ReaFull)],ReaFull[-nrow(ReaFull),-c(1,2)]/((ReaFull$Tous.âges)[-nrow(ReaFull)]))
 summary(Rea)
@@ -1641,7 +1664,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(HospitFull)
 Hospit=cbind(Région=(HospitFull$Région)[-nrow(HospitFull)],HospitFull[-nrow(HospitFull),-c(1,2)])
 summary(Hospit)
@@ -1682,7 +1705,7 @@ dev.off()
 
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(HospitFull)
 Hospit=cbind(Région=(HospitFull$Région)[-nrow(HospitFull)],HospitFull[-nrow(HospitFull),-c(1,2)]/((HospitFull$Tous.âges)[-nrow(HospitFull)]))
 summary(Hospit)
@@ -1725,7 +1748,7 @@ dev.off()
 
 # Mesures de liaison
 ## Salariés*Non-salariés (Quanti-Quanti)
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(Europe)
 
 sum((Europe$Salariés-mean(Europe$Salariés))*(Europe$NonSalariés-mean(Europe$NonSalariés)))/nrow(Europe)
@@ -1742,7 +1765,7 @@ cov(Europe$Salariés,Europe$NonSalariés)*(nrow(Europe)-1)/nrow(Europe)/(sqrt(su
 cor(Europe$Salariés,Europe$NonSalariés)
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 
 c(Europe$Partiel_Ens,Europe$Partiel_H,Europe$Partiel_F)
 factor(c(rep("Ensemble",length(Europe$Partiel_Ens)),rep("Hommes",length(Europe$Partiel_H)),rep("Femmes",length(Europe$Partiel_F))))
@@ -1763,12 +1786,12 @@ var(tapply(donnees$Taux,donnees$Type,mean))*(nlevels(donnees$Type)-1)/nlevels(do
 
 
 ## Provinces et territoires vs Sexe Canada (Quali-Quali)
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(ProtervsSexe_Canada)
 ```
 
 ### Association
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 ProtervsSexe_Canada.table <- as.table(as.matrix(ProtervsSexe_Canada))
 aaa=chisq.test(ProtervsSexe_Canada.table)
 aaa$expected
@@ -1777,7 +1800,7 @@ aaa$statistic/(sum(ProtervsSexe_Canada.table))
 ```
 
 ## OCDE Secteur (Quali-Quali)
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(Secteur)
 
 rownames(Secteur) <- Secteur$PAYS
@@ -1797,14 +1820,14 @@ bbb$statistic/(sum(Secteur.table))
 
 
 ## Taux partiel ANOVA (Quali-Quanti)
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(Europe)
 
 donnees = data.frame(Taux=c(Europe$Partiel_Ens,Europe$Partiel_H,Europe$Partiel_F),Type=factor(c(rep("Ensemble",nrow(Europe)),rep("Hommes",nrow(Europe)),rep("Femmes",nrow(Europe)))))
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 tapply(donnees$Taux,donnees$Type,mean)
 
 var(tapply(donnees$Taux,donnees$Type,mean))*(nlevels(donnees$Type)-1)/nlevels(donnees$Type)
@@ -1821,7 +1844,7 @@ summary(lm(Taux~Type,data=donnees))
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 pie(table(donnees$Type),labels=levels(donnees$Type),col=c("white","#00FFFF","black","#00FFFF"),border=c("black","#00FFFF","black","#00FFFF"),density=25,cex=1.2)
 ```
@@ -1846,7 +1869,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 histogram(~Taux,data=donnees,breaks=c(0,10,20,30,40,50,60,70,80))
 ```
 
@@ -1863,7 +1886,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 histogram(~Taux|Type,data=donnees,breaks=c(0,10,20,30,40,50,60,70,80))
 ```
 
@@ -1880,7 +1903,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 TauxQuali <- cut(donnees$Taux,c(0,10,20,30,40,50,60,70,80))
 split(donnees$Type,TauxQuali)
 sapply(split(donnees$Type,TauxQuali),table)
@@ -1905,7 +1928,7 @@ dev.off()
 
 
 ## Iris Fisher (Quali-Quanti)
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 data(iris)
 colmodel="cmyk"
 
@@ -1913,7 +1936,7 @@ donnees = iris[,c(1,5)]
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 tapply(donnees$Sepal.Length,donnees$Species,mean)
 
 var(tapply(donnees$Sepal.Length,donnees$Species,mean))*(nlevels(donnees$Species)-1)/nlevels(donnees$Species)
@@ -1930,7 +1953,7 @@ summary(lm(Sepal.Length~Species,data=donnees))
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 pie(table(donnees$Species),labels=levels(donnees$Species),col=c("white","#00FFFF","black","#00FFFF"),border=c("black","#00FFFF","black","#00FFFF"),density=25,cex=1.2)
 ```
@@ -1954,7 +1977,7 @@ dotplot(table(donnees$Species),labels=levels(donnees$Species),col=c("#00FFFF","#
 dev.off()
 ```
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 histogram(~Sepal.Length,data=donnees,breaks=c(4.3,4.75,5.2,5.65,6.1,6.55,7,7.45,7.9))
 ```
 
@@ -1971,7 +1994,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 histogram(~Sepal.Length|Species,data=donnees,breaks=c(4.3,4.75,5.2,5.65,6.1,6.55,7,7.45,7.9))
 ```
 

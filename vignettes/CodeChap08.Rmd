@@ -3,27 +3,31 @@ title: "Chapitre 08. Introduction à la théorie des probabilités aux distribut
 subtitle: "Tout le code avec R. <img src='../man/figures/logo.png' align='right' width='200'/>"
 author: "F. Bertrand et M. Maumy"
 date: "`r Sys.Date()`"
-output:
-  prettydoc::html_pretty:
-    theme: architect
-    highlight: github
-    toc: true
+output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Chapitre 8. Introduction à la théorie des probabilités aux distributions statistiques classiques.}
+  %\VignetteIndexEntry{Chapitre 08. Introduction à la théorie des probabilités aux distributions statistiques classiques.}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, echo=FALSE}
 #file.edit(normalizePath("~/.Renviron"))
-LOCAL <- identical(Sys.getenv("LOCAL"), "true")
+LOCAL <- identical(Sys.getenv("LOCAL"), "TRUE")
+#, eval = LOCAL for skip on CRAN test
+#LOCAL=FALSE
+#knitr::opts_chunk$set(purl = LOCAL, eval=LOCAL)
 knitr::opts_chunk$set(purl = LOCAL)
-NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "TRUE")
 knitr::opts_chunk$set(purl = NOT_CRAN)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
 SAVE_GRAPHS=FALSE
 ```
 
-```{r}
+
+```{r, eval=LOCAL}
 if(!("SEGR" %in% installed.packages())){install.packages("SEGR")}
 library(SEGR)
 ```
@@ -31,7 +35,7 @@ library(SEGR)
 # Exemple fonction de probabilité et fonction de répartition d'une v.a. discrète finie
 
 
-```{r, cache=TRUE, message=FALSE, warning=FALSE}
+```{r, eval=LOCAL, cache=TRUE, message=FALSE, warning=FALSE}
 if(!("spatstat" %in% installed.packages())){install.packages("spatstat")}
 library(spatstat)
 if(!("ggplot2" %in% installed.packages())){install.packages("ggplot2")}
@@ -40,7 +44,7 @@ source("https://raw.githubusercontent.com/NicolasWoloszko/stat_ecdf_weighted/mas
 ```
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 xp <- data.frame(cbind(x=c(1,7/3,4,13/2),p=c(1/6,1/6,1/6,1/2),sp=c(1/6,1/3,1/2,1)))
 ggplot(aes(x=x),data = xp)  + geom_point(aes(y=sp),data = xp,col="#00FFFF") + geom_bar(aes(y=p), width=.025, stat="identity") + xlim(0,8) + ylab("Probabilité") + stat_ecdf(aes(x=x,weight=p),geom = "step",col="#00FFFF", lty=2)+ geom_point(aes(y=p),data = xp)+ annotate("text", x = .5, y = .95,
   label = paste(expression(p[X])),
@@ -67,7 +71,7 @@ ggsave(filename = paste(Chemin,"exemple_probas_2.pdf",sep=""),
 # Exemple fonction de probabilité et fonction de répartition d'une v.a. continue
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 library(ggplot2)
 densx = function(x) return((x>=0)*(x<=1)*2*x)
 ggplot() + xlim(-.5, 1.5) + ylim(0, 2) + geom_function(fun = densx, n=10^4, lwd=1)+ ylab("Densité de probabilité")
@@ -91,7 +95,7 @@ ggsave(filename = paste(Chemin,"exemple_probas_dens_cont_2.pdf",sep=""),
 
 
 
-```{r, cache=TRUE}
+```{r, eval=LOCAL, cache=TRUE}
 library(ggplot2)
 Frepx = function(x) return((x>=0)*(x<=1)*x^2+(x>=1))
 ggplot() + xlim(-.5, 1.5) + ylim(0, 1) + geom_function(fun = Frepx, n=10^4, lwd=1)+ ylab("Probabilité cumulée")
@@ -119,7 +123,7 @@ ggsave(filename = paste(Chemin,"exemple_probas_frep_cont_2.pdf",sep=""),
 
 
 
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 ramp <- colorRamp(c("cyan", "white"))
 colmagentas <- rgb(ramp(seq(0, 1, length = 3)), max = 255)
 colmagentas <- c("#000000","#00FFFF","#00FFFF","#00FFFF")
@@ -135,7 +139,7 @@ Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/LoisCouleur/"
 
 # Discrètes
 ## discunif
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "discunif"
 infx=0;supx=7;
 infy=0;supy=0.65;
@@ -174,7 +178,7 @@ dev.off()
 ```
 
 ## bernoulli
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "bernoulli"
 infx=0;supx=1;
 infy=0;supy=1;
@@ -210,7 +214,7 @@ dev.off()
 ```
 
 ## binomiale_sym
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "binomiale_sym"
 infx=0;supx=20;
 infy=0;supy=0.40;
@@ -248,7 +252,7 @@ dev.off()
 ```
 
 ## binomiale_asym
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "binomiale_asym"
 infx=0;supx=20;
 infy=0;supy=0.40;
@@ -286,7 +290,7 @@ dev.off()
 ```
 
 ## geom
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "geom"
 infx=0;supx=10;
 infy=0;supy=1;
@@ -324,7 +328,7 @@ dev.off()
 ```
 
 ## neg_binomiale_sym
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "neg_binomiale_sym"
 infx=0;supx=20;
 infy=0;supy=0.30;
@@ -362,7 +366,7 @@ dev.off()
 ```
 
 ## neg_binomiale_asym
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "neg_binomiale_asym"
 infx=0;supx=20;
 infy=0;supy=0.25;
@@ -400,7 +404,7 @@ dev.off()
 ```
 
 ## pascal_sym
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "pascal_sym"
 infx=0;supx=20;
 infy=0;supy=0.3;
@@ -440,7 +444,7 @@ dev.off()
 ```
 
 ## pascal_asym
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "pascal_asym"
 infx=0;supx=20;
 infy=0;supy=0.3;
@@ -480,7 +484,7 @@ dev.off()
 ```
 
 ## hyper_N
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "hyper_N"
 infx=0;supx=10;
 infy=0;supy=0.5;
@@ -524,7 +528,7 @@ dev.off()
 ```
 
 ## hyper_nn
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "hyper_nn"
 infx=0;supx=15;
 infy=0;supy=0.4;
@@ -563,7 +567,7 @@ dev.off()
 ```
 
 ## hyper_p
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "hyper_p"
 infx=0;supx=10;
 infy=0;supy=0.55;
@@ -603,7 +607,7 @@ dev.off()
 ```
 
 ## arret_fini_N
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "arret_fini_N"
 infx=0;supx=10;
 infy=0;supy=0.6;
@@ -644,7 +648,7 @@ dev.off()
 ```
 
 ## arret_fini_p
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "arret_fini_p"
 infx=0;supx=10;
 infy=0;supy=0.8;
@@ -685,7 +689,7 @@ dev.off()
 ```
 
 ## poisson
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "poisson"
 infx=0;supx=10;
 infy=0;supy=1;
@@ -726,7 +730,7 @@ dev.off()
 
 # Continue
 ## unif
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "unif"
 fdunif <- function(x) {dunif(x,-2,2)}
 curve(fdunif,from=-3,to=3,type="n",ylab="",xlab="",lty=1,lwd=3,cex.axis=2)
@@ -750,7 +754,7 @@ dev.off()
 ```
 
 Œ
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 frunif <- function(x) {punif(x,-2,2)}
 curve(frunif,from=-3,to=3,ylab="",xlab="",lty=1,lwd=3,cex.axis=2)
 ```
@@ -769,7 +773,7 @@ dev.off()
 ```
 
 ## exp
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "exp"
 infx=-1;supx=3;
 fd <- function(x) {dexp(x,2)}
@@ -814,7 +818,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-1;supx=3;
 fr <- function(x) {pexp(x,2)}
 curve(fr,from=infx,to=supx,ylab="",xlab="",lty=4,lwd=3,col=colmagentas[1],type="n",cex.axis=2)
@@ -858,7 +862,7 @@ dev.off()
 ```
 
 ## gamma_r
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "gamma_r"
 infx=-1;supx=3;
 fd <- function(x) {dgamma(x,0.75)}
@@ -907,7 +911,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-1;supx=3;
 fr <- function(x) {pgamma(x,0.75)}
 curve(fr,from=infx,to=supx,ylab="",xlab="",lty=1,lwd=3,col=colmagentas[1],type="n",cex.axis=2)
@@ -956,7 +960,7 @@ dev.off()
 ```
 
 ## gamma_lambda
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "gamma_lambda"
 infx=-1;supx=3;
 fd <- function(x) {dgamma(x,1.5,2)}
@@ -1005,7 +1009,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-1;supx=3;
 fr <- function(x) {pgamma(x,1.5,2)}
 curve(fr,from=infx,to=supx,ylab="",xlab="",lty=1,lwd=3,col=colmagentas[1],type="n",cex.axis=2)
@@ -1054,7 +1058,7 @@ dev.off()
 ```
 
 ## beta_pic
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "beta_pic"
 infx=-0.25;supx=1.25;
 fd <- function(x) {dbeta(x,20,20)}
@@ -1111,7 +1115,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-0.25;supx=1.25;
 fr <- function(x) {pbeta(x,20,20)}
 curve(fr,from=infx,to=supx,ylab="",xlab="",lty=1,lwd=3,col=colmagentas[1],type="n",cex.axis=2)
@@ -1167,7 +1171,7 @@ dev.off()
 ```
 
 ## beta_asym
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "beta_asym"
 infx=-0.25;supx=1.25;
 fd <- function(x) {dbeta(x,8,1)}
@@ -1224,7 +1228,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-0.25;supx=1.25;
 fr <- function(x) {pbeta(x,8,1)}
 curve(fr,from=infx,to=supx,ylab="",xlab="",lty=1,lwd=3,col=colmagentas[1],type="n",cex.axis=2)
@@ -1280,7 +1284,7 @@ dev.off()
 ```
 
 ## normal_mu
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "normal_mu"
 infx=-6;supx=7;
 fd <- function(x) {dnorm(x,4,1)}
@@ -1315,7 +1319,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-6;supx=7;
 fr <- function(x) {pnorm(x,4,1)}
 curve(fr,from=infx,to=supx,ylab="",xlab="",lty=1,lwd=3,col=colmagentas[1],type="n",cex.axis=2)
@@ -1350,7 +1354,7 @@ dev.off()
 ```
 
 ## normal_sigma
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "normal_sigma"
 infx=-6;supx=6;
 fd <- function(x) {dnorm(x,0,1/2)}
@@ -1385,7 +1389,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-6;supx=6;
 fr <- function(x) {pnorm(x,0,1/2)}
 curve(fr,from=infx,to=supx,ylab="",xlab="",lty=1,lwd=3,col=colmagentas[1],type="n",cex.axis=2)
@@ -1420,7 +1424,7 @@ dev.off()
 ```
 
 ## chisqr
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "chisqr"
 infx=-1;supx=9;
 fd <- function(x) {dchisq(x,1)}
@@ -1469,7 +1473,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-1;supx=9;
 fr <- function(x) {pchisq(x,1)}
 curve(fr,from=infx,to=supx,ylab="",xlab="",lty=1,lwd=3,col=colmagentas[1],type="n",cex.axis=2)
@@ -1518,7 +1522,7 @@ dev.off()
 ```
 
 ## fisher_sym
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "fisher_sym"
 infx=-0.25;supx=2;
 fd <- function(x) {df(x,1,1)}
@@ -1567,7 +1571,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-1;supx=5;
 fr <- function(x) {pf(x,50,50)}
 curve(fr,from=infx,to=supx,ylab="",xlab="",lty=1,lwd=3,col=colmagentas[1],type="n",cex.axis=2)
@@ -1616,7 +1620,7 @@ dev.off()
 ```
 
 ## fisher_asyme
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "fisher_asyme"
 infx=-0.5;supx=3;
 fd <- function(x) {df(x,10,5000)}
@@ -1665,7 +1669,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-1;supx=5;
 fr <- function(x) {pf(x,10,5000)}
 curve(fr,from=infx,to=supx,ylab="",xlab="",lty=1,lwd=3,col=colmagentas[1],type="n",cex.axis=2)
@@ -1714,7 +1718,7 @@ dev.off()
 ```
 
 ## student
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "student"
 infx=-4;supx=4;
 fd <- function(x) {dnorm(x)}
@@ -1757,7 +1761,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-4;supx=4;
 fr <- function(x) {pnorm(x)}
 curve(fr,from=infx,to=supx,ylab="",xlab="",lty=5,lwd=3,add=F,col=colmagentas[1],cex.axis=2)
@@ -1796,7 +1800,7 @@ dev.off()
 ```
 
 ## cauchy_x
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "cau_x"
 infx=-3;supx=6;
 fd <- function(x) {dcauchy(x,-1)}
@@ -1837,7 +1841,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-3;supx=6;
 fr <- function(x) {pcauchy(x,-1)}
 curve(fr,from=infx,to=supx,ylab="",xlab="",lty=1,lwd=3,col=colmagentas[1],type="n",cex.axis=2)
@@ -1878,7 +1882,7 @@ dev.off()
 ```
 
 ## cauchy_a
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "cau_a"
 infx=-4;supx=4;
 fd <- function(x) {dcauchy(x,0,2/3)}
@@ -1919,7 +1923,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-4;supx=4;
 fd <- function(x) {pcauchy(x,0,2/3)}
 curve(fd,from=infx,to=supx,ylab="",xlab="",lty=1,lwd=3,col=colmagentas[1],type="n",cex.axis=2)
@@ -1959,7 +1963,7 @@ dev.off()
 ```
 
 ## pareto_xm
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 library(VGAM)
 LOI <- "par_xm"
 infx=0;supx=5;
@@ -2001,7 +2005,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=0;supx=5;
 fr <- function(x) {ppareto(x,1,1)}
 curve(fr,from=infx,to=supx,ylab="",xlab="",lty=1,lwd=3,col=colmagentas[1],type="n",cex.axis=2)
@@ -2042,7 +2046,7 @@ dev.off()
 ```
 
 ## pareto_alpha
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "par_alpha"
 infx=0;supx=5;
 fd <- function(x) {dpareto(x,1,3/2)}
@@ -2083,7 +2087,7 @@ dev.off()
 ```
 
 
-```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=0;supx=5;
 fr <- function(x) {ppareto(x,1,3/2)}
 curve(fr,from=infx,to=supx,ylab="",xlab="",lty=1,lwd=3,col=colmagentas[1],type="n",cex.axis=2)
