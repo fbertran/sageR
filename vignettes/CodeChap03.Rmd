@@ -58,11 +58,19 @@ Emploi par niveau d’études (indicateur). OCDE (2021) [doi: 10.1787/6e3d44f3-f
 
 Cet indicateur fournit les taux d’emploi selon le niveau d’études : premier cycle du second degré, deuxième cycle du second degré, supérieur. Le taux d’emploi est le pourcentage d’actifs occupés dans la population en âge de travailler. Les actifs occupés sont les personnes qui travaillent au moins une heure par semaine en tant que salarié ou à titre lucratif, ou qui ont un emploi mais sont temporairement absentes de leur travail pour maladie, congé ou conflit social. Cet indicateur donne le pourcentage des actifs occupés âgés de 25 à 64 ans dans la population des individus âgés de 25 à 64 ans.
 
+* Part du revenu national total équivalent en Euro en 2019. Répartitition du revenu par quantiles - enquêtes EU-SILC et PCM (ILC_DI01).
+
 ## INSEE
 
 * Ménages par taille du ménage,
 
 MEN4 - Ménages par taille du ménage, sexe et âge de la personne de référence en 2017. France métropolitaine. Insee.
+
+## Données Covid officielles 
+
+* Répartition par région française du nombre de personnes hospitalisées et atteintes du Covid 19 le 21 février 2021.
+
+* Répartition par région française du nombre de personne en réanimation et atteintes du Covid 19 le 21 février 2021.
 
 
 ```{r, eval=LOCAL}

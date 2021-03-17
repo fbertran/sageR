@@ -3,18 +3,20 @@
 \docType{data}
 \name{Total_Secteur}
 \alias{Total_Secteur}
-\title{Nombre de personnes dans un foyer}
+\title{Emploi total par secteur dans les pays de l'OCDE en 2020-Q3.}
 \format{
-Un jeu de données avec 6 observations de 2 variables \code{xi} et \code{ni}.
+Un jeu de données avec 5 observations de 3 variables.
 \describe{
-\item{xi}{Nombres de personnes dans un foyer}
-\item{ni}{Nombres de foyers}
+\item{Secteur}{Acronyme du secteur d'actvité}
+\item{NameX}{Nom du secteur d'actvité}
+\item{Effectif}{Nombres de personnes}
 }
 }
 \usage{
 Total_Secteur
 }
 \description{
-Ménages par taille du ménage en 2017, source INSEE.
+Emploi total par secteur d'activité (indicateur). OCDE (2021). \href{https://doi.org/10.1787/6b2fff89-fr}{doi: 10.1787/6b2fff89-fr}. (Consulté le 11 février 2021).
+L'industrie (\code{INDUSwithoutCONSTR}) désigne l'activité industrielle \emph{SANS} la construction.
 }
 \keyword{datasets}

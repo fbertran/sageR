@@ -3,18 +3,18 @@
 \docType{data}
 \name{Total_Pays}
 \alias{Total_Pays}
-\title{Nombre de personnes dans un foyer}
+\title{Emploi total par pays dans les pays de l'OCDE en 2020-Q3.}
 \format{
-Un jeu de données avec 6 observations de 2 variables \code{xi} et \code{ni}.
+Un jeu de données avec 34 observations de 2 variables.
 \describe{
-\item{xi}{Nombres de personnes dans un foyer}
-\item{ni}{Nombres de foyers}
+\item{NameX}{Acronyme du pays}
+\item{Effectif}{Nombres de personnes}
 }
 }
 \usage{
 Total_Pays
 }
 \description{
-Ménages par taille du ménage en 2017, source INSEE.
+Emploi total par pays (indicateur). OCDE (2021). \href{https://doi.org/10.1787/6b2fff89-fr}{doi: 10.1787/6b2fff89-fr}. (Consulté le 11 février 2021).
 }
 \keyword{datasets}

@@ -55,15 +55,25 @@
 "Europe"
 #> [1] "Europe"
 
-#' Nombre de personnes dans un foyer
+#' Personnes hospitalisées atteintes de la Covid 19 (21/02/2021)
 #'
-#' Ménages par taille du ménage en 2017, source INSEE.
+#' Répartition par région française du nombre de personnes hospitalisées et atteintes du Covid 19 le 21 février 2021.
 #'
 #' @docType data
-#' @format Un jeu de données avec 6 observations de 2 variables `xi` et `ni`.
+#' @format Un jeu de données avec 19 observations de 12 variables.
 #' \describe{
-#'   \item{xi}{Nombres de personnes dans un foyer}
-#'   \item{ni}{Nombres de foyers}
+#'   \item{Région}
+#'   \item{Tous.âges}
+#'   \item{X0.9}
+#'   \item{X11.19}
+#'   \item{X20.29}
+#'   \item{X30.39}
+#'   \item{X40.49}
+#'   \item{X50.59}
+#'   \item{X60.69}
+#'   \item{X70.79}
+#'   \item{X80.89}
+#'   \item{X90.}
 #' }
 "HospitFull"
 #> [1] "HospitFull"
@@ -122,41 +132,90 @@
 "ProtervsSexe_Canada"
 #> [1] "ProtervsSexe_Canada"
 
-#' Nombre de personnes dans un foyer
+#' Personnes en réanimation atteintes de la Covid 19 (21/02/2021)
 #'
-#' Ménages par taille du ménage en 2017, source INSEE.
+#' Répartition par région française du nombre de personne en réanimation et atteintes de la Covid 19 le 21 février 2021.
 #'
 #' @docType data
-#' @format Un jeu de données avec 6 observations de 2 variables `xi` et `ni`.
+#' @format Un jeu de données avec 19 observations de 12 variables.
 #' \describe{
-#'   \item{xi}{Nombres de personnes dans un foyer}
-#'   \item{ni}{Nombres de foyers}
+#'   \item{Région}
+#'   \item{Tous.âges}
+#'   \item{X0.9}
+#'   \item{X11.19}
+#'   \item{X20.29}
+#'   \item{X30.39}
+#'   \item{X40.49}
+#'   \item{X50.59}
+#'   \item{X60.69}
+#'   \item{X70.79}
+#'   \item{X80.89}
+#'   \item{X90.}
 #' }
 "ReaFull"
 #> [1] "ReaFull"
 
-#' Nombre de personnes dans un foyer
+#' Part du revenu national total équivalent	en Euro en 2019
 #'
-#' Ménages par taille du ménage en 2017, source INSEE.
+#' Répartitition du revenu par quantiles - enquêtes EU-SILC et PCM (ILC_DI01).
 #'
 #' @docType data
-#' @format Un jeu de données avec 6 observations de 2 variables `xi` et `ni`.
+#' @format Un jeu de données avec 10 observations de 36 variables.
 #' \describe{
-#'   \item{xi}{Nombres de personnes dans un foyer}
-#'   \item{ni}{Nombres de foyers}
+#'   \item{"Déciles"}
+#'   \item{"Belgique"}
+#'   \item{"Bulgarie"}
+#'   \item{"Tchéquie"}
+#'   \item{"Danemark"}
+#'   \item{"Allemagne..jusqu.en.1990..ancien.territoire.de.la.RFA."}
+#'   \item{"Estonie"}
+#'   \item{"Irlande"}
+#'   \item{"Grèce"}
+#'   \item{"Espagne"}
+#'   \item{"France"}
+#'   \item{"Croatie"}
+#'   \item{"Italie"}
+#'   \item{"Chypre"}
+#'   \item{"Lettonie"}
+#'   \item{"Lituanie"}
+#'   \item{"Luxembourg"}
+#'   \item{"Hongrie"}
+#'   \item{"Malte"}
+#'   \item{"Pays.Bas"}
+#'   \item{"Autriche"}
+#'   \item{"Pologne"}
+#'   \item{"Portugal"}
+#'   \item{"Roumanie"}
+#'   \item{"Slovénie"}
+#'   \item{"Slovaquie"}
+#'   \item{"Finlande"}
+#'   \item{"Suède"}
+#'   \item{"Islande"}
+#'   \item{"Norvège"}
+#'   \item{"Suisse"}
+#'   \item{"Royaume.Uni"}
+#'   \item{"Monténégro"}
+#'   \item{"Macédoine.du.Nord"}
+#'   \item{"Serbie"}
+#'   \item{"Turquie"}
 #' }
 "Richesse"
 #> [1] "Richesse"
 
-#' Nombre de personnes dans un foyer
+#' Emploi par secteur et par pays dans les pays de l'OCDE en 2020-Q3.
 #'
-#' Ménages par taille du ménage en 2017, source INSEE.
+#' Emploi par secteur d'activité et par pays (indicateur). OCDE (2021). [doi: 10.1787/6b2fff89-fr](https://doi.org/10.1787/6b2fff89-fr). (Consulté le 11 février 2021).
+#' `INDUSCONSTR désigne l'activité industrielle *AVEC* la construction.
 #'
 #' @docType data
-#' @format Un jeu de données avec 6 observations de 2 variables `xi` et `ni`.
+#' @format Un jeu de données avec 34 observations de 6 variables .
 #' \describe{
-#'   \item{xi}{Nombres de personnes dans un foyer}
-#'   \item{ni}{Nombres de foyers}
+#'   \item{PAYS}{Nombres de personnes dans un foyer}
+#'   \item{AGR}{Nombres de foyers}
+#'   \item{CONSTR}{Nombres de foyers}
+#'   \item{INDUSCONSTR}{Nombres de foyers}
+#'   \item{MFG}{Nombres de foyers}
+#'   \item{SERV}{Nombres de foyers}
 #' }
 "Secteur"
 #> [1] "Secteur"
@@ -176,28 +235,30 @@
 "Sieges_Voix"
 #> [1] "Sieges_Voix"
 
-#' Nombre de personnes dans un foyer
+#' Emploi total par pays dans les pays de l'OCDE en 2020-Q3.
 #'
-#' Ménages par taille du ménage en 2017, source INSEE.
+#' Emploi total par pays (indicateur). OCDE (2021). [doi: 10.1787/6b2fff89-fr](https://doi.org/10.1787/6b2fff89-fr). (Consulté le 11 février 2021).
 #'
 #' @docType data
-#' @format Un jeu de données avec 6 observations de 2 variables `xi` et `ni`.
+#' @format Un jeu de données avec 34 observations de 2 variables.
 #' \describe{
-#'   \item{xi}{Nombres de personnes dans un foyer}
-#'   \item{ni}{Nombres de foyers}
+#'   \item{NameX}{Acronyme du pays}
+#'   \item{Effectif}{Nombres de personnes}
 #' }
 "Total_Pays"
 #> [1] "Total_Pays"
 
-#' Nombre de personnes dans un foyer
+#' Emploi total par secteur dans les pays de l'OCDE en 2020-Q3.
 #'
-#' Ménages par taille du ménage en 2017, source INSEE.
+#' Emploi total par secteur d'activité (indicateur). OCDE (2021). [doi: 10.1787/6b2fff89-fr](https://doi.org/10.1787/6b2fff89-fr). (Consulté le 11 février 2021).
+#' L'industrie (`INDUSwithoutCONSTR`) désigne l'activité industrielle *SANS* la construction.
 #'
 #' @docType data
-#' @format Un jeu de données avec 6 observations de 2 variables `xi` et `ni`.
+#' @format Un jeu de données avec 5 observations de 3 variables.
 #' \describe{
-#'   \item{xi}{Nombres de personnes dans un foyer}
-#'   \item{ni}{Nombres de foyers}
+#'   \item{Secteur}{Acronyme du secteur d'actvité}
+#'   \item{NameX}{Nom du secteur d'actvité}
+#'   \item{Effectif}{Nombres de personnes}
 #' }
 "Total_Secteur"
 #> [1] "Total_Secteur"

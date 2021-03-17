@@ -3,18 +3,23 @@
 \docType{data}
 \name{Secteur}
 \alias{Secteur}
-\title{Nombre de personnes dans un foyer}
+\title{Emploi par secteur et par pays dans les pays de l'OCDE en 2020-Q3.}
 \format{
-Un jeu de données avec 6 observations de 2 variables \code{xi} et \code{ni}.
+Un jeu de données avec 34 observations de 6 variables .
 \describe{
-\item{xi}{Nombres de personnes dans un foyer}
-\item{ni}{Nombres de foyers}
+\item{PAYS}{Nombres de personnes dans un foyer}
+\item{AGR}{Nombres de foyers}
+\item{CONSTR}{Nombres de foyers}
+\item{INDUSCONSTR}{Nombres de foyers}
+\item{MFG}{Nombres de foyers}
+\item{SERV}{Nombres de foyers}
 }
 }
 \usage{
 Secteur
 }
 \description{
-Ménages par taille du ménage en 2017, source INSEE.
+Emploi par secteur d'activité et par pays (indicateur). OCDE (2021). \href{https://doi.org/10.1787/6b2fff89-fr}{doi: 10.1787/6b2fff89-fr}. (Consulté le 11 février 2021).
+`INDUSCONSTR désigne l'activité industrielle \emph{AVEC} la construction.
 }
 \keyword{datasets}

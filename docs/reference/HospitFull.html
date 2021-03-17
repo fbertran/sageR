@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nombre de personnes dans un foyer — HospitFull • SEGR</title>
+<title>Personnes hospitalisées atteintes de la Covid 19 (21/02/2021) — HospitFull • SEGR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Nombre de personnes dans un foyer — HospitFull" />
-<meta property="og:description" content="Ménages par taille du ménage en 2017, source INSEE." />
+<meta property="og:title" content="Personnes hospitalisées atteintes de la Covid 19 (21/02/2021) — HospitFull" />
+<meta property="og:description" content="Répartition par région française du nombre de personnes hospitalisées et atteintes du Covid 19 le 21 février 2021." />
 <meta property="og:image" content="https://fbertran.github.io/SEGR/reference/figures/logo.png" />
 <meta property="og:image:alt" content="Statistiques pour l’économie et la gestion" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SEGR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -107,7 +107,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/CodeChap00Introduction.html">Introduction à la statistique et à son environnement.</a>
+      <a href="../articles/CodeChap00Introduction.html">Avant-propos.</a>
     </li>
     <li>
       <a href="../articles/CodeChap01.html">Chapitre 01. Introduction à la statistique et à son environnement.</a>
@@ -131,7 +131,7 @@
       <a href="../articles/CodeChap07.html">Chapitre 07. Exploration des données avec une classification automatique.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap08.html">Chapitre 8. Introduction à la théorie des probabilités aux distributions statistiques classiques.</a>
+      <a href="../articles/CodeChap08.html">Chapitre 08. Introduction à la théorie des probabilités aux distributions statistiques classiques.</a>
     </li>
     <li>
       <a href="../articles/CodeChap09.html">Chapitre 09. Inférence statistique.</a>
@@ -171,13 +171,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Nombre de personnes dans un foyer</h1>
+    <h1>Personnes hospitalisées atteintes de la Covid 19 (21/02/2021)</h1>
     <small class="dont-index">Source: <a href='https://github.com/fbertran/SEGR/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
     <div class="hidden name"><code>HospitFull.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Ménages par taille du ménage en 2017, source INSEE.</p>
+    <p>Répartition par région française du nombre de personnes hospitalisées et atteintes du Covid 19 le 21 février 2021.</p>
     </div>
 
     <pre class="usage"><span class='va'>HospitFull</span></pre>
@@ -185,10 +185,8 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>Un jeu de données avec 6 observations de 2 variables <code>xi</code> et <code>ni</code>.</p><dl>
-<dt>xi</dt><dd><p>Nombres de personnes dans un foyer</p></dd>
-<dt>ni</dt><dd><p>Nombres de foyers</p></dd>
-
+    <p>Un jeu de données avec 19 observations de 12 variables.</p><dl>
+<dt>Région</dt><dd><p></p></dd><dt>Tous.âges</dt><dd><p></p></dd><dt>X0.9</dt><dd><p></p></dd><dt>X11.19</dt><dd><p></p></dd><dt>X20.29</dt><dd><p></p></dd><dt>X30.39</dt><dd><p></p></dd><dt>X40.49</dt><dd><p></p></dd><dt>X50.59</dt><dd><p></p></dd><dt>X60.69</dt><dd><p></p></dd><dt>X70.79</dt><dd><p></p></dd><dt>X80.89</dt><dd><p></p></dd><dt>X90.</dt><dd><p></p></dd>
 </dl>
 
 
@@ -203,7 +201,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Frederic Bertrand, Myriam Maumy.</p>
+  <p>Developed by Frederic Bertrand, Myriam Maumy-Bertrand.</p>
 </div>
 
 <div class="pkgdown">

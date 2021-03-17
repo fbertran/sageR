@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nombre de personnes dans un foyer — Total_Secteur • SEGR</title>
+<title>Emploi total par secteur dans les pays de l'OCDE en 2020-Q3. — Total_Secteur • SEGR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,9 @@
 
 
 
-<meta property="og:title" content="Nombre de personnes dans un foyer — Total_Secteur" />
-<meta property="og:description" content="Ménages par taille du ménage en 2017, source INSEE." />
+<meta property="og:title" content="Emploi total par secteur dans les pays de l'OCDE en 2020-Q3. — Total_Secteur" />
+<meta property="og:description" content="Emploi total par secteur d'activité (indicateur). OCDE (2021). doi: 10.1787/6b2fff89-fr. (Consulté le 11 février 2021).
+L'industrie (INDUSwithoutCONSTR) désigne l'activité industrielle SANS la construction." />
 <meta property="og:image" content="https://fbertran.github.io/SEGR/reference/figures/logo.png" />
 <meta property="og:image:alt" content="Statistiques pour l’économie et la gestion" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -84,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SEGR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -107,7 +108,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/CodeChap00Introduction.html">Introduction à la statistique et à son environnement.</a>
+      <a href="../articles/CodeChap00Introduction.html">Avant-propos.</a>
     </li>
     <li>
       <a href="../articles/CodeChap01.html">Chapitre 01. Introduction à la statistique et à son environnement.</a>
@@ -131,7 +132,7 @@
       <a href="../articles/CodeChap07.html">Chapitre 07. Exploration des données avec une classification automatique.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap08.html">Chapitre 8. Introduction à la théorie des probabilités aux distributions statistiques classiques.</a>
+      <a href="../articles/CodeChap08.html">Chapitre 08. Introduction à la théorie des probabilités aux distributions statistiques classiques.</a>
     </li>
     <li>
       <a href="../articles/CodeChap09.html">Chapitre 09. Inférence statistique.</a>
@@ -171,13 +172,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Nombre de personnes dans un foyer</h1>
+    <h1>Emploi total par secteur dans les pays de l'OCDE en 2020-Q3.</h1>
     <small class="dont-index">Source: <a href='https://github.com/fbertran/SEGR/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
     <div class="hidden name"><code>Total_Secteur.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Ménages par taille du ménage en 2017, source INSEE.</p>
+    <p>Emploi total par secteur d'activité (indicateur). OCDE (2021). <a href='https://doi.org/10.1787/6b2fff89-fr'>doi: 10.1787/6b2fff89-fr</a>. (Consulté le 11 février 2021).
+L'industrie (<code>INDUSwithoutCONSTR</code>) désigne l'activité industrielle <em>SANS</em> la construction.</p>
     </div>
 
     <pre class="usage"><span class='va'>Total_Secteur</span></pre>
@@ -185,9 +187,10 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>Un jeu de données avec 6 observations de 2 variables <code>xi</code> et <code>ni</code>.</p><dl>
-<dt>xi</dt><dd><p>Nombres de personnes dans un foyer</p></dd>
-<dt>ni</dt><dd><p>Nombres de foyers</p></dd>
+    <p>Un jeu de données avec 5 observations de 3 variables.</p><dl>
+<dt>Secteur</dt><dd><p>Acronyme du secteur d'actvité</p></dd>
+<dt>NameX</dt><dd><p>Nom du secteur d'actvité</p></dd>
+<dt>Effectif</dt><dd><p>Nombres de personnes</p></dd>
 
 </dl>
 
@@ -203,7 +206,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Frederic Bertrand, Myriam Maumy.</p>
+  <p>Developed by Frederic Bertrand, Myriam Maumy-Bertrand.</p>
 </div>
 
 <div class="pkgdown">

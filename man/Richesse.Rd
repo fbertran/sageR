@@ -3,18 +3,52 @@
 \docType{data}
 \name{Richesse}
 \alias{Richesse}
-\title{Nombre de personnes dans un foyer}
+\title{Part du revenu national total équivalent	en Euro en 2019}
 \format{
-Un jeu de données avec 6 observations de 2 variables \code{xi} et \code{ni}.
+Un jeu de données avec 10 observations de 36 variables.
 \describe{
-\item{xi}{Nombres de personnes dans un foyer}
-\item{ni}{Nombres de foyers}
+\item{"Déciles"}
+\item{"Belgique"}
+\item{"Bulgarie"}
+\item{"Tchéquie"}
+\item{"Danemark"}
+\item{"Allemagne..jusqu.en.1990..ancien.territoire.de.la.RFA."}
+\item{"Estonie"}
+\item{"Irlande"}
+\item{"Grèce"}
+\item{"Espagne"}
+\item{"France"}
+\item{"Croatie"}
+\item{"Italie"}
+\item{"Chypre"}
+\item{"Lettonie"}
+\item{"Lituanie"}
+\item{"Luxembourg"}
+\item{"Hongrie"}
+\item{"Malte"}
+\item{"Pays.Bas"}
+\item{"Autriche"}
+\item{"Pologne"}
+\item{"Portugal"}
+\item{"Roumanie"}
+\item{"Slovénie"}
+\item{"Slovaquie"}
+\item{"Finlande"}
+\item{"Suède"}
+\item{"Islande"}
+\item{"Norvège"}
+\item{"Suisse"}
+\item{"Royaume.Uni"}
+\item{"Monténégro"}
+\item{"Macédoine.du.Nord"}
+\item{"Serbie"}
+\item{"Turquie"}
 }
 }
 \usage{
 Richesse
 }
 \description{
-Ménages par taille du ménage en 2017, source INSEE.
+Répartitition du revenu par quantiles - enquêtes EU-SILC et PCM (ILC_DI01).
 }
 \keyword{datasets}

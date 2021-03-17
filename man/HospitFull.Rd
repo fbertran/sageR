@@ -3,18 +3,28 @@
 \docType{data}
 \name{HospitFull}
 \alias{HospitFull}
-\title{Nombre de personnes dans un foyer}
+\title{Personnes hospitalisées atteintes de la Covid 19 (21/02/2021)}
 \format{
-Un jeu de données avec 6 observations de 2 variables \code{xi} et \code{ni}.
+Un jeu de données avec 19 observations de 12 variables.
 \describe{
-\item{xi}{Nombres de personnes dans un foyer}
-\item{ni}{Nombres de foyers}
+\item{Région}
+\item{Tous.âges}
+\item{X0.9}
+\item{X11.19}
+\item{X20.29}
+\item{X30.39}
+\item{X40.49}
+\item{X50.59}
+\item{X60.69}
+\item{X70.79}
+\item{X80.89}
+\item{X90.}
 }
 }
 \usage{
 HospitFull
 }
 \description{
-Ménages par taille du ménage en 2017, source INSEE.
+Répartition par région française du nombre de personnes hospitalisées et atteintes du Covid 19 le 21 février 2021.
 }
 \keyword{datasets}

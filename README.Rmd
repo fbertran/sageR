@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 # Statistiques pour l’économie et la gestion <img src="man/figures/logo.png" align="right" width="200"/>
 
 <!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/fbertran/SEGR/workflows/R-CMD-check/badge.svg)](https://github.com/fbertran/SEGR/actions)
 [![Codecov test coverage](https://codecov.io/gh/fbertran/SEGR/branch/master/graph/badge.svg)](https://codecov.io/gh/fbertran/SEGR?branch=master)
