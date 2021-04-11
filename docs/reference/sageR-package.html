@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate Axis Path — CalculateAxisPath • sageR</title>
+<title>sageR: Applied Statistics for Economics and Management with R — sageR-package • sageR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,22 @@
 
 
 
-<meta property="og:title" content="Calculate Axis Path — CalculateAxisPath" />
-<meta property="og:description" content="Calculates x-y coordinates for a set of radial axes (one per variable being plotted in radar plot)" />
+<meta property="og:title" content="sageR: Applied Statistics for Economics and Management with R — sageR-package" />
+<meta property="og:description" content="
+Datasets and functions for the book &quot;Statistiques pour l’économie et la gestion&quot;, F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy-Bertrand, C. Borsenberger editor, (2021, ISBN: , De Boeck Supérieur, Paris). 
+    The first chapter of the book is dedicated to an introduction to statistics and their world. 
+    The second chapter deals with univariate exploratory statistics and graphics. 
+    The third chapter deals with bivariate and multivariate exploratory statistics and graphics. 
+    The fourth chapter is dedicated to data exploration with Principal Component Analysis. 
+    The fifth chapter is dedicated to data exploration with Correspondance Analysis.
+    The sixth chapter is dedicated to data exploration with Multiple Correspondance Analysis. 
+    The seventh chapter is dedicated to data exploration with automatic clustering. 
+    The eighth chapter is dedicated to an introduction to probability theory and classical probability distributions.
+    The ninth chapter is dedicated to an estimation theory, one-sample and two-sample tests.
+    The tenth chapter is dedicated to an Gaussian linear model.
+    The eleventh chapter is dedicated to an introduction to time series.
+    The twelfth chapter is dedicated to an introduction to probit and logit models.
+    Various example datasets are shipped with the package as well as some new functions." />
 <meta property="og:image" content="https://fbertran.github.io/SEGR/reference/figures/logo.png" />
 <meta property="og:image:alt" content="Statistiques pour l’économie et la gestion" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -171,37 +185,56 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate Axis Path</h1>
-    <small class="dont-index">Source: <a href='https://github.com/fbertran/sageR/blob/master/R/functions.R'><code>R/functions.R</code></a></small>
-    <div class="hidden name"><code>CalculateAxisPath.Rd</code></div>
+    <h1>sageR: Applied Statistics for Economics and Management with R</h1>
+    <small class="dont-index">Source: <a href='https://github.com/fbertran/sageR/blob/master/R/SEGR-package.R'><code>R/SEGR-package.R</code></a></small>
+    <div class="hidden name"><code>sageR-package.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calculates x-y coordinates for a set of radial axes (one per variable being plotted in radar plot)</p>
+    <p><img src='figures/logo.png' align='right' alt='logo' width='120' /></p>
+<p>Datasets and functions for the book "Statistiques pour l’économie et la gestion", F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy-Bertrand, C. Borsenberger editor, (2021, ISBN: , De Boeck Supérieur, Paris). 
+    The first chapter of the book is dedicated to an introduction to statistics and their world. 
+    The second chapter deals with univariate exploratory statistics and graphics. 
+    The third chapter deals with bivariate and multivariate exploratory statistics and graphics. 
+    The fourth chapter is dedicated to data exploration with Principal Component Analysis. 
+    The fifth chapter is dedicated to data exploration with Correspondance Analysis.
+    The sixth chapter is dedicated to data exploration with Multiple Correspondance Analysis. 
+    The seventh chapter is dedicated to data exploration with automatic clustering. 
+    The eighth chapter is dedicated to an introduction to probability theory and classical probability distributions.
+    The ninth chapter is dedicated to an estimation theory, one-sample and two-sample tests.
+    The tenth chapter is dedicated to an Gaussian linear model.
+    The eleventh chapter is dedicated to an introduction to time series.
+    The twelfth chapter is dedicated to an introduction to probit and logit models.
+    Various example datasets are shipped with the package as well as some new functions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>CalculateAxisPath</span><span class='op'>(</span><span class='va'>var.names</span>, <span class='va'>min</span>, <span class='va'>max</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>var.names</th>
-      <td><p>list of variables to be plotted on radar plot</p></td>
-    </tr>
-    <tr>
-      <th>min</th>
-      <td><p>MININUM value required for the plotted axes (same value will be applied to all axes)</p></td>
-    </tr>
-    <tr>
-      <th>max</th>
-      <td><p>MAXIMUM value required for the plotted axes (same value will be applied to all axes)</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>a dataframe of the calculated axis paths</p>
+    <div class='dont-index'><p>Useful links:</p><ul>
+<li><p><a href='https://fbertran.github.io/homepage/'>https://fbertran.github.io/homepage/</a></p></li>
+<li><p><a href='https://fbertran.github.io/sageR/'>https://fbertran.github.io/sageR/</a></p></li>
+<li><p><a href='https://github.com/fbertran/sageR/'>https://github.com/fbertran/sageR/</a></p></li>
+<li><p>Report bugs at <a href='https://github.com/fbertran/sageR/issues/'>https://github.com/fbertran/sageR/issues/</a></p></li>
+</ul>
+
+</div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p><strong>Maintainer</strong>: Frederic Bertrand <a href='mailto:frederic.bertrand@utt.fr'>frederic.bertrand@utt.fr</a> (<a href='https://orcid.org/0000-0002-0837-8281'>ORCID</a>)</p>
+<p>Authors:</p><ul>
+<li><p>Myriam Maumy-Bertrand <a href='mailto:myriam.maumy@utt.fr'>myriam.maumy@utt.fr</a> (<a href='https://orcid.org/0000-0002-4615-1512'>ORCID</a>)</p></li>
+</ul>
+
+<p>Other contributors:</p><ul>
+<li><p>Claire Borsenberger <a href='mailto:claire.borsenberger@sfr.fr'>claire.borsenberger@sfr.fr</a> [contributor]</p></li>
+<li><p>Christian Derquenne <a href='mailto:chris.emr@wanadoo.fr'>chris.emr@wanadoo.fr</a> [contributor]</p></li>
+<li><p>Gilles Dufrénot <a href='mailto:gilles.dufrenot@univ-amu.fr'>gilles.dufrenot@univ-amu.fr</a> [contributor]</p></li>
+<li><p>Fredj Jawadi <a href='mailto:fredj.jawadi@univ-lille.fr'>fredj.jawadi@univ-lille.fr</a> [contributor]</p></li>
+</ul>
+
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -28,8 +28,8 @@ SAVE_GRAPHS=FALSE
 
 
 ```{r, eval=LOCAL}
-if(!("SEGR" %in% installed.packages())){install.packages("SEGR")}
-library(SEGR)
+if(!("sageR" %in% installed.packages())){install.packages("sageR")}
+library(sageR)
 ```
 
 # Exemple fonction de probabilité et fonction de répartition d'une v.a. discrète finie

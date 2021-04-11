@@ -36,7 +36,7 @@ library(ggpubr)
 #   theme_transparent() + theme(legend.position = "none")
 # p
 
-library(SEGR)
+library(sageR)
 library(ggradar)
 library(scales)
 data(Europe)
@@ -262,7 +262,7 @@ pp <-
 
 sticker(
   pp,
-  package = "SEGR",
+  package = "sageR",
   p_size = 8,
   s_x = 0.9,
   s_y = 1,
@@ -270,7 +270,7 @@ sticker(
   s_height = 1.3,
   p_x = 1.30,
   p_y = 1.25,
-  url = "https://cran.r-project.org/package=SEGR",
+  url = "https://cran.r-project.org/package=sageR",
   u_color = "white",
   u_size = 1.1,
   h_fill = "black",

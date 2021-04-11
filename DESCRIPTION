@@ -1,6 +1,6 @@
-Package: SEGR
+Package: sageR
 Type: Package
-Title: Statistics for Economics and Management with R
+Title: Applied Statistics for Economics and Management with R
 Version: 0.2.0
 Date: 2021-03-08
 Depends: R (>= 3.5.0)
@@ -61,5 +61,5 @@ VignetteBuilder: knitr, rmarkdown
 Language: fr-FR
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-URL: https://fbertran.github.io/homepage/, https://github.com/fbertran/SEGR
-BugReports: https://github.com/fbertran/SEGR/issues
+URL: https://fbertran.github.io/homepage/, https://fbertran.github.io/sageR/, https://github.com/fbertran/sageR/
+BugReports: https://github.com/fbertran/sageR/issues/

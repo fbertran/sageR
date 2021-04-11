@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapitre 09. Inférence statistique. • SEGR</title>
+<title>Chapitre 09. Inférence statistique. • sageR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Chapitre 09. Inférence statistique.">
-<meta property="og:description" content="SEGR">
+<meta property="og:description" content="sageR">
 <meta property="og:image" content="https://fbertran.github.io/SEGR/reference/figures/logo.png">
 <meta property="og:image:alt" content="Statistiques pour l’économie et la gestion">
 <meta name="twitter:card" content="summary_large_image">
@@ -41,8 +41,8 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">SEGR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <a class="navbar-link" href="../index.html">sageR</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -111,7 +111,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/fbertran/SEGR/">
+  <a href="https://github.com/fbertran/sageR/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -134,9 +134,9 @@
 </h3>
                         <h4 class="author">F. Bertrand et M. Maumy</h4>
             
-            <h4 class="date">2021-03-13</h4>
+            <h4 class="date">2021-04-11</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/fbertran/SEGR/blob/master/vignettes/CodeChap09.Rmd"><code>vignettes/CodeChap09.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/fbertran/sageR/blob/master/vignettes/CodeChap09.Rmd"><code>vignettes/CodeChap09.Rmd</code></a></small>
       <div class="hidden name"><code>CodeChap09.Rmd</code></div>
 
     </div>
@@ -144,8 +144,8 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"SEGR"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"SEGR"</span><span class="op">)</span><span class="op">}</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/homepage/">SEGR</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"sageR"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"sageR"</span><span class="op">)</span><span class="op">}</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/homepage/">sageR</a></span><span class="op">)</span></code></pre></div>
 <div id="test-t-pour-deux-échantillons-indépendants-" class="section level1">
 <h1 class="hasAnchor">
 <a href="#test-t-pour-deux-%C3%A9chantillons-ind%C3%A9pendants-" class="anchor"></a>Test <span class="math inline">\(t\)</span> pour deux échantillons indépendants.</h1>
@@ -184,7 +184,7 @@
 <h1 class="hasAnchor">
 <a href="#analyse-de-la-variance-%C3%A0-un-facteur" class="anchor"></a>Analyse de la variance à un facteur</h1>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/homepage/">SEGR</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/homepage/">sageR</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">Marque.Valeur</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">Marque.Valeur</span><span class="op">)</span>
 <span class="co">#&gt; 'data.frame':    90 obs. of  2 variables:</span>
@@ -1497,7 +1497,7 @@ f(x,\theta)=\exp\left(\beta(\theta)+b(x)+\sum_{j=1}^r\alpha_j(\theta)a_j(x)\righ
 
 
       <footer><div class="copyright">
-  <p>Developed by Frederic Bertrand, Myriam Maumy.</p>
+  <p>Developed by Frederic Bertrand, Myriam Maumy-Bertrand.</p>
 </div>
 
 <div class="pkgdown">

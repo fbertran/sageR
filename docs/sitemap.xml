@@ -40,9 +40,6 @@
     <loc>https://fbertran.github.io/SEGR//reference/Richesse.html</loc>
   </url>
   <url>
-    <loc>https://fbertran.github.io/SEGR//reference/SEGR-package.html</loc>
-  </url>
-  <url>
     <loc>https://fbertran.github.io/SEGR//reference/Secteur.html</loc>
   </url>
   <url>
@@ -65,6 +62,9 @@
   </url>
   <url>
     <loc>https://fbertran.github.io/SEGR//reference/plotcdf3.html</loc>
+  </url>
+  <url>
+    <loc>https://fbertran.github.io/SEGR//reference/sageR-package.html</loc>
   </url>
   <url>
     <loc>https://fbertran.github.io/SEGR//articles/CodeChap00Introduction.html</loc>

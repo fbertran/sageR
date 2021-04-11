@@ -1,4 +1,4 @@
-citHeader("To cite the SEGR package in publications use:")
+citHeader("To cite the sageR package in publications use:")
 
 titl <- meta$Title
 year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
@@ -15,7 +15,7 @@ citEntry(entry="Manual",
          publisher = "manual",
          year         = year,
          note         = vers,
-         url          = "https://fbertran.github.io/homepage/SEGR/",
+         url          = "https://fbertran.github.io/homepage/sageR/",
          textVersion  = paste("F. Bertrand, Cl. Borsenberger, Ch. Derquenne, G. Dufrénot, F. Jawadi, M. Maumy (",year ,"). ",
                  titl, ", ", vers, ".", sep=""
            )

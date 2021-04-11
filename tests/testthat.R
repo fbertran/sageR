@@ -1,4 +1,4 @@
 library(testthat)
-library(SEGR)
+library(sageR)
 
-test_check("SEGR")
+test_check("sageR")

@@ -75,8 +75,8 @@ MEN4 - Ménages par taille du ménage, sexe et âge de la personne de référenc
 
 
 ```{r, eval=LOCAL}
-if(!("SEGR" %in% installed.packages())){install.packages("SEGR")}
-library(SEGR)
+if(!("sageR" %in% installed.packages())){install.packages("sageR")}
+library(sageR)
 ```
 
 
