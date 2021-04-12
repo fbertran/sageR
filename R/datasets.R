@@ -62,18 +62,18 @@
 #' @docType data
 #' @format Un jeu de données avec 19 observations de 12 variables.
 #' \describe{
-#'   \item{Région}
-#'   \item{Tous.âges}
-#'   \item{X0.9}
-#'   \item{X11.19}
-#'   \item{X20.29}
-#'   \item{X30.39}
-#'   \item{X40.49}
-#'   \item{X50.59}
-#'   \item{X60.69}
-#'   \item{X70.79}
-#'   \item{X80.89}
-#'   \item{X90.}
+#'   \item{Région}{}
+#'   \item{Tous.âges}{}
+#'   \item{X0.9}{}
+#'   \item{X11.19}{}
+#'   \item{X20.29}{}
+#'   \item{X30.39}{}
+#'   \item{X40.49}{}
+#'   \item{X50.59}{}
+#'   \item{X60.69}{}
+#'   \item{X70.79}{}
+#'   \item{X80.89}{}
+#'   \item{X90.}{}
 #' }
 "HospitFull"
 #> [1] "HospitFull"
@@ -139,18 +139,18 @@
 #' @docType data
 #' @format Un jeu de données avec 19 observations de 12 variables.
 #' \describe{
-#'   \item{Région}
-#'   \item{Tous.âges}
-#'   \item{X0.9}
-#'   \item{X11.19}
-#'   \item{X20.29}
-#'   \item{X30.39}
-#'   \item{X40.49}
-#'   \item{X50.59}
-#'   \item{X60.69}
-#'   \item{X70.79}
-#'   \item{X80.89}
-#'   \item{X90.}
+#'   \item{Région}{}
+#'   \item{Tous.âges}{}
+#'   \item{X0.9}{}
+#'   \item{X11.19}{}
+#'   \item{X20.29}{}
+#'   \item{X30.39}{}
+#'   \item{X40.49}{}
+#'   \item{X50.59}{}
+#'   \item{X60.69}{}
+#'   \item{X70.79}{}
+#'   \item{X80.89}{}
+#'   \item{X90.}{}
 #' }
 "ReaFull"
 #> [1] "ReaFull"
@@ -162,42 +162,42 @@
 #' @docType data
 #' @format Un jeu de données avec 10 observations de 36 variables.
 #' \describe{
-#'   \item{"Déciles"}
-#'   \item{"Belgique"}
-#'   \item{"Bulgarie"}
-#'   \item{"Tchéquie"}
-#'   \item{"Danemark"}
-#'   \item{"Allemagne..jusqu.en.1990..ancien.territoire.de.la.RFA."}
-#'   \item{"Estonie"}
-#'   \item{"Irlande"}
-#'   \item{"Grèce"}
-#'   \item{"Espagne"}
-#'   \item{"France"}
-#'   \item{"Croatie"}
-#'   \item{"Italie"}
-#'   \item{"Chypre"}
-#'   \item{"Lettonie"}
-#'   \item{"Lituanie"}
-#'   \item{"Luxembourg"}
-#'   \item{"Hongrie"}
-#'   \item{"Malte"}
-#'   \item{"Pays.Bas"}
-#'   \item{"Autriche"}
-#'   \item{"Pologne"}
-#'   \item{"Portugal"}
-#'   \item{"Roumanie"}
-#'   \item{"Slovénie"}
-#'   \item{"Slovaquie"}
-#'   \item{"Finlande"}
-#'   \item{"Suède"}
-#'   \item{"Islande"}
-#'   \item{"Norvège"}
-#'   \item{"Suisse"}
-#'   \item{"Royaume.Uni"}
-#'   \item{"Monténégro"}
-#'   \item{"Macédoine.du.Nord"}
-#'   \item{"Serbie"}
-#'   \item{"Turquie"}
+#'   \item{"Déciles"}{}
+#'   \item{"Belgique"}{}
+#'   \item{"Bulgarie"}{}
+#'   \item{"Tchéquie"}{}
+#'   \item{"Danemark"}{}
+#'   \item{"Allemagne..jusqu.en.1990..ancien.territoire.de.la.RFA."}{}
+#'   \item{"Estonie"}{}
+#'   \item{"Irlande"}{}
+#'   \item{"Grèce"}{}
+#'   \item{"Espagne"}{}
+#'   \item{"France"}{}
+#'   \item{"Croatie"}{}
+#'   \item{"Italie"}{}
+#'   \item{"Chypre"}{}
+#'   \item{"Lettonie"}{}
+#'   \item{"Lituanie"}{}
+#'   \item{"Luxembourg"}{}
+#'   \item{"Hongrie"}{}
+#'   \item{"Malte"}{}
+#'   \item{"Pays.Bas"}{}
+#'   \item{"Autriche"}{}
+#'   \item{"Pologne"}{}
+#'   \item{"Portugal"}{}
+#'   \item{"Roumanie"}{}
+#'   \item{"Slovénie"}{}
+#'   \item{"Slovaquie"}{}
+#'   \item{"Finlande"}{}
+#'   \item{"Suède"}{}
+#'   \item{"Islande"}{}
+#'   \item{"Norvège"}{}
+#'   \item{"Suisse"}{}
+#'   \item{"Royaume.Uni"}{}
+#'   \item{"Monténégro"}{}
+#'   \item{"Macédoine.du.Nord"}{}
+#'   \item{"Serbie"}{}
+#'   \item{"Turquie"}{}
 #' }
 "Richesse"
 #> [1] "Richesse"
