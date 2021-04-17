@@ -38,12 +38,29 @@ library(sageR)
 ```{r, eval=LOCAL}
 data(Flux)
 mean(Flux)
+```
+
+```{r, eval=LOCAL}
+shapiro.test(Flux)
+```
+
+```{r, eval=LOCAL}
+qqnorm(Flux)
+qqline(Flux)
+```
+
+```{r, eval=LOCAL}
 t.test(Flux)
 ```
 
 ## Pour la variance
 ```{r, eval=LOCAL}
 var(Flux)
+```
+
+L'hypothèse de normalité a déjà été validée au seuil $\alpha=5\%$
+
+```{r, eval=LOCAL}
 if(!("TeachingDemos" %in% installed.packages())){install.packages("TeachingDemos")}
 library(TeachingDemos)
 TeachingDemos::sigma.test(Flux)
@@ -98,9 +115,22 @@ ggmap(precip_gps_map_bw,extent = "device") +
   scale_color_gradient(low="white", high="black")
 ```
 
+
 ```{r, eval=LOCAL}
 with(Precipitations_USA, shapiro.test(`Precipitation (cms)`))
+```
+
+```{r, eval=LOCAL}
+with(Precipitations_USA,qqnorm(`Precipitation (cms)`))
+with(Precipitations_USA,qqline(`Precipitation (cms)`))
+```
+
+```{r, eval=LOCAL}
 with(Precipitations_USA, t.test(`Precipitation (cms)`, mu = 83.90))
+```
+
+
+```{r, eval=LOCAL}
 with(Precipitations_USA, TeachingDemos::sigma.test(`Precipitation (cms)`))
 ```
 
@@ -112,22 +142,18 @@ ggsave("map_pprecip_USA_bw.pdf", width=14, height=8)
 
 ```{r, eval=LOCAL}
 data(Resistance)
-Resistance<-c(219.92,216.71,219.90,218.61,216.06,214.85,219.23,214.00,223.43,221.64,
-  223.39,218.57,215.00,221.90,222.23,215.42,218.85,222.22,219.45,216.99,
-  220.94,217.77,225.23,217.66,215.56,219.46,215.75,215.78,216.91,226.63)
-sigma.test(Resistance,sigmasq = 8)
 ```
 
-```{r}
-data(Essence)
-shapiro.test(Essence$Aube)
-shapiro.test(Essence$Marne)
-mean(Essence$Aube)
-mean(Essence$Marne)
-with(Essence, var.test(x=Aube,y=Marne))
-with(Essence, t.test(x=Aube,y=Marne, var.equal = TRUE))
-with(Essence, t.test(x=Aube,y=Marne))
+```{r, eval=LOCAL}
+qqnorm(Resistance)
+qqline(Resistance)
 ```
+
+```{r, eval=LOCAL}
+if(!("TeachingDemos" %in% installed.packages())){install.packages("TeachingDemos")}
+TeachingDemos::sigma.test(Resistance,sigmasq = 8)
+```
+
 
 
 ```{r}
@@ -135,36 +161,94 @@ binom.test(30,200,p=0.10,alternative=c("greater"))
 ```
 
 
-```{r}
-data(Copies)
-with(Copies,shapiro.test(Correcteur.A-Correcteur.B))
-with(Copies,mean(Correcteur.A))
-with(Copies,mean(Correcteur.B))
-with(Copies,mean(Correcteur.A)-mean(Correcteur.B))
-with(Copies,t.test(Correcteur.A-Correcteur.B))
-with(Copies,t.test(Correcteur.A,Correcteur.B,paired=TRUE))
-```
+
 
 
 
 # Test $t$ pour deux échantillons indépendants.
 
 ```{r, eval=LOCAL, cache=TRUE}
-pipit <- c(17.0 , 16.9 , 16.9 , 17.3 , 16.8 , 16.8 , 17.0 , 16.5 , 16.9 , 16.5 , 17.0 , 17.0 , 16.8 , 17.0 , 16.9 , 17.0 , 17.0 , 17.3 , 16.8 , 17.1 , 16.9 , 16.8 , 17.1 , 17.0 , 17.1 , 17.2 , 16.7 , 16.6 , 17.2 , 17.0 , 17.0)
-fauvette <- c(16.0 , 16.1 , 16.3 , 16.5 , 16.2 , 15.2 , 15.6 , 15.6 , 16.6 , 16.0 , 16.2 , 16.8 , 16.0 , 17.0 , 17.9 , 16.0 , 16.4 , 16.3 , 16.9 , 17.1 , 17.0 , 16.1 , 16.5 , 16.5 , 16.1 , 16.5 , 17.9 , 16.5 , 16.7 , 16.8)
+data(Essence)
 ```
 
-```{r, eval=LOCAL, cache=TRUE}
-shapiro.test(pipit)
-```
 
 ```{r, eval=LOCAL, cache=TRUE}
-shapiro.test(fauvette)
+shapiro.test(Essence$Aube)
 ```
 
-```{r, eval=LOCAL, cache=TRUE}
-var.test(pipit,fauvette)
+```{r, eval=LOCAL}
+with(Essence,qqnorm(Aube))
+with(Essence,qqline(Aube))
 ```
+
+
+```{r, eval=LOCAL, cache=TRUE}
+shapiro.test(Essence$Marne)
+```
+
+
+```{r, eval=LOCAL}
+with(Essence,qqnorm(Marne))
+with(Essence,qqline(Marne))
+```
+
+
+```{r, eval=LOCAL, cache=TRUE}
+mean(Essence$Aube)
+mean(Essence$Marne)
+```
+
+
+```{r, eval=LOCAL, cache=TRUE}
+with(Essence, var.test(x=Aube,y=Marne))
+```
+
+
+```{r, eval=LOCAL, cache=TRUE}
+with(Essence, t.test(x=Aube,y=Marne, var.equal = TRUE))
+```
+
+
+```{r, eval=LOCAL, cache=TRUE}
+with(Essence, t.test(x=Aube,y=Marne))
+```
+
+# Test $t$ pour deux échantillons appariés
+
+```{r, eval=LOCAL, cache=TRUE}
+with(Copies,shapiro.test(Correcteur.A-Correcteur.B))
+```
+
+```{r, eval=LOCAL}
+with(Copies,qqnorm(Correcteur.A-Correcteur.B))
+with(Copies,qqline(Correcteur.A-Correcteur.B))
+```
+
+
+```{r, eval=LOCAL, cache=TRUE}
+with(Copies,mean(Correcteur.A))
+```
+
+
+```{r, eval=LOCAL, cache=TRUE}
+with(Copies,mean(Correcteur.B))
+```
+
+
+```{r, eval=LOCAL, cache=TRUE}
+with(Copies,mean(Correcteur.A)-mean(Correcteur.B))
+```
+
+
+```{r, eval=LOCAL, cache=TRUE}
+with(Copies,t.test(Correcteur.A-Correcteur.B))
+```
+
+
+```{r, eval=LOCAL, cache=TRUE}
+with(Copies,t.test(Correcteur.A,Correcteur.B,paired=TRUE))
+```
+
 
 # Analyse de la variance à un facteur
 
@@ -241,6 +325,10 @@ res.model.MV <- residuals(lm.Marque.Valeur)
 shapiro.test(res.model.MV)
 ```
 
+```{r, eval=LOCAL}
+qqnorm(res.model.MV)
+qqline(res.model.MV)
+```
 
 ```{r, eval=LOCAL, cache=TRUE}
 bartlett.test(res.model.MV,Marque.Valeur$Marque)
@@ -287,8 +375,6 @@ bartlett.test(res.model.MV,Marque.Valeur$Marque)
 
 # QQplots
 
-```{r, eval=FALSE}
-# QQplot
 
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
