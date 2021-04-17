@@ -1,3 +1,62 @@
+#' Correction de copies
+#'
+#' Notes de deux correcteurs (A et B) pour les mêmes trente copies.
+#'
+#' @docType data
+#' @format Un jeu de données avec 30 observations de 2 variables.
+#' \describe{
+#'   \item{Correcteur A}{}
+#'   \item{Correcteur B}{}
+#' }
+"Copies"
+#> [1] "Copies"
+
+#' Prix de l'essence sans plomb 95
+#'
+#' Prix de l'essence sans plomb 95 en avril 2021 dans deux départements français, l'aube et la marne.
+#'
+#' @docType data
+#' @format Un jeu de données avec 60 observations de 2 variables.
+#' \describe{
+#'   \item{Aube}{}
+#'   \item{Marne}{}
+#' }
+"Essence"
+#> [1] "Essence"
+
+#' Résistance à l’éclatement
+#'
+#' Résistance à l’éclatement.
+#'
+#' @docType data
+#' @format Un vecteur avec 30 observations.
+"Resistance"
+#> [1] "Resistance"
+
+#' Flux bancaires
+#'
+#' Flux bancaires.
+#'
+#' @docType data
+#' @format Un vecteur avec 30 observations.
+"Flux"
+#> [1] "Flux"
+
+#' Précipitations aux USA en 1975
+#'
+#' Précipitations relevées dans soixante villes aux États-Unis d'Amérique en 1975.
+#'
+#' @docType data
+#' @format Un jeu de données avec 60 observations de 4 variables.
+#' \describe{
+#'   \item{Ville}{}
+#'   \item{Precipitation..inches.}{}
+#'   \item{Precipitation..cms.}{}
+#'   \item{Etat}{}
+#' }
+"Precipitations_USA"
+#> [1] "Precipitations_USA"
+
 #' Population du Canada par classes d’âge et provinces et territoires en 2020
 #'
 #' Répartition en classes d’âge de la population des provinces et des territoires du Canada en 2020. Statistique Canada. Tableau 17-10-0005-01  Estimations de la population au 1er juillet, par âge et sexe.

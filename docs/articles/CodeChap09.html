@@ -134,7 +134,7 @@
 </h3>
                         <h4 class="author">F. Bertrand et M. Maumy</h4>
             
-            <h4 class="date">2021-04-11</h4>
+            <h4 class="date">2021-04-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/fbertran/sageR/blob/master/vignettes/CodeChap09.Rmd"><code>vignettes/CodeChap09.Rmd</code></a></small>
       <div class="hidden name"><code>CodeChap09.Rmd</code></div>
@@ -146,27 +146,689 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"sageR"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"sageR"</span><span class="op">)</span><span class="op">}</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/homepage/">sageR</a></span><span class="op">)</span></code></pre></div>
+<div id="intervalles-de-confiance" class="section level1">
+<h1 class="hasAnchor">
+<a href="#intervalles-de-confiance" class="anchor"></a>Intervalles de confiance</h1>
+<div id="pour-la-moyenne" class="section level2">
+<h2 class="hasAnchor">
+<a href="#pour-la-moyenne" class="anchor"></a>Pour la moyenne</h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">Flux</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Flux</span><span class="op">)</span>
+<span class="co">#&gt; [1] 13.99533</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">Flux</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  One Sample t-test</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  Flux</span>
+<span class="co">#&gt; t = 80.878, df = 29, p-value &lt; 2.2e-16</span>
+<span class="co">#&gt; alternative hypothesis: true mean is not equal to 0</span>
+<span class="co">#&gt; 95 percent confidence interval:</span>
+<span class="co">#&gt;  13.64142 14.34925</span>
+<span class="co">#&gt; sample estimates:</span>
+<span class="co">#&gt; mean of x </span>
+<span class="co">#&gt;  13.99533</span></code></pre></div>
+</div>
+<div id="pour-la-variance" class="section level2">
+<h2 class="hasAnchor">
+<a href="#pour-la-variance" class="anchor"></a>Pour la variance</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">Flux</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0.8983154</span>
+<span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"TeachingDemos"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"TeachingDemos"</span><span class="op">)</span><span class="op">}</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TeachingDemos</span><span class="op">)</span>
+<span class="fu">TeachingDemos</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/TeachingDemos/man/sigma.test.html">sigma.test</a></span><span class="op">(</span><span class="va">Flux</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  One sample Chi-squared test for variance</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  Flux</span>
+<span class="co">#&gt; X-squared = 26.051, df = 29, p-value = 0.7545</span>
+<span class="co">#&gt; alternative hypothesis: true variance is not equal to 1</span>
+<span class="co">#&gt; 95 percent confidence interval:</span>
+<span class="co">#&gt;  0.5697691 1.6234206</span>
+<span class="co">#&gt; sample estimates:</span>
+<span class="co">#&gt; var of Flux </span>
+<span class="co">#&gt;   0.8983154</span></code></pre></div>
+</div>
+</div>
+<div id="test-t-pour-un-échantillon" class="section level1">
+<h1 class="hasAnchor">
+<a href="#test-t-pour-un-%C3%A9chantillon" class="anchor"></a>Test <span class="math inline">\(t\)</span> pour un échantillon</h1>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">Precipitations_USA</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">Precipitations_USA</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Ville"</span>, <span class="st">"Precipitation (inches)"</span>, <span class="st">"Precipitation (cms)"</span>, <span class="st">"Etat"</span><span class="op">)</span>
+<span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"ggmap"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ggmap"</span><span class="op">)</span><span class="op">}</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dkahle/ggmap">ggmap</a></span><span class="op">)</span>
+<span class="co">#&gt; Le chargement a nécessité le package : ggplot2</span>
+<span class="co">#&gt; Google's Terms of Service: https://cloud.google.com/maps-platform/terms/.</span>
+<span class="co">#&gt; Please cite ggmap if you use it! See citation("ggmap") for details.</span>
+<span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"tidygeocoder"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidygeocoder"</span><span class="op">)</span><span class="op">}</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jessecambon.github.io/tidygeocoder/">tidygeocoder</a></span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attachement du package : 'tidygeocoder'</span>
+<span class="co">#&gt; The following object is masked from 'package:ggmap':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     geocode</span>
+<span class="va">gps_coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mapply.html">mapply</a></span><span class="op">(</span><span class="va">geo</span>, city<span class="op">=</span> <span class="va">Precipitations_USA</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, state <span class="op">=</span> <span class="va">Precipitations_USA</span><span class="op">[</span>,<span class="fl">4</span><span class="op">]</span>, method <span class="op">=</span> <span class="st">"osm"</span><span class="op">)</span>
+
+<span class="va">gps_coords_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">gps_coords</span><span class="op">)</span>,ncol<span class="op">=</span><span class="fl">4</span>,byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Ville"</span>, <span class="st">"Etat"</span>, <span class="st">"lat"</span>, <span class="st">"long"</span><span class="op">)</span>
+<span class="va">gps_coords_df</span><span class="op">$</span><span class="va">lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">lat</span><span class="op">)</span>
+<span class="va">gps_coords_df</span><span class="op">$</span><span class="va">long</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">long</span><span class="op">)</span>
+
+<span class="va">precip_gps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span><span class="va">Precipitations_USA</span>,<span class="va">gps_coords_df</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">precip_gps_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/get_map.html">get_map</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">long</span><span class="op">)</span><span class="op">*</span><span class="fl">1.03</span>, bottom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">lat</span><span class="op">)</span><span class="op">/</span><span class="fl">1.2</span>, right <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">long</span><span class="op">)</span><span class="op">/</span><span class="fl">1.12</span>, top <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">lat</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">1.03</span>, source <span class="op">=</span> <span class="st">"osm"</span>, zoom<span class="op">=</span><span class="fl">6</span>, messaging <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="co">#&gt; 209 tiles needed, this may take a while (try a smaller zoom).</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/2/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/3/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/4/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/5/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/6/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/7/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/8/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/9/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/10/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/11/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/12/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/13/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/14/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/15/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/16/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/17/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/18/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/19/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/20/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/2/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/3/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/4/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/5/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/6/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/7/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/8/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/9/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/10/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/11/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/12/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/13/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/14/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/15/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/16/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/17/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/18/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/19/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/20/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/2/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/3/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/4/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/5/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/6/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/7/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/8/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/9/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/10/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/11/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/12/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/13/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/14/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/15/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/16/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/17/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/18/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/19/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/20/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/2/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/3/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/4/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/5/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/6/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/7/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/8/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/9/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/10/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/11/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/12/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/13/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/14/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/15/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/16/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/17/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/18/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/19/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/20/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/2/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/3/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/4/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/5/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/6/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/7/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/8/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/9/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/10/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/11/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/12/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/13/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/14/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/15/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/16/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/17/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/18/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/19/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/20/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/2/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/3/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/4/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/5/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/6/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/7/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/8/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/9/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/10/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/11/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/12/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/13/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/14/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/15/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/16/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/17/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/18/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/19/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/20/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/2/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/3/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/4/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/5/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/6/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/7/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/8/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/9/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/10/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/11/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/12/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/13/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/14/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/15/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/16/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/17/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/18/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/19/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/20/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/2/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/3/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/4/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/5/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/6/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/7/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/8/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/9/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/10/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/11/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/12/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/13/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/14/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/15/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/16/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/17/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/18/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/19/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/20/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/2/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/3/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/4/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/5/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/6/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/7/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/8/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/9/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/10/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/11/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/12/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/13/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/14/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/15/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/16/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/17/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/18/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/19/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/20/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/2/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/3/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/4/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/5/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/6/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/7/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/8/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/9/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/10/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/11/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/12/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/13/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/14/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/15/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/16/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/17/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/18/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/19/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/20/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/2/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/3/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/4/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/5/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/6/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/7/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/8/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/9/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/10/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/11/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/12/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/13/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/14/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/15/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/16/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/17/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/18/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/19/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/20/28.png</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/ggmap.html">ggmap</a></span><span class="op">(</span><span class="va">precip_gps_map</span>,extent <span class="op">=</span> <span class="st">"device"</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, color<span class="op">=</span><span class="va">`Precipitation (cms)`</span><span class="op">)</span>,
+             data <span class="op">=</span> <span class="va">precip_gps</span>, size <span class="op">=</span> <span class="fl">5</span>, pch <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">scale_color_gradient</span><span class="op">(</span>low<span class="op">=</span><span class="st">"red"</span>, high<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></code></pre></div>
+<p><img src="CodeChap09_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">precip_gps_map_bw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/get_stamenmap.html">get_stamenmap</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">long</span><span class="op">)</span><span class="op">*</span><span class="fl">1.03</span>, bottom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">lat</span><span class="op">)</span><span class="op">/</span><span class="fl">1.2</span>, right <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">long</span><span class="op">)</span><span class="op">/</span><span class="fl">1.12</span>, top <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">lat</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">1.03</span>, source <span class="op">=</span> <span class="st">"stamen"</span>, zoom<span class="op">=</span><span class="fl">6</span>, maptype<span class="op">=</span><span class="st">"toner"</span><span class="op">)</span>
+<span class="co">#&gt; 209 tiles needed, this may take a while (try a smaller zoom).</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/2/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/3/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/4/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/5/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/6/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/7/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/8/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/9/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/10/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/11/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/12/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/13/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/14/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/15/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/16/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/17/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/18/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/19/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/20/18.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/2/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/3/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/4/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/5/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/6/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/7/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/8/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/9/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/10/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/11/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/12/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/13/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/14/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/15/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/16/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/17/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/18/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/19/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/20/19.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/2/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/3/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/4/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/5/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/6/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/7/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/8/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/9/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/10/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/11/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/12/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/13/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/14/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/15/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/16/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/17/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/18/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/19/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/20/20.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/2/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/3/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/4/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/5/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/6/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/7/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/8/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/9/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/10/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/11/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/12/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/13/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/14/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/15/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/16/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/17/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/18/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/19/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/20/21.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/2/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/3/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/4/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/5/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/6/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/7/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/8/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/9/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/10/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/11/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/12/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/13/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/14/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/15/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/16/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/17/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/18/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/19/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/20/22.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/2/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/3/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/4/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/5/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/6/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/7/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/8/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/9/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/10/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/11/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/12/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/13/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/14/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/15/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/16/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/17/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/18/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/19/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/20/23.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/2/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/3/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/4/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/5/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/6/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/7/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/8/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/9/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/10/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/11/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/12/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/13/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/14/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/15/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/16/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/17/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/18/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/19/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/20/24.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/2/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/3/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/4/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/5/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/6/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/7/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/8/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/9/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/10/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/11/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/12/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/13/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/14/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/15/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/16/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/17/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/18/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/19/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/20/25.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/2/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/3/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/4/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/5/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/6/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/7/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/8/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/9/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/10/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/11/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/12/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/13/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/14/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/15/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/16/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/17/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/18/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/19/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/20/26.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/2/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/3/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/4/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/5/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/6/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/7/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/8/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/9/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/10/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/11/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/12/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/13/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/14/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/15/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/16/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/17/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/18/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/19/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/20/27.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/2/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/3/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/4/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/5/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/6/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/7/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/8/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/9/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/10/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/11/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/12/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/13/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/14/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/15/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/16/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/17/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/18/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/19/28.png</span>
+<span class="co">#&gt; Source : http://tile.stamen.com/toner/6/20/28.png</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/ggmap.html">ggmap</a></span><span class="op">(</span><span class="va">precip_gps_map_bw</span>,extent <span class="op">=</span> <span class="st">"device"</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, color<span class="op">=</span><span class="va">`Precipitation (cms)`</span><span class="op">)</span>,
+             data <span class="op">=</span> <span class="va">precip_gps</span>, size <span class="op">=</span> <span class="fl">5</span>, pch <span class="op">=</span> <span class="fl">20</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">scale_color_gradient</span><span class="op">(</span>low<span class="op">=</span><span class="st">"white"</span>, high<span class="op">=</span><span class="st">"black"</span><span class="op">)</span></code></pre></div>
+<p><img src="CodeChap09_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">Precipitations_USA</span>, <span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="va">`Precipitation (cms)`</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  Shapiro-Wilk normality test</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  Precipitation (cms)</span>
+<span class="co">#&gt; W = 0.97241, p-value = 0.1911</span>
+<span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">Precipitations_USA</span>, <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">`Precipitation (cms)`</span>, mu <span class="op">=</span> <span class="fl">83.90</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  One Sample t-test</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  Precipitation (cms)</span>
+<span class="co">#&gt; t = 1.6898, df = 59, p-value = 0.09635</span>
+<span class="co">#&gt; alternative hypothesis: true mean is not equal to 83.9</span>
+<span class="co">#&gt; 95 percent confidence interval:</span>
+<span class="co">#&gt;  82.61107 99.18519</span>
+<span class="co">#&gt; sample estimates:</span>
+<span class="co">#&gt; mean of x </span>
+<span class="co">#&gt;  90.89813</span>
+<span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">Precipitations_USA</span>, <span class="fu">TeachingDemos</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/TeachingDemos/man/sigma.test.html">sigma.test</a></span><span class="op">(</span><span class="va">`Precipitation (cms)`</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  One sample Chi-squared test for variance</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  Precipitation (cms)</span>
+<span class="co">#&gt; X-squared = 60717, df = 59, p-value &lt; 2.2e-16</span>
+<span class="co">#&gt; alternative hypothesis: true variance is not equal to 1</span>
+<span class="co">#&gt; 95 percent confidence interval:</span>
+<span class="co">#&gt;   739.3954 1530.8720</span>
+<span class="co">#&gt; sample estimates:</span>
+<span class="co">#&gt; var of Precipitation (cms) </span>
+<span class="co">#&gt;                   1029.106</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">Resistance</span><span class="op">)</span>
+<span class="co">#&gt; Warning in data(Resistance): data set 'Resistance' not found</span>
+<span class="va">Resistance</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">219.92</span>,<span class="fl">216.71</span>,<span class="fl">219.90</span>,<span class="fl">218.61</span>,<span class="fl">216.06</span>,<span class="fl">214.85</span>,<span class="fl">219.23</span>,<span class="fl">214.00</span>,<span class="fl">223.43</span>,<span class="fl">221.64</span>,
+  <span class="fl">223.39</span>,<span class="fl">218.57</span>,<span class="fl">215.00</span>,<span class="fl">221.90</span>,<span class="fl">222.23</span>,<span class="fl">215.42</span>,<span class="fl">218.85</span>,<span class="fl">222.22</span>,<span class="fl">219.45</span>,<span class="fl">216.99</span>,
+  <span class="fl">220.94</span>,<span class="fl">217.77</span>,<span class="fl">225.23</span>,<span class="fl">217.66</span>,<span class="fl">215.56</span>,<span class="fl">219.46</span>,<span class="fl">215.75</span>,<span class="fl">215.78</span>,<span class="fl">216.91</span>,<span class="fl">226.63</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/TeachingDemos/man/sigma.test.html">sigma.test</a></span><span class="op">(</span><span class="va">Resistance</span>,sigmasq <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  One sample Chi-squared test for variance</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  Resistance</span>
+<span class="co">#&gt; X-squared = 38.47, df = 29, p-value = 0.2245</span>
+<span class="co">#&gt; alternative hypothesis: true variance is not equal to 8</span>
+<span class="co">#&gt; 95 percent confidence interval:</span>
+<span class="co">#&gt;   6.731113 19.178694</span>
+<span class="co">#&gt; sample estimates:</span>
+<span class="co">#&gt; var of Resistance </span>
+<span class="co">#&gt;          10.61248</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">Essence</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="va">Essence</span><span class="op">$</span><span class="va">Aube</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  Shapiro-Wilk normality test</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  Essence$Aube</span>
+<span class="co">#&gt; W = 0.97524, p-value = 0.6897</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="va">Essence</span><span class="op">$</span><span class="va">Marne</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  Shapiro-Wilk normality test</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  Essence$Marne</span>
+<span class="co">#&gt; W = 0.95879, p-value = 0.2884</span>
+<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Essence</span><span class="op">$</span><span class="va">Aube</span><span class="op">)</span>
+<span class="co">#&gt; [1] 1.529867</span>
+<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Essence</span><span class="op">$</span><span class="va">Marne</span><span class="op">)</span>
+<span class="co">#&gt; [1] 1.4241</span>
+<span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">Essence</span>, <span class="fu"><a href="https://rdrr.io/r/stats/var.test.html">var.test</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Aube</span>,y<span class="op">=</span><span class="va">Marne</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  F test to compare two variances</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  Aube and Marne</span>
+<span class="co">#&gt; F = 1.6155, num df = 29, denom df = 29, p-value = 0.2025</span>
+<span class="co">#&gt; alternative hypothesis: true ratio of variances is not equal to 1</span>
+<span class="co">#&gt; 95 percent confidence interval:</span>
+<span class="co">#&gt;  0.7689431 3.3942558</span>
+<span class="co">#&gt; sample estimates:</span>
+<span class="co">#&gt; ratio of variances </span>
+<span class="co">#&gt;           1.615546</span>
+<span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">Essence</span>, <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Aube</span>,y<span class="op">=</span><span class="va">Marne</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  Two Sample t-test</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  Aube and Marne</span>
+<span class="co">#&gt; t = 21.852, df = 58, p-value &lt; 2.2e-16</span>
+<span class="co">#&gt; alternative hypothesis: true difference in means is not equal to 0</span>
+<span class="co">#&gt; 95 percent confidence interval:</span>
+<span class="co">#&gt;  0.0960779 0.1154554</span>
+<span class="co">#&gt; sample estimates:</span>
+<span class="co">#&gt; mean of x mean of y </span>
+<span class="co">#&gt;  1.529867  1.424100</span>
+<span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">Essence</span>, <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Aube</span>,y<span class="op">=</span><span class="va">Marne</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  Welch Two Sample t-test</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  Aube and Marne</span>
+<span class="co">#&gt; t = 21.852, df = 54.956, p-value &lt; 2.2e-16</span>
+<span class="co">#&gt; alternative hypothesis: true difference in means is not equal to 0</span>
+<span class="co">#&gt; 95 percent confidence interval:</span>
+<span class="co">#&gt;  0.09606647 0.11546687</span>
+<span class="co">#&gt; sample estimates:</span>
+<span class="co">#&gt; mean of x mean of y </span>
+<span class="co">#&gt;  1.529867  1.424100</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/binom.test.html">binom.test</a></span><span class="op">(</span><span class="fl">30</span>,<span class="fl">200</span>,p<span class="op">=</span><span class="fl">0.10</span>,alternative<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"greater"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  Exact binomial test</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  30 and 200</span>
+<span class="co">#&gt; number of successes = 30, number of trials = 200, p-value = 0.01633</span>
+<span class="co">#&gt; alternative hypothesis: true probability of success is greater than 0.1</span>
+<span class="co">#&gt; 95 percent confidence interval:</span>
+<span class="co">#&gt;  0.1100814 1.0000000</span>
+<span class="co">#&gt; sample estimates:</span>
+<span class="co">#&gt; probability of success </span>
+<span class="co">#&gt;                   0.15</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">Copies</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">Copies</span>,<span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="va">Correcteur.A</span><span class="op">-</span><span class="va">Correcteur.B</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  Shapiro-Wilk normality test</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  Correcteur.A - Correcteur.B</span>
+<span class="co">#&gt; W = 0.97738, p-value = 0.7524</span>
+<span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">Copies</span>,<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Correcteur.A</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 10.79333</span>
+<span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">Copies</span>,<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Correcteur.B</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 11.37667</span>
+<span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">Copies</span>,<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Correcteur.A</span><span class="op">)</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Correcteur.B</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] -0.5833333</span>
+<span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">Copies</span>,<span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">Correcteur.A</span><span class="op">-</span><span class="va">Correcteur.B</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  One Sample t-test</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  Correcteur.A - Correcteur.B</span>
+<span class="co">#&gt; t = -2.4078, df = 29, p-value = 0.02263</span>
+<span class="co">#&gt; alternative hypothesis: true mean is not equal to 0</span>
+<span class="co">#&gt; 95 percent confidence interval:</span>
+<span class="co">#&gt;  -1.07881769 -0.08784898</span>
+<span class="co">#&gt; sample estimates:</span>
+<span class="co">#&gt;  mean of x </span>
+<span class="co">#&gt; -0.5833333</span>
+<span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">Copies</span>,<span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">Correcteur.A</span>,<span class="va">Correcteur.B</span>,paired<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  Paired t-test</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  Correcteur.A and Correcteur.B</span>
+<span class="co">#&gt; t = -2.4078, df = 29, p-value = 0.02263</span>
+<span class="co">#&gt; alternative hypothesis: true difference in means is not equal to 0</span>
+<span class="co">#&gt; 95 percent confidence interval:</span>
+<span class="co">#&gt;  -1.07881769 -0.08784898</span>
+<span class="co">#&gt; sample estimates:</span>
+<span class="co">#&gt; mean of the differences </span>
+<span class="co">#&gt;              -0.5833333</span></code></pre></div>
+</div>
 <div id="test-t-pour-deux-échantillons-indépendants-" class="section level1">
 <h1 class="hasAnchor">
 <a href="#test-t-pour-deux-%C3%A9chantillons-ind%C3%A9pendants-" class="anchor"></a>Test <span class="math inline">\(t\)</span> pour deux échantillons indépendants.</h1>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pipit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">17.0</span> , <span class="fl">16.9</span> , <span class="fl">16.9</span> , <span class="fl">17.3</span> , <span class="fl">16.8</span> , <span class="fl">16.8</span> , <span class="fl">17.0</span> , <span class="fl">16.5</span> , <span class="fl">16.9</span> , <span class="fl">16.5</span> , <span class="fl">17.0</span> , <span class="fl">17.0</span> , <span class="fl">16.8</span> , <span class="fl">17.0</span> , <span class="fl">16.9</span> , <span class="fl">17.0</span> , <span class="fl">17.0</span> , <span class="fl">17.3</span> , <span class="fl">16.8</span> , <span class="fl">17.1</span> , <span class="fl">16.9</span> , <span class="fl">16.8</span> , <span class="fl">17.1</span> , <span class="fl">17.0</span> , <span class="fl">17.1</span> , <span class="fl">17.2</span> , <span class="fl">16.7</span> , <span class="fl">16.6</span> , <span class="fl">17.2</span> , <span class="fl">17.0</span> , <span class="fl">17.0</span><span class="op">)</span>
 <span class="va">fauvette</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">16.0</span> , <span class="fl">16.1</span> , <span class="fl">16.3</span> , <span class="fl">16.5</span> , <span class="fl">16.2</span> , <span class="fl">15.2</span> , <span class="fl">15.6</span> , <span class="fl">15.6</span> , <span class="fl">16.6</span> , <span class="fl">16.0</span> , <span class="fl">16.2</span> , <span class="fl">16.8</span> , <span class="fl">16.0</span> , <span class="fl">17.0</span> , <span class="fl">17.9</span> , <span class="fl">16.0</span> , <span class="fl">16.4</span> , <span class="fl">16.3</span> , <span class="fl">16.9</span> , <span class="fl">17.1</span> , <span class="fl">17.0</span> , <span class="fl">16.1</span> , <span class="fl">16.5</span> , <span class="fl">16.5</span> , <span class="fl">16.1</span> , <span class="fl">16.5</span> , <span class="fl">17.9</span> , <span class="fl">16.5</span> , <span class="fl">16.7</span> , <span class="fl">16.8</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="va">pipit</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  Shapiro-Wilk normality test</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; data:  pipit</span>
 <span class="co">#&gt; W = 0.94442, p-value = 0.1094</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="va">fauvette</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  Shapiro-Wilk normality test</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; data:  fauvette</span>
 <span class="co">#&gt; W = 0.94926, p-value = 0.1615</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/var.test.html">var.test</a></span><span class="op">(</span><span class="va">pipit</span>,<span class="va">fauvette</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  F test to compare two variances</span>
@@ -183,37 +845,37 @@
 <div id="analyse-de-la-variance-à-un-facteur" class="section level1">
 <h1 class="hasAnchor">
 <a href="#analyse-de-la-variance-%C3%A0-un-facteur" class="anchor"></a>Analyse de la variance à un facteur</h1>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/homepage/">sageR</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">Marque.Valeur</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">Marque.Valeur</span><span class="op">)</span>
 <span class="co">#&gt; 'data.frame':    90 obs. of  2 variables:</span>
 <span class="co">#&gt;  $ Marque: Factor w/ 3 levels "Marque 1","Marque 2",..: 1 1 1 1 1 1 1 1 1 1 ...</span>
 <span class="co">#&gt;  $ Valeur: num  1.5 1.95 1.84 1.08 1.28 2.07 -0.33 1.9 1.94 3.69 ...</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">Marque.Valeur.large</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">Marque.Valeur.large</span><span class="op">)</span>
 <span class="co">#&gt; 'data.frame':    30 obs. of  3 variables:</span>
 <span class="co">#&gt;  $ Marque.1: num  1.5 1.95 1.84 1.08 1.28 2.07 -0.33 1.9 1.94 3.69 ...</span>
 <span class="co">#&gt;  $ Marque.2: num  1.98 1.86 3.3 2.19 3.43 2.49 1.98 2.84 4 3.13 ...</span>
 <span class="co">#&gt;  $ Marque.3: num  4.46 6.49 4.69 3.23 4.53 3.61 3.45 2.91 4.25 4.12 ...</span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">Marque.Valeur</span>,<span class="fu"><a href="https://rdrr.io/r/base/tapply.html">tapply</a></span><span class="op">(</span><span class="va">Valeur</span>,<span class="va">Marque</span>,<span class="va">mean</span><span class="op">)</span><span class="op">)</span>,<span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt; Marque 1 Marque 2 Marque 3 </span>
 <span class="co">#&gt;    1.411    2.889    4.124</span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">Marque.Valeur</span>,<span class="fu"><a href="https://rdrr.io/r/base/tapply.html">tapply</a></span><span class="op">(</span><span class="va">Valeur</span>,<span class="va">Marque</span>,<span class="va">sd</span><span class="op">)</span><span class="op">)</span>,<span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt; Marque 1 Marque 2 Marque 3 </span>
 <span class="co">#&gt;    0.870    1.051    0.939</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">Marque.Valeur</span>,<span class="fu"><a href="https://rdrr.io/r/base/tapply.html">tapply</a></span><span class="op">(</span><span class="va">Valeur</span>,<span class="va">Marque</span>,<span class="va">var</span><span class="op">)</span><span class="op">)</span>,<span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt; Marque 1 Marque 2 Marque 3 </span>
 <span class="co">#&gt;    0.756    1.105    0.882</span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">Marque.Valeur</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Marque</span>,y<span class="op">=</span><span class="va">Valeur</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span></code></pre></div>
-<p><img src="CodeChap09_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<p><img src="CodeChap09_files/figure-html/unnamed-chunk-27-1.png" width="700"></p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"contr.sum"</span>,<span class="st">"contr.sum"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">lm.Marque.Valeur</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Valeur</span><span class="op">~</span><span class="va">Marque</span>,data<span class="op">=</span><span class="va">Marque.Valeur</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">lm.Marque.Valeur</span><span class="op">)</span>
@@ -225,10 +887,10 @@
 <span class="co">#&gt; Residuals 87  79.575   0.915                      </span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">lm.Marque.Valeur</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1.315667</span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res.model.MV</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">residuals</a></span><span class="op">(</span><span class="va">lm.Marque.Valeur</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="va">res.model.MV</span><span class="op">)</span>
 <span class="co">#&gt; </span>
@@ -236,14 +898,14 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; data:  res.model.MV</span>
 <span class="co">#&gt; W = 0.98958, p-value = 0.6999</span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/bartlett.test.html">bartlett.test</a></span><span class="op">(</span><span class="va">res.model.MV</span>,<span class="va">Marque.Valeur</span><span class="op">$</span><span class="va">Marque</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  Bartlett test of homogeneity of variances</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; data:  res.model.MV and Marque.Valeur$Marque</span>
 <span class="co">#&gt; Bartlett's K-squared = 1.0505, df = 2, p-value = 0.5914</span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"ggiraphExtra"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ggiraphExtra"</span><span class="op">)</span><span class="op">}</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/cardiomoon/ggiraphExtra">ggiraphExtra</a></span><span class="op">)</span>
 <span class="va">Marque.Valeur</span><span class="op">$</span><span class="va">Marque</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"M"</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">30</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -260,17 +922,17 @@
 <span class="co">#&gt; M 2-M 1 1.478333 0.8895222 2.067144 1.0e-07</span>
 <span class="co">#&gt; M 3-M 1 2.712667 2.1238555 3.301478 0.0e+00</span>
 <span class="co">#&gt; M 3-M 2 1.234333 0.6455222 1.823144 8.8e-06</span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/ggiraphExtra/man/ggHSD.html">ggHSD</a></span><span class="op">(</span><span class="va">resHSD</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Differences entre les niveaux moyens de Marque"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Intervalles de confiance globale 95%"</span><span class="op">)</span></code></pre></div>
-<p><img src="CodeChap09_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<p><img src="CodeChap09_files/figure-html/unnamed-chunk-34-1.png" width="700"></p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">C1</span><span class="op">=</span><span class="fl">1</span><span class="op">+</span><span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="fl">3</span><span class="op">*</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nlevels.html">nlevels</a></span><span class="op">(</span><span class="va">Marque.Valeur</span><span class="op">$</span><span class="va">Marque</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">Marque.Valeur</span><span class="op">$</span><span class="va">Marque</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">Marque.Valeur</span><span class="op">)</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nlevels.html">nlevels</a></span><span class="op">(</span><span class="va">Marque.Valeur</span><span class="op">$</span><span class="va">Marque</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">C1</span>
 <span class="co">#&gt; [1] 1.015326</span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fl">1</span><span class="op">/</span><span class="va">C1</span><span class="op">*</span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">Marque.Valeur</span><span class="op">)</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nlevels.html">nlevels</a></span><span class="op">(</span><span class="va">Marque.Valeur</span><span class="op">$</span><span class="va">Marque</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">oav.Marque.Valeur</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">`Mean Sq`</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">Marque.Valeur</span><span class="op">$</span><span class="va">Marque</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">Marque.Valeur</span>,<span class="fu"><a href="https://rdrr.io/r/base/tapply.html">tapply</a></span><span class="op">(</span><span class="va">Valeur</span>,<span class="va">Marque</span>,<span class="va">var</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1.050525</span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/bartlett.test.html">bartlett.test</a></span><span class="op">(</span><span class="va">res.model.MV</span>,<span class="va">Marque.Valeur</span><span class="op">$</span><span class="va">Marque</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  Bartlett test of homogeneity of variances</span>
@@ -281,9 +943,9 @@
 <div id="qqplots" class="section level1">
 <h1 class="hasAnchor">
 <a href="#qqplots" class="anchor"></a>QQplots</h1>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># QQplot</span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">oldpar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">Chemin</span> <span class="op">&lt;-</span> <span class="st">"~/Documents/Recherche/DeBoeck/Graphes/"</span>
@@ -294,37 +956,37 @@
 <span class="va">ech_norm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html">qqnorm</a></span><span class="op">(</span><span class="va">ech_norm</span>, ylab<span class="op">=</span><span class="st">""</span>,main<span class="op">=</span><span class="st">""</span>, xaxt<span class="op">=</span><span class="st">"n"</span>, yaxt<span class="op">=</span><span class="st">"n"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span><span class="st">"bottomright"</span>,legend<span class="op">=</span><span class="st">"(a)"</span>,cex<span class="op">=</span><span class="fl">2</span>,bty<span class="op">=</span><span class="st">"n"</span><span class="op">)</span></code></pre></div>
-<p><img src="CodeChap09_files/figure-html/unnamed-chunk-26-1.png" width="700"></p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<p><img src="CodeChap09_files/figure-html/unnamed-chunk-40-1.png" width="700"></p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0.1</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ech_laplace</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VGAM/man/laplaceUC.html">rlaplace</a></span><span class="op">(</span><span class="fl">100</span>,<span class="fl">1</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html">qqnorm</a></span><span class="op">(</span><span class="va">ech_laplace</span>, ylab<span class="op">=</span><span class="st">""</span>,main<span class="op">=</span><span class="st">""</span>, xaxt<span class="op">=</span><span class="st">"n"</span>, yaxt<span class="op">=</span><span class="st">"n"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span><span class="st">"bottomright"</span>,legend<span class="op">=</span><span class="st">"(b)"</span>,cex<span class="op">=</span><span class="fl">2</span>,bty<span class="op">=</span><span class="st">"n"</span><span class="op">)</span></code></pre></div>
-<p><img src="CodeChap09_files/figure-html/unnamed-chunk-28-1.png" width="700"></p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<p><img src="CodeChap09_files/figure-html/unnamed-chunk-42-1.png" width="700"></p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0.1</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ech_unif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">100</span>,<span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html">qqnorm</a></span><span class="op">(</span><span class="va">ech_unif</span>, ylab<span class="op">=</span><span class="st">"(c)"</span>,main<span class="op">=</span><span class="st">""</span>, xaxt<span class="op">=</span><span class="st">"n"</span>, yaxt<span class="op">=</span><span class="st">"n"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span><span class="st">"bottomright"</span>,legend<span class="op">=</span><span class="st">"(c)"</span>,cex<span class="op">=</span><span class="fl">2</span>,bty<span class="op">=</span><span class="st">"n"</span><span class="op">)</span></code></pre></div>
-<p><img src="CodeChap09_files/figure-html/unnamed-chunk-30-1.png" width="700"></p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<p><img src="CodeChap09_files/figure-html/unnamed-chunk-44-1.png" width="700"></p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0.1</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ech_exp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html">rexp</a></span><span class="op">(</span><span class="fl">100</span>,<span class="fl">1</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html">qqnorm</a></span><span class="op">(</span><span class="va">ech_exp</span>, ylab<span class="op">=</span><span class="st">""</span>,main<span class="op">=</span><span class="st">""</span>, xaxt<span class="op">=</span><span class="st">"n"</span>, yaxt<span class="op">=</span><span class="st">"n"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span><span class="st">"bottomright"</span>,legend<span class="op">=</span><span class="st">"(d)"</span>,cex<span class="op">=</span><span class="fl">2</span>,bty<span class="op">=</span><span class="st">"n"</span><span class="op">)</span></code></pre></div>
-<p><img src="CodeChap09_files/figure-html/unnamed-chunk-32-1.png" width="700"></p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<p><img src="CodeChap09_files/figure-html/unnamed-chunk-46-1.png" width="700"></p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0.1</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ech_mel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">50</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">50</span>,<span class="fl">5</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html">qqnorm</a></span><span class="op">(</span><span class="va">ech_mel</span>, ylab<span class="op">=</span><span class="st">""</span>, main<span class="op">=</span><span class="st">""</span>, xaxt<span class="op">=</span><span class="st">"n"</span>, yaxt<span class="op">=</span><span class="st">"n"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span><span class="st">"bottomright"</span>,legend<span class="op">=</span><span class="st">"(e)"</span>,cex<span class="op">=</span><span class="fl">2</span>,bty<span class="op">=</span><span class="st">"n"</span><span class="op">)</span></code></pre></div>
-<p><img src="CodeChap09_files/figure-html/unnamed-chunk-34-1.png" width="700"></p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<p><img src="CodeChap09_files/figure-html/unnamed-chunk-48-1.png" width="700"></p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0.1</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ech_ext</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">99</span>,<span class="fl">0</span><span class="op">)</span>,<span class="fl">5</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html">qqnorm</a></span><span class="op">(</span><span class="va">ech_ext</span>, ylab<span class="op">=</span><span class="st">""</span>,main<span class="op">=</span><span class="st">""</span>, xaxt<span class="op">=</span><span class="st">"n"</span>, yaxt<span class="op">=</span><span class="st">"n"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span><span class="st">"bottomright"</span>,legend<span class="op">=</span><span class="st">"(f)"</span>,cex<span class="op">=</span><span class="fl">2</span>,bty<span class="op">=</span><span class="st">"n"</span><span class="op">)</span></code></pre></div>
-<p><img src="CodeChap09_files/figure-html/unnamed-chunk-36-1.png" width="700"></p>
+<p><img src="CodeChap09_files/figure-html/unnamed-chunk-50-1.png" width="700"></p>
 </div>
 <div id="compléments--tests-non-paramétriques-pour-un-échantillon-" class="section level1">
 <h1 class="hasAnchor">
@@ -517,7 +1179,7 @@ X_i&gt;0\end{array}}R_i^{a}.\]</span></p>
 <p>Nous obtenons ainsi deux séries d’observations notées <span class="math inline">\((x_{1,1},\ldots,x_{1,n_1})\)</span> pour la première et <span class="math inline">\((x_{2,1},\ldots,x_{2,n_2})\)</span> pour la seconde.</p>
 <p>Nous notons <span class="math inline">\(\mathcal{L}_i(X)\)</span> la loi de la variable aléatoire <span class="math inline">\(X\)</span> sur la <span class="math inline">\(i\)</span>-eme (sous-)population.</p>
 <p>Sans faire d’hypothèses spécifiques, le test de Mann-Whitney-Wilcoxon ne permet pas de tester l’égalité des moyennes ni celle des médianes entre les deux (sous-)populations même dans le cas où les variances ou les mads (median of absolute differences to the median, voir la Section correspondante de la variable <span class="math inline">\(X\)</span> sont égales sur les deux (sous-)populations. Pour s’en convaincre, il suffit de s’intéresser à l’exemple suivant :</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Premier_echantillon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">6</span>,<span class="fl">7</span>,<span class="fl">8</span>,<span class="fl">9</span>,<span class="fl">20</span>,<span class="fl">21</span>,<span class="fl">22</span>,<span class="fl">23</span>,<span class="fl">24</span>,<span class="fl">25</span>,<span class="fl">26</span>,<span class="fl">27</span>,<span class="fl">28</span>,<span class="fl">29</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">Premier_echantillon</span><span class="op">)</span>
 <span class="co">#&gt; [1] 10.39146</span>
@@ -1082,7 +1744,7 @@ U_{n_2}=n_1 n_2 +\frac{n_2(n_2+1)}{2}-R_{n_2}=n_1 n_2-U_{n_1}.\]</span> Enfin, l
 <div id="test-de-fligner-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#test-de-fligner-1" class="anchor"></a>Test de Fligner :</h4>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/fligner.test.html">fligner.test</a></span><span class="op">(</span><span class="va">res.model.MV</span>,<span class="va">Marque.Valeur</span><span class="op">$</span><span class="va">Marque</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  Fligner-Killeen test of homogeneity of variances</span>
@@ -1094,7 +1756,7 @@ U_{n_2}=n_1 n_2 +\frac{n_2(n_2+1)}{2}-R_{n_2}=n_1 n_2-U_{n_1}.\]</span> Enfin, l
 <div id="test-de-levene-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#test-de-levene-1" class="anchor"></a>Test de Levene :</h4>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-forge.r-project.org/projects/car/">car</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/car/man/leveneTest.html">leveneTest</a></span><span class="op">(</span><span class="va">res.model.MV</span>,<span class="va">Marque.Valeur</span><span class="op">$</span><span class="va">Marque</span><span class="op">)</span>
 <span class="co">#&gt; Levene's Test for Homogeneity of Variance (center = median)</span>
@@ -1102,7 +1764,7 @@ U_{n_2}=n_1 n_2 +\frac{n_2(n_2+1)}{2}-R_{n_2}=n_1 n_2-U_{n_1}.\]</span> Enfin, l
 <span class="co">#&gt; group  2  1.2809  0.283</span>
 <span class="co">#&gt;       87</span></code></pre></div>
 <p>En utilisant un logiciel de statistique, nous calculons la <span class="math inline">\(p\)</span>-valeur qui vaut <span class="math inline">\(0,283\)</span>. Comme la <span class="math inline">\(p\)</span>-valeur est <span class="math inline">\(&gt;0,05\)</span>, nous décidons, au seuil <span class="math inline">\(\alpha =5\ %,\)</span>que rien ne vient contredire l’hypothèse nulle <span class="math inline">\(\mathcal{H}_0\)</span>, c’est-à-dire que l’hypothèse d’homogénéité des variances est vérifiée. La condition d’homogénéité des variances des variables observées est bien remplie qu’elle soit vérifiée à l’aide du test de Fligner (<span class="math inline">\(p\)</span>-valeur égale à <span class="math inline">\(0,2735\)</span>) ou du test de Levene (<span class="math inline">\(p\)</span>-valeur égale à <span class="math inline">\(0,283\)</span>). Nous sommes en présence d’ex quo, nous devons donc utiliser la statistique de test <span class="math inline">\(KW_{n_{\bullet}}^{\star}\)</span> à la place de la statistique de test <span class="math inline">\(KW_{n_{\bullet}}\)</span>.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"PMCMRplus"</span> <span class="op">%in%</span>  <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"PMCMRplus"</span><span class="op">)</span><span class="op">}</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">PMCMRplus</span><span class="op">)</span>
 <span class="fu">PMCMRplus</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/PMCMRplus/man/kruskalTest.html">kruskalTest</a></span><span class="op">(</span><span class="va">Marque.Valeur</span><span class="op">$</span><span class="va">Valeur</span>,<span class="va">Marque.Valeur</span><span class="op">$</span><span class="va">Marque</span><span class="op">)</span>
@@ -1145,7 +1807,7 @@ U_{n_2}=n_1 n_2 +\frac{n_2(n_2+1)}{2}-R_{n_2}=n_1 n_2-U_{n_1}.\]</span> Enfin, l
 <a href="#test-bas%C3%A9-sur-la-m%C3%A9thode-de-scheff%C3%A9" class="anchor"></a>Test basé sur la méthode de Scheffé</h4>
 <p>Les <span class="math inline">\(p\)</span>-valeurs reproduites dans le Tableau 14 indiquent que tous les tests de comparaison deux à deux des distributions des groupes sont significatifs au seuil <span class="math inline">\(\alpha=5\%\)</span>.</p>
 <p>Tableau 14 : résultats des comparaisons multiples du test basé sur la méthode de Scheffé.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"PMCMR"</span> <span class="op">%in%</span>  <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"PMCMR"</span><span class="op">)</span><span class="op">}</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">PMCMR</span><span class="op">)</span>
 <span class="fu">PMCMR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/PMCMR/man/posthoc.kruskal.nemenyi.test.html">posthoc.kruskal.nemenyi.test</a></span><span class="op">(</span><span class="va">Valeur</span><span class="op">~</span><span class="va">Marque</span>, data<span class="op">=</span><span class="va">Marque.Valeur</span>, dist<span class="op">=</span><span class="st">"Chisquare"</span><span class="op">)</span>
@@ -1168,7 +1830,7 @@ U_{n_2}=n_1 n_2 +\frac{n_2(n_2+1)}{2}-R_{n_2}=n_1 n_2-U_{n_1}.\]</span> Enfin, l
 <a href="#test-bas%C3%A9-sur-lin%C3%A9galit%C3%A9-de-bonferroni-1" class="anchor"></a>Test basé sur l’inégalité de Bonferroni</h4>
 <p>Les <span class="math inline">\(p\)</span>-valeurs reproduites dans le Tableau 15 indiquent que tous les tests de comparaison deux à deux des distributions des groupes sont significatifs au seuil <span class="math inline">\(\alpha=5\%\)</span>.</p>
 <p>Tableau 15 : résultats des comparaisons multiples du test basé sur l’inégalité de Bonferroni.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">PMCMR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/PMCMR/man/posthoc.kruskal.dunn.test.html">posthoc.kruskal.dunn.test</a></span><span class="op">(</span><span class="va">Valeur</span><span class="op">~</span><span class="va">Marque</span>, data<span class="op">=</span><span class="va">Marque.Valeur</span>, dist<span class="op">=</span><span class="st">"Tukey"</span>, p.adjust<span class="op">=</span><span class="st">"bonf"</span><span class="op">)</span>
 <span class="co">#&gt; Warning in posthoc.kruskal.dunn.test.default(c(1.5, 1.95, 1.84, 1.08, 1.28, :</span>
 <span class="co">#&gt; Ties are present. z-quantiles were corrected for ties.</span>
@@ -1189,7 +1851,7 @@ U_{n_2}=n_1 n_2 +\frac{n_2(n_2+1)}{2}-R_{n_2}=n_1 n_2-U_{n_1}.\]</span> Enfin, l
 <a href="#test-de-dunn" class="anchor"></a>Test de Dunn</h4>
 <p>Les <span class="math inline">\(p\)</span>-valeurs reproduites dans le Tableau 16 indiquent que tous les tests de comparaison deux à deux des distributions des groupes sont significatifs au seuil <span class="math inline">\(\alpha=5\%\)</span>.</p>
 <p>Tableau 16 : résultats des comparaisons multiples du test de Dunn.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">PMCMR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/PMCMR/man/posthoc.kruskal.dunn.test.html">posthoc.kruskal.dunn.test</a></span><span class="op">(</span><span class="va">Valeur</span><span class="op">~</span><span class="va">Marque</span>, data<span class="op">=</span><span class="va">Marque.Valeur</span>, dist<span class="op">=</span><span class="st">"Tukey"</span><span class="op">)</span>
 <span class="co">#&gt; Warning in posthoc.kruskal.dunn.test.default(c(1.5, 1.95, 1.84, 1.08, 1.28, :</span>
 <span class="co">#&gt; Ties are present. z-quantiles were corrected for ties.</span>
@@ -1210,7 +1872,7 @@ U_{n_2}=n_1 n_2 +\frac{n_2(n_2+1)}{2}-R_{n_2}=n_1 n_2-U_{n_1}.\]</span> Enfin, l
 <a href="#test-de-nemeyi-adapt%C3%A9-de-tukey-kramer" class="anchor"></a>Test de Nemeyi (adapté de Tukey-Kramer)</h4>
 <p>Les <span class="math inline">\(p\)</span>-valeurs reproduites dans le Tableau 17 indiquent que tous les tests de comparaison deux à deux des distributions des groupes sont significatifs au seuil <span class="math inline">\(\alpha=5\%\)</span>.</p>
 <p>Tableau 17 : résultats des comparaisons multiples du test de Nemeyi.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">PMCMR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/PMCMR/man/posthoc.kruskal.nemenyi.test.html">posthoc.kruskal.nemenyi.test</a></span><span class="op">(</span><span class="va">Valeur</span><span class="op">~</span><span class="va">Marque</span>, data<span class="op">=</span><span class="va">Marque.Valeur</span>, dist<span class="op">=</span><span class="st">"Tukey"</span><span class="op">)</span>
 <span class="co">#&gt; Warning in posthoc.kruskal.nemenyi.test.default(c(1.5, 1.95, 1.84, 1.08, : Ties</span>
 <span class="co">#&gt; are present, p-values are not corrected.</span>

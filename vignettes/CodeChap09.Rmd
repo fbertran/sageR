@@ -32,6 +32,121 @@ if(!("sageR" %in% installed.packages())){install.packages("sageR")}
 library(sageR)
 ```
 
+# Intervalles de confiance
+
+## Pour la moyenne
+```{r, eval=LOCAL}
+data(Flux)
+mean(Flux)
+t.test(Flux)
+```
+
+## Pour la variance
+```{r, eval=LOCAL}
+var(Flux)
+if(!("TeachingDemos" %in% installed.packages())){install.packages("TeachingDemos")}
+library(TeachingDemos)
+TeachingDemos::sigma.test(Flux)
+```
+
+
+# Test $t$ pour un échantillon
+```{r, eval=LOCAL}
+data(Precipitations_USA)
+colnames(Precipitations_USA) <- c("Ville", "Precipitation (inches)", "Precipitation (cms)", "Etat")
+if(!("ggmap" %in% installed.packages())){install.packages("ggmap")}
+library(ggmap)
+if(!("tidygeocoder" %in% installed.packages())){install.packages("tidygeocoder")}
+library(tidygeocoder)
+gps_coords <- mapply(geo, city= Precipitations_USA[,1], state = Precipitations_USA[,4], method = "osm")
+
+gps_coords_df <- as.data.frame(matrix(unlist(gps_coords),ncol=4,byrow=TRUE))
+colnames(gps_coords_df) <- c("Ville", "Etat", "lat", "long")
+gps_coords_df$lat <- as.numeric(gps_coords_df$lat)
+gps_coords_df$long <- as.numeric(gps_coords_df$long)
+
+precip_gps <- merge(Precipitations_USA,gps_coords_df)
+```
+
+
+```{r, eval=LOCAL}
+precip_gps_map <- get_map(c(left = min(gps_coords_df$long)*1.03, bottom = min(gps_coords_df$lat)/1.2, right = max(gps_coords_df$long)/1.12, top = max(gps_coords_df$lat))*1.03, source = "osm", zoom=6, messaging = FALSE)
+```
+
+
+```{r, eval=LOCAL}
+ggmap(precip_gps_map,extent = "device") + 
+  geom_point(aes(x = long, y = lat, color=`Precipitation (cms)`),
+             data = precip_gps, size = 5, pch = 20) + 
+  scale_color_gradient(low="red", high="blue")
+```
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+ggsave("map_pprecip_USA.pdf", width=14, height=8)
+```
+
+
+```{r, eval=LOCAL}
+precip_gps_map_bw <- get_stamenmap(c(left = min(gps_coords_df$long)*1.03, bottom = min(gps_coords_df$lat)/1.2, right = max(gps_coords_df$long)/1.12, top = max(gps_coords_df$lat))*1.03, source = "stamen", zoom=6, maptype="toner")
+```
+
+
+```{r, eval=LOCAL}
+ggmap(precip_gps_map_bw,extent = "device") + 
+  geom_point(aes(x = long, y = lat, color=`Precipitation (cms)`),
+             data = precip_gps, size = 5, pch = 20, fill = "white") + 
+  scale_color_gradient(low="white", high="black")
+```
+
+```{r, eval=LOCAL}
+with(Precipitations_USA, shapiro.test(`Precipitation (cms)`))
+with(Precipitations_USA, t.test(`Precipitation (cms)`, mu = 83.90))
+with(Precipitations_USA, TeachingDemos::sigma.test(`Precipitation (cms)`))
+```
+
+
+```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
+ggsave("map_pprecip_USA_bw.pdf", width=14, height=8)
+```
+
+
+```{r, eval=LOCAL}
+data(Resistance)
+Resistance<-c(219.92,216.71,219.90,218.61,216.06,214.85,219.23,214.00,223.43,221.64,
+  223.39,218.57,215.00,221.90,222.23,215.42,218.85,222.22,219.45,216.99,
+  220.94,217.77,225.23,217.66,215.56,219.46,215.75,215.78,216.91,226.63)
+sigma.test(Resistance,sigmasq = 8)
+```
+
+```{r}
+data(Essence)
+shapiro.test(Essence$Aube)
+shapiro.test(Essence$Marne)
+mean(Essence$Aube)
+mean(Essence$Marne)
+with(Essence, var.test(x=Aube,y=Marne))
+with(Essence, t.test(x=Aube,y=Marne, var.equal = TRUE))
+with(Essence, t.test(x=Aube,y=Marne))
+```
+
+
+```{r}
+binom.test(30,200,p=0.10,alternative=c("greater"))
+```
+
+
+```{r}
+data(Copies)
+with(Copies,shapiro.test(Correcteur.A-Correcteur.B))
+with(Copies,mean(Correcteur.A))
+with(Copies,mean(Correcteur.B))
+with(Copies,mean(Correcteur.A)-mean(Correcteur.B))
+with(Copies,t.test(Correcteur.A-Correcteur.B))
+with(Copies,t.test(Correcteur.A,Correcteur.B,paired=TRUE))
+```
+
+
+
 # Test $t$ pour deux échantillons indépendants.
 
 ```{r, eval=LOCAL, cache=TRUE}
