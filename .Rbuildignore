@@ -32,3 +32,4 @@ genlogo.R
 ^vignettes/.*_cache$
 ^vignettes/.*_files$
 ^\.github$
+^complements/$
