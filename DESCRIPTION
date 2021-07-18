@@ -1,21 +1,22 @@
 Package: sageR
 Type: Package
 Title: Applied Statistics for Economics and Management with R
-Version: 0.2.0
-Date: 2021-03-08
+Version: 0.3.0
+Date: 2021-07-17
 Depends: R (>= 3.5.0)
 Imports:
     ggplot2
 Suggests: 
+    knitr,
+    markdown,
+    prettydoc,
+    rmarkdown,
     testthat (>= 3.0.0),
     covr,
-    knitr,
-    rmarkdown,
     learnr,
     spelling,
     lattice,
     spatstat.data,
-    markdown,
     Matrix,
     mgcv,
     PMCMR,
@@ -27,6 +28,7 @@ Suggests:
     VGAM,
     car,
     dplyr,
+    tibble,
     ggiraphExtra,
     scales,
     spatstat,
@@ -40,7 +42,7 @@ Authors@R: c(
 	person(given = "Myriam", family= "Maumy-Bertrand", role = c("aut"), email = "myriam.maumy@utt.fr", comment = c(ORCID = "0000-0002-4615-1512")))
 Author: Frederic Bertrand [cre, aut] (<https://orcid.org/0000-0002-0837-8281>), Claire Borsenberger [ctb], Christian Derquenne [ctb], Gilles Dufrénot [ctb], Fredj Jawadi [ctb], Myriam Maumy-Bertrand [aut] (<https://orcid.org/0000-0002-4615-1512>)
 Maintainer: Frederic Bertrand <frederic.bertrand@utt.fr>
-Description: Datasets and functions for the book "Statistiques pour l’économie et la gestion", F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy-Bertrand, C. Borsenberger editor, (2021, ISBN: , De Boeck Supérieur, Paris). 
+Description: Datasets and functions for the book "Statistiques pour l’économie et la gestion", "Théorie et applications en entreprise", F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy, C. Borsenberger editor, (2021, ISBN:9782807319448, De Boeck Supérieur, Louvain-la-Neuve). 
     The first chapter of the book is dedicated to an introduction to statistics and their world. 
     The second chapter deals with univariate exploratory statistics and graphics. 
     The third chapter deals with bivariate and multivariate exploratory statistics and graphics. 

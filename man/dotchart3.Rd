@@ -74,7 +74,7 @@ dotchart3(Effectif,labels=NameX,pch=19,col="#00FFFF")
 
 }
 \references{
-F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy, C. Borsenberger editor, \emph{Statistiques pour l’économie et la gestion}, De Boeck Supérieur, 2021.
+F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy, C. Borsenberger editor, \emph{Statistiques pour l’économie et la gestion}, De Boeck Supérieur, Louvain-la-Neuve, 2021.
 }
 \seealso{
 Other plot functions: 

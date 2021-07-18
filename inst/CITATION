@@ -32,6 +32,7 @@ citEntry(entry="Book",
                              as.person("M. Maumy")),
          year         = 2021,
          publisher = "De Boeck Supérieure",
+         address = "Louvain-la-Neuve",
          textVersion =
-           paste("F. Bertrand, Cl. Borsenberger, Ch. Derquenne, G. Dufrénot, F. Jawadi, M. Maumy (2021).", "Statistiques pour l’économie et la gestion.", "De Boeck Supérieure,", "VILLE." )
+           paste("F. Bertrand, Cl. Borsenberger, Ch. Derquenne, G. Dufrénot, F. Jawadi, M. Maumy (2021).", "Statistiques pour l’économie et la gestion.", "De Boeck Supérieure,", "Louvain-la-Neuve." )
 )

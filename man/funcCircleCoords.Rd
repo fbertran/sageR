@@ -4,7 +4,7 @@
 \alias{funcCircleCoords}
 \title{Generate circle coordinates}
 \source{
-Adapted from Joran's response to \url{http://stackoverflow.com/questions/6862742/draw-a-circle-with-ggplot2}.
+Adapted from Joran's response to \url{https://stackoverflow.com/questions/6862742/draw-a-circle-with-ggplot2}.
 }
 \usage{
 funcCircleCoords(center = c(0, 0), r = 1, npoints = 100)

@@ -19,7 +19,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Chapitre 02. Statistiques descriptives et visualisation des données univariables">
 <meta property="og:description" content="sageR">
-<meta property="og:image" content="https://fbertran.github.io/SEGR/reference/figures/logo.png">
+<meta property="og:image" content="https://fbertran.github.io/sageR/reference/figures/logo.png">
 <meta property="og:image:alt" content="Statistiques pour l’économie et la gestion">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@BertrandFrdric2">
@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -65,10 +65,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/CodeChap00Introduction.html">Avant-propos.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap01.html">Chapitre 01. Introduction à la statistique et à son environnement.</a>
+      <a href="../articles/AllLinksExtVignettes.html">Links to the vignette of each chapter.</a>
     </li>
     <li>
       <a href="../articles/CodeChap02.html">Chapitre 02. Statistiques descriptives et visualisation des données univariables</a>
@@ -77,31 +74,10 @@
       <a href="../articles/CodeChap03.html">Chapitre 03.	Statistiques descriptives et visualisation des données bivariables ou multivariables</a>
     </li>
     <li>
-      <a href="../articles/CodeChap04.html">Chapitre 04. Exploration de données avec l'analyse en composantes principales.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap05.html">Chapitre 05. Exploration de données avec l'analyse factorielle des correspondances.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap06.html">Chapitre 06. Exploration de données avec l'analyse des correspondances multiples.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap07.html">Chapitre 07. Exploration des données avec une classification automatique.</a>
-    </li>
-    <li>
       <a href="../articles/CodeChap08.html">Chapitre 08. Introduction à la théorie des probabilités aux distributions statistiques classiques.</a>
     </li>
     <li>
       <a href="../articles/CodeChap09.html">Chapitre 09. Inférence statistique.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap10.html">Chapitre 10. Modèle linéaire gaussien.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap11.html">Chapitre 11. Introduction aux séries temporelles.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap12.html">Chapitre 12. Introduction aux modèles logit et probit.</a>
     </li>
   </ul>
 </li>
@@ -130,11 +106,10 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Chapitre 02. Statistiques descriptives et visualisation des données univariables</h1>
-            <h3 class="subtitle">Tout le code avec R. <img src="../man/figures/logo.png" align="right" width="200">
-</h3>
+            <h3 class="subtitle">Tout le code avec R.</h3>
                         <h4 class="author">F. Bertrand et M. Maumy</h4>
             
-            <h4 class="date">2021-04-11</h4>
+            <h4 class="date">2021-07-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/fbertran/sageR/blob/master/vignettes/CodeChap02.Rmd"><code>vignettes/CodeChap02.Rmd</code></a></small>
       <div class="hidden name"><code>CodeChap02.Rmd</code></div>
@@ -143,6 +118,14 @@
 
     
     
+<table class="table"><tr>
+<td>
+<img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;">
+</td>
+<td>
+<img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;">
+</td>
+</tr></table>
 <div id="sources-des-données" class="section level1">
 <h1 class="hasAnchor">
 <a href="#sources-des-donn%C3%A9es" class="anchor"></a>Sources des données</h1>
@@ -580,7 +563,18 @@
 <p><img src="CodeChap02_files/figure-html/unnamed-chunk-36-2.png" width="700"></p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"dplyr"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"dplyr"</span><span class="op">)</span><span class="op">}</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attachement du package : 'dplyr'</span>
+<span class="co">#&gt; The following object is masked from 'package:MASS':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     select</span>
+<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     filter, lag</span>
+<span class="co">#&gt; The following objects are masked from 'package:base':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     intersect, setdiff, setequal, union</span></code></pre></div>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>NameX2<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="va">NameX2</span><span class="op">)</span>, 
                  Effectif<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="va">Effectif</span><span class="op">)</span><span class="op">)</span>
@@ -2637,7 +2631,7 @@
          <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">Europe</span><span class="op">[</span>,<span class="fl">6</span><span class="op">]</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">Europe</span><span class="op">[</span>,<span class="fl">6</span><span class="op">]</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Europe</span><span class="op">[</span>,<span class="fl">6</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,
          <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">Europe</span><span class="op">[</span>,<span class="fl">5</span><span class="op">]</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">Europe</span><span class="op">[</span>,<span class="fl">5</span><span class="op">]</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Europe</span><span class="op">[</span>,<span class="fl">5</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span><span class="op">(</span><span class="va">Europe</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">6</span>,<span class="fl">5</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span>
 
-<span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames</a></span><span class="op">(</span><span class="va">tab2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">Europe</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">6</span>,<span class="fl">5</span><span class="op">)</span><span class="op">]</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">tab2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">Europe</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">6</span>,<span class="fl">5</span><span class="op">)</span><span class="op">]</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">tab2</span>,digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt;                 sd  mad Range  EIQ     CV</span>
 <span class="co">#&gt; Partiel_Ens 10.559  6.5  48.3 16.2 70.364</span>
@@ -2737,7 +2731,12 @@
 <a href="#utilisation-du-package-actuar" class="anchor"></a>Utilisation du package actuar</h3>
 <div class="sourceCode" id="cb236"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"actuar"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"actuar"</span><span class="op">)</span><span class="op">}</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gitlab.com/vigou3/actuar">actuar</a></span><span class="op">)</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gitlab.com/vigou3/actuar">actuar</a></span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attachement du package : 'actuar'</span>
+<span class="co">#&gt; The following object is masked from 'package:grDevices':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     cm</span></code></pre></div>
 <div class="sourceCode" id="cb237"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/actuar/man/grouped.data.html">grouped.data</a></span><span class="op">(</span>Partiel_Ens<span class="op">=</span><span class="va">Europe</span><span class="op">$</span><span class="va">Partiel_Ens</span>,breaks<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span>,<span class="fl">20</span>,<span class="fl">30</span>,<span class="fl">40</span>,<span class="fl">50</span>,<span class="fl">60</span>,<span class="fl">70</span>,<span class="fl">80</span><span class="op">)</span><span class="op">)</span>
 <span class="va">x2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/actuar/man/grouped.data.html">grouped.data</a></span><span class="op">(</span>Partiel_Ens<span class="op">=</span><span class="va">Europe</span><span class="op">$</span><span class="va">Partiel_H</span>,breaks<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span>,<span class="fl">20</span>,<span class="fl">30</span>,<span class="fl">40</span>,<span class="fl">50</span>,<span class="fl">60</span>,<span class="fl">70</span>,<span class="fl">80</span><span class="op">)</span><span class="op">)</span>
@@ -2896,7 +2895,7 @@
        <span class="op">+</span><span class="fl">7</span><span class="op">/</span><span class="fl">240</span><span class="op">*</span><span class="fl">10</span><span class="op">^</span><span class="fl">4</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html">weighted.mean</a></span><span class="op">(</span><span class="op">(</span><span class="op">(</span><span class="va">x5</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">+</span><span class="va">x5</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x5</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x5</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span>,<span class="va">x5</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">12</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html">weighted.mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="va">x5</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span>,<span class="va">x5</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="fl">4</span>
     <span class="op">)</span>
 <span class="op">)</span>
-<span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames</a></span><span class="op">(</span><span class="va">tab6</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">Europe</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">tab6</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">Europe</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">tab6</span>,digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt;             asyFis asyPea appFis appPea</span>
 <span class="co">#&gt; Partiel_Ens   1.46   2.12   2.28   5.28</span>

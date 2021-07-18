@@ -48,6 +48,8 @@ ff=table(cut(Europe$Partiel_H,c(0,10,20,30)),
                    cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80))))
 plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),
          f=ff,xaxe="Hommes",yaxe="Femmes",theme="0")
+
+\donttest{
 plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),
          f=ff,xaxe="Hommes",yaxe="Femmes",theme="1")
 plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),
@@ -58,6 +60,7 @@ plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),
          f=ff,xaxe="Hommes",yaxe="Femmes",theme="cyan",border=TRUE)
 plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),
          f=ff,xaxe="Hommes",yaxe="Femmes",theme="bw")
+}
 
 xx=seq(1.5,12.5)
 yy=seq(0.5,6.5)
@@ -77,7 +80,7 @@ plotcdf3(xx,yy,p,"somme des des","valeur du plus petit")
 
 }
 \references{
-F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy, C. Borsenberger editor, \emph{Statistiques pour l’économie et la gestion}, De Boeck Supérieur, 2021.
+F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy, C. Borsenberger editor, \emph{Statistiques pour l’économie et la gestion}, De Boeck Supérieur, Louvain-la-Neuve, 2021.
 }
 \seealso{
 Other plot functions: 

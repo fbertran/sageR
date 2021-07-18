@@ -40,7 +40,7 @@
 #' @return Un dotplot de la série statistique.
 #' @family plot functions
 #' @author Frederic Bertrand, \email{frederic.bertrand@utt.fr}
-#' @references F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy, C. Borsenberger editor, \emph{Statistiques pour l’économie et la gestion}, De Boeck Supérieur, 2021.
+#' @references F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy, C. Borsenberger editor, \emph{Statistiques pour l’économie et la gestion}, De Boeck Supérieur, Louvain-la-Neuve, 2021.
 #'
 #' @examples
 #' data(Total_Secteur)
@@ -221,7 +221,7 @@ dotchart3 <-
 #' @return Un stéréogramme des deux séries statistiques groupées ou des deux séries statistiques discrètes étudiées.
 #' @family plot functions
 #' @author Frederic Bertrand, \email{frederic.bertrand@utt.fr}
-#' @references F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy, C. Borsenberger editor, \emph{Statistiques pour l’économie et la gestion}, De Boeck Supérieur, 2021.
+#' @references F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy, C. Borsenberger editor, \emph{Statistiques pour l’économie et la gestion}, De Boeck Supérieur, Louvain-la-Neuve, 2021.
 #'
 #' @examples
 #' ff=table(cut(Europe$Partiel_H,c(0,10,20,30)),
@@ -230,6 +230,8 @@ dotchart3 <-
 #'                    cut(Europe$Partiel_F,c(0,10,20,30,40,50,60,70,80))))
 #' plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),
 #'          f=ff,xaxe="Hommes",yaxe="Femmes",theme="0")
+#'
+#' \donttest{
 #' plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),
 #'          f=ff,xaxe="Hommes",yaxe="Femmes",theme="1")
 #' plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),
@@ -240,6 +242,7 @@ dotchart3 <-
 #'          f=ff,xaxe="Hommes",yaxe="Femmes",theme="cyan",border=TRUE)
 #' plotcdf3(c(0,10,20,30),c(0,10,20,30,40,50,60,70,80),
 #'          f=ff,xaxe="Hommes",yaxe="Femmes",theme="bw")
+#' }
 #'
 #' xx=seq(1.5,12.5)
 #' yy=seq(0.5,6.5)
@@ -395,7 +398,7 @@ plotcdf3 <-
     ))
   }
 
-#' ggradar
+#' @title Enhanced Radar Plots for ggplot2
 #'
 #' @param plot.data dataframe comprising one row per group
 #' @param base.size text size
@@ -439,16 +442,14 @@ plotcdf3 <-
 #' @import ggplot2
 #' @return a ggplot object
 #'
-#' @name ggradar-package
+#' @name ggradar
 #'
 #' @export
 #'
 #' @source
-#' Most of the code is from \url{http://rstudio-pubs-static.s3.amazonaws.com/5795_e6e6411731bb4f1b9cc7eb49499c2082.html}.
+#' Most of the code is from \url{https://rstudio-pubs-static.s3.amazonaws.com/5795_e6e6411731bb4f1b9cc7eb49499c2082.html}.
 #'
 #' @examples
-#' \dontrun{
-#' library(ggradar)
 #' library(dplyr)
 #' library(scales)
 #' library(tibble)
@@ -460,7 +461,6 @@ plotcdf3 <-
 #'   select(1:10)
 #' mtcars_radar
 #' ggradar(mtcars_radar)
-#' }
 ggradar <- function(plot.data,
                     base.size = 15,
                     font.radar = "sans",
@@ -728,7 +728,7 @@ ggradar <- function(plot.data,
 #'
 #' @return a dataframe
 #' @source
-#' Adapted from Joran's response to \url{http://stackoverflow.com/questions/6862742/draw-a-circle-with-ggplot2}.
+#' Adapted from Joran's response to \url{https://stackoverflow.com/questions/6862742/draw-a-circle-with-ggplot2}.
 funcCircleCoords <- function(center = c(0, 0), r = 1, npoints = 100) {
   tt <- seq(0, 2 * pi, length.out = npoints)
   xx <- center[1] + r * cos(tt)
@@ -745,7 +745,7 @@ funcCircleCoords <- function(center = c(0, 0), r = 1, npoints = 100) {
 #' @return a dataframe of the calculated axis paths
 #'
 #' @source
-#' Code adapted from a solution posted by Tony M to \url{http://stackoverflow.com/questions/9614433/creating-radar-chart-a-k-a-star-plot-spider-plot-using-ggplot2-in-r}.
+#' Code adapted from a solution posted by Tony M to \url{https://stackoverflow.com/questions/9614433/creating-radar-chart-a-k-a-star-plot-spider-plot-using-ggplot2-in-r}.
 CalculateGroupPath <- function(df) {
   path <- df[, 1]
 

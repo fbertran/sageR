@@ -1,6 +1,6 @@
 ---
 title: "Chapitre 02. Statistiques descriptives et visualisation des données univariables"
-subtitle: "Tout le code avec R. <img src='../man/figures/logo.png' align='right' width='200'/>"
+subtitle: "Tout le code avec R."
 author: "F. Bertrand et M. Maumy"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -9,6 +9,13 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+<table align="center">
+        <tr>
+            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;"/></td>
+            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;"/></td>
+        </tr>
+</table>
 
 ```{r, echo=FALSE}
 #file.edit(normalizePath("~/.Renviron"))

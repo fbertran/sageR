@@ -19,7 +19,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Chapitre 09. Inférence statistique.">
 <meta property="og:description" content="sageR">
-<meta property="og:image" content="https://fbertran.github.io/SEGR/reference/figures/logo.png">
+<meta property="og:image" content="https://fbertran.github.io/sageR/reference/figures/logo.png">
 <meta property="og:image:alt" content="Statistiques pour l’économie et la gestion">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@BertrandFrdric2">
@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -65,10 +65,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/CodeChap00Introduction.html">Avant-propos.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap01.html">Chapitre 01. Introduction à la statistique et à son environnement.</a>
+      <a href="../articles/AllLinksExtVignettes.html">Links to the vignette of each chapter.</a>
     </li>
     <li>
       <a href="../articles/CodeChap02.html">Chapitre 02. Statistiques descriptives et visualisation des données univariables</a>
@@ -77,31 +74,10 @@
       <a href="../articles/CodeChap03.html">Chapitre 03.	Statistiques descriptives et visualisation des données bivariables ou multivariables</a>
     </li>
     <li>
-      <a href="../articles/CodeChap04.html">Chapitre 04. Exploration de données avec l'analyse en composantes principales.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap05.html">Chapitre 05. Exploration de données avec l'analyse factorielle des correspondances.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap06.html">Chapitre 06. Exploration de données avec l'analyse des correspondances multiples.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap07.html">Chapitre 07. Exploration des données avec une classification automatique.</a>
-    </li>
-    <li>
       <a href="../articles/CodeChap08.html">Chapitre 08. Introduction à la théorie des probabilités aux distributions statistiques classiques.</a>
     </li>
     <li>
       <a href="../articles/CodeChap09.html">Chapitre 09. Inférence statistique.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap10.html">Chapitre 10. Modèle linéaire gaussien.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap11.html">Chapitre 11. Introduction aux séries temporelles.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap12.html">Chapitre 12. Introduction aux modèles logit et probit.</a>
     </li>
   </ul>
 </li>
@@ -130,11 +106,10 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Chapitre 09. Inférence statistique.</h1>
-            <h3 class="subtitle">Tout le code avec R. <img src="../man/figures/logo.png" align="right" width="200">
-</h3>
+            <h3 class="subtitle">Tout le code avec R.</h3>
                         <h4 class="author">F. Bertrand et M. Maumy</h4>
             
-            <h4 class="date">2021-06-25</h4>
+            <h4 class="date">2021-07-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/fbertran/sageR/blob/master/vignettes/CodeChap09.Rmd"><code>vignettes/CodeChap09.Rmd</code></a></small>
       <div class="hidden name"><code>CodeChap09.Rmd</code></div>
@@ -143,6 +118,14 @@
 
     
     
+<table class="table"><tr>
+<td>
+<img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;">
+</td>
+<td>
+<img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;">
+</td>
+</tr></table>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"sageR"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"sageR"</span><span class="op">)</span><span class="op">}</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/homepage/">sageR</a></span><span class="op">)</span></code></pre></div>
@@ -223,7 +206,10 @@
 <span class="co">#&gt; The following object is masked from 'package:ggmap':</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;     geocode</span>
-<span class="va">gps_coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mapply.html">mapply</a></span><span class="op">(</span><span class="va">geo</span>, city<span class="op">=</span> <span class="va">Precipitations_USA</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, state <span class="op">=</span> <span class="va">Precipitations_USA</span><span class="op">[</span>,<span class="fl">4</span><span class="op">]</span>, method <span class="op">=</span> <span class="st">"osm"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">Precipitations_USA</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"Philadelphie"</span>,<span class="st">"Philadelphia"</span>,<span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">Precipitations_USA</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+<span class="va">gps_coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mapply.html">mapply</a></span><span class="op">(</span><span class="fu">tidygeocoder</span><span class="fu">::</span><span class="va"><a href="https://jessecambon.github.io/tidygeocoder/reference/geo.html">geo</a></span>, city<span class="op">=</span> <span class="va">Precipitations_USA</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, state <span class="op">=</span> <span class="va">Precipitations_USA</span><span class="op">[</span>,<span class="fl">4</span><span class="op">]</span>, method <span class="op">=</span> <span class="st">"osm"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">Precipitations_USA</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"Philadelphia"</span>,<span class="st">"Philadelphie"</span>,<span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">Precipitations_USA</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+<span class="va">gps_coords</span><span class="op">[</span><span class="fl">1</span>,<span class="va">gps_coords</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span><span class="op">==</span><span class="st">"Philadelphia"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Philadelphie"</span>
 
 <span class="va">gps_coords_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">gps_coords</span><span class="op">)</span>,ncol<span class="op">=</span><span class="fl">4</span>,byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Ville"</span>, <span class="st">"Etat"</span>, <span class="st">"lat"</span>, <span class="st">"long"</span><span class="op">)</span>
@@ -232,7 +218,7 @@
 
 <span class="va">precip_gps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span><span class="va">Precipitations_USA</span>,<span class="va">gps_coords_df</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">precip_gps_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/get_map.html">get_map</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">long</span><span class="op">)</span><span class="op">*</span><span class="fl">1.03</span>, bottom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">lat</span><span class="op">)</span><span class="op">/</span><span class="fl">1.2</span>, right <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">long</span><span class="op">)</span><span class="op">/</span><span class="fl">1.12</span>, top <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">lat</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">1.03</span>, source <span class="op">=</span> <span class="st">"osm"</span>, zoom<span class="op">=</span><span class="fl">6</span>, messaging <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">precip_gps_map</span> <span class="op">&lt;-</span> <span class="fu">ggmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/get_map.html">get_map</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">long</span><span class="op">)</span><span class="op">*</span><span class="fl">1.03</span>, bottom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">lat</span><span class="op">)</span><span class="op">/</span><span class="fl">1.2</span>, right <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">long</span><span class="op">)</span><span class="op">/</span><span class="fl">1.12</span>, top <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">lat</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">1.03</span>, source <span class="op">=</span> <span class="st">"osm"</span>, zoom<span class="op">=</span><span class="fl">6</span>, messaging <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; 209 tiles needed, this may take a while (try a smaller zoom).</span>
 <span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/2/18.png</span>
 <span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/3/18.png</span>
@@ -444,13 +430,13 @@
 <span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/19/28.png</span>
 <span class="co">#&gt; Source : http://tile.stamen.com/terrain/6/20/28.png</span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/ggmap.html">ggmap</a></span><span class="op">(</span><span class="va">precip_gps_map</span>,extent <span class="op">=</span> <span class="st">"device"</span><span class="op">)</span> <span class="op">+</span> 
+<code class="sourceCode R"><span class="fu">ggmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/ggmap.html">ggmap</a></span><span class="op">(</span><span class="va">precip_gps_map</span>,extent <span class="op">=</span> <span class="st">"device"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, color<span class="op">=</span><span class="va">`Precipitation (cms)`</span><span class="op">)</span>,
              data <span class="op">=</span> <span class="va">precip_gps</span>, size <span class="op">=</span> <span class="fl">5</span>, pch <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">scale_color_gradient</span><span class="op">(</span>low<span class="op">=</span><span class="st">"red"</span>, high<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></code></pre></div>
 <p><img src="CodeChap09_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">precip_gps_map_bw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/get_stamenmap.html">get_stamenmap</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">long</span><span class="op">)</span><span class="op">*</span><span class="fl">1.03</span>, bottom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">lat</span><span class="op">)</span><span class="op">/</span><span class="fl">1.2</span>, right <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">long</span><span class="op">)</span><span class="op">/</span><span class="fl">1.12</span>, top <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">lat</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">1.03</span>, source <span class="op">=</span> <span class="st">"stamen"</span>, zoom<span class="op">=</span><span class="fl">6</span>, maptype<span class="op">=</span><span class="st">"toner"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">precip_gps_map_bw</span> <span class="op">&lt;-</span> <span class="fu">ggmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/get_stamenmap.html">get_stamenmap</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">long</span><span class="op">)</span><span class="op">*</span><span class="fl">1.03</span>, bottom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">lat</span><span class="op">)</span><span class="op">/</span><span class="fl">1.2</span>, right <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">long</span><span class="op">)</span><span class="op">/</span><span class="fl">1.12</span>, top <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">gps_coords_df</span><span class="op">$</span><span class="va">lat</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">1.03</span>, source <span class="op">=</span> <span class="st">"stamen"</span>, zoom<span class="op">=</span><span class="fl">6</span>, maptype<span class="op">=</span><span class="st">"toner"</span><span class="op">)</span>
 <span class="co">#&gt; 209 tiles needed, this may take a while (try a smaller zoom).</span>
 <span class="co">#&gt; Source : http://tile.stamen.com/toner/6/2/18.png</span>
 <span class="co">#&gt; Source : http://tile.stamen.com/toner/6/3/18.png</span>
@@ -662,7 +648,7 @@
 <span class="co">#&gt; Source : http://tile.stamen.com/toner/6/19/28.png</span>
 <span class="co">#&gt; Source : http://tile.stamen.com/toner/6/20/28.png</span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/ggmap.html">ggmap</a></span><span class="op">(</span><span class="va">precip_gps_map_bw</span>,extent <span class="op">=</span> <span class="st">"device"</span><span class="op">)</span> <span class="op">+</span> 
+<code class="sourceCode R"><span class="fu">ggmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/ggmap.html">ggmap</a></span><span class="op">(</span><span class="va">precip_gps_map_bw</span>,extent <span class="op">=</span> <span class="st">"device"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, color<span class="op">=</span><span class="va">`Precipitation (cms)`</span><span class="op">)</span>,
              data <span class="op">=</span> <span class="va">precip_gps</span>, size <span class="op">=</span> <span class="fl">5</span>, pch <span class="op">=</span> <span class="fl">20</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">scale_color_gradient</span><span class="op">(</span>low<span class="op">=</span><span class="st">"white"</span>, high<span class="op">=</span><span class="st">"black"</span><span class="op">)</span></code></pre></div>
@@ -971,6 +957,8 @@
 <span class="va">Chemin</span> <span class="op">&lt;-</span> <span class="st">"~/Documents/Recherche/DeBoeck/Graphes/"</span>
 <span class="va">colmodel</span><span class="op">=</span><span class="st">"cmyk"</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.stat.auckland.ac.nz/~yee/VGAM/">VGAM</a></span><span class="op">)</span>
+<span class="co">#&gt; Le chargement a nécessité le package : stats4</span>
+<span class="co">#&gt; Le chargement a nécessité le package : splines</span>
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0.1</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ech_norm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>

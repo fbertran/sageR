@@ -1,6 +1,6 @@
 ---
 title: "Chapitre 09. Inférence statistique."
-subtitle: "Tout le code avec R. <img src='../man/figures/logo.png' align='right' width='200'/>"
+subtitle: "Tout le code avec R."
 author: "F. Bertrand et M. Maumy"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -9,6 +9,13 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+<table align="center">
+        <tr>
+            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;"/></td>
+            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;"/></td>
+        </tr>
+</table>
 
 ```{r, echo=FALSE}
 #file.edit(normalizePath("~/.Renviron"))
@@ -75,7 +82,10 @@ if(!("ggmap" %in% installed.packages())){install.packages("ggmap")}
 library(ggmap)
 if(!("tidygeocoder" %in% installed.packages())){install.packages("tidygeocoder")}
 library(tidygeocoder)
-gps_coords <- mapply(geo, city= Precipitations_USA[,1], state = Precipitations_USA[,4], method = "osm")
+levels(Precipitations_USA[,1]) <- gsub("Philadelphie","Philadelphia",levels(Precipitations_USA[,1]))
+gps_coords <- mapply(tidygeocoder::geo, city= Precipitations_USA[,1], state = Precipitations_USA[,4], method = "osm")
+levels(Precipitations_USA[,1]) <- gsub("Philadelphia","Philadelphie",levels(Precipitations_USA[,1]))
+gps_coords[1,gps_coords[1,]=="Philadelphia"] <- "Philadelphie"
 
 gps_coords_df <- as.data.frame(matrix(unlist(gps_coords),ncol=4,byrow=TRUE))
 colnames(gps_coords_df) <- c("Ville", "Etat", "lat", "long")
@@ -87,29 +97,29 @@ precip_gps <- merge(Precipitations_USA,gps_coords_df)
 
 
 ```{r, eval=LOCAL}
-precip_gps_map <- get_map(c(left = min(gps_coords_df$long)*1.03, bottom = min(gps_coords_df$lat)/1.2, right = max(gps_coords_df$long)/1.12, top = max(gps_coords_df$lat))*1.03, source = "osm", zoom=6, messaging = FALSE)
+precip_gps_map <- ggmap::get_map(c(left = min(gps_coords_df$long)*1.03, bottom = min(gps_coords_df$lat)/1.2, right = max(gps_coords_df$long)/1.12, top = max(gps_coords_df$lat))*1.03, source = "osm", zoom=6, messaging = FALSE)
 ```
 
 
 ```{r, eval=LOCAL}
-ggmap(precip_gps_map,extent = "device") + 
+ggmap::ggmap(precip_gps_map,extent = "device") + 
   geom_point(aes(x = long, y = lat, color=`Precipitation (cms)`),
              data = precip_gps, size = 5, pch = 20) + 
   scale_color_gradient(low="red", high="blue")
 ```
 
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
-ggsave("map_pprecip_USA.pdf", width=14, height=8)
+ggplot2::ggsave("map_pprecip_USA.pdf", width=14, height=8)
 ```
 
 
 ```{r, eval=LOCAL}
-precip_gps_map_bw <- get_stamenmap(c(left = min(gps_coords_df$long)*1.03, bottom = min(gps_coords_df$lat)/1.2, right = max(gps_coords_df$long)/1.12, top = max(gps_coords_df$lat))*1.03, source = "stamen", zoom=6, maptype="toner")
+precip_gps_map_bw <- ggmap::get_stamenmap(c(left = min(gps_coords_df$long)*1.03, bottom = min(gps_coords_df$lat)/1.2, right = max(gps_coords_df$long)/1.12, top = max(gps_coords_df$lat))*1.03, source = "stamen", zoom=6, maptype="toner")
 ```
 
 
 ```{r, eval=LOCAL}
-ggmap(precip_gps_map_bw,extent = "device") + 
+ggmap::ggmap(precip_gps_map_bw,extent = "device") + 
   geom_point(aes(x = long, y = lat, color=`Precipitation (cms)`),
              data = precip_gps, size = 5, pch = 20, fill = "white") + 
   scale_color_gradient(low="white", high="black")
@@ -136,7 +146,7 @@ with(Precipitations_USA, TeachingDemos::sigma.test(`Precipitation (cms)`))
 
 
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
-ggsave("map_pprecip_USA_bw.pdf", width=14, height=8)
+ggmap::ggsave("map_pprecip_USA_bw.pdf", width=14, height=8)
 ```
 
 

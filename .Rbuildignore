@@ -23,7 +23,7 @@ genlogo.R
 ^README\.Rmd$
 #^README\.md$
 #Specific
-^articles*$
+^articles.*$
 #Vignette cache
 ^cran-comments[.].*$
 ^vignettes/.*[.](pdf|PDF)$
@@ -31,5 +31,7 @@ genlogo.R
 ^vignettes/[.]install_extras$
 ^vignettes/.*_cache$
 ^vignettes/.*_files$
+^vignettes/CodeChap*
+^vignettes/TODO*
 ^\.github$
-^complements/$
+^complements.*$

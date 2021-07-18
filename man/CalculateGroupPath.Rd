@@ -4,7 +4,7 @@
 \alias{CalculateGroupPath}
 \title{Calculate Group Path}
 \source{
-Code adapted from a solution posted by Tony M to \url{http://stackoverflow.com/questions/9614433/creating-radar-chart-a-k-a-star-plot-spider-plot-using-ggplot2-in-r}.
+Code adapted from a solution posted by Tony M to \url{https://stackoverflow.com/questions/9614433/creating-radar-chart-a-k-a-star-plot-spider-plot-using-ggplot2-in-r}.
 }
 \usage{
 CalculateGroupPath(df)

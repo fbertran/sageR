@@ -1,33 +1,40 @@
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+---
+title: "Links to the vignette of each chapter."
+subtitle: "Liens vers les vignettes de chaque chapitre."
+author: "F. Bertrand, Cl. Borsenberger, Ch. Derquenne, G. Dufrénot, F. Jawadi, M. Maumy-Bertrand"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+vignette: >
+  %\VignetteIndexEntry{Links to the vignette of each chapter.}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
-
-
-# Statistiques pour l’économie et la gestion 
-
+```{r, echo=FALSE}
+#file.edit(normalizePath("~/.Renviron"))
+LOCAL <- identical(Sys.getenv("LOCAL"), "TRUE")
+#, eval = LOCAL for skip on CRAN test
+#LOCAL=FALSE
+#knitr::opts_chunk$set(purl = LOCAL, eval=LOCAL)
+knitr::opts_chunk$set(purl = LOCAL)
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "TRUE")
+knitr::opts_chunk$set(purl = NOT_CRAN)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+SAVE_GRAPHS=FALSE
+```
 
 <table align="center">
         <tr>
-            <td><img src="man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;"/></td>
-            <td><img src="man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;"/></td>
+            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;"/></td>
+            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;"/></td>
         </tr>
 </table>
-
-
-
-
-
-
-<!-- badges: start -->
-[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html)
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![R-CMD-check](https://github.com/fbertran/sageR/workflows/R-CMD-check/badge.svg)](https://github.com/fbertran/sageR/actions)
-[![Codecov test coverage](https://codecov.io/gh/fbertran/sageR/branch/master/graph/badge.svg)](https://codecov.io/gh/fbertran/sageR?branch=master)
-[![CRAN status](https://www.r-pkg.org/badges/version/sageR)](https://CRAN.R-project.org/package=sageR)
-[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/sageR)](https://cran.r-project.org/package=sageR)
-[![GitHub Repo stars](https://img.shields.io/github/stars/fbertran/sageR?style=social)](https://github.com/github/fbertran/sageR)
-[![DOI](https://zenodo.org/badge/204068588.svg)](https://zenodo.org/badge/latestdoi/204068588)
-<!-- badges: end -->
-
 
 L'objectif du package `sageR` est de fournir le code des illustrations et des exemples, ainsi que celui de fonctions addtionnelles, pour le livre *Statistiques pour l’économie et la gestion*, *Théorie et applications en entreprise*, écrit par Frédéric Bertrand, Christian Derquenne, Gilles Dufrénot, Fredj Jawadi, Myriam Maumy-Bertrand, dirigés par Claire Borsenberger, De Boeck Supérieur, Louvain-la-Neuve, 2021.
 
@@ -49,8 +56,6 @@ devtools::install_github("fbertran/sageR")
 
 ## Table des matières
 
-<!-- [Avant-propos.](https://fbertran.github.io/sageR/articles/CodeChap00.html) -->
-
 <!-- 1. [Chapitre 1. Introduction à la statistique et à son petit monde.](https://fbertran.github.io/sageR/articles/CodeChap01.html) -->
 2. [Chapitre 2. Statistique exploratoire et représentations graphiques de séries univariées.](https://fbertran.github.io/sageR/articles/CodeChap02.html) 
 3. [Chapitre 3. Statistique exploratoire et représentations graphiques de séries bivariées et multivariées.](https://fbertran.github.io/sageR/articles/CodeChap03.html) 
@@ -67,7 +72,7 @@ devtools::install_github("fbertran/sageR")
 
 # Statistics for Economics and Management (English version)
 
-The goal of the `sageR` package is to provide code and additionnal material for the book *Statistiques pour l’économie et la gestion*, *Théorie et applications en entreprise*, written in French by Frédéric Bertrand, Christian Derquenne, Gilles Dufrénot, Fredj Jawadi, Myriam Maumy-Bertrand, edited by Claire Borsenberger and published by De Boeck Supérieur, Louvain-la-Neuve, 2021.
+The goal of the `sageR` package is to provide code and additionnal material for the book *Statistiques pour l’économie et la gestion*, written by Frédéric Bertrand, Christian Derquenne, Gilles Dufrénot, Fredj Jawadi, Myriam Maumy-Bertrand, edited by Claire Borsenberger and published by De Boeck Supérieur, Louvain-la-Neuve, 2021.
 
 ## Installation
 
@@ -86,8 +91,6 @@ devtools::install_github("fbertran/sageR")
 ```
 
 ## Contents
-
-<!-- [Foreword.](https://fbertran.github.io/sageR/articles/CodeChap00.html) -->
 
 <!-- 1. [Chapter 1. Introduction to statistics and their world.](https://fbertran.github.io/sageR/articles/CodeChap01.html) -->
 2. [Chapter 2. Univariate exploratory statistics and graphics.](https://fbertran.github.io/sageR/articles/CodeChap02.html) 

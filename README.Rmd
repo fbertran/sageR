@@ -9,7 +9,20 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Statistiques pour l’économie et la gestion <img src="man/figures/logo.png" align="right" width="200"/>
+# Statistiques pour l’économie et la gestion 
+
+
+<table align="center">
+        <tr>
+            <td><img src="man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;"/></td>
+            <td><img src="man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;"/></td>
+        </tr>
+</table>
+
+
+
+
+
 
 <!-- badges: start -->
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html)
@@ -23,7 +36,7 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 
-L'objectif du package `sageR` est de fournir le code des illustrations et des exemples, ainsi que du matériel additionnel, pour le livre *Statistiques pour l’économie et la gestion*, écrit par Frédéric Bertrand, Christian Derquenne, Gilles Dufrénot, Fredj Jawadi, Myriam Maumy-Bertrand, dirigés par Claire Borsenberger, De Boeck Supérieure, 2021.
+L'objectif du package `sageR` est de fournir le code des illustrations et des exemples, ainsi que celui de fonctions addtionnelles, pour le livre *Statistiques pour l’économie et la gestion*, *Théorie et applications en entreprise*, écrit par Frédéric Bertrand, Christian Derquenne, Gilles Dufrénot, Fredj Jawadi, Myriam Maumy-Bertrand, dirigés par Claire Borsenberger, De Boeck Supérieur, Louvain-la-Neuve, 2021.
 
 
 ## Installation
@@ -43,25 +56,25 @@ devtools::install_github("fbertran/sageR")
 
 ## Table des matières
 
-[Avant-propos.](https://fbertran.github.io/sageR/articles/CodeChap00.html)
+<!-- [Avant-propos.](https://fbertran.github.io/sageR/articles/CodeChap00.html) -->
 
-1. [Introduction à la statistique et à son petit monde.](https://fbertran.github.io/sageR/articles/CodeChap01.html)
-2. [Statistique exploratoire et représentations graphiques de séries univariées.](https://fbertran.github.io/sageR/articles/CodeChap02.html) 
-3. [Statistique exploratoire et représentations graphiques de séries bivariées et multivariées.](https://fbertran.github.io/sageR/articles/CodeChap03.html) 
-4. [Exploration des données avec l'analyse en composantes principales.](https://fbertran.github.io/sageR/articles/CodeChap04.html) 
-5. [Exploration des données avec l'analyse factorielle des correspondances.](https://fbertran.github.io/sageR/articles/CodeChap05.html)
-6. [Exploration des données avec l'analyse des correspondances multiples.](https://fbertran.github.io/sageR/articles/CodeChap06.html) 
-7. [Exploration des données avec la classification automatique.](https://fbertran.github.io/sageR/articles/CodeChap07.html) 
-8. [Introduction à la théorie des probabilités aux distributions statistiques classiques.](https://fbertran.github.io/sageR/articles/CodeChap08.html)
-9. [Théorie de l'estimation, tests à un ou deux échantillons.](https://fbertran.github.io/sageR/articles/CodeChap09.html)
-10. [Modèle linéaire gaussien.](https://fbertran.github.io/sageR/articles/CodeChap10.html)
-11. [Introduction aux séries temporelles.](https://fbertran.github.io/sageR/articles/CodeChap11.html)
-12. [Introduction aux modèles logit et probit.](https://fbertran.github.io/sageR/articles/CodeChap12.html)
+<!-- 1. [Chapitre 1. Introduction à la statistique et à son petit monde.](https://fbertran.github.io/sageR/articles/CodeChap01.html) -->
+2. [Chapitre 2. Statistique exploratoire et représentations graphiques de séries univariées.](https://fbertran.github.io/sageR/articles/CodeChap02.html) 
+3. [Chapitre 3. Statistique exploratoire et représentations graphiques de séries bivariées et multivariées.](https://fbertran.github.io/sageR/articles/CodeChap03.html) 
+<!-- 4. [Chapitre 4. Exploration des données avec l'analyse en composantes principales.](https://fbertran.github.io/sageR/articles/CodeChap04.html)  -->
+<!-- 5. [Chapitre 5. Exploration des données avec l'analyse factorielle des correspondances.](https://fbertran.github.io/sageR/articles/CodeChap05.html) -->
+<!-- 6. [Chapitre 6. Exploration des données avec l'analyse des correspondances multiples.](https://fbertran.github.io/sageR/articles/CodeChap06.html)  -->
+<!-- 7. [Chapitre 7. Exploration des données avec la classification automatique.](https://fbertran.github.io/sageR/articles/CodeChap07.html)  -->
+8. [Chapitre 8. Introduction à la théorie des probabilités aux distributions statistiques classiques.](https://fbertran.github.io/sageR/articles/CodeChap08.html)
+9. [Chapitre 9. Théorie de l'estimation, tests à un ou deux échantillons.](https://fbertran.github.io/sageR/articles/CodeChap09.html)
+<!-- 10. [Chapitre 10. Modèle linéaire gaussien.](https://fbertran.github.io/sageR/articles/CodeChap10.html) -->
+<!-- 11. [Chapitre 11. Introduction aux séries temporelles.](https://fbertran.github.io/sageR/articles/CodeChap11.html) -->
+<!-- 12. [Chapitre 12. Introduction aux modèles logit et probit.](https://fbertran.github.io/sageR/articles/CodeChap12.html) -->
 
 
 # Statistics for Economics and Management (English version)
 
-The goal of the `sageR` package is to provide code and additionnal material for the book *Statistiques pour l’économie et la gestion*, written by Frédéric Bertrand, Christian Derquenne, Gilles Dufrénot, Fredj Jawadi, Myriam Maumy-Bertrand, edited by Claire Borsenberger and published by De Boeck Supérieur, 2021.
+The goal of the `sageR` package is to provide code and additionnal material for the book *Statistiques pour l’économie et la gestion*, *Théorie et applications en entreprise*, written in French by Frédéric Bertrand, Christian Derquenne, Gilles Dufrénot, Fredj Jawadi, Myriam Maumy-Bertrand, edited by Claire Borsenberger and published by De Boeck Supérieur, Louvain-la-Neuve, 2021.
 
 ## Installation
 
@@ -81,19 +94,19 @@ devtools::install_github("fbertran/sageR")
 
 ## Contents
 
-[Foreword.](https://fbertran.github.io/sageR/articles/CodeChap00.html)
+<!-- [Foreword.](https://fbertran.github.io/sageR/articles/CodeChap00.html) -->
 
-1. [Introduction to statistics and their world.](https://fbertran.github.io/sageR/articles/CodeChap01.html)
-2. [Univariate exploratory statistics and graphics.](https://fbertran.github.io/sageR/articles/CodeChap02.html) 
-3. [Bivariate and multivariate exploratory statistics and graphics.](https://fbertran.github.io/sageR/articles/CodeChap03.html) 
-4. [Data exploration with Principal Component Analysis.](https://fbertran.github.io/sageR/articles/CodeChap04.html) 
-5. [Data exploration with Correspondence Analysis.](https://fbertran.github.io/sageR/articles/CodeChap05.html)
-6. [Data exploration with Multiple Correspondence Analysis.](https://fbertran.github.io/sageR/articles/CodeChap06.html) 
-7. [Data exploration with automatic clustering.](https://fbertran.github.io/sageR/articles/CodeChap07.html) 
-8. [Introduction to probability theory and classical probability distributions.](https://fbertran.github.io/sageR/articles/CodeChap08.html)
-9. [Estimation theory, one-sample and two-sample tests.](https://fbertran.github.io/sageR/articles/CodeChap09.html)
-10. [Gaussian linear model.](https://fbertran.github.io/sageR/articles/CodeChap10.html)
-11. [Introduction to time series.](https://fbertran.github.io/sageR/articles/CodeChap11.html)
-12. [Introduction to probit and logit models.](https://fbertran.github.io/sageR/articles/CodeChap12.html)
+<!-- 1. [Chapter 1. Introduction to statistics and their world.](https://fbertran.github.io/sageR/articles/CodeChap01.html) -->
+2. [Chapter 2. Univariate exploratory statistics and graphics.](https://fbertran.github.io/sageR/articles/CodeChap02.html) 
+3. [Chapter 3. Bivariate and multivariate exploratory statistics and graphics.](https://fbertran.github.io/sageR/articles/CodeChap03.html) 
+<!-- 4. [Chapter 4. Data exploration with Principal Component Analysis.](https://fbertran.github.io/sageR/articles/CodeChap04.html)  -->
+<!-- 5. [Chapter 5. Data exploration with Correspondence Analysis.](https://fbertran.github.io/sageR/articles/CodeChap05.html) -->
+<!-- 6. [Chapter 6. Data exploration with Multiple Correspondence Analysis.](https://fbertran.github.io/sageR/articles/CodeChap06.html)  -->
+<!-- 7. [Chapter 7. Data exploration with automatic clustering.](https://fbertran.github.io/sageR/articles/CodeChap07.html)  -->
+8. [Chapter 8. Introduction to probability theory and classical probability distributions.](https://fbertran.github.io/sageR/articles/CodeChap08.html)
+9. [Chapter 9. Estimation theory, one-sample and two-sample tests.](https://fbertran.github.io/sageR/articles/CodeChap09.html)
+<!-- 10. [Chapter 10. Gaussian linear model.](https://fbertran.github.io/sageR/articles/CodeChap10.html) -->
+<!-- 11. [Chapter 11. Introduction to time series.](https://fbertran.github.io/sageR/articles/CodeChap11.html) -->
+<!-- 12. [Chapter 12. Introduction to probit and logit models.](https://fbertran.github.io/sageR/articles/CodeChap12.html) -->
 
 
