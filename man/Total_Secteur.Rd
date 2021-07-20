@@ -16,7 +16,7 @@ Un jeu de données avec 5 observations de 3 variables.
 Total_Secteur
 }
 \description{
-Emploi total par secteur d'activité (indicateur). OCDE (2021). \href{https://doi.org/10.1787/6b2fff89-fr}{doi: 10.1787/6b2fff89-fr}. (Consulté le 11 février 2021).
+Emploi total par secteur d'activité (indicateur). OCDE (2021). \doi{10.1787/6b2fff89-fr}. (Consulté le 11 février 2021).
 L'industrie (\code{INDUSwithoutCONSTR}) désigne l'activité industrielle \emph{SANS} la construction.
 }
 \keyword{datasets}

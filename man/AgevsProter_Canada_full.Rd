@@ -29,6 +29,6 @@ AgevsProter_Canada_full
 Répartition en classes d’âge de la population des provinces et des territoires du Canada en 2020. Statistique Canada. Tableau 17-10-0005-01  Estimations de la population au 1er juillet, par âge et sexe.
 }
 \references{
-\url{https://doi.org/10.25318/1710000501-fra}
+\doi{10.25318/1710000501-fra}
 }
 \keyword{datasets}

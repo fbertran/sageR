@@ -15,6 +15,6 @@ Un jeu de données avec 34 observations de 2 variables.
 Total_Pays
 }
 \description{
-Emploi total par pays (indicateur). OCDE (2021). \href{https://doi.org/10.1787/6b2fff89-fr}{doi: 10.1787/6b2fff89-fr}. (Consulté le 11 février 2021).
+Emploi total par pays (indicateur). OCDE (2021). \doi{10.1787/6b2fff89-fr}. (Consulté le 11 février 2021).
 }
 \keyword{datasets}

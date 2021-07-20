@@ -1,6 +1,6 @@
 ---
-title: "Links to the vignette of each chapter."
-subtitle: "Liens vers les vignettes de chaque chapitre."
+title: "Liens vers la vignette de chaque chapitre."
+subtitle: "Links to the vignette of each chapter."
 author: "F. Bertrand, Cl. Borsenberger, Ch. Derquenne, G. Dufrénot, F. Jawadi, M. Maumy-Bertrand"
 date: "`r Sys.Date()`"
 output:
@@ -8,7 +8,7 @@ output:
     theme: cayman
     highlight: github
 vignette: >
-  %\VignetteIndexEntry{Links to the vignette of each chapter.}
+  %\VignetteIndexEntry{Liens vers les vignette de chaque chapitre.}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

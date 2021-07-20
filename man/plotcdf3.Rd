@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{plotcdf3}
 \alias{plotcdf3}
-\title{plotcdf3}
+\title{Stéréogramme avec plotcdf3 (Stereogram with plotcdf3)}
 \usage{
 plotcdf3(
   x,

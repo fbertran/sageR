@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{CalculateGroupPath}
 \alias{CalculateGroupPath}
-\title{Calculate Group Path}
+\title{Calcule les trajectoires par groupe pour un diagramme en radar (Calculate Group Path)}
 \source{
 Code adapted from a solution posted by Tony M to \url{https://stackoverflow.com/questions/9614433/creating-radar-chart-a-k-a-star-plot-spider-plot-using-ggplot2-in-r}.
 }
@@ -17,4 +17,21 @@ a dataframe of the calculated axis paths
 }
 \description{
 Converts variable values into a set of radial x-y coordinates
+}
+\examples{
+library(dplyr)
+library(scales)
+library(tibble)
+
+mtcars_radar <- mtcars \%>\%
+  as_tibble(rownames = "group") \%>\%
+  mutate_at(vars(-group), rescale) \%>\%
+  tail(4) \%>\%
+  select(1:10)
+plot.data <- as.data.frame(mtcars_radar)
+if(!is.factor(plot.data[, 1])) {
+  plot.data[, 1] <- as.factor(as.character(plot.data[, 1]))
+  }
+names(plot.data)[1] <- "group"
+CalculateGroupPath(plot.data)
 }

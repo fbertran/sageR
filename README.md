@@ -24,7 +24,7 @@
 [![Codecov test coverage](https://codecov.io/gh/fbertran/sageR/branch/master/graph/badge.svg)](https://codecov.io/gh/fbertran/sageR?branch=master)
 [![CRAN status](https://www.r-pkg.org/badges/version/sageR)](https://CRAN.R-project.org/package=sageR)
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/sageR)](https://cran.r-project.org/package=sageR)
-[![GitHub Repo stars](https://img.shields.io/github/stars/fbertran/sageR?style=social)](https://github.com/github/fbertran/sageR)
+[![GitHub Repo stars](https://img.shields.io/github/stars/fbertran/sageR?style=social)](https://github.com/fbertran/sageR)
 [![DOI](https://zenodo.org/badge/204068588.svg)](https://zenodo.org/badge/latestdoi/204068588)
 <!-- badges: end -->
 

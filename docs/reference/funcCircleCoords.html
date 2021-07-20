@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate circle coordinates — funcCircleCoords • sageR</title>
+<title>Calcule les coordonnées des points d'un cercle (Generate circle coordinates) — funcCircleCoords • sageR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Generate circle coordinates — funcCircleCoords" />
+<meta property="og:title" content="Calcule les coordonnées des points d'un cercle (Generate circle coordinates) — funcCircleCoords" />
 <meta property="og:description" content="Generate coordinates to draw a circle." />
 <meta property="og:image" content="https://fbertran.github.io/sageR/reference/figures/logo.png" />
 <meta property="og:image:alt" content="Statistiques pour l’économie et la gestion" />
@@ -147,7 +147,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate circle coordinates</h1>
+    <h1>Calcule les coordonnées des points d'un cercle (Generate circle coordinates)</h1>
     <small class="dont-index">Source: <a href='https://github.com/fbertran/sageR/blob/master/R/functions.R'><code>R/functions.R</code></a></small>
     <div class="hidden name"><code>funcCircleCoords.Rd</code></div>
     </div>
@@ -182,6 +182,110 @@
 
     <p>a dataframe</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>funcCircleCoords</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>,<span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                x        y
+#&gt; 1   2.0000000000 2.000000
+#&gt; 2   1.9979866765 2.063424
+#&gt; 3   1.9919548128 2.126592
+#&gt; 4   1.9819286973 2.189251
+#&gt; 5   1.9679487014 2.251148
+#&gt; 6   1.9500711177 2.312033
+#&gt; 7   1.9283679330 2.371662
+#&gt; 8   1.9029265383 2.429795
+#&gt; 9   1.8738493771 2.486197
+#&gt; 10  1.8412535328 2.540641
+#&gt; 11  1.8052702575 2.592908
+#&gt; 12  1.7660444431 2.642788
+#&gt; 13  1.7237340381 2.690079
+#&gt; 14  1.6785094116 2.734592
+#&gt; 15  1.6305526671 2.776146
+#&gt; 16  1.5800569096 2.814576
+#&gt; 17  1.5272254676 2.849725
+#&gt; 18  1.4722710748 2.881453
+#&gt; 19  1.4154150130 2.909632
+#&gt; 20  1.3568862216 2.934148
+#&gt; 21  1.2969203753 2.954902
+#&gt; 22  1.2357589355 2.971812
+#&gt; 23  1.1736481777 2.984808
+#&gt; 24  1.1108381999 2.993838
+#&gt; 25  1.0475819158 2.998867
+#&gt; 26  0.9841340362 2.999874
+#&gt; 27  0.9207500431 2.996855
+#&gt; 28  0.8576851617 2.989821
+#&gt; 29  0.7951933319 2.978802
+#&gt; 30  0.7335261863 2.963842
+#&gt; 31  0.6729320367 2.945001
+#&gt; 32  0.6136548743 2.922354
+#&gt; 33  0.5559333874 2.895994
+#&gt; 34  0.5000000000 2.866025
+#&gt; 35  0.4460799361 2.832570
+#&gt; 36  0.3943903129 2.795762
+#&gt; 37  0.3451392661 2.755750
+#&gt; 38  0.2985251123 2.712694
+#&gt; 39  0.2547355503 2.666769
+#&gt; 40  0.2139469053 2.618159
+#&gt; 41  0.1763234186 2.567060
+#&gt; 42  0.1420165868 2.513677
+#&gt; 43  0.1111645513 2.458227
+#&gt; 44  0.0838915426 2.400931
+#&gt; 45  0.0603073792 2.342020
+#&gt; 46  0.0405070264 2.281733
+#&gt; 47  0.0245702131 2.220311
+#&gt; 48  0.0125611113 2.158001
+#&gt; 49  0.0045280774 2.095056
+#&gt; 50  0.0005034576 2.031728
+#&gt; 51  0.0005034576 1.968272
+#&gt; 52  0.0045280774 1.904944
+#&gt; 53  0.0125611113 1.841999
+#&gt; 54  0.0245702131 1.779689
+#&gt; 55  0.0405070264 1.718267
+#&gt; 56  0.0603073792 1.657980
+#&gt; 57  0.0838915426 1.599069
+#&gt; 58  0.1111645513 1.541773
+#&gt; 59  0.1420165868 1.486323
+#&gt; 60  0.1763234186 1.432940
+#&gt; 61  0.2139469053 1.381841
+#&gt; 62  0.2547355503 1.333231
+#&gt; 63  0.2985251123 1.287306
+#&gt; 64  0.3451392661 1.244250
+#&gt; 65  0.3943903129 1.204238
+#&gt; 66  0.4460799361 1.167430
+#&gt; 67  0.5000000000 1.133975
+#&gt; 68  0.5559333874 1.104006
+#&gt; 69  0.6136548743 1.077646
+#&gt; 70  0.6729320367 1.054999
+#&gt; 71  0.7335261863 1.036158
+#&gt; 72  0.7951933319 1.021198
+#&gt; 73  0.8576851617 1.010179
+#&gt; 74  0.9207500431 1.003145
+#&gt; 75  0.9841340362 1.000126
+#&gt; 76  1.0475819158 1.001133
+#&gt; 77  1.1108381999 1.006162
+#&gt; 78  1.1736481777 1.015192
+#&gt; 79  1.2357589355 1.028188
+#&gt; 80  1.2969203753 1.045098
+#&gt; 81  1.3568862216 1.065852
+#&gt; 82  1.4154150130 1.090368
+#&gt; 83  1.4722710748 1.118547
+#&gt; 84  1.5272254676 1.150275
+#&gt; 85  1.5800569096 1.185424
+#&gt; 86  1.6305526671 1.223854
+#&gt; 87  1.6785094116 1.265408
+#&gt; 88  1.7237340381 1.309921
+#&gt; 89  1.7660444431 1.357212
+#&gt; 90  1.8052702575 1.407092
+#&gt; 91  1.8412535328 1.459359
+#&gt; 92  1.8738493771 1.513803
+#&gt; 93  1.9029265383 1.570205
+#&gt; 94  1.9283679330 1.628338
+#&gt; 95  1.9500711177 1.687967
+#&gt; 96  1.9679487014 1.748852
+#&gt; 97  1.9819286973 1.810749
+#&gt; 98  1.9919548128 1.873408
+#&gt; 99  1.9979866765 1.936576
+#&gt; 100 2.0000000000 2.000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>funcCircleCoords</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='funcCircleCoords-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

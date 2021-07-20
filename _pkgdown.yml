@@ -4,7 +4,7 @@ home:
     L'objectif du package `sageR` est de fournir le code des illustrations et
     des exemples, ainsi que celui de fonctions addtionnelles, pour le livre
     *Statistiques pour l’économie et la gestion*, *Théorie et applications en entreprise*,
-    De Boeck Supérieure, Louvain-la-Neuve, 2021.
+    De Boeck Supérieur, Louvain-la-Neuve, 2021.
 url: https://fbertran.github.io/sageR/
 template:
   params:
@@ -25,7 +25,7 @@ reference:
     *Statistiques pour l’économie et la gestion*, *Théorie et applications en entreprise*,
     écrit par Frédéric Bertrand, Christian Derquenne, Gilles Dufrénot,
     Fredj Jawadi, Myriam Maumy-Bertrand, dirigés par Claire Borsenberger,
-    De Boeck Supérieure, Louvain-la-Neuve, 2021.
+    De Boeck Supérieur, Louvain-la-Neuve, 2021.
 - title: "Jeux de données"
   desc: "Jeux de données accompagnant le package."
 - contents:

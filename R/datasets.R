@@ -78,7 +78,7 @@
 #'   \item{TerritoiresduNord.Ouest}{}
 #'   \item{Nunavut}{}
 #' }
-#' @references \url{https://doi.org/10.25318/1710000501-fra}
+#' @references \doi{10.25318/1710000501-fra}
 "AgevsProter_Canada_full"
 #> [1] "AgevsProter_Canada_full"
 
@@ -92,7 +92,7 @@
 #'   \item{Hommes}{}
 #'   \item{Femmes}{}
 #' }
-#' @references \url{https://doi.org/10.25318/1710000501-fra}
+#' @references \doi{10.25318/1710000501-fra}
 "AgevsSexe_Canada_full"
 #> [1] "AgevsSexe_Canada_full"
 
@@ -110,7 +110,7 @@
 #'   \item{Salariés}{}
 #'   \item{NonSalariés}{}
 #' }
-#' @references \url{https://doi.org/10.1787/b01db125-fr}
+#' @references \doi{10.1787/b01db125-fr}
 "Europe"
 #> [1] "Europe"
 
@@ -187,7 +187,7 @@
 #'   \item{Hommes}{}
 #'   \item{Femmes}{}
 #' }
-#' @references \url{https://doi.org/10.25318/1710000501-fra}
+#' @references \doi{10.25318/1710000501-fra}
 "ProtervsSexe_Canada"
 #> [1] "ProtervsSexe_Canada"
 
@@ -263,7 +263,7 @@
 
 #' Emploi par secteur et par pays dans les pays de l'OCDE en 2020-Q3.
 #'
-#' Emploi par secteur d'activité et par pays (indicateur). OCDE (2021). [doi: 10.1787/6b2fff89-fr](https://doi.org/10.1787/6b2fff89-fr). (Consulté le 11 février 2021).
+#' Emploi par secteur d'activité et par pays (indicateur). OCDE (2021). \doi{10.1787/6b2fff89-fr}. (Consulté le 11 février 2021).
 #' `INDUSCONSTR désigne l'activité industrielle *AVEC* la construction.
 #'
 #' @docType data
@@ -296,7 +296,7 @@
 
 #' Emploi total par pays dans les pays de l'OCDE en 2020-Q3.
 #'
-#' Emploi total par pays (indicateur). OCDE (2021). [doi: 10.1787/6b2fff89-fr](https://doi.org/10.1787/6b2fff89-fr). (Consulté le 11 février 2021).
+#' Emploi total par pays (indicateur). OCDE (2021). \doi{10.1787/6b2fff89-fr}. (Consulté le 11 février 2021).
 #'
 #' @docType data
 #' @format Un jeu de données avec 34 observations de 2 variables.
@@ -309,7 +309,7 @@
 
 #' Emploi total par secteur dans les pays de l'OCDE en 2020-Q3.
 #'
-#' Emploi total par secteur d'activité (indicateur). OCDE (2021). [doi: 10.1787/6b2fff89-fr](https://doi.org/10.1787/6b2fff89-fr). (Consulté le 11 février 2021).
+#' Emploi total par secteur d'activité (indicateur). OCDE (2021). \doi{10.1787/6b2fff89-fr}. (Consulté le 11 février 2021).
 #' L'industrie (`INDUSwithoutCONSTR`) désigne l'activité industrielle *SANS* la construction.
 #'
 #' @docType data

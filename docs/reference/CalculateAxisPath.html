@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate Axis Path — CalculateAxisPath • sageR</title>
+<title>Calcule les trajectoires par axe pour un diagramme en radar (Calculate Axis Path) — CalculateAxisPath • sageR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Calculate Axis Path — CalculateAxisPath" />
+<meta property="og:title" content="Calcule les trajectoires par axe pour un diagramme en radar (Calculate Axis Path) — CalculateAxisPath" />
 <meta property="og:description" content="Calculates x-y coordinates for a set of radial axes (one per variable being plotted in radar plot)" />
 <meta property="og:image" content="https://fbertran.github.io/sageR/reference/figures/logo.png" />
 <meta property="og:image:alt" content="Statistiques pour l’économie et la gestion" />
@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -107,10 +107,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/CodeChap00Introduction.html">Avant-propos.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap01.html">Chapitre 01. Introduction à la statistique et à son environnement.</a>
+      <a href="../articles/AllLinksExtVignettes.html">Links to the vignette of each chapter.</a>
     </li>
     <li>
       <a href="../articles/CodeChap02.html">Chapitre 02. Statistiques descriptives et visualisation des données univariables</a>
@@ -119,31 +116,10 @@
       <a href="../articles/CodeChap03.html">Chapitre 03.	Statistiques descriptives et visualisation des données bivariables ou multivariables</a>
     </li>
     <li>
-      <a href="../articles/CodeChap04.html">Chapitre 04. Exploration de données avec l'analyse en composantes principales.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap05.html">Chapitre 05. Exploration de données avec l'analyse factorielle des correspondances.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap06.html">Chapitre 06. Exploration de données avec l'analyse des correspondances multiples.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap07.html">Chapitre 07. Exploration des données avec une classification automatique.</a>
-    </li>
-    <li>
       <a href="../articles/CodeChap08.html">Chapitre 08. Introduction à la théorie des probabilités aux distributions statistiques classiques.</a>
     </li>
     <li>
       <a href="../articles/CodeChap09.html">Chapitre 09. Inférence statistique.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap10.html">Chapitre 10. Modèle linéaire gaussien.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap11.html">Chapitre 11. Introduction aux séries temporelles.</a>
-    </li>
-    <li>
-      <a href="../articles/CodeChap12.html">Chapitre 12. Introduction aux modèles logit et probit.</a>
     </li>
   </ul>
 </li>
@@ -171,7 +147,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate Axis Path</h1>
+    <h1>Calcule les trajectoires par axe pour un diagramme en radar (Calculate Axis Path)</h1>
     <small class="dont-index">Source: <a href='https://github.com/fbertran/sageR/blob/master/R/functions.R'><code>R/functions.R</code></a></small>
     <div class="hidden name"><code>CalculateAxisPath.Rd</code></div>
     </div>
@@ -203,6 +179,50 @@
 
     <p>a dataframe of the calculated axis paths</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attachement du package : ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://scales.r-lib.org'>scales</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tibble.tidyverse.org/'>tibble</a></span><span class='op'>)</span>
+
+<span class='va'>mtcars_radar</span> <span class='op'>&lt;-</span> <span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span><span class='op'>(</span>rownames <span class='op'>=</span> <span class='st'>"group"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>group</span><span class='op'>)</span>, <span class='va'>rescale</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>plot.data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>mtcars_radar</span><span class='op'>)</span>
+<span class='kw'>if</span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>is.factor</a></span><span class='op'>(</span><span class='va'>plot.data</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>plot.data</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>plot.data</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='op'>}</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>plot.data</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"group"</span>
+<span class='va'>var.names</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>plot.data</span><span class='op'>)</span><span class='op'>[</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span>
+<span class='va'>grid.min</span> <span class='op'>=</span> <span class='fl'>0</span>
+<span class='va'>grid.max</span> <span class='op'>=</span> <span class='fl'>1</span>
+<span class='va'>centre.y</span> <span class='op'>=</span> <span class='va'>grid.min</span> <span class='op'>-</span> <span class='op'>(</span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>/</span> <span class='fl'>9</span><span class='op'>)</span> <span class='op'>*</span> <span class='op'>(</span><span class='va'>grid.max</span> <span class='op'>-</span> <span class='va'>grid.min</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>CalculateAxisPath</span><span class='op'>(</span><span class='va'>var.names</span>, <span class='va'>grid.min</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='va'>centre.y</span><span class='op'>)</span>, <span class='va'>grid.max</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='va'>centre.y</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    axis.no           x           y
+#&gt; 1        1  0.00000000  0.11111111
+#&gt; 2        1  0.00000000  1.11111111
+#&gt; 3        2  0.07142085  0.08511605
+#&gt; 4        2  0.71420846  0.85116049
+#&gt; 5        3  0.10942308  0.01929424
+#&gt; 6        3  1.09423084  0.19294242
+#&gt; 7        4  0.09622504 -0.05555556
+#&gt; 8        4  0.96225045 -0.55555556
+#&gt; 9        5  0.03800224 -0.10441029
+#&gt; 10       5  0.38002238 -1.04410291
+#&gt; 11       6 -0.03800224 -0.10441029
+#&gt; 12       6 -0.38002238 -1.04410291
+#&gt; 13       7 -0.09622504 -0.05555556
+#&gt; 14       7 -0.96225045 -0.55555556
+#&gt; 15       8 -0.10942308  0.01929424
+#&gt; 16       8 -1.09423084  0.19294242
+#&gt; 17       9 -0.07142085  0.08511605
+#&gt; 18       9 -0.71420846  0.85116049</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

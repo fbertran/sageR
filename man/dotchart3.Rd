@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{dotchart3}
 \alias{dotchart3}
-\title{Dotchart 3}
+\title{Dotchart de Cleveland améliorés (Enhanced Cleveland's dotchart)}
 \usage{
 dotchart3(
   x,

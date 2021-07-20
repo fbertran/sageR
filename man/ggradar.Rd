@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{ggradar}
 \alias{ggradar}
-\title{Enhanced Radar Plots for ggplot2}
+\title{Diagrammes en radar avancés pour ggplot2 (Enhanced Radar Plots for ggplot2)}
 \source{
 Most of the code is from \url{https://rstudio-pubs-static.s3.amazonaws.com/5795_e6e6411731bb4f1b9cc7eb49499c2082.html}.
 }
@@ -129,7 +129,7 @@ ggradar(
 a ggplot object
 }
 \description{
-Enhanced Radar Plots for ggplot2
+Diagrammes en radar avancés pour ggplot2 (Enhanced Radar Plots for ggplot2)
 }
 \examples{
 library(dplyr)

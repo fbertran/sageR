@@ -22,6 +22,6 @@ Europe
 Le taux d'emploi d'une classe d'âge se mesure en fonction du nombre des actifs occupés d'un âge donné rapporté à l'effectif total de cette classe d'âge. Les actifs occupés sont les personnes de 15 ans et plus qui, durant la semaine de référence, déclarent avoir effectué un travail rémunéré pendant une heure au moins ou avoir occupé un emploi dont elles étaient absentes. Les taux d'emploi sont présentés pour quatre classes d'âge : les personnes âgées de 15 à 64 ans (personnes en âge de travailler); les personnes âgées de 15 à 24 ans sont celles qui font leur entrée sur le marché du travail à l'issue de leur scolarité, les personnes âgées de 25 à 54 ans sont celles qui sont au plus fort de leur activité professionnelle, et les personnes âgées de 55 à 64 ans sont celles qui ont dépassé le pic de leur carrière professionnelle et approchent de l'âge de la retraite. Cet indicateur est désaisonnalisé et est mesuré en pourcentage de l'effectif total de la classe d'âge. OCDE (2021), Taux d'emploi par groupe d'âge (indicateur).
 }
 \references{
-\url{https://doi.org/10.1787/b01db125-fr}
+\doi{10.1787/b01db125-fr}
 }
 \keyword{datasets}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{CalculateAxisPath}
 \alias{CalculateAxisPath}
-\title{Calculate Axis Path}
+\title{Calcule les trajectoires par axe pour un diagramme en radar (Calculate Axis Path)}
 \usage{
 CalculateAxisPath(var.names, min, max)
 }
@@ -18,4 +18,25 @@ a dataframe of the calculated axis paths
 }
 \description{
 Calculates x-y coordinates for a set of radial axes (one per variable being plotted in radar plot)
+}
+\examples{
+library(dplyr)
+library(scales)
+library(tibble)
+
+mtcars_radar <- mtcars \%>\%
+  as_tibble(rownames = "group") \%>\%
+  mutate_at(vars(-group), rescale) \%>\%
+  tail(4) \%>\%
+  select(1:10)
+plot.data <- as.data.frame(mtcars_radar)
+if(!is.factor(plot.data[, 1])) {
+  plot.data[, 1] <- as.factor(as.character(plot.data[, 1]))
+  }
+names(plot.data)[1] <- "group"
+var.names <- colnames(plot.data)[-1]
+grid.min = 0
+grid.max = 1
+centre.y = grid.min - ((1 / 9) * (grid.max - grid.min))
+CalculateAxisPath(var.names, grid.min + abs(centre.y), grid.max + abs(centre.y))
 }

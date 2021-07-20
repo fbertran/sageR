@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{funcCircleCoords}
 \alias{funcCircleCoords}
-\title{Generate circle coordinates}
+\title{Calcule les coordonnées des points d'un cercle (Generate circle coordinates)}
 \source{
 Adapted from Joran's response to \url{https://stackoverflow.com/questions/6862742/draw-a-circle-with-ggplot2}.
 }
@@ -21,4 +21,8 @@ a dataframe
 }
 \description{
 Generate coordinates to draw a circle.
+}
+\examples{
+funcCircleCoords(c(1,2),1)
+plot(funcCircleCoords(c(1,2),1))
 }

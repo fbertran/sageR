@@ -1,19 +1,4 @@
-# Hello, world!
-#
-# This is an example function named 'hello'
-# which prints 'Hello, world!'.
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Install Package:           'Cmd + Shift + B'
-#   Check Package:             'Cmd + Shift + E'
-#   Test Package:              'Cmd + Shift + T'
-
-#' @title Dotchart 3
+#' @title Dotchart de Cleveland améliorés (Enhanced Cleveland's dotchart)
 #'
 #' @description dotchart3 est une version améliorée des fonctions dotchart et dotchart2 qui permettent de construire des diagrammes à points de Cleveland.
 #'
@@ -202,7 +187,7 @@ dotchart3 <-
 
 
 
-#' @title plotcdf3
+#' @title Stéréogramme avec plotcdf3 (Stereogram with plotcdf3)
 #'
 #' @description Cette fonction construit un stéréogramme permettant de juger de l'association entre deux variables discrètes ou groupées en classes.
 #'
@@ -398,7 +383,7 @@ plotcdf3 <-
     ))
   }
 
-#' @title Enhanced Radar Plots for ggplot2
+#' @title Diagrammes en radar avancés pour ggplot2 (Enhanced Radar Plots for ggplot2)
 #'
 #' @param plot.data dataframe comprising one row per group
 #' @param base.size text size
@@ -718,17 +703,20 @@ ggradar <- function(plot.data,
   return(base)
 }
 
-#' Generate circle coordinates
+#' @title Calcule les coordonnées des points d'un cercle (Generate circle coordinates)
 #'
-#' Generate coordinates to draw a circle.
+#' @description Generate coordinates to draw a circle.
 #'
 #' @param center coordinate for centroid
 #' @param r radius
 #' @param npoints number of coordinates to generate
 #'
 #' @return a dataframe
-#' @source
-#' Adapted from Joran's response to \url{https://stackoverflow.com/questions/6862742/draw-a-circle-with-ggplot2}.
+#' @source Adapted from Joran's response to \url{https://stackoverflow.com/questions/6862742/draw-a-circle-with-ggplot2}.
+#' @export
+#' @examples
+#' funcCircleCoords(c(1,2),1)
+#' plot(funcCircleCoords(c(1,2),1))
 funcCircleCoords <- function(center = c(0, 0), r = 1, npoints = 100) {
   tt <- seq(0, 2 * pi, length.out = npoints)
   xx <- center[1] + r * cos(tt)
@@ -736,16 +724,32 @@ funcCircleCoords <- function(center = c(0, 0), r = 1, npoints = 100) {
   return(data.frame(x = xx, y = yy))
 }
 
-#' Calculate Group Path
+#' @title Calcule les trajectoires par groupe pour un diagramme en radar (Calculate Group Path)
 #'
-#' Converts variable values into a set of radial x-y coordinates
+#' @description Converts variable values into a set of radial x-y coordinates
 #'
 #' @param df a dataframe with Col 1 is group ('unique' cluster / group ID of entity) and Col 2-n are  v1.value to vn.value - values (e.g. group/cluser mean or median) of variables v1 to v.n
 #'
 #' @return a dataframe of the calculated axis paths
 #'
-#' @source
-#' Code adapted from a solution posted by Tony M to \url{https://stackoverflow.com/questions/9614433/creating-radar-chart-a-k-a-star-plot-spider-plot-using-ggplot2-in-r}.
+#' @source Code adapted from a solution posted by Tony M to \url{https://stackoverflow.com/questions/9614433/creating-radar-chart-a-k-a-star-plot-spider-plot-using-ggplot2-in-r}.
+#' @export
+#' @examples
+#' library(dplyr)
+#' library(scales)
+#' library(tibble)
+#'
+#' mtcars_radar <- mtcars %>%
+#'   as_tibble(rownames = "group") %>%
+#'   mutate_at(vars(-group), rescale) %>%
+#'   tail(4) %>%
+#'   select(1:10)
+#' plot.data <- as.data.frame(mtcars_radar)
+#' if(!is.factor(plot.data[, 1])) {
+#'   plot.data[, 1] <- as.factor(as.character(plot.data[, 1]))
+#'   }
+#' names(plot.data)[1] <- "group"
+#' CalculateGroupPath(plot.data)
 CalculateGroupPath <- function(df) {
   path <- df[, 1]
 
@@ -780,15 +784,36 @@ CalculateGroupPath <- function(df) {
   graphData # data frame returned by function
 }
 
-#' Calculate Axis Path
+#' @title Calcule les trajectoires par axe pour un diagramme en radar (Calculate Axis Path)
 #'
-#' Calculates x-y coordinates for a set of radial axes (one per variable being plotted in radar plot)
+#' @description Calculates x-y coordinates for a set of radial axes (one per variable being plotted in radar plot)
 #'
 #' @param var.names list of variables to be plotted on radar plot
 #' @param min MININUM value required for the plotted axes (same value will be applied to all axes)
 #' @param max MAXIMUM value required for the plotted axes (same value will be applied to all axes)
 #'
 #' @return a dataframe of the calculated axis paths
+#' @export
+#' @examples
+#' library(dplyr)
+#' library(scales)
+#' library(tibble)
+#'
+#' mtcars_radar <- mtcars %>%
+#'   as_tibble(rownames = "group") %>%
+#'   mutate_at(vars(-group), rescale) %>%
+#'   tail(4) %>%
+#'   select(1:10)
+#' plot.data <- as.data.frame(mtcars_radar)
+#' if(!is.factor(plot.data[, 1])) {
+#'   plot.data[, 1] <- as.factor(as.character(plot.data[, 1]))
+#'   }
+#' names(plot.data)[1] <- "group"
+#' var.names <- colnames(plot.data)[-1]
+#' grid.min = 0
+#' grid.max = 1
+#' centre.y = grid.min - ((1 / 9) * (grid.max - grid.min))
+#' CalculateAxisPath(var.names, grid.min + abs(centre.y), grid.max + abs(centre.y))
 CalculateAxisPath <- function(var.names, min, max) {
   # var.names <- c("v1","v2","v3","v4","v5")
   n.vars <- length(var.names) # number of vars (axes) required
@@ -812,4 +837,3 @@ CalculateAxisPath <- function(var.names, min, max) {
   # Return calculated axis paths
   as.data.frame(axisData)
 }
-

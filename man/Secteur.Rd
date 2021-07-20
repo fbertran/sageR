@@ -19,7 +19,7 @@ Un jeu de données avec 34 observations de 6 variables .
 Secteur
 }
 \description{
-Emploi par secteur d'activité et par pays (indicateur). OCDE (2021). \href{https://doi.org/10.1787/6b2fff89-fr}{doi: 10.1787/6b2fff89-fr}. (Consulté le 11 février 2021).
+Emploi par secteur d'activité et par pays (indicateur). OCDE (2021). \doi{10.1787/6b2fff89-fr}. (Consulté le 11 février 2021).
 `INDUSCONSTR désigne l'activité industrielle \emph{AVEC} la construction.
 }
 \keyword{datasets}

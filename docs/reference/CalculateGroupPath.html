@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate Group Path — CalculateGroupPath • sageR</title>
+<title>Calcule les trajectoires par groupe pour un diagramme en radar (Calculate Group Path) — CalculateGroupPath • sageR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Calculate Group Path — CalculateGroupPath" />
+<meta property="og:title" content="Calcule les trajectoires par groupe pour un diagramme en radar (Calculate Group Path) — CalculateGroupPath" />
 <meta property="og:description" content="Converts variable values into a set of radial x-y coordinates" />
 <meta property="og:image" content="https://fbertran.github.io/sageR/reference/figures/logo.png" />
 <meta property="og:image:alt" content="Statistiques pour l’économie et la gestion" />
@@ -147,7 +147,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate Group Path</h1>
+    <h1>Calcule les trajectoires par groupe pour un diagramme en radar (Calculate Group Path)</h1>
     <small class="dont-index">Source: <a href='https://github.com/fbertran/sageR/blob/master/R/functions.R'><code>R/functions.R</code></a></small>
     <div class="hidden name"><code>CalculateGroupPath.Rd</code></div>
     </div>
@@ -174,6 +174,63 @@
 
     <p>a dataframe of the calculated axis paths</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://scales.r-lib.org'>scales</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tibble.tidyverse.org/'>tibble</a></span><span class='op'>)</span>
+
+<span class='va'>mtcars_radar</span> <span class='op'>&lt;-</span> <span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span><span class='op'>(</span>rownames <span class='op'>=</span> <span class='st'>"group"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>group</span><span class='op'>)</span>, <span class='va'>rescale</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>plot.data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>mtcars_radar</span><span class='op'>)</span>
+<span class='kw'>if</span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>is.factor</a></span><span class='op'>(</span><span class='va'>plot.data</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>plot.data</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>plot.data</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='op'>}</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>plot.data</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"group"</span>
+<span class='fu'>CalculateGroupPath</span><span class='op'>(</span><span class='va'>plot.data</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;             group           x            y
+#&gt; 1    Ferrari Dino  0.00000000  0.395744681
+#&gt; 2    Ferrari Dino  0.32139380  0.383022222
+#&gt; 3    Ferrari Dino  0.18153478  0.032009479
+#&gt; 4    Ferrari Dino  0.37639973 -0.217314488
+#&gt; 5    Ferrari Dino  0.13554715 -0.372412744
+#&gt; 6    Ferrari Dino -0.10992568 -0.302018314
+#&gt; 7    Ferrari Dino -0.10309826 -0.059523810
+#&gt; 8    Ferrari Dino  0.00000000  0.000000000
+#&gt; 9    Ferrari Dino -0.64278761  0.766044443
+#&gt; 10   Ferrari Dino  0.00000000  0.395744681
+#&gt; 11 Ford Pantera L  0.00000000  0.229787234
+#&gt; 12 Ford Pantera L  0.64278761  0.766044443
+#&gt; 13 Ford Pantera L  0.68757219  0.121237528
+#&gt; 14 Ford Pantera L  0.64875401 -0.374558304
+#&gt; 15 Ford Pantera L  0.23011494 -0.632235588
+#&gt; 16 Ford Pantera L -0.14490600 -0.398125971
+#&gt; 17 Ford Pantera L  0.00000000  0.000000000
+#&gt; 18 Ford Pantera L  0.00000000  0.000000000
+#&gt; 19 Ford Pantera L -0.64278761  0.766044443
+#&gt; 20 Ford Pantera L  0.00000000  0.229787234
+#&gt; 21  Maserati Bora  0.00000000  0.195744681
+#&gt; 22  Maserati Bora  0.64278761  0.766044443
+#&gt; 23  Maserati Bora  0.56474757  0.099580235
+#&gt; 24  Maserati Bora  0.86602540 -0.500000000
+#&gt; 25  Maserati Bora  0.12293812 -0.337769698
+#&gt; 26  Maserati Bora -0.17988633 -0.494233628
+#&gt; 27  Maserati Bora -0.01030983 -0.005952381
+#&gt; 28  Maserati Bora  0.00000000  0.000000000
+#&gt; 29  Maserati Bora -0.64278761  0.766044443
+#&gt; 30  Maserati Bora  0.00000000  0.195744681
+#&gt; 31     Volvo 142E  0.00000000  0.468085106
+#&gt; 32     Volvo 142E  0.00000000  0.000000000
+#&gt; 33     Volvo 142E  0.12257896  0.021613979
+#&gt; 34     Volvo 142E  0.17442914 -0.100706714
+#&gt; 35     Volvo 142E  0.21277751 -0.584601400
+#&gt; 36     Volvo 142E -0.11080018 -0.304421005
+#&gt; 37     Volvo 142E -0.42270288 -0.244047619
+#&gt; 38     Volvo 142E -0.98480775  0.173648178
+#&gt; 39     Volvo 142E -0.64278761  0.766044443
+#&gt; 40     Volvo 142E  0.00000000  0.468085106</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

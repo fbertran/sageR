@@ -15,7 +15,7 @@ citEntry(entry="Manual",
          publisher = "manual",
          year         = year,
          note         = vers,
-         url          = "https://fbertran.github.io/homepage/sageR/",
+         url          = "https://fbertran.github.io/sageR/",
          textVersion  = paste("F. Bertrand, Cl. Borsenberger, Ch. Derquenne, G. Dufrénot, F. Jawadi, M. Maumy (",year ,"). ",
                  titl, ", ", vers, ".", sep=""
            )
@@ -31,8 +31,8 @@ citEntry(entry="Book",
                              as.person("F. Jawadi"),
                              as.person("M. Maumy")),
          year         = 2021,
-         publisher = "De Boeck Supérieure",
+         publisher = "De Boeck Supérieur",
          address = "Louvain-la-Neuve",
          textVersion =
-           paste("F. Bertrand, Cl. Borsenberger, Ch. Derquenne, G. Dufrénot, F. Jawadi, M. Maumy (2021).", "Statistiques pour l’économie et la gestion.", "De Boeck Supérieure,", "Louvain-la-Neuve." )
+           paste("F. Bertrand, Cl. Borsenberger, Ch. Derquenne, G. Dufrénot, F. Jawadi, M. Maumy (2021).", "Statistiques pour l’économie et la gestion.", "De Boeck Supérieur,", "Louvain-la-Neuve." )
 )
