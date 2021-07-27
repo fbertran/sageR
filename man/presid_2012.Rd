@@ -17,17 +17,17 @@ A data frame with 96 observations on the following 13 variables.
 \code{Eure-et-Loir} \code{Finistère} \code{Gard} \code{Gers} \code{Gironde}
 \code{Haut-Rhin} \code{Haute-Corse} \code{Haute-Garonne} \code{Haute-Loire}
 \code{Haute-Marne} \code{Haute-Saône} \code{Haute-Savoie}
-\code{Haute-Vienne} \code{Hautes-Alpes} DQSiniVgSdXityZHfRSxBSfpqaGbUDwO-44\code{Hauts-de-Seine} \code{Hérault} \code{Ille-et-Vilaine} \code{Indre}
+\code{Haute-Vienne} \code{Hautes-Alpes} 7a8zJxfCK9x8v1atXRx0cRdXOGpx88nV-44\code{Hauts-de-Seine} \code{Hérault} \code{Ille-et-Vilaine} \code{Indre}
 \code{Indre-et-Loire} \code{Isère} \code{Jura} \code{Landes}
 \code{Loir-et-Cher} \code{Loire} \code{Loire-Atlantique} \code{Loiret}
 \code{Lot} \code{Lot-et-Garonne} \code{Lozère} \code{Maine-et-Loire}
 \code{Manche} \code{Marne} \code{Mayenne} \code{Meurthe-et-Moselle}
 \code{Meuse} \code{Morbihan} \code{Moselle} \code{Nièvre} \code{Nord}
 \code{Oise} \code{Orne} \code{Paris} \code{Pas-de-Calais} \code{Puy-de-Dôme}
-DQSiniVgSdXityZHfRSxBSfpqaGbUDwO-75DQSiniVgSdXityZHfRSxBSfpqaGbUDwO-76\code{Rhône}
+7a8zJxfCK9x8v1atXRx0cRdXOGpx88nV-757a8zJxfCK9x8v1atXRx0cRdXOGpx88nV-76\code{Rhône}
 \code{Saône-et-Loire} \code{Sarthe} \code{Savoie} \code{Seine-et-Marne}
 \code{Seine-Maritime} \code{Seine-Saint-Denis} \code{Somme} \code{Tarn}
-\code{Tarn-et-Garonne} \code{Territoire_de_Belfort} \code{Val-d\'Oise}
+\code{Tarn-et-Garonne} \code{Territoire_de_Belfort} \code{Val-dOise}
 \code{Val-de-Marne} \code{Var} \code{Vaucluse} \code{Vendée} \code{Vienne}
 \code{Vosges} \code{Yonne} \code{Yvelines}. Nom du département (métropole) où les suffrages ont été dénombrés.}
 \item{abstentions_1}{a numeric vector. Abstentions du 1er tour.}

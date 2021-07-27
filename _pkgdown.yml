@@ -31,13 +31,21 @@ reference:
 - contents:
   - AgevsProter_Canada_full
   - AgevsSexe_Canada_full
+  - air_pollution
+  - champignons
+  - conso_temp
+  - Copies
+  - Essence
   - Europe
+  - Flux
   - HospitFull
-  - Marque.Valeur.large
   - Marque.Valeur
+  - Marque.Valeur.large
   - Personnes_Foyer
+  - presid_2012
   - ProtervsSexe_Canada
   - ReaFull
+  - Resistance
   - Richesse
   - Secteur
   - Sieges_Voix
@@ -46,6 +54,7 @@ reference:
 - title: "Fonctions"
   desc: "Fonctions accompagnant le package."
 - contents:
+  - att_rep_ind
   - CalculateAxisPath
   - CalculateGroupPath
   - dotchart3

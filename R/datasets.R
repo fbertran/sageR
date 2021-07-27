@@ -420,7 +420,7 @@
 #' \code{Pyrénées-Atlantiques} \code{Pyrénées-Orientales} \code{Rhône}
 #' \code{Saône-et-Loire} \code{Sarthe} \code{Savoie} \code{Seine-et-Marne}
 #' \code{Seine-Maritime} \code{Seine-Saint-Denis} \code{Somme} \code{Tarn}
-#' \code{Tarn-et-Garonne} \code{Territoire_de_Belfort} \code{Val-d\'Oise}
+#' \code{Tarn-et-Garonne} \code{Territoire_de_Belfort} \code{Val-dOise}
 #' \code{Val-de-Marne} \code{Var} \code{Vaucluse} \code{Vendée} \code{Vienne}
 #' \code{Vosges} \code{Yonne} \code{Yvelines}. Nom du département (métropole) où les suffrages ont été dénombrés.}
 #' \item{abstentions_1}{a numeric vector. Abstentions du 1er tour.}
@@ -572,17 +572,17 @@
 #' \code{30/04/2003} \code{30/05/2003} \code{30/06/2003} \code{30/07/2003}
 #' \code{30/08/2003} \code{30/09/2003} \code{30/10/2003} \code{30/11/2003}
 #' \code{30/12/2003} \code{31/01/2003} \code{31/03/2003} \code{31/05/2003}
-#' \code{31/07/2003} \code{31/08/2003} \code{31/10/2003} \code{31/12/2003}. .}
-#' \item{conso}{a numeric vector. .}
-#' \item{t}{a numeric vector. .}
+#' \code{31/07/2003} \code{31/08/2003} \code{31/10/2003} \code{31/12/2003}. Date.}
+#' \item{conso}{a numeric vector. Consommation d'électricité en MWH.}
+#' \item{t}{a numeric vector. Numéro du jour.}
 #' \item{nom_jour}{a factor with levels \code{Dimanche} \code{Jeudi}
-#' \code{Lundi} \code{Mardi} \code{Mercredi} \code{Samedi} \code{Vendredi}. .}
+#' \code{Lundi} \code{Mardi} \code{Mercredi} \code{Samedi} \code{Vendredi}. Nom du jour de la semaine.}
 #' \item{mois}{a factor with levels \code{Août} \code{Avril}
 #' \code{Décembre} \code{Février} \code{Janvier} \code{Juillet} \code{Juin}
-#' \code{Mai} \code{Mars} \code{Novembre} \code{Octobre} \code{Septembre}. .}
-#' \item{temp}{a numeric vector. .}
-#' \item{ejp}{a numeric vector. .}
-#' \item{ferie}{a factor with levels \code{non} \code{oui}. .}
+#' \code{Mai} \code{Mars} \code{Novembre} \code{Octobre} \code{Septembre}. Nom du mois.}
+#' \item{temp}{a numeric vector. Température en degrés Celsius.}
+#' \item{ejp}{a numeric vector. Statut du jour EDF (spécial = 1 ; non spécial = 0).}
+#' \item{ferie}{a factor with levels \code{non} \code{oui}. Statut du jour annuel (férié ou non).}
 #' }
 #' @keywords datasets
 #' @examples

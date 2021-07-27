@@ -791,8 +791,8 @@ Description des données : Consommation d'électricité
 
 Consommation d'électricité journalière en France de l'année 2003
 
-* Date : consommation d'életricité en MWH 
-* conso : consommation d'életricité en MWH
+* Date : date 
+* conso : consommation d'électricité en MWH
 * t : numéro du jour
 * nom_jour : nom du jour de la semaine
 * mois : nom du mois

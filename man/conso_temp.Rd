@@ -97,17 +97,17 @@ A data frame with 365 observations on the following 8 variables.
 \code{30/04/2003} \code{30/05/2003} \code{30/06/2003} \code{30/07/2003}
 \code{30/08/2003} \code{30/09/2003} \code{30/10/2003} \code{30/11/2003}
 \code{30/12/2003} \code{31/01/2003} \code{31/03/2003} \code{31/05/2003}
-\code{31/07/2003} \code{31/08/2003} \code{31/10/2003} \code{31/12/2003}. .}
-\item{conso}{a numeric vector. .}
-\item{t}{a numeric vector. .}
+\code{31/07/2003} \code{31/08/2003} \code{31/10/2003} \code{31/12/2003}. Date.}
+\item{conso}{a numeric vector. Consommation d'électricité en MWH.}
+\item{t}{a numeric vector. Numéro du jour.}
 \item{nom_jour}{a factor with levels \code{Dimanche} \code{Jeudi}
-\code{Lundi} \code{Mardi} \code{Mercredi} \code{Samedi} \code{Vendredi}. .}
+\code{Lundi} \code{Mardi} \code{Mercredi} \code{Samedi} \code{Vendredi}. Nom du jour de la semaine.}
 \item{mois}{a factor with levels \code{Août} \code{Avril}
 \code{Décembre} \code{Février} \code{Janvier} \code{Juillet} \code{Juin}
-\code{Mai} \code{Mars} \code{Novembre} \code{Octobre} \code{Septembre}. .}
-\item{temp}{a numeric vector. .}
-\item{ejp}{a numeric vector. .}
-\item{ferie}{a factor with levels \code{non} \code{oui}. .}
+\code{Mai} \code{Mars} \code{Novembre} \code{Octobre} \code{Septembre}. Nom du mois.}
+\item{temp}{a numeric vector. Température en degrés Celsius.}
+\item{ejp}{a numeric vector. Statut du jour EDF (spécial = 1 ; non spécial = 0).}
+\item{ferie}{a factor with levels \code{non} \code{oui}. Statut du jour annuel (férié ou non).}
 }
 }
 \usage{
