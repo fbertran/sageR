@@ -67,6 +67,18 @@
     <loc>https://fbertran.github.io/sageR//reference/Total_Secteur.html</loc>
   </url>
   <url>
+    <loc>https://fbertran.github.io/sageR//reference/air_pollution.html</loc>
+  </url>
+  <url>
+    <loc>https://fbertran.github.io/sageR//reference/att_rep_ind.html</loc>
+  </url>
+  <url>
+    <loc>https://fbertran.github.io/sageR//reference/champignons.html</loc>
+  </url>
+  <url>
+    <loc>https://fbertran.github.io/sageR//reference/conso_temp.html</loc>
+  </url>
+  <url>
     <loc>https://fbertran.github.io/sageR//reference/dotchart3.html</loc>
   </url>
   <url>
@@ -77,6 +89,9 @@
   </url>
   <url>
     <loc>https://fbertran.github.io/sageR//reference/plotcdf3.html</loc>
+  </url>
+  <url>
+    <loc>https://fbertran.github.io/sageR//reference/presid_2012.html</loc>
   </url>
   <url>
     <loc>https://fbertran.github.io/sageR//reference/sageR-package.html</loc>
@@ -91,9 +106,24 @@
     <loc>https://fbertran.github.io/sageR//articles/CodeChap03.html</loc>
   </url>
   <url>
+    <loc>https://fbertran.github.io/sageR//articles/CodeChap04.html</loc>
+  </url>
+  <url>
+    <loc>https://fbertran.github.io/sageR//articles/CodeChap05.html</loc>
+  </url>
+  <url>
+    <loc>https://fbertran.github.io/sageR//articles/CodeChap06.html</loc>
+  </url>
+  <url>
+    <loc>https://fbertran.github.io/sageR//articles/CodeChap07.html</loc>
+  </url>
+  <url>
     <loc>https://fbertran.github.io/sageR//articles/CodeChap08.html</loc>
   </url>
   <url>
     <loc>https://fbertran.github.io/sageR//articles/CodeChap09.html</loc>
+  </url>
+  <url>
+    <loc>https://fbertran.github.io/sageR//articles/CodeChap10.html</loc>
   </url>
 </urlset>

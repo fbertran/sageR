@@ -8,6 +8,7 @@
 #'   \item{Correcteur A}{}
 #'   \item{Correcteur B}{}
 #' }
+#' @keywords datasets
 "Copies"
 #> [1] "Copies"
 
@@ -21,6 +22,7 @@
 #'   \item{Aube}{}
 #'   \item{Marne}{}
 #' }
+#' @keywords datasets
 "Essence"
 #> [1] "Essence"
 
@@ -30,6 +32,7 @@
 #'
 #' @docType data
 #' @format Un vecteur avec 30 observations.
+#' @keywords datasets
 "Resistance"
 #> [1] "Resistance"
 
@@ -39,6 +42,7 @@
 #'
 #' @docType data
 #' @format Un vecteur avec 30 observations.
+#' @keywords datasets
 "Flux"
 #> [1] "Flux"
 
@@ -54,6 +58,7 @@
 #'   \item{Precipitation..cms.}{}
 #'   \item{Etat}{}
 #' }
+#' @keywords datasets
 "Precipitations_USA"
 #> [1] "Precipitations_USA"
 
@@ -79,6 +84,7 @@
 #'   \item{Nunavut}{}
 #' }
 #' @references \doi{10.25318/1710000501-fra}
+#' @keywords datasets
 "AgevsProter_Canada_full"
 #> [1] "AgevsProter_Canada_full"
 
@@ -93,6 +99,7 @@
 #'   \item{Femmes}{}
 #' }
 #' @references \doi{10.25318/1710000501-fra}
+#' @keywords datasets
 "AgevsSexe_Canada_full"
 #> [1] "AgevsSexe_Canada_full"
 
@@ -111,6 +118,7 @@
 #'   \item{NonSalariés}{}
 #' }
 #' @references \doi{10.1787/b01db125-fr}
+#' @keywords datasets
 "Europe"
 #> [1] "Europe"
 
@@ -134,6 +142,7 @@
 #'   \item{X80.89}{}
 #'   \item{X90.}{}
 #' }
+#' @keywords datasets
 "HospitFull"
 #> [1] "HospitFull"
 
@@ -148,6 +157,7 @@
 #'   \item{Marque.2}{}
 #'   \item{Marque.3}{}
 #' }
+#' @keywords datasets
 "Marque.Valeur.large"
 #> [1] "Marque.Valeur.large"
 
@@ -161,6 +171,7 @@
 #'   \item{Marque}{}
 #'   \item{Valeur}{}
 #' }
+#' @keywords datasets
 "Marque.Valeur"
 #> [1] "Marque.Valeur"
 
@@ -174,6 +185,7 @@
 #'   \item{xi}{Nombres de personnes dans un foyer}
 #'   \item{ni}{Nombres de foyers}
 #' }
+#' @keywords datasets
 "Personnes_Foyer"
 #> [1] "Personnes_Foyer"
 
@@ -188,6 +200,7 @@
 #'   \item{Femmes}{}
 #' }
 #' @references \doi{10.25318/1710000501-fra}
+#' @keywords datasets
 "ProtervsSexe_Canada"
 #> [1] "ProtervsSexe_Canada"
 
@@ -211,6 +224,7 @@
 #'   \item{X80.89}{}
 #'   \item{X90.}{}
 #' }
+#' @keywords datasets
 "ReaFull"
 #> [1] "ReaFull"
 
@@ -258,6 +272,7 @@
 #'   \item{"Serbie"}{}
 #'   \item{"Turquie"}{}
 #' }
+#' @keywords datasets
 "Richesse"
 #> [1] "Richesse"
 
@@ -276,6 +291,7 @@
 #'   \item{MFG}{Nombres de foyers}
 #'   \item{SERV}{Nombres de foyers}
 #' }
+#' @keywords datasets
 "Secteur"
 #> [1] "Secteur"
 
@@ -291,6 +307,7 @@
 #'   \item{Sièges.au.parlement}{}
 #'   \item{Voix.au.conseil}{}
 #' }
+#' @keywords datasets
 "Sieges_Voix"
 #> [1] "Sieges_Voix"
 
@@ -304,6 +321,7 @@
 #'   \item{NameX}{Acronyme du pays}
 #'   \item{Effectif}{Nombres de personnes}
 #' }
+#' @keywords datasets
 "Total_Pays"
 #> [1] "Total_Pays"
 
@@ -319,7 +337,260 @@
 #'   \item{NameX}{Nom du secteur d'actvité}
 #'   \item{Effectif}{Nombres de personnes}
 #' }
+#' @keywords datasets
 "Total_Secteur"
 #> [1] "Total_Secteur"
 
+
+#' @title Air pollution data
+#'
+#' @description Échantillon de 50 villes (individus) tirées aléatoirement sur la pollution de l'air aux États-Unis en 1960
+#'
+#' @name air_pollution
+#' @docType data
+#' @format A data frame with 50 observations on the following 15 variables.
+#' \describe{
+#' \item{CITY}{a factor with levels \code{AUGUSTA}
+#' \code{AUSTIN} \code{BEAUMONT} \code{BOSTON} \code{BRIDGEPO} \code{CHARLEST}
+#' \code{CHARLOTT} \code{CHATTANO} \code{CHICAGO} \code{CLEVELAN}
+#' \code{COLUMBUS} \code{DALLAS} \code{DAYTON} \code{DENVER} \code{DES_MOIN}
+#' \code{DETROIT} \code{EL_PASO} \code{FALL_RIV} \code{FLINT} \code{FORT_WOR}
+#' \code{FRESNO} \code{GALVESTO} \code{HUNTINGT} \code{INDIANAP} \code{JACKSON}
+#' \code{JERSEY_C} \code{JOHNSTOW} \code{KNOXVILL} \code{MACON} \code{MEMPHIS}
+#' \code{MIAMI} \code{MILWAUKE} \code{MOBILE} \code{NASHVIL} \code{NORFOLK}
+#' \code{OMAHA} \code{PHOENIX} \code{PROVIDEN} \code{READING} \code{ROCKFORD}
+#' \code{SAVANNAH} \code{SEATTLE} \code{SIOUX_FA} \code{SOUTH_BE} \code{TOLEDO}
+#' \code{TOPEKA} \code{WINSTON} \code{YORK} \code{YOUNGSTO}. Ville où les données ont été observées.}
+#' \item{TMR}{a numeric vector. Taux de mortalité exprimé en 1/10000.}
+#' \item{SMIN}{a numeric vector. Plus petite valeur des relevés réalisés deux fois par semaine de sulfate (micro-g/m3 multiplié par 10).}
+#' \item{SMEAN}{a numeric vector. Moyenne arithmétique des relevés réalisés deux fois par semaine de sulfate (micro-g/m3 multiplié par 10).}
+#' \item{SMAX}{a numeric vector. Plus grande valeur des relevés réalisés deux fois par semaine de sulfate (micro-g/m3 multiplié par 10).}
+#' \item{PMIN}{a numeric vector. Plus petite valeur des relevés réalisés deux fois par semaine de particules suspendues dans l’air (micro-g/m3 multiplié par 10).}
+#' \item{PMEAN}{a numeric vector. Moyenne arithmétique des relevés réalisés deux fois par semaine de particules suspendues dans l’air (micro-g/m3 multiplié par 10).}
+#' \item{PMAX}{a numeric vector. Logarithme de la plus grande valeur des relevés réalisés deux fois par semaine de particules suspendues dans l'air (micro-g/m3 multiplié par 10).}
+#' \item{PM2}{a numeric vector. Densité de la population par mile carré (multiplié par 0,1).}
+#' \item{PERWH}{a numeric vector. Pourcentage de population blanche.}
+#' \item{NONPOOR}{a numeric vector. Pourcentage de ménages avec un revenu au dessus du seuil de pauvreté.}
+#' \item{GE65}{a numeric vector.  Pourcentage (multiplié par 10) de la population des 65 ans et plus.}
+#' \item{LPOP}{a numeric vector. Logarithme (en base 10 et multiplié par 10) de la population.}
+#' \item{l_pm2}{a numeric vector. Logarithme de la densité de la population par mile carré (multiplié par 0,1).}
+#' \item{l_pmax}{a numeric vector. Logarithme de la plus grande valeur des relevés réalisés deux fois par semaine de particules suspendues dans l'air (micro-g/m3 multiplié par 10).}
+#' }
+#'
+#' @keywords datasets
+#' @examples
+#'
+#' data(air_pollution)
+#' str(air_pollution)
+#' library(ggplot2)
+#' library(GGally)
+#' GGally::ggpairs(air_pollution[,2:4],)
+#'
+"air_pollution"
+#> [1] "air_pollution"
+
+
+
+#' @title Résultats des élections présidentielles françaises de 2012
+#'
+#' @description Résultats par département au premier tour des élections présidentielles françaises de 2012.
+#'
+#' @name presid_2012
+#' @docType data
+#' @format A data frame with 96 observations on the following 13 variables.
+#' \describe{ \item{departement}{a factor with levels \code{Ain}
+#' \code{Aisne} \code{Allier} \code{Alpes-de-Haute-Provence}
+#' \code{Alpes-Maritimes} \code{Ardèche} \code{Ardennes} \code{Ariège}
+#' \code{Aube} \code{Aude} \code{Aveyron} \code{Bas-Rhin}
+#' \code{Bouches-du-Rhône} \code{Calvados} \code{Cantal} \code{Charente}
+#' \code{Charente-Maritime} \code{Cher} \code{Corrèze} \code{Corse-du-Sud}
+#' \code{Côte-d'Or} \code{Côtes-d'Armor} \code{Creuse} \code{Deux-Sèvres}
+#' \code{Dordogne} \code{Doubs} \code{Drôme} \code{Essonne} \code{Eure}
+#' \code{Eure-et-Loir} \code{Finistère} \code{Gard} \code{Gers} \code{Gironde}
+#' \code{Haut-Rhin} \code{Haute-Corse} \code{Haute-Garonne} \code{Haute-Loire}
+#' \code{Haute-Marne} \code{Haute-Saône} \code{Haute-Savoie}
+#' \code{Haute-Vienne} \code{Hautes-Alpes} \code{Hautes-Pyrénées}
+#' \code{Hauts-de-Seine} \code{Hérault} \code{Ille-et-Vilaine} \code{Indre}
+#' \code{Indre-et-Loire} \code{Isère} \code{Jura} \code{Landes}
+#' \code{Loir-et-Cher} \code{Loire} \code{Loire-Atlantique} \code{Loiret}
+#' \code{Lot} \code{Lot-et-Garonne} \code{Lozère} \code{Maine-et-Loire}
+#' \code{Manche} \code{Marne} \code{Mayenne} \code{Meurthe-et-Moselle}
+#' \code{Meuse} \code{Morbihan} \code{Moselle} \code{Nièvre} \code{Nord}
+#' \code{Oise} \code{Orne} \code{Paris} \code{Pas-de-Calais} \code{Puy-de-Dôme}
+#' \code{Pyrénées-Atlantiques} \code{Pyrénées-Orientales} \code{Rhône}
+#' \code{Saône-et-Loire} \code{Sarthe} \code{Savoie} \code{Seine-et-Marne}
+#' \code{Seine-Maritime} \code{Seine-Saint-Denis} \code{Somme} \code{Tarn}
+#' \code{Tarn-et-Garonne} \code{Territoire_de_Belfort} \code{Val-d\'Oise}
+#' \code{Val-de-Marne} \code{Var} \code{Vaucluse} \code{Vendée} \code{Vienne}
+#' \code{Vosges} \code{Yonne} \code{Yvelines}. Nom du département (métropole) où les suffrages ont été dénombrés.}
+#' \item{abstentions_1}{a numeric vector. Abstentions du 1er tour.}
+#' \item{blancs_ou_nuls_1}{a numeric vector. Bulletins blancs ou nuls au 1er tour.}
+#' \item{bayrou}{a numeric vector. Candidat Bayrou.}
+#' \item{hollande_1}{a numeric vector. Candidat Hollande au 1er tour.}
+#' \item{cheminade}{a numeric vector. Candidat Cheminade.}
+#' \item{melenchon}{a numeric vector. Candidat Mélenchon.}
+#' \item{dupont_aignan}{a numeric vector. Candidat Dupont-Aignan.}
+#' \item{sarkozy_1}{a numeric vector. Candidat Sarkozy au 1er tour.}
+#' \item{poutou}{a numeric vector. Candidat Poutou.}
+#' \item{joly}{a numeric vector. Candidate Joly.}
+#' \item{le_pen}{a numeric vector. Candidate Le Pen.}
+#' \item{arthaud}{a numeric vector. Candidate Arthaud.} }
+#' @keywords datasets
+#' @examples
+#'
+#' data(presid_2012)
+#' str(presid_2012)
+#' plot(presid_2012)
+#' library(vcd)
+#' vcd::mosaic(t(as.table(as.matrix(presid_2012[1:5,-1]))),
+#' rot_labels=c(0,90,0,0), just_labels  = "right")
+#'
+"presid_2012"
+#> [1] "presid_2012"
+
+#' @title Caractéristiques de champignons
+#'
+#' @description Caractéristiques de 1000 champignons.
+#'
+#' @name champignons
+#' @docType data
+#' @format A data frame with 1000 observations on the following 8 variables.
+#' \describe{\item{num_champ}{a numeric vector. Numéro du champignon.}
+#' \item{classes}{a factor with levels \code{comestible} \code{veneneux}. Classes.}
+#' \item{couleur_chapeau}{a factor with levels \code{blanc} \code{gris} \code{jaune} \code{marron} \code{rouge}. Couleur du chapeau.}
+#' \item{contusions}{a factor with levels \code{abime} \code{non}. Contusions.}
+#' \item{odeur}{a factor with levels \code{amande} \code{anis} \code{apre} \code{inodore}. Odeur du champignon.}
+#' \item{espacement_lamelle}{a factor with levels \code{ferme} \code{serre}. Espacement des lamelles.}
+#' \item{couleur_tige_dessus}{a factor with levels \code{blanc} \code{gris} \code{rose}. Couleur du dessus de la tige.}
+#' \item{habitat}{a factor with levels \code{foret} \code{pelouse} \code{prairies} \code{sentier} \code{urbain}. Habitat.}
+#' }
+#' @keywords datasets
+#' @examples
+#'
+#' data(champignons)
+#' str(champignons)
+#' summary(champignons)
+#'
+"champignons"
+#> [1] "champignons"
+
+#' @title Consommation d'électricité
+#'
+#' @description Consommation d'électricité journalière en France de l'année 2003?
+#'
+#' @name conso_temp
+#' @docType data
+#' @format A data frame with 365 observations on the following 8 variables.
+#' \describe{ \item{Date}{a factor with levels \code{01/01/2003}
+#' \code{01/02/2003} \code{01/03/2003} \code{01/04/2003} \code{01/05/2003}
+#' \code{01/06/2003} \code{01/07/2003} \code{01/08/2003} \code{01/09/2003}
+#' \code{01/10/2003} \code{01/11/2003} \code{01/12/2003} \code{02/01/2003}
+#' \code{02/02/2003} \code{02/03/2003} \code{02/04/2003} \code{02/05/2003}
+#' \code{02/06/2003} \code{02/07/2003} \code{02/08/2003} \code{02/09/2003}
+#' \code{02/10/2003} \code{02/11/2003} \code{02/12/2003} \code{03/01/2003}
+#' \code{03/02/2003} \code{03/03/2003} \code{03/04/2003} \code{03/05/2003}
+#' \code{03/06/2003} \code{03/07/2003} \code{03/08/2003} \code{03/09/2003}
+#' \code{03/10/2003} \code{03/11/2003} \code{03/12/2003} \code{04/01/2003}
+#' \code{04/02/2003} \code{04/03/2003} \code{04/04/2003} \code{04/05/2003}
+#' \code{04/06/2003} \code{04/07/2003} \code{04/08/2003} \code{04/09/2003}
+#' \code{04/10/2003} \code{04/11/2003} \code{04/12/2003} \code{05/01/2003}
+#' \code{05/02/2003} \code{05/03/2003} \code{05/04/2003} \code{05/05/2003}
+#' \code{05/06/2003} \code{05/07/2003} \code{05/08/2003} \code{05/09/2003}
+#' \code{05/10/2003} \code{05/11/2003} \code{05/12/2003} \code{06/01/2003}
+#' \code{06/02/2003} \code{06/03/2003} \code{06/04/2003} \code{06/05/2003}
+#' \code{06/06/2003} \code{06/07/2003} \code{06/08/2003} \code{06/09/2003}
+#' \code{06/10/2003} \code{06/11/2003} \code{06/12/2003} \code{07/01/2003}
+#' \code{07/02/2003} \code{07/03/2003} \code{07/04/2003} \code{07/05/2003}
+#' \code{07/06/2003} \code{07/07/2003} \code{07/08/2003} \code{07/09/2003}
+#' \code{07/10/2003} \code{07/11/2003} \code{07/12/2003} \code{08/01/2003}
+#' \code{08/02/2003} \code{08/03/2003} \code{08/04/2003} \code{08/05/2003}
+#' \code{08/06/2003} \code{08/07/2003} \code{08/08/2003} \code{08/09/2003}
+#' \code{08/10/2003} \code{08/11/2003} \code{08/12/2003} \code{09/01/2003}
+#' \code{09/02/2003} \code{09/03/2003} \code{09/04/2003} \code{09/05/2003}
+#' \code{09/06/2003} \code{09/07/2003} \code{09/08/2003} \code{09/09/2003}
+#' \code{09/10/2003} \code{09/11/2003} \code{09/12/2003} \code{10/01/2003}
+#' \code{10/02/2003} \code{10/03/2003} \code{10/04/2003} \code{10/05/2003}
+#' \code{10/06/2003} \code{10/07/2003} \code{10/08/2003} \code{10/09/2003}
+#' \code{10/10/2003} \code{10/11/2003} \code{10/12/2003} \code{11/01/2003}
+#' \code{11/02/2003} \code{11/03/2003} \code{11/04/2003} \code{11/05/2003}
+#' \code{11/06/2003} \code{11/07/2003} \code{11/08/2003} \code{11/09/2003}
+#' \code{11/10/2003} \code{11/11/2003} \code{11/12/2003} \code{12/01/2003}
+#' \code{12/02/2003} \code{12/03/2003} \code{12/04/2003} \code{12/05/2003}
+#' \code{12/06/2003} \code{12/07/2003} \code{12/08/2003} \code{12/09/2003}
+#' \code{12/10/2003} \code{12/11/2003} \code{12/12/2003} \code{13/01/2003}
+#' \code{13/02/2003} \code{13/03/2003} \code{13/04/2003} \code{13/05/2003}
+#' \code{13/06/2003} \code{13/07/2003} \code{13/08/2003} \code{13/09/2003}
+#' \code{13/10/2003} \code{13/11/2003} \code{13/12/2003} \code{14/01/2003}
+#' \code{14/02/2003} \code{14/03/2003} \code{14/04/2003} \code{14/05/2003}
+#' \code{14/06/2003} \code{14/07/2003} \code{14/08/2003} \code{14/09/2003}
+#' \code{14/10/2003} \code{14/11/2003} \code{14/12/2003} \code{15/01/2003}
+#' \code{15/02/2003} \code{15/03/2003} \code{15/04/2003} \code{15/05/2003}
+#' \code{15/06/2003} \code{15/07/2003} \code{15/08/2003} \code{15/09/2003}
+#' \code{15/10/2003} \code{15/11/2003} \code{15/12/2003} \code{16/01/2003}
+#' \code{16/02/2003} \code{16/03/2003} \code{16/04/2003} \code{16/05/2003}
+#' \code{16/06/2003} \code{16/07/2003} \code{16/08/2003} \code{16/09/2003}
+#' \code{16/10/2003} \code{16/11/2003} \code{16/12/2003} \code{17/01/2003}
+#' \code{17/02/2003} \code{17/03/2003} \code{17/04/2003} \code{17/05/2003}
+#' \code{17/06/2003} \code{17/07/2003} \code{17/08/2003} \code{17/09/2003}
+#' \code{17/10/2003} \code{17/11/2003} \code{17/12/2003} \code{18/01/2003}
+#' \code{18/02/2003} \code{18/03/2003} \code{18/04/2003} \code{18/05/2003}
+#' \code{18/06/2003} \code{18/07/2003} \code{18/08/2003} \code{18/09/2003}
+#' \code{18/10/2003} \code{18/11/2003} \code{18/12/2003} \code{19/01/2003}
+#' \code{19/02/2003} \code{19/03/2003} \code{19/04/2003} \code{19/05/2003}
+#' \code{19/06/2003} \code{19/07/2003} \code{19/08/2003} \code{19/09/2003}
+#' \code{19/10/2003} \code{19/11/2003} \code{19/12/2003} \code{20/01/2003}
+#' \code{20/02/2003} \code{20/03/2003} \code{20/04/2003} \code{20/05/2003}
+#' \code{20/06/2003} \code{20/07/2003} \code{20/08/2003} \code{20/09/2003}
+#' \code{20/10/2003} \code{20/11/2003} \code{20/12/2003} \code{21/01/2003}
+#' \code{21/02/2003} \code{21/03/2003} \code{21/04/2003} \code{21/05/2003}
+#' \code{21/06/2003} \code{21/07/2003} \code{21/08/2003} \code{21/09/2003}
+#' \code{21/10/2003} \code{21/11/2003} \code{21/12/2003} \code{22/01/2003}
+#' \code{22/02/2003} \code{22/03/2003} \code{22/04/2003} \code{22/05/2003}
+#' \code{22/06/2003} \code{22/07/2003} \code{22/08/2003} \code{22/09/2003}
+#' \code{22/10/2003} \code{22/11/2003} \code{22/12/2003} \code{23/01/2003}
+#' \code{23/02/2003} \code{23/03/2003} \code{23/04/2003} \code{23/05/2003}
+#' \code{23/06/2003} \code{23/07/2003} \code{23/08/2003} \code{23/09/2003}
+#' \code{23/10/2003} \code{23/11/2003} \code{23/12/2003} \code{24/01/2003}
+#' \code{24/02/2003} \code{24/03/2003} \code{24/04/2003} \code{24/05/2003}
+#' \code{24/06/2003} \code{24/07/2003} \code{24/08/2003} \code{24/09/2003}
+#' \code{24/10/2003} \code{24/11/2003} \code{24/12/2003} \code{25/01/2003}
+#' \code{25/02/2003} \code{25/03/2003} \code{25/04/2003} \code{25/05/2003}
+#' \code{25/06/2003} \code{25/07/2003} \code{25/08/2003} \code{25/09/2003}
+#' \code{25/10/2003} \code{25/11/2003} \code{25/12/2003} \code{26/01/2003}
+#' \code{26/02/2003} \code{26/03/2003} \code{26/04/2003} \code{26/05/2003}
+#' \code{26/06/2003} \code{26/07/2003} \code{26/08/2003} \code{26/09/2003}
+#' \code{26/10/2003} \code{26/11/2003} \code{26/12/2003} \code{27/01/2003}
+#' \code{27/02/2003} \code{27/03/2003} \code{27/04/2003} \code{27/05/2003}
+#' \code{27/06/2003} \code{27/07/2003} \code{27/08/2003} \code{27/09/2003}
+#' \code{27/10/2003} \code{27/11/2003} \code{27/12/2003} \code{28/01/2003}
+#' \code{28/02/2003} \code{28/03/2003} \code{28/04/2003} \code{28/05/2003}
+#' \code{28/06/2003} \code{28/07/2003} \code{28/08/2003} \code{28/09/2003}
+#' \code{28/10/2003} \code{28/11/2003} \code{28/12/2003} \code{29/01/2003}
+#' \code{29/03/2003} \code{29/04/2003} \code{29/05/2003} \code{29/06/2003}
+#' \code{29/07/2003} \code{29/08/2003} \code{29/09/2003} \code{29/10/2003}
+#' \code{29/11/2003} \code{29/12/2003} \code{30/01/2003} \code{30/03/2003}
+#' \code{30/04/2003} \code{30/05/2003} \code{30/06/2003} \code{30/07/2003}
+#' \code{30/08/2003} \code{30/09/2003} \code{30/10/2003} \code{30/11/2003}
+#' \code{30/12/2003} \code{31/01/2003} \code{31/03/2003} \code{31/05/2003}
+#' \code{31/07/2003} \code{31/08/2003} \code{31/10/2003} \code{31/12/2003}. .}
+#' \item{conso}{a numeric vector. .}
+#' \item{t}{a numeric vector. .}
+#' \item{nom_jour}{a factor with levels \code{Dimanche} \code{Jeudi}
+#' \code{Lundi} \code{Mardi} \code{Mercredi} \code{Samedi} \code{Vendredi}. .}
+#' \item{mois}{a factor with levels \code{Août} \code{Avril}
+#' \code{Décembre} \code{Février} \code{Janvier} \code{Juillet} \code{Juin}
+#' \code{Mai} \code{Mars} \code{Novembre} \code{Octobre} \code{Septembre}. .}
+#' \item{temp}{a numeric vector. .}
+#' \item{ejp}{a numeric vector. .}
+#' \item{ferie}{a factor with levels \code{non} \code{oui}. .}
+#' }
+#' @keywords datasets
+#' @examples
+#'
+#' data(conso_temp)
+#' str(conso_temp)
+#' plot(conso_temp$conso)
+#'
+"conso_temp"
+#> [1] "conso_temp"
 

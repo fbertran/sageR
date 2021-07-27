@@ -837,3 +837,64 @@ CalculateAxisPath <- function(var.names, min, max) {
   # Return calculated axis paths
   as.data.frame(axisData)
 }
+
+
+#' @title Indices d'attraction/répulsion
+#'
+#' @description Fonction de calcul et de représentation des indices d'attraction/répulsion
+#'
+#' @param data Jeux de données
+#'
+#' @return Liste à un élément qui content le tableau croisé des indices.
+#' @export
+#'
+#' @examples
+#'
+#' data(champignons)
+#' champ_sel <- champignons[,c("couleur_chapeau","contusions","odeur",
+#' "espacement_lamelle","habitat")]
+#' sageR::att_rep_ind(champ_sel)
+#'
+att_rep_ind=function(data){
+  nb_var <- nrow(as.matrix(names(data)))
+  for (i in 1:nb_var)
+  {for (j in 1:nb_var)
+  {X1 <- data[,i]
+  X2 <- data[,j]
+  X <- data.frame(X1,X2)
+  tab_X <- table(X)
+  tab_X <- as.matrix(tab_X)
+  marg_X1 <- table(X1)
+  marg_X1 <- as.matrix(marg_X1)
+  marg_X2 <- table(X2)
+  marg_X2 <- as.matrix(marg_X2)
+  somme_lignes <- apply(tab_X,1,sum,na.rm=TRUE)
+  somme_colonnes <- apply(tab_X,2,sum,na.rm=TRUE)
+  n <- sum(tab_X)
+  m1 <- nrow(marg_X1)
+  m2 <- nrow(marg_X2)
+  attrac_repul <- matrix(0,nrow=m1,ncol=m2)
+  for (k in 1:m1)
+  {for (l in 1:m2)
+  {attrac_repul[k,l]=tab_X[k,l]/(somme_lignes[k]*somme_colonnes[l])*n
+  }
+  }
+  rownames(attrac_repul) <- rownames(marg_X1)
+  colnames(attrac_repul) <- rownames(marg_X2)
+  if (j == 1) {d_kl <- attrac_repul}
+  else {d_kl <- data.frame(d_kl,attrac_repul)}
+  }
+    if (i == 1) {d_kl_all <- d_kl}
+    else {d_kl_all <- rbind(d_kl_all,d_kl)}
+  }
+  for (i in 1:nrow(d_kl_all))
+  {d_kl_all[i,i]=1}
+
+  z <- as.matrix(d_kl_all)
+  x <- seq(1,nrow(d_kl_all),length.out=nrow(d_kl_all))
+  y <- seq(1,nrow(d_kl_all),length.out=nrow(d_kl_all))
+  image(x,y,z,xlab="",ylab="",main="Indices d'attraction/r\u00e9pulsion",axes=FALSE)
+  axis(1, at = x,labels = rownames(z),las=1,cex.axis=0.8)
+  axis(2, at = y,labels = colnames(z),las=2,cex.axis=0.8)
+  return(list(out_ind=d_kl_all))
+}

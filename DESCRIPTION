@@ -1,8 +1,8 @@
 Package: sageR
 Type: Package
 Title: Applied Statistics for Economics and Management with R
-Version: 0.3.0
-Date: 2021-07-17
+Version: 0.4.0
+Date: 2021-07-27
 Depends: R (>= 3.5.0)
 Imports:
     ggplot2
@@ -32,7 +32,11 @@ Suggests:
     ggiraphExtra,
     scales,
     spatstat,
-    vcd
+    vcd,
+    FactoMineR,
+    cluster,
+    caret,
+    corrplot
 Authors@R: c(
 	person(given = "Frederic", family= "Bertrand", role = c("cre", "aut"), email = "frederic.bertrand@utt.fr", comment = c(ORCID = "0000-0002-0837-8281")),
 	person(given = "Claire", family= "Borsenberger", role = c("ctb"), email = "claire.borsenberger@sfr.fr"),

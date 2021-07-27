@@ -1,0 +1,126 @@
+---
+title: "Chapitre 06. Exploration de données avec l'analyse des correspondances multiples."
+subtitle: "Tout le code avec R."
+author: "Christian Derquenne"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapitre 06. Exploration de données avec l'analyse des correspondances multiples.}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<table align="center">
+        <tr>
+            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;"/></td>
+            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;"/></td>
+        </tr>
+</table>
+
+```{r, echo=FALSE}
+#file.edit(normalizePath("~/.Renviron"))
+LOCAL <- identical(Sys.getenv("LOCAL"), "TRUE")
+#, eval = LOCAL for skip on CRAN test
+#LOCAL=FALSE
+#knitr::opts_chunk$set(purl = LOCAL, eval=LOCAL)
+knitr::opts_chunk$set(purl = LOCAL)
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "TRUE")
+knitr::opts_chunk$set(purl = NOT_CRAN)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+SAVE_GRAPHS=FALSE
+```
+
+
+# Description des données
+
+Caractéristiques de champignons
+
+* `num_champ` : numéro du champignon
+* `couleur_chapeau` : couleur du chapeau
+* `contusions` : contusions
+* `odeur` : odeur du champignon
+* `espacement_lamelle` : espacement des lamelles
+* `habitat` : habitat
+* `classes` : classes
+* `couleur_tige_dessus` : couleur du dessus de la tige
+
+
+Lecture des données
+
+```{r}
+library(sageR)
+data(champignons)
+```
+
+Sélection des variables de l'étude
+
+```{r}
+champ_sel <- champignons[,c("couleur_chapeau","contusions","odeur","espacement_lamelle","habitat")]
+```
+
+
+# Exercice 6.2 : Indices d’attraction/répulsion
+
+```{r, cache=TRUE}
+res.ind <- sageR::att_rep_ind(champ_sel)
+```
+
+
+```{r, cache=TRUE}
+round(res.ind$out_ind,2)
+```
+
+
+# Exercice 6.3 : parts des inerties expliquées des deux premières composantes principales
+
+```{r, fig.keep='all', cache=TRUE}
+res.ACM <- FactoMineR::MCA(champ_sel)
+eig.val <- res.ACM$eig
+```
+
+# Exercice 6.4 : nombre de composantes à sélectionner
+
+```{r, cache=TRUE}
+barplot(eig.val[, 2], 
+        names.arg = 1:nrow(eig.val), 
+        main = "Inerties expliquées par les dimensions (%)",
+        xlab = "Dimensions principales",
+        ylab = "Pourcentage d'inerties",
+        col ="steelblue")
+```
+
+# Exercice 6.5 : Associations des modalités sur les deux premiers plans
+
+```{r, cache=TRUE}
+plot(res.ACM, axes = c(1, 2))
+```
+
+```{r, cache=TRUE}
+plot(res.ACM, axes = c(1, 3))
+```
+
+# Exercice 6.6 : Contributions et reconstitutions des modalités
+
+```{r, cache=TRUE}
+round(res.ACM$var$contrib[,1:3],2)
+```
+
+```{r, cache=TRUE}
+round(res.ACM$var$cos2[,1:3],2)
+```
+
+# Exercice 6.7 : Valeurs-tests des modalités
+
+```{r, cache=TRUE}
+round(res.ACM$var$v.test[,1:3],3)
+```
+
+# Exercice 6.9 : Valeurs des rapports de corrélations
+
+```{r, cache=TRUE}
+round(res.ACM$var$eta2[,1:3],3)
+```
+

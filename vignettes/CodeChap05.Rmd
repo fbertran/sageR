@@ -1,0 +1,320 @@
+---
+title: "Chapitre 05. Exploration de données avec l'analyse factorielle des correspondances."
+subtitle: "Tout le code avec R."
+author: "Christian Derquenne"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapitre 05. Exploration de données avec l'analyse factorielle des correspondances.}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<table align="center">
+        <tr>
+            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;"/></td>
+            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;"/></td>
+        </tr>
+</table>
+
+```{r, echo=FALSE}
+#file.edit(normalizePath("~/.Renviron"))
+LOCAL <- identical(Sys.getenv("LOCAL"), "TRUE")
+#, eval = LOCAL for skip on CRAN test
+#LOCAL=FALSE
+#knitr::opts_chunk$set(purl = LOCAL, eval=LOCAL)
+knitr::opts_chunk$set(purl = LOCAL)
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "TRUE")
+knitr::opts_chunk$set(purl = NOT_CRAN)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+SAVE_GRAPHS=FALSE
+```
+
+
+# Description des données
+
+Résultats au premier tour des élections présidentielles françaises de 2012
+
+* `departement` : nom du département (métropole)
+* `arthaud` : candidate Arthaud
+* `bayrou` : candidat Bayrou
+* `cheminade` : candidat Cheminade
+* `dupont_aignan` : candidat Dupont-Aignan
+* `hollande_1` : candidat Hollande au 1er tour
+* `joly` : candidate Joly
+* `le_pen` : candidate Le Pen
+* `melenchon` : candidat Mélenchon
+* `poutou` : candidat Poutou
+* `sarkozy_1` : candidat Sarkozy au 1er tour
+* `abstentions_1` : abstentions du 1er tour
+* `blancs_ou_nuls_1` : bulletins blancs ou nuls au 1er tour
+
+Lecture des données
+
+```{r}
+library(sageR)
+data(presid_2012)
+```
+
+
+# Exercice 5.1 : Analyse descriptive - les profils-lignes
+
+Préparation du tableau de contingence et des profils colonnes et lignes
+
+```{r, cache=TRUE}
+somme_lignes <- apply(presid_2012[,2:13],1,sum,na.rm=TRUE)
+presid_2012_tab_cont <- data.frame(presid_2012,somme_lignes)
+somme_colonnes <- apply(presid_2012[,2:13],2,sum,na.rm=TRUE)
+somme_colonnes <- t(as.matrix(somme_colonnes))
+departement <- "France"
+somme_lignes <- apply(somme_colonnes,1,sum,na.rm=TRUE)
+somme_colonnes <- data.frame(departement,somme_colonnes,somme_lignes)
+presid_2012_tab_cont <- rbind(presid_2012_tab_cont,somme_colonnes)
+prop_presid_2012_tab_cont <- presid_2012_tab_cont[,2:13]/presid_2012_tab_cont$somme_lignes
+departement <- presid_2012_tab_cont$departement
+prop_presid_2012_tab_cont <- data.frame(departement,prop_presid_2012_tab_cont)
+profil_colonnes <- matrix(0,nrow=97,ncol=12)
+for (i in 1:96)
+    {for (j in 1:12)  
+       {profil_colonnes[i,j]=presid_2012_tab_cont[i,j+1]/presid_2012_tab_cont[97,j+1]   
+       }
+    }
+for (j in 1:12)  
+    {profil_colonnes[97,j]=presid_2012_tab_cont[97,j+1]/sum(presid_2012_tab_cont[97,2:13])   
+    }
+colnames(profil_colonnes) <- c("abstentions_1","blancs_nuls_1","bayrou","hollande_1","cheminade","melenchon","dupont_aignan","sarkozy_1","poutou","joly","le_pen","arthaud")
+rownames(profil_colonnes) <- departement[1:97]
+profil_colonnes_France <- presid_2012_tab_cont$somme_lignes/sum(presid_2012_tab_cont$somme_lignes)
+profil_colonnes <- data.frame(profil_colonnes,profil_colonnes_France)
+```
+
+Calcul des profils-lignes Alpes-Maritimes, de la Corrèze, de la Haute-Corse et de la France métropolitaine
+
+```{r, cache=TRUE}
+Alpes_Maritimes <- as.numeric(prop_presid_2012_tab_cont[6,2:13])
+Correze <- as.numeric(prop_presid_2012_tab_cont[19,2:13])
+Haute_Corse <- as.numeric(prop_presid_2012_tab_cont[96,2:13])
+France <- as.numeric(prop_presid_2012_tab_cont[97,2:13])
+trois_dept_france <- data.frame(Alpes_Maritimes,Correze,Haute_Corse,France)
+rownames(trois_dept_france) <- names(prop_presid_2012_tab_cont[,2:13])
+```
+
+Affichage des profils-lignes
+
+```{r, cache=TRUE}
+round(trois_dept_france,3)
+```
+
+Cartographie des profils-lignes
+
+```{r, cache=TRUE}
+z <- t(as.matrix(trois_dept_france))
+x <- seq(1,4,length.out=4)
+y <- seq(1,12,length.out=12)
+zr <- range(0,0.36)
+oldpar <- par(no.readonly = TRUE)
+#par(oma=c(0,4,0,4),bg="white")
+image(x,y,z,zlim=zr,xlab="",ylab="",main="Profils-lignes des choix de votes par département",axes=FALSE)
+axis(1, at = x,labels = rownames(z),las=1,cex.axis=1)
+axis(2, at = y,labels = colnames(z),las=2,cex.axis=1)
+par(oldpar)
+```
+
+# Exercice 5.2 : Analyse des écarts
+
+Profils-colonnes des types de votes avec la France
+
+```{r, cache=TRUE}
+d_chi2_type_vote_France <- matrix(0,nrow=96,ncol=1)
+d_chi2_type_vote_France_all <- matrix(0,nrow=12,ncol=1)
+for (i in 1:12)
+    {for (j in 1:96)
+         {d_chi2_type_vote_France[j]=1/profil_colonnes[j,13]*(profil_colonnes[j,i]-profil_colonnes[j,13])^2
+         }
+     d_chi2_type_vote_France_all[i] <- apply(d_chi2_type_vote_France,2,sum,na.rm=TRUE)
+
+    }
+type_vote <- c("abstentions_1","blancs_nuls_1","bayrou","hollande_1","cheminade","melenchon","dupont_aignan","sarkozy_1","poutou","joly","le_pen","arthaud")
+d_chi2_type_vote_France_all <- data.frame(type_vote,round(d_chi2_type_vote_France_all,4))
+colnames(d_chi2_type_vote_France_all) <- c("Type de vote","Distance du Chi-2")
+print(d_chi2_type_vote_France_all)
+z <- as.matrix(d_chi2_type_vote_France_all[,2])
+x <- seq(1,12,length.out=12)
+y <- seq(1,1,length.out=1)
+rownames(z) <- c("abstentions_1","blancs_nuls_1","bayrou","hollande_1","cheminade","melenchon","dupont_aignan","sarkozy_1","poutou","joly","le_pen","arthaud")
+colnames(z) <- c("France entière")
+oldpar <- par(no.readonly = TRUE)
+#par(oma=c(0,2,8,0)+0.1,bg="white")
+image(x,y,z,xlab="",ylab="",main="Distance Chi-2 des types de votes avec la France entière",axes=FALSE)
+axis(1, at = x,labels = rownames(z),las=1,cex.axis=0.8)
+axis(2, at = y,labels = colnames(z),las=2,cex.axis=0.8)
+par(oldpar)
+```
+
+
+# Exercice 5.3 : Analyse des rapports - les indices d’attraction/répulsion
+
+```{r, cache=TRUE}
+attrac_repul <- matrix(0,nrow=12,ncol=3)
+for (i in 1:12)
+    {attrac_repul[i,1]=round(trois_dept_france[i,1]/trois_dept_france[i,4],3)
+     attrac_repul[i,2]=round(trois_dept_france[i,2]/trois_dept_france[i,4],3)
+     attrac_repul[i,3]=round(trois_dept_france[i,3]/trois_dept_france[i,4],3)
+    }
+rownames(attrac_repul) <- c("abstentions_1","blancs_nuls_1","bayrou","hollande_1","cheminade","melenchon","dupont_aignan","sarkozy_1","poutou","joly","le_pen","arthaud")
+colnames(attrac_repul) <- c("Alpes-Maritimes","Corrèze","Haute-Corse")
+
+z <- as.matrix(attrac_repul)
+x <- seq(1,12,length.out=12)
+y <- seq(1,3,length.out=3)
+image(x,y,z,xlab="",ylab="",main="Indices d'attraction/répulsion",axes=FALSE)
+axis(1, at = x,labels = rownames(z),las=1,cex.axis=0.7)
+axis(2, at = y,labels = colnames(z),las=2,cex.axis=0.7)
+```
+
+# Exercice 5.4 : Le Chi-2 et ses contributions
+
+Calcul de la distance du Chi-2
+
+```{r, cache=TRUE}
+chisq.test(presid_2012[,2:13])
+```
+
+Calcul des contributions au Chi-2
+
+```{r, cache=TRUE}
+attrac_repul <- matrix(0,nrow=12,ncol=96)
+for (i in 1:12)
+    {for (j in 1:96)
+         {attrac_repul[i,j]=prop_presid_2012_tab_cont[j,i+1]/prop_presid_2012_tab_cont[97,i+1]}
+    }
+d_ij <- t(attrac_repul)
+f_j <- as.matrix(presid_2012_tab_cont[97,2:13]/sum(presid_2012_tab_cont[97,2:13]))
+fi_ <- as.matrix(presid_2012_tab_cont[1:97,14]/presid_2012_tab_cont[97,14])
+fi_x_f_j <- fi_%*%f_j
+ecart_indep <- matrix(0,nrow=96,ncol=12)
+for (i in 1:96)
+    {for (j in 1:12)
+         {ecart_indep[i,j]=(d_ij[i,j]-1)^2*fi_x_f_j[i,j]
+         }
+    }
+n <- presid_2012_tab_cont[97,14]
+```
+
+Calcul de la statistique du Chi-2
+
+```{r, cache=TRUE}
+d_2 = n*sum(ecart_indep)
+
+contrib_chi_2 <- matrix(0,nrow=96,ncol=12)
+for (i in 1:96)
+    {for (j in 1:12)
+         {contrib_chi_2[i,j]=n*ecart_indep[i,j]/d_2*100
+         }
+    }
+colnames(contrib_chi_2) <- c("abstentions_1","blancs_nuls_1","bayrou","hollande_1","cheminade","melenchon","dupont_aignan","sarkozy_1","poutou","joly","le_pen","arthaud")
+rownames(contrib_chi_2) <- departement[1:96]
+```
+
+Affiche l'ensemble des contributions au Chi-2
+
+```{r, cache=TRUE}
+round(contrib_chi_2,3)
+```
+
+Calcul le couple (département,type de vote) qui a la plus petite contribution au Chi-2
+
+```{r, cache=TRUE}
+departement[round(which.min(contrib_chi_2)%%96,0)]
+type_vote[round(which.min(contrib_chi_2)/96,0)]
+```
+
+Calcul le couple (département,type de vote) qui a la plus grande contribution au Chi-2
+
+```{r, cache=TRUE}
+departement[round(which.max(contrib_chi_2)%%96,0)]
+type_vote[round(which.max(contrib_chi_2)/96,0)]
+```
+
+
+# Exercice 5.5 : La force de la dépendance - le V de Cramer
+
+Calcul de la distance du Chi-2
+
+```{r, cache=TRUE}
+chi_2 <- chisq.test(presid_2012[,2:13])$statistic
+p=96
+q=12
+V_cramer <- sqrt(chi_2/(n*min(p-1,q-1)))
+```
+
+
+# Exercice 5.6 : Inerties expliquées et résiduelles
+
+AFC sur les données avec le package `FactoMineR`
+
+```{r, fig.keep='all', cache=TRUE}
+res.AFC <- FactoMineR::CA(presid_2012[,2:13])
+```
+
+
+# Exercice 5.7 : Contributions et reconstitutions des types de vote
+
+Contributions des types de votes
+
+```{r, cache=TRUE}
+round(res.AFC$col$contrib,2)
+```
+
+Reconstitutions des types de votes
+
+```{r, cache=TRUE}
+round(100*res.AFC$col$cos2,2)
+```
+
+
+# Exercice 5.8 : Nombre de dimensions à retenir ?
+
+Histogramme des valeurs propres
+
+```{r, cache=TRUE}
+vp <- as.matrix(res.AFC$eig[,1])
+colnames(vp) <- c("vp")
+num_cp <- 11:1
+histo_vp <- data.frame(num_cp,vp)
+histo_vp <- histo_vp[order(histo_vp$vp, decreasing = TRUE), ]
+```
+
+
+```{r, cache=TRUE}
+library(ggplot2)
+ggplot(data=histo_vp, aes(x=num_cp, y=vp)) +  geom_bar(stat="identity") + coord_flip() + scale_x_discrete(limits=c("11","10","9","8","7","6","5","4","3","2","1"))
+```
+
+
+# Exercice 5.9 : Analyse des liens entre les types de vote et les départements
+
+Plan 1 : coordonnées factorielles
+
+```{r, cache=TRUE}
+coord <- res.AFC$row$coord[,1:2]
+modal <- presid_2012$departement
+coord_dept <- data.frame(modal,coord)
+coord <- res.AFC$col$coord[,1:2]
+modal <- c("abstentions_1","blancs_nuls_1","bayrou","hollande_1","cheminade","melenchon","dupont_aignan","sarkozy_1","poutou","joly","le_pen","arthaud")
+coord_vote <- data.frame(modal,coord)
+graph <- rbind(coord_vote,coord_dept)
+oldpar <- par(no.readonly = TRUE)
+par(oma=c(0,1,0,1)+1,bg="white")
+plot (graph[,2], graph[,3],type="n",xlab="Z_1 (46,26%)",ylab="Z_2 (26,37%)",main="")
+text (graph[1:12,2], graph[1:12,3], graph[1:12,1],col='red',cex=1)
+text (graph[13:108,2], graph[13:108,3], graph[13:108,1],col='blue',cex=0.6)
+abline(h=0)
+abline(v=0)
+par(oldpar)
+```
+
+

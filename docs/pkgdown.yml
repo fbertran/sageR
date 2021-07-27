@@ -5,9 +5,14 @@ articles:
   AllLinksExtVignettes: AllLinksExtVignettes.html
   CodeChap02: CodeChap02.html
   CodeChap03: CodeChap03.html
+  CodeChap04: CodeChap04.html
+  CodeChap05: CodeChap05.html
+  CodeChap06: CodeChap06.html
+  CodeChap07: CodeChap07.html
   CodeChap08: CodeChap08.html
   CodeChap09: CodeChap09.html
-last_built: 2021-07-20T11:13Z
+  CodeChap10: CodeChap10.html
+last_built: 2021-07-27T22:35Z
 urls:
   reference: https://fbertran.github.io/sageR//reference
   article: https://fbertran.github.io/sageR//articles

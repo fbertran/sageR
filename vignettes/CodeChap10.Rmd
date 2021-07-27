@@ -1,0 +1,1003 @@
+---
+title: "Chapitre 10. Modèle linéaire gaussien."
+subtitle: "Tout le code avec R."
+author: "Christian Derquenne"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapitre 10. Modèle linéaire gaussien.}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<table align="center">
+        <tr>
+            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;"/></td>
+            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;"/></td>
+        </tr>
+</table>
+
+```{r, echo=FALSE}
+#file.edit(normalizePath("~/.Renviron"))
+LOCAL <- identical(Sys.getenv("LOCAL"), "TRUE")
+#, eval = LOCAL for skip on CRAN test
+#LOCAL=FALSE
+#knitr::opts_chunk$set(purl = LOCAL, eval=LOCAL)
+knitr::opts_chunk$set(purl = LOCAL)
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "TRUE")
+knitr::opts_chunk$set(purl = NOT_CRAN)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+SAVE_GRAPHS=FALSE
+```
+
+
+# Description des données : Air pollution
+
+Échantillon de 50 villes (individus) tirées aléatoirement sur la pollution de l'air aux États-Unis en 1960
+
+* CITY : Nom de la ville
+* TMR : taux de mortalité exprimé en 1/10000
+* GE65 : pourcentage (multiplié par 10) de la population des 65 ans et plus
+* LPOP : logarithme (en base 10 et multiplié par 10) de la population
+* NONPOOR : pourcentage de ménages avec un revenu au dessus du seuil de pauvreté
+* PERWH : pourcentage de population blanche * PMEAN : moyenne arithmétique des relevés réalisés deux fois par semaine de particules suspendues dans l’air (micro-g/m3 multiplié par 10)
+* PMIN : plus petite valeur des relevés réalisés deux fois par semaine de particules suspendues dans l’air (micro-g/m3 multiplié par 10)
+* LPMAX : logarithme de la plus grande valeur des relevés réalisés deux fois par semaine de particules suspendues dans l'air (micro-g/m3 multiplié par 10)
+* SMEAN : moyenne arithmétique des relevés réalisés deux fois par semaine de sulfate (micro-g/m3 multiplié par 10)
+* SMIN : plus petite valeur des relevés réalisés deux fois par semaine de sulfate (micro-g/m3 multiplié par 10)
+* SMAX : plus grande valeur des relevés réalisés deux fois par semaine de sulfate (micro-g/m3 multiplié par 10)
+* LPM2 : logarithme de la densité de la population par mile carré (multiplié par 0,1)
+
+
+Lecture des données
+```{r}
+library(sageR)
+data(air_pollution)
+```
+
+Élimine les variables `PM2` et `PMAX` qui sont transformées en logarithme dans les variables `l_pm2` et `l_pmax`
+```{r, cache=TRUE}
+air_pollution <- air_pollution[,-(8:9)]
+```
+
+Quelques statistiques descriptives du fichier de données
+```{r, cache=TRUE}
+summary(air_pollution)
+```
+
+
+# Exercice 10.1 : Analyse des corrélations entre les variables
+
+```{r, cache=TRUE}
+GGally::ggpairs(air_pollution[,-1], progress = FALSE)
+```
+
+```{r, cache=TRUE}
+cor_pollution <- cor(air_pollution[,-1])
+col1 <- colorRampPalette(c("#7F0000", "red", "#FF7F00", "yellow", "white",
+                           "cyan", "#007FFF", "blue", "#00007F"))
+col2 <- colorRampPalette(c("#67001F", "#B2182B", "#D6604D", "#F4A582",
+                           "#FDDBC7", "#FFFFFF", "#D1E5F0", "#92C5DE",
+                           "#4393C3", "#2166AC", "#053061"))
+col3 <- colorRampPalette(c("red", "white", "blue")) 
+col4 <- colorRampPalette(c("#7F0000", "red", "#FF7F00", "yellow", "#7FFF7F",
+                           "cyan", "#007FFF", "blue", "#00007F"))
+whiteblack <- c("white", "black")
+corrplot::corrplot(cor_pollution, method = "color", addrect = 2, col = col1(100))
+```
+
+# Exercice 10.2 : Régression simple
+
+```{r, cache=TRUE}
+reg_TMR_GE65 <- lm(TMR~GE65,data=air_pollution)
+summary(reg_TMR_GE65)
+```
+
+```{r, cache=TRUE}
+reg_TMR_LPOP <- lm(TMR~LPOP,data=air_pollution)
+summary(reg_TMR_LPOP)
+```
+
+```{r, cache=TRUE}
+reg_TMR_NONPOOR <- lm(TMR~NONPOOR,data=air_pollution)
+summary(reg_TMR_NONPOOR)
+```
+
+```{r, cache=TRUE}
+reg_TMR_PERWH <- lm(TMR~PERWH,data=air_pollution)
+summary(reg_TMR_PERWH)
+```
+
+```{r, cache=TRUE}
+reg_TMR_PMEAN <- lm(TMR~PMEAN,data=air_pollution)
+summary(reg_TMR_PMEAN)
+```
+
+```{r, cache=TRUE}
+reg_TMR_PMIN <- lm(TMR~PMIN,data=air_pollution)
+summary(reg_TMR_PMIN)
+```
+
+```{r, cache=TRUE}
+reg_TMR_l_pmax <- lm(TMR~l_pmax,data=air_pollution)
+summary(reg_TMR_l_pmax)
+```
+
+```{r, cache=TRUE}
+reg_TMR_SMEAN <- lm(TMR~SMEAN,data=air_pollution)
+summary(reg_TMR_SMEAN)
+```
+
+```{r, cache=TRUE}
+reg_TMR_SMIN <- lm(TMR~SMIN,data=air_pollution)
+summary(reg_TMR_SMIN)
+```
+
+```{r, cache=TRUE}
+reg_TMR_SMAX <- lm(TMR~SMAX,data=air_pollution)
+summary(reg_TMR_SMAX)
+```
+
+```{r, cache=TRUE}
+reg_TMR_l_pm2 <- lm(TMR~l_pm2,data=air_pollution)
+summary(reg_TMR_l_pm2)
+```
+
+# Exercice 10.3 : Analyse des résidus et des observations
+
+Analyse du modèle `TMR` vs `GE65`
+
+```{r, cache=TRUE}
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$GE65, air_pollution$TMR, type = "n",xlab="GE65",ylab="TMR",main="Evolution de TMR en fonction de GE65")
+text(air_pollution$GE65, air_pollution$TMR, air_pollution$CITY,col='black',cex=0.7)
+```
+
+```{r, cache=TRUE}
+rstudent_leverage <- olsrr::ols_prep_rstudlev_data(reg_TMR_GE65)
+rstudent <- rstudent_leverage$levrstud$rstudent
+result_TMR_GE65 <- data.frame(air_pollution,rstudent)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_GE65$GE65, result_TMR_GE65$rstudent, type = "n",xlab="GE65",ylab="RStudents",main="Comportement des RStudents")
+text(result_TMR_GE65$GE65, result_TMR_GE65$rstudent, result_TMR_GE65$CITY,col='black',cex=0.7)
+abline(h=c(-1.99,0,1.99))
+```
+
+```{r, cache=TRUE}
+leverage <- rstudent_leverage$levrstud$leverage
+result_TMR_GE65 <- data.frame(result_TMR_GE65,leverage)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_GE65$GE65, result_TMR_GE65$leverage, type = "n",xlab="GE65",ylab="Levier",main="Comportement des leviers")
+text(result_TMR_GE65$GE65, result_TMR_GE65$leverage, result_TMR_GE65$CITY,col='black',cex=0.7)
+abline(h=0.08)
+```
+
+```{r, cache=TRUE}
+resid <- reg_TMR_GE65$residuals
+rmse <- sqrt(49*var(resid)/48)
+resid_std <- resid/rmse
+```
+
+```{r, cache=TRUE}
+cookd <- matrix(0,nrow=50)
+for (i in 1:50)
+    {cookd[i]=(leverage[i]/(1-leverage[i]))*(resid_std[i]^2/(2*(1-leverage[i])))}
+result_TMR_GE65 <- data.frame(result_TMR_GE65,cookd)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_GE65$GE65, result_TMR_GE65$cookd, type = "n",xlab="GE65",ylab="D de Cook",main="Comportement des D de Cook")
+text(result_TMR_GE65$GE65, result_TMR_GE65$cookd, result_TMR_GE65$CITY,col='black',cex=0.7)
+abline(h=0.08)
+```
+
+
+Analyse du modèle `TMR` vs `l_pm2`
+
+```{r, cache=TRUE}
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$l_pm2, air_pollution$TMR, type = "n",xlab="l_pm2",ylab="TMR",main="Evolution de TMR en fonction de l_pm2")
+text(air_pollution$l_pm2, air_pollution$TMR, air_pollution$CITY,col='black',cex=0.7)
+```
+
+```{r, cache=TRUE}
+rstudent_leverage <- olsrr::ols_prep_rstudlev_data(reg_TMR_l_pm2)
+rstudent <- rstudent_leverage$levrstud$rstudent
+result_TMR_l_pm2 <- data.frame(air_pollution,rstudent)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_l_pm2$l_pm2, result_TMR_l_pm2$rstudent, type = "n",xlab="l_pm2",ylab="RStudents",main="Comportement des RStudents")
+text(result_TMR_l_pm2$l_pm2, result_TMR_l_pm2$rstudent, result_TMR_l_pm2$CITY,col='black',cex=0.7)
+abline(h=c(-1.99,0,1.99))
+```
+
+```{r, cache=TRUE}
+leverage <- rstudent_leverage$levrstud$leverage
+result_TMR_l_pm2 <- data.frame(result_TMR_l_pm2,leverage)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_l_pm2$l_pm2, result_TMR_l_pm2$leverage, type = "n",xlab="l_pm2",ylab="Levier",main="Comportement des leviers")
+text(result_TMR_l_pm2$l_pm2, result_TMR_l_pm2$leverage, result_TMR_l_pm2$CITY,col='black',cex=0.7)
+abline(h=0.08)
+```
+
+```{r, cache=TRUE}
+resid <- reg_TMR_l_pm2$residuals
+rmse <- sqrt(49*var(resid)/48)
+resid_std <- resid/rmse
+```
+
+```{r, cache=TRUE}
+cookd <- matrix(0,nrow=50)
+for (i in 1:50)
+    {cookd[i]=(leverage[i]/(1-leverage[i]))*(resid_std[i]^2/(2*(1-leverage[i])))}
+result_TMR_l_pm2 <- data.frame(result_TMR_l_pm2,cookd)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_l_pm2$l_pm2, result_TMR_l_pm2$cookd, type = "n",xlab="l_pm2",ylab="D de Cook",main="Comportement des D de Cook")
+text(result_TMR_l_pm2$l_pm2, result_TMR_l_pm2$cookd, result_TMR_l_pm2$CITY,col='black',cex=0.7)
+abline(h=0.08)
+```
+
+
+Analyse du modèle `TMR` vs `SMIN`
+
+```{r, cache=TRUE}
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$SMIN, air_pollution$TMR, type = "n",xlab="SMIN",ylab="TMR",main="Evolution de TMR en fonction de SMIN")
+text(air_pollution$SMIN, air_pollution$TMR, air_pollution$CITY,col='black',cex=0.7)
+```
+
+```{r, cache=TRUE}
+rstudent_leverage <- olsrr::ols_prep_rstudlev_data(reg_TMR_SMIN)
+rstudent <- rstudent_leverage$levrstud$rstudent
+result_TMR_SMIN <- data.frame(air_pollution,rstudent)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_SMIN$SMIN, result_TMR_SMIN$rstudent, type = "n",xlab="SMIN",ylab="RStudents",main="Comportement des RStudents")
+text(result_TMR_SMIN$SMIN, result_TMR_SMIN$rstudent, result_TMR_SMIN$CITY,col='black',cex=0.7)
+abline(h=c(-1.99,0,1.99))
+```
+
+```{r, cache=TRUE}
+leverage <- rstudent_leverage$levrstud$leverage
+result_TMR_SMIN <- data.frame(result_TMR_SMIN,leverage)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_SMIN$SMIN, result_TMR_SMIN$leverage, type = "n",xlab="SMIN",ylab="Levier",main="Comportement des leviers")
+text(result_TMR_SMIN$SMIN, result_TMR_SMIN$leverage, result_TMR_SMIN$CITY,col='black',cex=0.7)
+abline(h=0.08)
+```
+
+```{r, cache=TRUE}
+resid <- reg_TMR_SMIN$residuals
+rmse <- sqrt(49*var(resid)/48)
+resid_std <- resid/rmse
+```
+
+```{r, cache=TRUE}
+cookd <- matrix(0,nrow=50)
+for (i in 1:50)
+    {cookd[i]=(leverage[i]/(1-leverage[i]))*(resid_std[i]^2/(2*(1-leverage[i])))}
+result_TMR_SMIN <- data.frame(result_TMR_SMIN,cookd)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_SMIN$SMIN, result_TMR_SMIN$cookd, type = "n",xlab="SMIN",ylab="D de Cook",main="Comportement des D de Cook")
+text(result_TMR_SMIN$SMIN, result_TMR_SMIN$cookd, result_TMR_SMIN$CITY,col='black',cex=0.7)
+abline(h=0.08)
+```
+
+
+Analyse du modèle `TMR` vs `SMEAN`
+
+```{r, cache=TRUE}
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$SMEAN, air_pollution$TMR, type = "n",xlab="SMEAN",ylab="TMR",main="Evolution de TMR en fonction de SMEAN")
+text(air_pollution$SMEAN, air_pollution$TMR, air_pollution$CITY,col='black',cex=0.7)
+```
+
+```{r, cache=TRUE}
+rstudent_leverage <- olsrr::ols_prep_rstudlev_data(reg_TMR_SMEAN)
+rstudent <- rstudent_leverage$levrstud$rstudent
+result_TMR_SMEAN <- data.frame(air_pollution,rstudent)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_SMEAN$SMEAN, result_TMR_SMEAN$rstudent, type = "n",xlab="SMEAN",ylab="RStudents",main="Comportement des RStudents")
+text(result_TMR_SMEAN$SMEAN, result_TMR_SMEAN$rstudent, result_TMR_SMEAN$CITY,col='black',cex=0.7)
+abline(h=c(-1.99,0,1.99))
+```
+
+```{r, cache=TRUE}
+leverage <- rstudent_leverage$levrstud$leverage
+result_TMR_SMEAN <- data.frame(result_TMR_SMEAN,leverage)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_SMEAN$SMEAN, result_TMR_SMEAN$leverage, type = "n",xlab="SMEAN",ylab="Levier",main="Comportement des leviers")
+text(result_TMR_SMEAN$SMEAN, result_TMR_SMEAN$leverage, result_TMR_SMEAN$CITY,col='black',cex=0.7)
+abline(h=0.08)
+```
+
+```{r, cache=TRUE}
+resid <- reg_TMR_SMEAN$residuals
+rmse <- sqrt(49*var(resid)/48)
+resid_std <- resid/rmse
+```
+
+```{r, cache=TRUE}
+cookd <- matrix(0,nrow=50)
+for (i in 1:50)
+    {cookd[i]=(leverage[i]/(1-leverage[i]))*(resid_std[i]^2/(2*(1-leverage[i])))}
+result_TMR_SMEAN <- data.frame(result_TMR_SMEAN,cookd)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_SMEAN$SMEAN, result_TMR_SMEAN$cookd, type = "n",xlab="SMEAN",ylab="D de Cook",main="Comportement des D de Cook")
+text(result_TMR_SMEAN$SMEAN, result_TMR_SMEAN$cookd, result_TMR_SMEAN$CITY,col='black',cex=0.7)
+abline(h=0.08)
+```
+
+Analyse du modèle `TMR` vs `NOOPOOR`
+
+```{r, cache=TRUE}
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$NONPOOR, air_pollution$TMR, type = "n",xlab="NONPOOR",ylab="TMR",main="Evolution de TMR en fonction de NONPOOR")
+text(air_pollution$NONPOOR, air_pollution$TMR, air_pollution$CITY,col='black',cex=0.7)
+```
+
+```{r, cache=TRUE}
+rstudent_leverage <- olsrr::ols_prep_rstudlev_data(reg_TMR_NONPOOR)
+rstudent <- rstudent_leverage$levrstud$rstudent
+result_TMR_NONPOOR <- data.frame(air_pollution,rstudent)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_NONPOOR$NONPOOR, result_TMR_NONPOOR$rstudent, type = "n",xlab="NONPOOR",ylab="RStudents",main="Comportement des RStudents")
+text(result_TMR_NONPOOR$NONPOOR, result_TMR_NONPOOR$rstudent, result_TMR_NONPOOR$CITY,col='black',cex=0.7)
+abline(h=c(-1.99,0,1.99))
+```
+
+```{r, cache=TRUE}
+leverage <- rstudent_leverage$levrstud$leverage
+result_TMR_NONPOOR <- data.frame(result_TMR_NONPOOR,leverage)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_NONPOOR$NONPOOR, result_TMR_NONPOOR$leverage, type = "n",xlab="NONPOOR",ylab="Levier",main="Comportement des leviers")
+text(result_TMR_NONPOOR$NONPOOR, result_TMR_NONPOOR$leverage, result_TMR_NONPOOR$CITY,col='black',cex=0.7)
+abline(h=0.08)
+```
+
+```{r, cache=TRUE}
+resid <- reg_TMR_NONPOOR$residuals
+rmse <- sqrt(49*var(resid)/48)
+resid_std <- resid/rmse
+```
+
+```{r, cache=TRUE}
+cookd <- matrix(0,nrow=50)
+for (i in 1:50)
+    {cookd[i]=(leverage[i]/(1-leverage[i]))*(resid_std[i]^2/(2*(1-leverage[i])))}
+result_TMR_NONPOOR <- data.frame(result_TMR_NONPOOR,cookd)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_NONPOOR$NONPOOR, result_TMR_NONPOOR$cookd, type = "n",xlab="NONPOOR",ylab="D de Cook",main="Comportement des D de Cook")
+text(result_TMR_NONPOOR$NONPOOR, result_TMR_NONPOOR$cookd, result_TMR_NONPOOR$CITY,col='black',cex=0.7)
+abline(h=0.08)
+```
+
+
+Analyse du modèle `TMR` vs `PERWH`
+
+```{r, cache=TRUE}
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$PERWH, air_pollution$TMR, type = "n",xlab="PERWH",ylab="TMR",main="Evolution de TMR en fonction de PERWH")
+text(air_pollution$PERWH, air_pollution$TMR, air_pollution$CITY,col='black',cex=0.7)
+```
+
+```{r, cache=TRUE}
+rstudent_leverage <- olsrr::ols_prep_rstudlev_data(reg_TMR_PERWH)
+rstudent <- rstudent_leverage$levrstud$rstudent
+result_TMR_PERWH <- data.frame(air_pollution,rstudent)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_PERWH$PERWH, result_TMR_PERWH$rstudent, type = "n",xlab="PERWH",ylab="RStudents",main="Comportement des RStudents")
+text(result_TMR_PERWH$PERWH, result_TMR_PERWH$rstudent, result_TMR_PERWH$CITY,col='black',cex=0.7)
+abline(h=c(-1.99,0,1.99))
+```
+
+```{r, cache=TRUE}
+leverage <- rstudent_leverage$levrstud$leverage
+result_TMR_PERWH <- data.frame(result_TMR_PERWH,leverage)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_PERWH$PERWH, result_TMR_PERWH$leverage, type = "n",xlab="PERWH",ylab="Levier",main="Comportement des leviers")
+text(result_TMR_PERWH$PERWH, result_TMR_PERWH$leverage, result_TMR_PERWH$CITY,col='black',cex=0.7)
+abline(h=0.08)
+```
+
+```{r, cache=TRUE}
+resid <- reg_TMR_PERWH$residuals
+rmse <- sqrt(49*var(resid)/48)
+resid_std <- resid/rmse
+```
+
+```{r, cache=TRUE}
+cookd <- matrix(0,nrow=50)
+for (i in 1:50)
+    {cookd[i]=(leverage[i]/(1-leverage[i]))*(resid_std[i]^2/(2*(1-leverage[i])))}
+result_TMR_PERWH <- data.frame(result_TMR_PERWH,cookd)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(result_TMR_PERWH$PERWH, result_TMR_PERWH$cookd, type = "n",xlab="PERWH",ylab="D de Cook",main="Comportement des D de Cook")
+text(result_TMR_PERWH$PERWH, result_TMR_PERWH$cookd, result_TMR_PERWH$CITY,col='black',cex=0.7)
+abline(h=0.08)
+```
+
+
+# Exercices 10.4 : Intervalles de confiance et de prévision
+
+Analyse du modèle `TMR` vs `GE65`
+
+```{r, cache=TRUE}
+IC_95 <- predict(reg_TMR_GE65, interval="confidence")
+IC_95 <- data.frame(IC_95)
+binf_IC_95 <- IC_95$lwr
+bsup_IC_95 <- IC_95$upr
+result_TMR_GE65 <- data.frame(air_pollution,binf_IC_95,bsup_IC_95)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$GE65, air_pollution$TMR, type = "p",xlab="GE65",ylab="TMR")
+abline(reg_TMR_GE65)
+matlines(result_TMR_GE65$GE65,IC_95[,2:3],lty=c(2,2),col="black")
+```
+
+```{r, cache=TRUE}
+IP_95 <- predict(reg_TMR_GE65, interval="prediction")
+IP_95 <- data.frame(IP_95)
+binf_IP_95 <- IP_95$lwr
+bsup_IP_95 <- IP_95$upr
+result_TMR_GE65 <- data.frame(result_TMR_GE65,binf_IP_95,bsup_IP_95)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$GE65, air_pollution$TMR, type = "n",xlab="GE65",ylab="TMR")
+text(air_pollution$GE65, air_pollution$TMR, air_pollution$CITY,col='black',cex=0.7)
+abline(reg_TMR_GE65)
+matlines(air_pollution$GE65,IP_95[,2:3],lty=c(2,2),col="black")
+```
+
+
+Analyse du modèle `TMR` vs `l_pm2`
+
+```{r, cache=TRUE}
+IC_95 <- predict(reg_TMR_l_pm2, interval="confidence")
+IC_95 <- data.frame(IC_95)
+binf_IC_95 <- IC_95$lwr
+bsup_IC_95 <- IC_95$upr
+result_TMR_l_pm2 <- data.frame(air_pollution,binf_IC_95,bsup_IC_95)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$l_pm2, air_pollution$TMR, type = "p",xlab="l_pm2",ylab="TMR")
+abline(reg_TMR_l_pm2)
+matlines(result_TMR_l_pm2$l_pm2,IC_95[,2:3],lty=c(2,2),col="black")
+```
+
+```{r, cache=TRUE}
+IP_95 <- predict(reg_TMR_l_pm2, interval="prediction")
+IP_95 <- data.frame(IP_95)
+binf_IP_95 <- IP_95$lwr
+bsup_IP_95 <- IP_95$upr
+result_TMR_l_pm2 <- data.frame(result_TMR_l_pm2,binf_IP_95,bsup_IP_95)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$l_pm2, air_pollution$TMR, type = "n",xlab="l_pm2",ylab="TMR")
+text(air_pollution$l_pm2, air_pollution$TMR, air_pollution$CITY,col='black',cex=0.7)
+abline(reg_TMR_l_pm2)
+matlines(air_pollution$l_pm2,IP_95[,2:3],lty=c(2,2),col="black")
+```
+
+
+Analyse du modèle `TMR` vs `SMIN`
+
+```{r, cache=TRUE}
+IC_95 <- predict(reg_TMR_SMIN, interval="confidence")
+IC_95 <- data.frame(IC_95)
+binf_IC_95 <- IC_95$lwr
+bsup_IC_95 <- IC_95$upr
+result_TMR_SMIN <- data.frame(air_pollution,binf_IC_95,bsup_IC_95)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$SMIN, air_pollution$TMR, type = "p",xlab="SMIN",ylab="TMR")
+abline(reg_TMR_SMIN)
+matlines(result_TMR_SMIN$SMIN,IC_95[,2:3],lty=c(2,2),col="black")
+```
+
+```{r, cache=TRUE}
+IP_95 <- predict(reg_TMR_SMIN, interval="prediction")
+IP_95 <- data.frame(IP_95)
+binf_IP_95 <- IP_95$lwr
+bsup_IP_95 <- IP_95$upr
+result_TMR_SMIN <- data.frame(result_TMR_SMIN,binf_IP_95,bsup_IP_95)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$SMIN, air_pollution$TMR, type = "n",xlab="SMIN",ylab="TMR")
+text(air_pollution$SMIN, air_pollution$TMR, air_pollution$CITY,col='black',cex=0.7)
+abline(reg_TMR_SMIN)
+matlines(air_pollution$SMIN,IP_95[,2:3],lty=c(2,2),col="black")
+```
+
+
+Analyse du modèle `TMR` vs `SMEAN`
+
+```{r, cache=TRUE}
+IC_95 <- predict(reg_TMR_SMEAN, interval="confidence")
+IC_95 <- data.frame(IC_95)
+binf_IC_95 <- IC_95$lwr
+bsup_IC_95 <- IC_95$upr
+result_TMR_SMEAN <- data.frame(air_pollution,binf_IC_95,bsup_IC_95)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$SMEAN, air_pollution$TMR, type = "p",xlab="SMEAN",ylab="TMR")
+abline(reg_TMR_SMEAN)
+matlines(result_TMR_SMEAN$SMEAN,IC_95[,2:3],lty=c(2,2),col="black")
+```
+
+```{r, cache=TRUE}
+IP_95 <- predict(reg_TMR_SMEAN, interval="prediction")
+IP_95 <- data.frame(IP_95)
+binf_IP_95 <- IP_95$lwr
+bsup_IP_95 <- IP_95$upr
+result_TMR_SMEAN <- data.frame(result_TMR_SMEAN,binf_IP_95,bsup_IP_95)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$SMEAN, air_pollution$TMR, type = "n",xlab="SMEAN",ylab="TMR")
+text(air_pollution$SMEAN, air_pollution$TMR, air_pollution$CITY,col='black',cex=0.7)
+abline(reg_TMR_SMEAN)
+matlines(air_pollution$SMEAN,IP_95[,2:3],lty=c(2,2),col="black")
+```
+
+
+Analyse du modèle `TMR` vs `NONPOOR`
+
+```{r, cache=TRUE}
+IC_95 <- predict(reg_TMR_NONPOOR, interval="confidence")
+IC_95 <- data.frame(IC_95)
+binf_IC_95 <- IC_95$lwr
+bsup_IC_95 <- IC_95$upr
+result_TMR_NONPOOR <- data.frame(air_pollution,binf_IC_95,bsup_IC_95)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$NONPOOR, air_pollution$TMR, type = "p",xlab="NONPOOR",ylab="TMR")
+abline(reg_TMR_NONPOOR)
+matlines(result_TMR_NONPOOR$NONPOOR,IC_95[,2:3],lty=c(2,2),col="black")
+```
+
+```{r, cache=TRUE}
+IP_95 <- predict(reg_TMR_NONPOOR, interval="prediction")
+IP_95 <- data.frame(IP_95)
+binf_IP_95 <- IP_95$lwr
+bsup_IP_95 <- IP_95$upr
+result_TMR_NONPOOR <- data.frame(result_TMR_NONPOOR,binf_IP_95,bsup_IP_95)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$NONPOOR, air_pollution$TMR, type = "n",xlab="NONPOOR",ylab="TMR")
+text(air_pollution$NONPOOR, air_pollution$TMR, air_pollution$CITY,col='black',cex=0.7)
+abline(reg_TMR_NONPOOR)
+matlines(air_pollution$NONPOOR,IP_95[,2:3],lty=c(2,2),col="black")
+```
+
+
+Analyse du modèle `TMR` vs `PERWH`
+
+```{r, cache=TRUE}
+IC_95 <- predict(reg_TMR_PERWH, interval="confidence")
+IC_95 <- data.frame(IC_95)
+binf_IC_95 <- IC_95$lwr
+bsup_IC_95 <- IC_95$upr
+result_TMR_PERWH <- data.frame(air_pollution,binf_IC_95,bsup_IC_95)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$PERWH, air_pollution$TMR, type = "p",xlab="PERWH",ylab="TMR")
+abline(reg_TMR_PERWH)
+matlines(result_TMR_PERWH$PERWH,IC_95[,2:3],lty=c(2,2),col="black")
+```
+
+```{r, cache=TRUE}
+IP_95 <- predict(reg_TMR_PERWH, interval="prediction")
+IP_95 <- data.frame(IP_95)
+binf_IP_95 <- IP_95$lwr
+bsup_IP_95 <- IP_95$upr
+result_TMR_PERWH <- data.frame(result_TMR_PERWH,binf_IP_95,bsup_IP_95)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(air_pollution$PERWH, air_pollution$TMR, type = "n",xlab="PERWH",ylab="TMR")
+text(air_pollution$PERWH, air_pollution$TMR, air_pollution$CITY,col='black',cex=0.7)
+abline(reg_TMR_PERWH)
+matlines(air_pollution$PERWH,IP_95[,2:3],lty=c(2,2),col="black")
+```
+
+# Exercice 10.5 : Régression multiple
+
+```{r, cache=TRUE}
+reg_TMR_all <- lm(TMR~SMIN+SMEAN+SMAX+PMIN+PMEAN+PERWH+NONPOOR+GE65+LPOP+l_pm2+l_pmax,data=air_pollution)
+summary(reg_TMR_all)
+```
+
+# Exercice 10.6 : Régression simplifié 
+
+```{r, cache=TRUE}
+reg_TMR_simplifie <- lm(TMR~PERWH+GE65+l_pm2,data=air_pollution)
+summary(reg_TMR_simplifie)
+```
+
+
+# Exercice 10.7 : Régression multiple par sélection de variables
+
+Définir la graine aléatoire pour pouvoir reproduire les simulations
+
+```{r, cache=TRUE}
+set.seed(123)
+```
+
+Mise en place de la validation croisée $k$-fold
+
+```{r, cache=TRUE}
+train.control <- caret::trainControl(method = "cv", number = 10)
+```
+
+Sélection ascendante
+```{r, cache=TRUE}
+step.model <- caret::train(TMR~SMIN+SMEAN+SMAX+PMIN+PMEAN+PERWH+NONPOOR+GE65+LPOP+l_pm2+l_pmax,data=air_pollution,method = "leapForward", tuneGrid = data.frame(nvmax = 1:5), trControl = train.control)
+step.model$results
+```
+
+```{r, cache=TRUE}
+step.model$bestTune
+```
+
+```{r, cache=TRUE}
+summary(step.model$finalModel)
+```
+
+```{r, cache=TRUE}
+reg_TMR_forward <- lm(TMR~PERWH+GE65+l_pm2,data=air_pollution)
+summary(reg_TMR_forward)
+```
+
+Sélection descendante
+```{r, cache=TRUE}
+step.model <- caret::train(TMR~SMIN+SMEAN+SMAX+PMIN+PMEAN+PERWH+NONPOOR+GE65+LPOP+l_pm2+l_pmax,data=air_pollution, method = "leapBackward", tuneGrid = data.frame(nvmax = 1:5), trControl = train.control)
+step.model$results
+```
+
+```{r, cache=TRUE}
+step.model$bestTune
+```
+
+```{r, cache=TRUE}
+summary(step.model$finalModel)
+```
+
+```{r, cache=TRUE}
+reg_TMR_backward <- lm(TMR~NONPOOR+GE65+l_pm2,data=air_pollution)
+summary(reg_TMR_backward)
+```
+
+Sélection pas à pas
+```{r, cache=TRUE}
+step.model <- caret::train(TMR~SMIN+SMEAN+SMAX+PMIN+PMEAN+PERWH+NONPOOR+GE65+LPOP+l_pm2+l_pmax,data=air_pollution, method = "leapSeq",tuneGrid = data.frame(nvmax = 1:5), trControl = train.control)
+step.model$results
+```
+
+```{r, cache=TRUE}
+step.model$bestTune
+```
+
+```{r, cache=TRUE}
+summary(step.model$finalModel)
+```
+
+```{r, cache=TRUE}
+reg_TMR_step_by_step <- lm(TMR~NONPOOR+GE65+l_pm2,data=air_pollution)
+summary(reg_TMR_step_by_step)
+```
+
+
+# Exercice 10.8 : Analyse des résidus et des observations
+
+```{r, cache=TRUE}
+reg_TMR_sel <- lm(TMR~PERWH+GE65+l_pm2,data=air_pollution)
+summary(reg_TMR_sel)
+```
+
+```{r, cache=TRUE}
+resid <- reg_TMR_sel$residuals
+pred <- fitted(reg_TMR_sel)
+
+rmse <- sqrt(49*var(resid)/46)
+resid_std <- resid/rmse
+```
+
+```{r, cache=TRUE}
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(pred, resid_std, type = "n",xlab="TMR prédit",ylab="Résidus standardisés",main="Comportement des résidus standardisés")
+text(pred, resid_std, air_pollution$CITY,col='black',cex=0.7)
+abline(h=c(-2,0,2))
+```
+
+```{r, cache=TRUE}
+rstudent_leverage <- olsrr::ols_prep_rstudlev_data(reg_TMR_sel)
+rstudent <- rstudent_leverage$levrstud$rstudent
+result_TMR_sel <- data.frame(air_pollution,rstudent)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(pred, result_TMR_sel$rstudent, type = "n",xlab="TMR prédit",ylab="RStudents")
+text(pred, result_TMR_sel$rstudent, result_TMR_sel$CITY,col='black',cex=0.7)
+abline(h=c(-2.01,0,2.01))
+```
+
+```{r, cache=TRUE}
+leverage <- rstudent_leverage$levrstud$leverage
+result_TMR_sel <- data.frame(result_TMR_sel,leverage)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(pred, result_TMR_sel$leverage, type = "n",xlab="TMR prédit",ylab="Leviers")
+text(pred, result_TMR_sel$leverage, result_TMR_sel$CITY,col='black',cex=0.7)
+abline(h=0.16)
+```
+
+```{r, cache=TRUE}
+cookd <- matrix(0,nrow=50)
+for (i in 1:50)
+    {cookd[i]=(leverage[i]/(1-leverage[i]))*(resid_std[i]^2/(2*(1-leverage[i])))}
+result_TMR_sel <- data.frame(result_TMR_sel,cookd)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(pred, result_TMR_sel$cookd, type = "n",xlab="TMR prédit",ylab="D de Cook")
+text(pred, result_TMR_sel$cookd, result_TMR_sel$CITY,col='black',cex=0.7)
+abline(h=0.0870)
+```
+
+```{r, cache=TRUE}
+num_ville <- 1:50
+dfb <- dfbetas(reg_TMR_sel)
+dfbetas <- data.frame(dfb)
+dfbetas_GE65 <- dfbetas$GE65
+result_TMR_sel <- data.frame(result_TMR_sel,dfbetas_GE65)
+dfbetas_l_pm2 <- dfbetas$l_pm2
+result_TMR_sel <- data.frame(result_TMR_sel,dfbetas_l_pm2)
+dfbetas_PERWH <- dfbetas$PERWH
+result_TMR_sel <- data.frame(result_TMR_sel,dfbetas_PERWH)
+par(oma=c(0,12,1,5)+1,bg="white")
+plot(pred, result_TMR_sel$dfbetas_GE65, type = "n",xlab="TMR prédit",ylab="DFBetas pour GE65")
+text(pred, result_TMR_sel$dfbetas_GE65, result_TMR_sel$CITY,col='black',cex=0.7)
+abline(h=0.2828)
+plot(pred, result_TMR_sel$dfbetas_l_pm2, type = "n",xlab="TMR prédit",ylab="DFBetas pour l_pm2")
+text(pred, result_TMR_sel$dfbetas_l_pm2, result_TMR_sel$CITY,col='black',cex=0.7)
+abline(h=0.2828)
+plot(pred, result_TMR_sel$dfbetas_PERWH, type = "n",xlab="TMR prédit",ylab="DFBetas pour PERWH")
+text(pred, result_TMR_sel$dfbetas_PERWH, result_TMR_sel$CITY,col='black',cex=0.7)
+abline(h=0.2828)
+```
+
+# Exercice 10.9 : Intervalles de confiance et de prévision
+
+```{r, cache=TRUE}
+IC_95 <- predict(reg_TMR_sel, interval="confidence")
+IC_95 <- data.frame(IC_95)
+binf_IC_95 <- IC_95$lwr
+bsup_IC_95 <- IC_95$upr
+result_TMR_sel <- data.frame(air_pollution,binf_IC_95,bsup_IC_95)
+par(oma=c(0,12,1,5)+1,bg="white")
+lattice::xyplot(pred+binf_IC_95+bsup_IC_95~num_ville,type=c("p","l"),lty=1,cex=2,lwd=2,col=c("red","green","green"),xlab="",ylab="TMR")
+```
+
+```{r, cache=TRUE}
+IP_95 <- predict(reg_TMR_sel, interval="prediction")
+IP_95 <- data.frame(IP_95)
+binf_IP_95 <- IP_95$lwr
+bsup_IP_95 <- IP_95$upr
+result_TMR_sel <- data.frame(result_TMR_sel,binf_IP_95,bsup_IP_95)
+par(oma=c(0,12,1,5)+1,bg="white")
+lattice::xyplot(air_pollution$TMR+pred+binf_IP_95+bsup_IP_95~num_ville,type=c("p","l"),lty=1,cex=2,lwd=2,col=c("blue","red","green","green"),xlab="",ylab="TMR")
+```
+
+# Exercice 10.10 : Multicolinéarité
+
+Modèle avec `GE65`, `l_pm2` et `PERWH`
+```{r, cache=TRUE}
+GE65 <- air_pollution$GE65
+l_pm2 <- air_pollution$l_pm2
+PERWH <- air_pollution$PERWH
+predicteurs_sel <- data.frame(GE65,l_pm2,PERWH)
+GGally::ggpairs(predicteurs_sel)
+```
+
+Modèle avec `GE65`, `l_pm2` et `NONPOOR`
+```{r, cache=TRUE}
+NONPOOR <- air_pollution$NONPOOR
+predicteurs_sel <- data.frame(GE65,l_pm2,NONPOOR)
+GGally::ggpairs(predicteurs_sel)
+```
+
+Description des données : Consommation d'électricité
+
+Consommation d'électricité journalière en France de l'année 2003
+
+* Date : consommation d'életricité en MWH 
+* conso : consommation d'életricité en MWH
+* t : numéro du jour
+* nom_jour : nom du jour de la semaine
+* mois : nom du mois
+* temp : température en degrés Celsius
+* ejp : statut du jour EDF (spécial = 1 ; non spécial = 0)
+* ferie : statut du jour annuel (férié ou non)
+
+Lecture des données
+```{r}
+data(conso_temp)
+```
+
+# Exercice 10.12 : Analyse descriptive
+
+```{r, cache=TRUE}
+plot(conso_temp$temp, conso_temp$conso, xlab="Température",ylab="Consommation d'électricité")
+```
+
+```{r, cache=TRUE}
+plot(conso_temp$t, conso_temp$conso, type="l",xlab="Temps",ylab="Consommation d'électricité")
+```
+
+# Exercice 10.13 : Plusieurs petits modèles 
+
+```{r, cache=TRUE}
+res.lm_conso_temp <- lm('conso~temp',data=conso_temp)
+summary(res.lm_conso_temp)
+```
+
+```{r, cache=TRUE}
+res.lm_conso_nom_jour <- lm('conso~nom_jour',data=conso_temp)
+summary(res.lm_conso_nom_jour)
+```
+
+```{r, cache=TRUE}
+res.lm_conso_mois <- lm('conso~mois',data=conso_temp)
+summary(res.lm_conso_mois)
+```
+
+```{r, cache=TRUE}
+res.lm_conso_ejp <- lm('conso~ejp',data=conso_temp)
+summary(res.lm_conso_ejp)
+```
+
+```{r, cache=TRUE}
+res.lm_conso_ferie <- lm('conso~ferie',data=conso_temp)
+summary(res.lm_conso_ferie)
+```
+
+
+# Exercice 10.14 : Modèle complet
+
+Modèle complet
+```{r, cache=TRUE}
+res.lm_conso_all <- lm('conso~temp+nom_jour+mois+ejp+ferie',data=conso_temp)
+summary(res.lm_conso_all)
+SCT <- sum((conso_temp$conso-mean(conso_temp$conso))^2)
+resid <- res.lm_conso_all$residuals
+SCR_all <- 364*var(resid)
+SCE_all <- SCT-SCR_all
+```
+
+Calcul de l'apport de chaque variable du modèle à l'aide du $F$ partiel
+```{r, cache=TRUE}
+variable <- matrix(0,nrow=5)
+f_partiel <- matrix(0,nrow=5)
+p_value <- matrix(0,nrow=5)
+nu_1 <- matrix(0,nrow=5)
+nu_2 <- matrix(0,nrow=5)
+```
+
+Modèle sans temp
+```{r, cache=TRUE}
+res.lm_conso_all_temp <- lm('conso~nom_jour+mois+ejp+ferie',data=conso_temp)
+summary(res.lm_conso_all_temp)
+resid <- res.lm_conso_all_temp$residuals
+SCR_temp <-364*var(resid)
+SCE_temp <- SCT-SCR_temp
+f_temp=((SCE_all-SCE_temp)/(1))/(SCR_all/344)
+p_val_temp = 1-pf(f_temp,1,344)
+variable[1] <- "temp"
+f_partiel[1] <- f_temp
+p_value[1] <- p_val_temp
+nu_1[1] <- 1
+nu_2[1] <- 344
+```
+
+Modèle sans `nom_jour`
+```{r, cache=TRUE}
+res.lm_conso_all_nom_jour <- lm('conso~temp+mois+ejp+ferie',data=conso_temp)
+summary(res.lm_conso_all_nom_jour)
+resid <- res.lm_conso_all_nom_jour$residuals
+SCR_nom_jour <-364*var(resid)
+SCE_nom_jour <- SCT-SCR_nom_jour
+f_nom_jour=((SCE_all-SCE_nom_jour)/(6))/(SCR_all/344)
+p_val_nom_jour = 1-pf(f_nom_jour,6,344)
+variable[2] <- "nom_jour"
+f_partiel[2] <- f_nom_jour
+p_value[2] <- p_val_nom_jour
+nu_1[2] <- 6
+nu_2[2] <- 344
+```
+
+Modèle sans `mois`
+```{r, cache=TRUE}
+res.lm_conso_all_mois <- lm('conso~temp+nom_jour+ejp+ferie',data=conso_temp)
+summary(res.lm_conso_all_mois)
+resid <- res.lm_conso_all_mois$residuals
+SCR_mois <-364*var(resid)
+SCE_mois <- SCT-SCR_mois
+f_mois=((SCE_all-SCE_mois)/(11))/(SCR_all/344)
+p_val_mois = 1-pf(f_mois,11,344)
+variable[3] <- "mois"
+f_partiel[3] <- f_mois
+p_value[3] <- p_val_mois
+nu_1[3] <- 11
+nu_2[3] <- 344
+```
+
+Modèle sans `ejp`
+```{r, cache=TRUE}
+res.lm_conso_all_ejp <- lm('conso~temp+nom_jour+mois+ferie',data=conso_temp)
+summary(res.lm_conso_all_ejp)
+resid <- res.lm_conso_all_ejp$residuals
+SCR_ejp <-364*var(resid)
+SCE_ejp <- SCT-SCR_ejp
+f_ejp=((SCE_all-SCE_ejp)/(1))/(SCR_all/344)
+p_val_ejp = 1-pf(f_ejp,1,344)
+variable[4] <- "ejp"
+f_partiel[4] <- f_ejp
+p_value[4] <- p_val_ejp
+nu_1[4] <- 1
+nu_2[4] <- 344
+```
+
+Modèle sans `ferie`
+```{r, cache=TRUE}
+res.lm_conso_all_ferie <- lm('conso~temp+nom_jour+mois+ejp',data=conso_temp)
+summary(res.lm_conso_all_ferie)
+resid <- res.lm_conso_all_ferie$residuals
+SCR_ferie <-364*var(resid)
+SCE_ferie <- SCT-SCR_ferie
+f_ferie=((SCE_all-SCE_ferie)/(1))/(SCR_all/344)
+p_val_ferie = 1-pf(f_ferie,1,344)
+variable[5] <- "ferie"
+f_partiel[5] <- f_ferie
+p_value[5] <- p_val_ferie
+nu_1[5] <- 1
+nu_2[5] <- 344
+
+f_partiel <- round(f_partiel,2)
+p_value <- round(p_value,4)
+
+tab_result <- data.frame(variable,f_partiel,nu_1,nu_2,p_value)
+
+pred <- predict(res.lm_conso_all)
+lattice::xyplot(conso_temp$conso+pred~conso_temp$t,type="l",xlab="Temps",ylab="Consommation d'électricité",col=c("blue","red"))
+```
+
+# Exercice 10.15 : Un modèle « à la main »
+
+```{r, cache=TRUE}
+pred <- predict(res.lm_conso_all_ejp)
+lattice::xyplot(conso_temp$conso+pred~conso_temp$t,type="l",xlab="Temps",ylab="Consommation d'électricité",col=c("blue","red"))
+```
+
+# Exercice 10.16 : Amélioration du modèle
+
+Création de la variable catégorielle pour la variable température
+```{r, cache=TRUE}
+temp_cat <- matrix(0,nrow=365)
+for (i in 1:365)
+    {if (conso_temp$temp[i] < 15) {temp_cat[i]="< 15°C"}
+        else {temp_cat[i]=">= 15°C"}
+    }
+conso_temp <- data.frame(conso_temp,temp_cat)
+```
+
+Modèle avec interaction
+```{r, cache=TRUE}
+res.lm_conso_interaction <- lm('conso~temp_cat+temp_cat:temp+nom_jour+mois+ferie',data=conso_temp)
+summary(res.lm_conso_interaction)
+SCT <- sum((conso_temp$conso-mean(conso_temp$conso))^2)
+resid <- res.lm_conso_interaction$residuals
+SCR_interaction <- 364*var(resid)
+SCE_interaction <- SCT-SCR_interaction
+```
+
+Modèle sans interaction
+```{r, cache=TRUE}
+res.lm_conso_sans_inter <- lm('conso~temp+nom_jour+mois+ferie',data=conso_temp)
+summary(res.lm_conso_sans_inter)
+resid <- res.lm_conso_sans_inter$residuals
+SCR_sans_inter <- 364*var(resid)
+SCE_sans_inter <- SCT-SCR_sans_inter
+f_inter=((SCE_interaction-SCE_sans_inter)/(2))/(SCR_interaction/344)
+p_val_inter = 1-pf(f_inter,2,344)
+variable <- "interaction"
+f_partiel <- f_inter
+p_value <- p_val_inter
+nu_1 <- 2
+nu_2 <- 344
+
+tab_result <- data.frame(variable,f_partiel,nu_1,nu_2,p_value)
+
+pred <- predict(res.lm_conso_interaction)
+lattice::xyplot(conso_temp$conso+pred~conso_temp$t,type="l",xlab="Temps",ylab="Consommation d'électricité",col=c("blue","red"))
+```
