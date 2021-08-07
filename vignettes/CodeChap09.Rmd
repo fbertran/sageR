@@ -83,9 +83,11 @@ library(ggmap)
 if(!("tidygeocoder" %in% installed.packages())){install.packages("tidygeocoder")}
 library(tidygeocoder)
 levels(Precipitations_USA[,1]) <- gsub("Philadelphie","Philadelphia",levels(Precipitations_USA[,1]))
+levels(Precipitations_USA[,1]) <- gsub("Washington. D.C.","Washington",levels(Precipitations_USA[,1]))
 gps_coords <- mapply(tidygeocoder::geo, city= Precipitations_USA[,1], state = Precipitations_USA[,4], method = "osm")
 levels(Precipitations_USA[,1]) <- gsub("Philadelphia","Philadelphie",levels(Precipitations_USA[,1]))
 gps_coords[1,gps_coords[1,]=="Philadelphia"] <- "Philadelphie"
+gps_coords[1,gps_coords[1,]=="Washington"] <- "Washington. D.C."
 
 gps_coords_df <- as.data.frame(matrix(unlist(gps_coords),ncol=4,byrow=TRUE))
 colnames(gps_coords_df) <- c("Ville", "Etat", "lat", "long")

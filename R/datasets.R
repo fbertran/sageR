@@ -390,7 +390,6 @@
 #> [1] "air_pollution"
 
 
-
 #' @title Résultats des élections présidentielles françaises de 2012
 #'
 #' @description Résultats par département au premier tour des élections présidentielles françaises de 2012.
@@ -398,7 +397,8 @@
 #' @name presid_2012
 #' @docType data
 #' @format A data frame with 96 observations on the following 13 variables.
-#' \describe{ \item{departement}{a factor with levels \code{Ain}
+#' \describe{
+#' \item{departement}{a factor with levels \code{Ain}
 #' \code{Aisne} \code{Allier} \code{Alpes-de-Haute-Provence}
 #' \code{Alpes-Maritimes} \code{Ardèche} \code{Ardennes} \code{Ariège}
 #' \code{Aube} \code{Aude} \code{Aveyron} \code{Bas-Rhin}
@@ -434,7 +434,8 @@
 #' \item{poutou}{a numeric vector. Candidat Poutou.}
 #' \item{joly}{a numeric vector. Candidate Joly.}
 #' \item{le_pen}{a numeric vector. Candidate Le Pen.}
-#' \item{arthaud}{a numeric vector. Candidate Arthaud.} }
+#' \item{arthaud}{a numeric vector. Candidate Arthaud.}
+#' }
 #' @keywords datasets
 #' @examples
 #'
@@ -447,6 +448,7 @@
 #'
 "presid_2012"
 #> [1] "presid_2012"
+
 
 #' @title Caractéristiques de champignons
 #'

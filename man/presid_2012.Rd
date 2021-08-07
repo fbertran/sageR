@@ -6,7 +6,8 @@
 \title{Résultats des élections présidentielles françaises de 2012}
 \format{
 A data frame with 96 observations on the following 13 variables.
-\describe{ \item{departement}{a factor with levels \code{Ain}
+\describe{
+\item{departement}{a factor with levels \code{Ain}
 \code{Aisne} \code{Allier} \code{Alpes-de-Haute-Provence}
 \code{Alpes-Maritimes} \code{Ardèche} \code{Ardennes} \code{Ariège}
 \code{Aube} \code{Aude} \code{Aveyron} \code{Bas-Rhin}
@@ -17,14 +18,14 @@ A data frame with 96 observations on the following 13 variables.
 \code{Eure-et-Loir} \code{Finistère} \code{Gard} \code{Gers} \code{Gironde}
 \code{Haut-Rhin} \code{Haute-Corse} \code{Haute-Garonne} \code{Haute-Loire}
 \code{Haute-Marne} \code{Haute-Saône} \code{Haute-Savoie}
-\code{Haute-Vienne} \code{Hautes-Alpes} D4eFYFt4LFiHg05uzzviW0YT80eg630Z-44\code{Hauts-de-Seine} \code{Hérault} \code{Ille-et-Vilaine} \code{Indre}
+\code{Haute-Vienne} \code{Hautes-Alpes} 4fpobp1BIJtn4zj52yqHt53MZaKRl9Ur-44\code{Hauts-de-Seine} \code{Hérault} \code{Ille-et-Vilaine} \code{Indre}
 \code{Indre-et-Loire} \code{Isère} \code{Jura} \code{Landes}
 \code{Loir-et-Cher} \code{Loire} \code{Loire-Atlantique} \code{Loiret}
 \code{Lot} \code{Lot-et-Garonne} \code{Lozère} \code{Maine-et-Loire}
 \code{Manche} \code{Marne} \code{Mayenne} \code{Meurthe-et-Moselle}
 \code{Meuse} \code{Morbihan} \code{Moselle} \code{Nièvre} \code{Nord}
 \code{Oise} \code{Orne} \code{Paris} \code{Pas-de-Calais} \code{Puy-de-Dôme}
-D4eFYFt4LFiHg05uzzviW0YT80eg630Z-75D4eFYFt4LFiHg05uzzviW0YT80eg630Z-76\code{Rhône}
+4fpobp1BIJtn4zj52yqHt53MZaKRl9Ur-754fpobp1BIJtn4zj52yqHt53MZaKRl9Ur-76\code{Rhône}
 \code{Saône-et-Loire} \code{Sarthe} \code{Savoie} \code{Seine-et-Marne}
 \code{Seine-Maritime} \code{Seine-Saint-Denis} \code{Somme} \code{Tarn}
 \code{Tarn-et-Garonne} \code{Territoire_de_Belfort} \code{Val-dOise}
@@ -41,7 +42,8 @@ D4eFYFt4LFiHg05uzzviW0YT80eg630Z-75D4eFYFt4LFiHg05uzzviW0YT80eg630Z-76\code{Rhô
 \item{poutou}{a numeric vector. Candidat Poutou.}
 \item{joly}{a numeric vector. Candidate Joly.}
 \item{le_pen}{a numeric vector. Candidate Le Pen.}
-\item{arthaud}{a numeric vector. Candidate Arthaud.} }
+\item{arthaud}{a numeric vector. Candidate Arthaud.}
+}
 }
 \usage{
 presid_2012
