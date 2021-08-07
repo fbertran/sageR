@@ -1,8 +1,8 @@
 Package: sageR
 Type: Package
 Title: Applied Statistics for Economics and Management with R
-Version: 0.4.0
-Date: 2021-07-27
+Version: 0.5.0
+Date: 2021-08-07
 Depends: R (>= 3.5.0)
 Imports:
     ggplot2

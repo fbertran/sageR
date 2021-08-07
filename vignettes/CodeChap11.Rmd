@@ -1,0 +1,472 @@
+---
+title: "Chapitre 11. Introduction aux séries temporelles."
+subtitle: "Tout le code avec R."
+author: "Fredj Jawadi et Gilles Dufrenot"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapitre 11. Introduction aux séries temporelles.}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<table align="center">
+        <tr>
+            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;"/></td>
+            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;"/></td>
+        </tr>
+</table>
+
+```{r, echo=FALSE}
+#file.edit(normalizePath("~/.Renviron"))
+LOCAL <- identical(Sys.getenv("LOCAL"), "TRUE")
+#, eval = LOCAL for skip on CRAN test
+#LOCAL=FALSE
+#knitr::opts_chunk$set(purl = LOCAL, eval=LOCAL)
+knitr::opts_chunk$set(purl = LOCAL)
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "TRUE")
+knitr::opts_chunk$set(purl = NOT_CRAN)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+SAVE_GRAPHS=FALSE
+```
+
+# Description des données : Bitcoin
+
+Lecture des données
+
+Description de la base de données Bitcoin 
+
+Les données  décrivent l'évolution du prix journalier du Bitcoin sur la période du `31/12/2014` au `15/05/2018`. Les données sont publiques et disponibles sur le site de Yahoo finance (https://fr.finance.yahoo.com/quote/BTC-EUR/history?p=BTC-EUR). 
+```{r}
+if(!("sageR" %in% installed.packages())){install.packages("sageR")}
+library(sageR)
+data(bitcoin)
+```
+
+Quelques statistiques descriptives du fichier de données
+```{r, cache= TRUE, eval=LOCAL}
+summary(bitcoin)
+```
+
+# Application pratique. Analyse des séries temporelles avec R : un exemple sur le Bitcoin. 
+
+## Remarques préliminaires
+ 
+Dans l'exemple qui suit, on s'intéresse à la modélisation des rendements journaliers du Bitcoin.
+
+Pour faciliter la compréhension, quelques commentaires sont fournis pour l'interprétation des résultats.
+
+
+## Etape 1.- Visualisation des données 
+
+La commande `View` permet d’afficher rapidement à l’écran la série en entier.
+
+```{r, eval=FALSE}
+View(bitcoin)
+```
+
+On peut également n’afficher que le début et bien que la fin. Dans ce cas, il faut taper les commandes suivantes :
+
+```{r, cache= TRUE, eval=LOCAL}
+head(bitcoin)
+```
+
+
+```{r, cache= TRUE, eval=LOCAL}
+tail(bitcoin)
+```
+
+Comme le montrent les sorties `R`, le fichier a deux séries : `Date` et `Bitcoin` (attention de bien respecter les lettres majuscules et minuscules). 
+
+## Etape 2.- Représentation graphique 
+
+Il est nécessaire de transformer l’objet `bitcoin` en une série temporelle. 
+
+Pour ce faire, on appelle le package `xts`. Puis, on définit une série temporelle, appelée ici `coin` que l’on peut représenter par la fonction `plot`. 
+
+```{r}
+if(!("xts" %in% installed.packages())){install.packages("xts")}
+library(xts)
+```
+
+
+```{r, cache= TRUE, eval=LOCAL}
+coin <-xts(bitcoin$Bitcoin, order.by = bitcoin$Date)
+plot(coin)
+```
+
+## Commentaire 
+
+Le graphique montre deux tendances : une première tendance exponentielle de 2014 jusqu’au débit de l’année 2017, et une décroissance exponentielle jusqu’à la fin de la période. Par ailleurs, la série semble avoir plus de volatilité en 2017 et 2018. 
+
+La présence des tendances suggère que la série étudiée a peu de chances d’être stationnaire en moyenne. 
+
+De plus, les différences de variabilité (avant et après 2017) suggère qu’elle n’est pas non plus stationnaire au second-ordre (c’est-à-dire que la variance et les covariances entre les observations ne sont pas stationnaires). 
+
+## Etape 3.- Transformation de la série en log
+
+On transforme la série en log pour réduire sa volatilité (une des transformations appartenant à la famille des transformations de Box-Cox).
+
+```{r, cache= TRUE, eval=LOCAL}
+lcoin=log(coin)
+plot(lcoin)
+```
+
+La transformation en log a deux effets. 
+
+* Tout d’abord, nous « linéarisons » les tendances. 
+* Ensuite, nous homogénéisons  la variabilité de la série sur toute la période. 
+
+## Etape 4.- Décomposition de la série
+
+Sous `R`, une manière simple d’obtenir une décomposition d’une série consiste à utiliser la fonction `decompose`. On suppose ici que la saisonnalité est a-priori hebdomadaire dans la mesure où nous travaillons sur des données journalières `frequency = 7`. 
+
+Par ailleurs, l’hypothèse est faite d’une décomposition additive. 
+
+```{r}
+if(!("forecast" %in% installed.packages())){install.packages("forecast")}
+library(forecast)
+```
+
+
+```{r, cache= TRUE, eval=LOCAL}
+ts_lcoin = ts(lcoin, frequency = 7)
+decompose_lcoin = decompose(ts_lcoin, "additive")
+plot(as.ts(decompose_lcoin$seasonal))
+```
+
+
+```{r, cache= TRUE, eval=LOCAL}
+plot(as.ts(decompose_lcoin$trend))
+```
+
+
+```{r, cache= TRUE, eval=LOCAL}
+plot(as.ts(decompose_lcoin$random))
+```
+
+
+```{r, cache= TRUE, eval=LOCAL}
+plot(decompose_lcoin)
+```
+
+Le graphique montre les différentes composantes. Celle qui est aléatoire est en réalité « pseudo-aléatoire » dans la mesure où elle contient également les composantes périodiques et quasi-périodiques de la série. 
+
+L’analyse de la saisonnalité sur des données journalières est plus complexe que le fait de simplement supposer que toutes les fins ou début de semaine un événement est susceptible de se répéter. 
+
+Cela mérite une attention particulière, notamment s’il est question ensuite de désaisonnaliser la série. 
+
+On peut avoir tout type de saisonnalité : mensuelle, annuelle, hebdomadaire, etc. 
+
+Dans ce cas, il faut crééer des variables indicatrices (dummies) correspondant aux effets recherchés, puis filtrer la série d’origine à partir d’une régression. Ce point n’est pas développé ici. 
+
+En effet, les achats et les ventes de Bitcoin se font en continu, sans fermeture du marché. 
+
+Ce marché est moins « structuré » que les marchés d’actifs. 
+Il faut donc être prudent pour ne pas filtrer une composante saisonnière inexistante.  
+
+## Etape 5.- Stationnarisation de la moyenne de la série
+
+On commence par  définir le rendement à partir de la série d’origine (première ligne). 
+
+Puis on ligne omet la valeur manquante de la première observation (après le calcul des rendements). 
+
+Le graphique de la série est obtenu grâce aux fonctionalités du package `zoo` (une autre manière d’obtenir le graphique d’une série temporelle, au lieu de faire appel à la librairie `xts`. 
+
+```{r, cache= TRUE, eval=LOCAL}
+rlcoin =diff(log(coin),lag=1,differences=1)  
+rend <- rlcoin[!is.na(rlcoin),]
+```
+
+```{r}
+if(!("zoo" %in% installed.packages())){install.packages("zoo")}
+library(zoo)
+```
+
+
+```{r}
+my.panel <- function(...) {
+  lines(...)
+  abline(h=0)
+}
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+plot(zoo(rend,as.Date(bitcoin$Date)), xlab="Temps", main="Rendements journaliers", panel=my.panel, col=c("black", "blue")) 
+```
+
+Le graphique montre des pics (vers le haut et vers le bas) dans la variance des rendements. 
+
+Le fait d’avoir calculé la différence premère met la moyenne des rendements à zéro. 
+
+Globalement à partir de 2017, la variabilité des rendements semble plus importante que durant les années précédentes. Ces observations suggèrent qu’il est probable que nous ayons stabilisé la moyenne et la variance (non conditionnelles) de la série. 
+
+En revanche, il est probable que la variance conditionnelle ne soit pas stable dans le temps. 
+
+La stationnarité de la moyenne et de la variance, non conditionnelles, peut être étudiée en appliquant un test de racine unitaire. Le rejet de l’hypothèse de racine unitaire permettrait de conclure que la série d’origine (en log niveau) filtrée de sa composante de racine unitaire est un processus de bruit blanc stationnaire au second ordre. 
+
+Faisons le test sous `R`. Il faut pour cela télécharger le package `urca`. 
+
+```{r}
+if(!("urca" %in% installed.packages())){install.packages("urca")}
+library(urca)
+```
+
+Un exemple simple d’application est le test ADF. Dans les arguments de la fonction `ur.df`, on peut choisir un modèle sans constante ni trend, un modèle avec constante seulement (`drift`), ou un modèle incluant une tendance linéaire. Les résultats peuvent être affichés grâce à la fonction `summary`. 
+
+```{r, cache= TRUE, eval=LOCAL}
+df1 = urca::ur.df(rend,type="none",lags=1)
+df2 = urca::ur.df(rend,type="none",lags=1)
+df3 = urca::ur.df(rend,type="none",lags=1)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+summary(df1)
+```
+
+Les résultats pour le test sans constante ni tendance linéaire conduisent à rejeter l’hypothèse de racine unitaire contre celle d’une série de rendement intégrée d’ordre 0, donc stationnaire à l’ordre 1. Des résultats similaires sont obtenus pour les deux autres modèles. 
+
+
+Mais, on peut mettre en évidence une absence de stationnarité de la variance conditionnelle. 
+
+Pour ce faire, intéressons-nous à la distribution empirique de la série des rendements. 
+
+On utilise ici deux packages (`fitdistrplus` et `car`) permettant de représenter la distribution de la série et de mettre en évidence ses principales caractéristiques. 
+
+```{r}
+if(!("fitdistrplus" %in% installed.packages())){install.packages("fitdistrplus")}
+library(fitdistrplus)
+```
+
+
+```{r, cache= TRUE, eval=LOCAL}
+rendement = as.numeric(rend)
+fitdistrplus::plotdist(rendement, histo = TRUE, demp = TRUE)
+```
+
+
+L’absence de stationnarité en variance apparaît de deux manières. 
+
+Tout d’abord, la densité des rendements fait apparaître des valeurs extrêmes (des valeurs inférieures et supérieures, qui sont éloignées des autres valeurs de la série). 
+
+Ensuite, en observant la figure des quantiles, on peut noter que pour ces valeurs extrêmes, les quantiles calculées à partir de la densité estimée sont éloignées de celles d’une loi normale (les points à chaque extrémité se situent en dehors de la droite de Henry).  
+
+
+## Etape 6.- Corrélogramme 
+
+```{r, cache= TRUE, eval=LOCAL}
+acf(rendement)
+```
+
+La fonction `acf` ne montre aucun pic significatif (en dehors de l’autocorrélation en zéro qui vaut 1 par définition).
+
+```{r, cache= TRUE, eval=LOCAL}
+pacf(rendement)
+```
+
+La fonction `pacf` ne montre aucun pic significatif non plus, ce qui laisse supposer que le logarithme des rendements est un bruit blanc.
+
+```{r, cache= TRUE, eval=LOCAL}
+plot(zoo(rend,bitcoin$Date), xlab="Temps", main="Rendements journaliers", panel=my.panel, col=c("black", "blue"))
+```
+
+On peut le vérifier en demandant à `R` de trouver le meilleur modèle AR. 
+
+Il faut d’abord installer le package suivant : 
+
+```{r}
+if(!("fArma" %in% installed.packages())){install.packages("fArma", repos="https://R-Forge.R-project.org")}
+library(fArma)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+fit1 <- ar(rendement,aic=TRUE,order.max = 4,method=c("yule-walker"))
+fit1 
+```
+
+
+On peut noter que le meilleur modèle $\mathrm{AR}$ sélectionné a zéro retard, ce qui signifie que le processus n’a pas de mémoire. 
+
+
+## Etape 7.- Modélisation Box-Jenkins de la valeur absolue des rendements
+
+Représentation de la valeur absolue des rendements 
+
+```{r, cache= TRUE, eval=LOCAL}
+absrend = abs(rend)
+```
+
+```{r}
+my.panel <- function(...) {
+  lines(...)
+  abline(h=0)
+}
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+plot(zoo(absrend,bitcoin$Date), xlab="Temps", main="Valeur absolue des rendements journaliers", panel=my.panel, col=c("black", "blue"))  
+```
+
+
+
+
+# Fonctions ACF et PACF avec 30 retards 
+
+```{r, cache= TRUE, eval=LOCAL}
+absrendement = abs(rendement)
+```
+
+
+```{r, cache= TRUE, eval=LOCAL}
+acf(absrendement,30)
+```
+
+
+```{r, cache= TRUE, eval=LOCAL}
+pacf(absrendement,30)
+```
+
+
+La série de la valeur absolue des rendements est un indicateur de la variabilité de la série des rendements. 
+
+On peut remarquer que, contrairement à la série des rendements elle-même, la fonction ACF montre une décroissance très lente vers zéro et que de nombreux pics de la fonction PACF sont significatif. 
+
+C’est donc un processus qui a de la mémoire. 
+
+```{r, cache= TRUE, eval=LOCAL}
+fit2 <- ar(absrendement,aic=TRUE,order.max = 16,method=c("yule-walker"))
+fit2 
+```
+
+Si nous décidions d’ajuster un processus $\mathrm{AR}$ pur à la série, celui-ci comporterait un nombre de retards très élevé. 
+
+En effet, le meilleur modèle trouvé par `R` sur la base du critère AIC est un $\mathrm{AR}(15)$. 
+
+Cependant, pour des raisons de parcimonie, il vaut mieux modéliser la série par un modèle $\mathrm{ARMA}$, ce qui permet de réduire le nombre de retards de la composante $\mathrm{AR}$. 
+
+Par ailleurs, si nous faisons la somme des coefficients de ce modèle, nous obtenons une valeur supérieure à 1, c’est-à-dire un modèle AR non stationnaire.   
+
+Pour trouver le meilleur modèle $\mathrm{ARMA}$, nous utilisons le package `timsac` et la fonction `autoarmafit`.
+
+```{r}
+if(!("timsac" %in% installed.packages())){install.packages("timsac")}
+library(timsac)
+```
+
+
+La fonction `autoarmafit` est instable avec le jeu de données `bitcoin`. Il est nécessaire de relancer plusieurs l'ajustement pour btenir le résultat. La boucle suivante relance automatiquement cette fonction `autoarmafit` jusqu'à l'obtention d'un résultat. 
+
+```{r autoarmafit, cache= TRUE, eval=LOCAL}
+pass=FALSE
+count= 0
+while(!pass & count<100) {
+  try({count = count+1; resfitarma = autoarmafit(absrend) ; pass=TRUE}, silent = TRUE)
+}
+resfitarma
+```
+
+Le meilleur modèle sur la base des critères d’information est un $\mathrm{ARMA}(1,1)$.
+
+Nous estimons donc un modèle $\mathrm{ARIMA}(p,d,q)$, avec $d=0$ et $p=q=1$ et appliquons des tests de diagnostic sur les résidus estimés
+
+```{r, cache= TRUE, eval=LOCAL}
+fit3 <-arima(absrendement, order = c(1,0,1))
+summary(fit3)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+plot(fit3)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+checkresiduals(fit3)
+```
+
+```{r}
+library(car)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+car::qqPlot(fit3$residuals)
+```
+
+L’estimation du modèle $\mathrm{ARMA}(1,1)$ montre un modèle dont les composantes $\mathrm{AR}$ et $\mathrm{MA}$ sont proches de racine unitaire, ce qui n’est pas étonnant au vu des fonctions `acf` et `pacf`. 
+
+On peut donc s’attendre à ce qu’un choc ait des effets persistants sur la volatilité de la série des rendements. 
+
+Pour savoir si le modèle est convenablement estimé, il convient d’examiner :
+
+* les résidus standardisés ;
+* la fonction ACF des résidus ;
+* le QQ-plot ;
+* et effectuer des tests de corrélation des résidus.
+
+La fonction `checkresiduals` permet de vérifier les propriétés des résidus d’estimation et la fonction `qqPlot` du package `car` permet de tracer le diagramme comparatif des quantiles des résidus estimés par rapport à ceux d’une loi normale. Les figures montrent que les résidus ne suivent pas un processus de bruit blanc mais contiennent des autocorrélations.
+
+Le dernier graphique montre une différence entre les quantiles des résidus et ceux d’une loi gausienne, notamment pour les valeurs les plus élevées. 
+
+
+## Etape 8.- Modélisation ARCH/GARCH des résidus 
+
+On prend l’exemple d’un effet $\mathrm{ARCH}(2)$, la procédure étant valable pour n’importe quel retard. 
+
+Il suffit de changer dans l’option `lags` le retard souhaité. 
+
+Nous avons vu que la moyenne de la série des rendements était proche de zéro et que le meilleur modèle pour décrire la moyenne conditionnelle est un bruit blanc. Par ailleurs, nous avons constaté que la variabilité des rendements comporte des autocorrélations décrites par un modèle $\mathrm{ARMA}$. 
+
+La même conclusion s’appliquerait si l’on modélisait le carré des rendements. Or, nous savons qu’un modèle $\mathrm{GARCH}$ appliqué 
+à une série donnée peut être représentée sous la forme d’un modèle $\mathrm{ARMA}$ appliqué aux carrés des observations initiales. 
+
+Nous effectuons donc le test ARCH sur les rentabilités. En effet, au vu de ce qui vient d’être dit, il est probable qu’elles soient décrites par un bruit blanc avec une variance conditionnelle hétéroscédastique. 
+
+```{r}
+if(!("FinTS" %in% installed.packages())){install.packages("FinTS")}
+library(FinTS)
+```
+
+
+```{r, cache= TRUE, eval=LOCAL}
+rend.archTest <- ArchTest(rend, lags = 2, demean = TRUE)
+rend.archTest
+```
+
+Comme on le voit, l’hypothèse nulle d’absence d’effets ARCH est rejetée. 
+
+Estimation d'un modèle GARCH 
+
+```{r}
+if(!("fGarch" %in% installed.packages())){install.packages("fGarch")}
+library(fGarch)
+```
+
+
+```{r}
+if(!("tseries" %in% installed.packages())){install.packages("tseries")}
+require(tseries)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+rend.garch <- garch(as.numeric(rend), trace=FALSE)
+rend.fitgarch <- garchFit(~garch(1,1), data = rend)
+summary(rend.fitgarch)
+```
+
+
+```{r, cache= TRUE, eval=LOCAL}
+acf(rend.fitgarch@residuals)
+```
+
+
+À titre d’exemple, nous estimons un modèle $\mathrm{GARCH}(1,1)$. Le corrélograme montre que les résidus ne contiennent plus d’autocorrélation, mais les tests de Ljung-Box montrent que des autocorrélations subsistent dans les résidus d’estimation. 
+
+En effet, les niveaux de significativité des tests ($p$-value) sont petits et inférieurs à $5\%$. 
+
+Mais, ces autocorrélations ne captent plus des effets ARCH (la $p$-pvalue du test ARCH dépasse $5\%$). 
+
+Les autocorrélations qui subsistent correspondent vraisemblablement à d’autres hypothèses (par exemple l’existence de dynamiques non-linéaires). 
+
+
+

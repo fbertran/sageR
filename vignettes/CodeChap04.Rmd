@@ -60,13 +60,13 @@ data(air_pollution)
 
 Élimine les variables `PM2` et `PMAX` qui sont transformées en logarithme dans les variables `l_pm2` et `l_pmax`.
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 air_pollution <- air_pollution[,-(8:9)]
 ```
 
 Quelques statistiques descriptives du fichier de données
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 summary(air_pollution)
 ```
 
@@ -74,13 +74,13 @@ summary(air_pollution)
 
 Standardisation des données.
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 air_pollution_std <- scale(air_pollution[,-1])
 ```
 
 Affichage graphique du tableau de données sans la variable `CITY` qui est en première colonne.
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 z <- t(as.matrix(air_pollution_std))
 x <- seq(1,12,length.out=12)
 y <- seq(1,50,length.out=50)
@@ -93,11 +93,11 @@ axis(2, at = y,labels = colnames(z),las=2,cex.axis=0.4)
 
 # Exercice 4.2 : Analyse des corrélations entre les variables
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 GGally::ggpairs(air_pollution[,-1], progress=FALSE)
 ```
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 cor_pollution <- cor(air_pollution[,-1])
 col1 <- colorRampPalette(c("#7F0000", "red", "#FF7F00", "yellow", "white", "cyan", "#007FFF", "blue", "#00007F"))
 col2 <- colorRampPalette(c("#67001F", "#B2182B", "#D6604D", "#F4A582", "#FDDBC7", "#FFFFFF", "#D1E5F0", "#92C5DE", "#4393C3", "#2166AC", "#053061"))
@@ -109,19 +109,19 @@ corrplot::corrplot(cor_pollution, method = "color", addrect = 2, col = col1(100)
 
 # Exercice 4.3 : Analyse des inerties expliquées et résiduelles
 
-```{r, fig.keep='all', cache=TRUE}
+```{r, fig.keep='all', cache=TRUE, eval=LOCAL}
 library(FactoMineR)
 res.PCA <- PCA(air_pollution[,-(1:2)])
 ```
 
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 summary(res.PCA)
 ```
 
 # Exercice 4.4 : Contributions et reconstitutions des variables sur la première composante principale
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 res.PCA 
 ```
 fournit la liste des informations disponibles.
@@ -143,7 +143,7 @@ fournit la liste des informations disponibles.
 * "$call$row.w"      "weights for the individuals"        
 * "$call$col.w"      "weights for the variables"  
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 contrib_dim_1 <- round(res.PCA$var$contrib[,1],2)
 cos2_dim_1 <- round(res.PCA$var$cos2[,1]*100,2)
 contrib_cos2_var_dim_1 <- data.frame(contrib_dim_1,cos2_dim_1)
@@ -152,13 +152,13 @@ contrib_cos2_var_dim_1
 
 # Exercice 4.5 : Équation de la première composante principale
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 res.PCA$var$coord[,1]
 ```
 
 # Exercice 4.6 : Contributions et reconstitutions des individus sur la première composante principale
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 CITY <- air_pollution$CITY
 contrib_dim_1 <- round(res.PCA$ind$contrib[,1],2)
 cos2_dim_1 <- round(res.PCA$ind$cos2[,1]*100,2)
@@ -174,7 +174,7 @@ Le cercle des corrélations se situe dans la fenêtre graphique.
 
 # Exercice 4.8 : Analyse de la deuxième dimension
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 contrib_dim_2 <- round(res.PCA$var$contrib[,2],2)
 cos2_dim_2 <- round(res.PCA$var$cos2[,2]*100,2)
 contrib_cos2_var_dim_2 <- data.frame(contrib_dim_2,cos2_dim_2)

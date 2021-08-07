@@ -1,0 +1,113 @@
+---
+title: "Chapitre 01. Introduction à la statistique et à son environnement."
+subtitle: "Tout le code avec R."
+author: "F. Bertrand et M. Maumy"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapitre 01. Introduction à la statistique et à son environnement.}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<table align="center">
+        <tr>
+            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;"/></td>
+            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;"/></td>
+        </tr>
+</table>
+
+```{r, echo=FALSE}
+#file.edit(normalizePath("~/.Renviron"))
+LOCAL <- identical(Sys.getenv("LOCAL"), "TRUE")
+#, eval = LOCAL for skip on CRAN test
+#LOCAL=FALSE
+#knitr::opts_chunk$set(purl = LOCAL, eval=LOCAL)
+knitr::opts_chunk$set(purl = LOCAL)
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "TRUE")
+knitr::opts_chunk$set(purl = NOT_CRAN)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+SAVE_GRAPHS=FALSE
+```
+
+# Exercice
+```{r}
+if(!("sageR" %in% installed.packages())){install.packages("sageR")}
+library(sageR)
+```
+
+## Nombre de patients hospitalisés
+
+### Lecture des données
+
+```{r, cache= TRUE, eval=LOCAL}
+data(HospitFull)
+```
+
+La commande `View` permet de voir ce qu'il y a dans les données : nom des variables, nature des variables, chiffres, caractères, etc.
+
+```{r, eval=FALSE}
+View(HospitFull)
+```
+
+```{r, eval=LOCAL, cache=TRUE}
+summary(HospitFull)
+```
+
+```{r, eval=LOCAL, cache=TRUE}
+plot(HospitFull[,3:6])
+```
+
+### Questions :
+
+1. Quelle est la population étudiée ?
+2. Quels sont les individus ?
+3. Quels sont les caractères étudiés ?
+4. Quelle est la nature des caractères ?
+
+### Réponses :
+
+1. La population étudiée est l’ensemble des patients testés positifs à la Covid-19 et hospitalisés le 8 février 2021.
+2. Les individus sont les patients testés positifs à la Covid-19 et hospitalisés le 8 février 2021.
+3. Les deux caractères sont la « région d’hospitalisation » et la « classe d’âge » du patient.
+4. Les deux caractères sont simples et qualitatifs.
+
+## Nombre de patients en réanimation.
+
+### Lecture des données
+
+```{r, cache= TRUE, eval=LOCAL}
+data(ReaFull)
+```
+
+La commande `View` permet de voir ce qu'il y a dans les données : nom des variables, nature des variables, chiffres, caractères, etc.
+
+```{r, eval=FALSE}
+View(ReaFull)
+```
+
+```{r, eval=LOCAL, cache=TRUE}
+summary(ReaFull)
+```
+
+```{r, eval=LOCAL, cache=TRUE}
+plot(ReaFull[,3:6])
+```
+
+### Questions :
+
+1. Quelle est la population étudiée ?
+2. Quels sont les individus ?
+3. Quels sont les caractères étudiés ?
+4. Quelle est la nature des caractères ?
+
+### Réponses :
+
+1. La population étudiée est l’ensemble des patients testés positifs à la Covid-19 et placés en réanimation le 8 février 2021.
+2. Les individus sont des patients testés positifs à la Covid-19 et placés en réanimation le 8 février 2021.
+3. Les deux caractères sont la « région d’hospitalisation » et la « classe d’âge » du patient.
+4. Les deux caractères sont simples et qualitatifs.
+

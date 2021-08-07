@@ -26,9 +26,9 @@
 "Essence"
 #> [1] "Essence"
 
-#' Résistance à l’éclatement
+#' Résistance à l'éclatement
 #'
-#' Résistance à l’éclatement.
+#' Résistance à l'éclatement.
 #'
 #' @docType data
 #' @format Un vecteur avec 30 observations.
@@ -62,9 +62,9 @@
 "Precipitations_USA"
 #> [1] "Precipitations_USA"
 
-#' Population du Canada par classes d’âge et provinces et territoires en 2020
+#' Population du Canada par classes d'âge et provinces et territoires en 2020
 #'
-#' Répartition en classes d’âge de la population des provinces et des territoires du Canada en 2020. Statistique Canada. Tableau 17-10-0005-01  Estimations de la population au 1er juillet, par âge et sexe.
+#' Répartition en classes d'âge de la population des provinces et des territoires du Canada en 2020. Statistique Canada. Tableau 17-10-0005-01  Estimations de la population au 1er juillet, par âge et sexe.
 #'
 #' @docType data
 #' @format Un jeu de données avec 21 observations de 13 variables.
@@ -88,9 +88,9 @@
 "AgevsProter_Canada_full"
 #> [1] "AgevsProter_Canada_full"
 
-#' Population du Canada par classes d’âge et sexe en 2020
+#' Population du Canada par classes d'âge et sexe en 2020
 #'
-#' Répartition en classes d’âge et sexe de la population du Canada en 2020. Statistique Canada. Tableau 17-10-0005-01  Estimations de la population au 1er juillet, par âge et sexe.
+#' Répartition en classes d'âge et sexe de la population du Canada en 2020. Statistique Canada. Tableau 17-10-0005-01  Estimations de la population au 1er juillet, par âge et sexe.
 #'
 #' @docType data
 #' @format Un jeu de données avec 21 observations de 2 variables.
@@ -189,7 +189,7 @@
 "Personnes_Foyer"
 #> [1] "Personnes_Foyer"
 
-#' Population du Canada par classes d’âge et provinces et territoires en 2020
+#' Population du Canada par classes d'âge et provinces et territoires en 2020
 #'
 #' Répartition en provinces et territoires et sexe de la population du Canada en 2020. Statistique Canada. Tableau 17-10-0005-01  Estimations de la population au 1er juillet, par âge et sexe.
 #'
@@ -365,8 +365,8 @@
 #' \item{SMIN}{a numeric vector. Plus petite valeur des relevés réalisés deux fois par semaine de sulfate (micro-g/m3 multiplié par 10).}
 #' \item{SMEAN}{a numeric vector. Moyenne arithmétique des relevés réalisés deux fois par semaine de sulfate (micro-g/m3 multiplié par 10).}
 #' \item{SMAX}{a numeric vector. Plus grande valeur des relevés réalisés deux fois par semaine de sulfate (micro-g/m3 multiplié par 10).}
-#' \item{PMIN}{a numeric vector. Plus petite valeur des relevés réalisés deux fois par semaine de particules suspendues dans l’air (micro-g/m3 multiplié par 10).}
-#' \item{PMEAN}{a numeric vector. Moyenne arithmétique des relevés réalisés deux fois par semaine de particules suspendues dans l’air (micro-g/m3 multiplié par 10).}
+#' \item{PMIN}{a numeric vector. Plus petite valeur des relevés réalisés deux fois par semaine de particules suspendues dans l'air (micro-g/m3 multiplié par 10).}
+#' \item{PMEAN}{a numeric vector. Moyenne arithmétique des relevés réalisés deux fois par semaine de particules suspendues dans l'air (micro-g/m3 multiplié par 10).}
 #' \item{PMAX}{a numeric vector. Logarithme de la plus grande valeur des relevés réalisés deux fois par semaine de particules suspendues dans l'air (micro-g/m3 multiplié par 10).}
 #' \item{PM2}{a numeric vector. Densité de la population par mile carré (multiplié par 0,1).}
 #' \item{PERWH}{a numeric vector. Pourcentage de population blanche.}
@@ -594,3 +594,109 @@
 "conso_temp"
 #> [1] "conso_temp"
 
+#' @title Prix journalier du Bitcoin du 31/12/2014 au 15/05/2018
+#'
+#' @description Les données décrivent l'évolution du prix journalier du Bitcoin sur la période du
+#' 31/12/2014 au 15/05/2018. Les données sont publiques et disponibles sur le site de
+#' Yahoo finance (https://fr.finance.yahoo.com/quote/BTC-EUR/history?p=BTC-EUR).
+#'
+#' @name bitcoin
+#' @docType data
+#' @format A data frame with 1233 observations on the following 2 variables.
+#' \describe{
+#' \item{Date}{a POSIXct}
+#' \item{Bitcoin}{a numeric vector}
+#' }
+#' @source Yahoo finance (https://fr.finance.yahoo.com/quote/BTC-EUR/history?p=BTC-EUR)
+#' @keywords datasets
+#' @examples
+#'
+#' data(bitcoin)
+#' str(bitcoin)
+#' plot(bitcoin)
+#'
+"bitcoin"
+#> [1] "bitcoin"
+
+#' @title Évaluation du risque de défaut d'entreprises
+#'
+#' @description Les données de la base sont issues de Bloomberg. On s'intéresse au risque d'insolvabilité de 1060 entreprises cotées en bourse,
+#' durant l'année 2018, et appartenant à divers secteurs d'activité. Cette problématique est importante pour les investisseurs sur les marchés de capitaux
+#' internationaux qui prêtent aux entreprises, notamment en devenant actionnaires. L'information sur les risques financiers des entreprises est généralement
+#' fournie par des agences de notation : S&P, Fitch et Moody's. Dans la base, nous retenons les notations attribuées par S&P aux entreprises.
+#'
+#' Elles portent sur une évaluation du risque de défaut (le fait que l'entreprise ayant emprunté des fonds se retrouve un jour en incapacité de rembourser),
+#' et les notes vont de AAA à CCC-. La grille de notation est la suivante :
+#' \describe{
+#' \item{•}{AAA est la note la plus élevée et correspond à une sécurité maximale pour un investisseur qui détiendrait des parts dans l'entreprise concernée par la note. Le risque de défaut est quasiment nul ;}
+#' \item{•}{AA+, AA et AA- correspondent à une sécurité haute ou bonne (le risque de défaut est faible) ;}
+#' \item{•}{A+, A et A- correspondent à une qualité moyenne supérieure ;}
+#' \item{•}{BBB+, BBB et BBB- à une qualité moyenne inférieure ;}
+#' \item{•}{BB+, BB, \dots, B- est un ensemble de notes classant les actifs des entreprises dans la catégorie spéculative, c'est-à-dire suffisamment risquée de telle sorte que le détenteur des parts de l'entreprise peut s'attendre à un défaut avec une probabilité forte ;}
+#' \item{•}{CCC+, CCC, CCC-, D est une dernière catégorie de notes qui correspond à des actifs pour lesquels le risque de défaut est très élevé.}
+#' }
+#'
+#' Pour nos entreprises, les notes figurent dans la colonne du tableau 1 intitulée `SP` (dernière colonne).
+#'
+#' La variable `SP` est qualitative et polytomique (puisqu'elle peut prendre plus de deux modalités).
+#' Pour la transformer en une variable quantitative dichotomique, nous allons supposer que les agences de notation veulent envoyer un signal clair aux investisseurs, en différenciant les entreprises qui sont en bonne santé des autres.
+#' Pour ce faire, chaque fois que la note sera supérieure à BB+, nous attribuons la valeur 1 à l'observation (entreprises en bonne santé présentant un risque de défaut ou de défaillance faible).
+#' Et pour toute note inférieure à BB+, nous attribuons la valeur 0 (entreprises en mauvaise santé présentant un risque de défaut élevé).
+#' Nous appelons la nouvelle variable Risque. Notons que le critère utilisé ici est arbitraire et un autre découpage pourrait être retenu.
+#' Voir les colonnes intitulées `Risque` et `Défaut`.
+#'
+#' La colonne `Défaut2` correspond à un autre classement des entreprises, en les hiérarchisant des plus performantes aux moins performantes:
+#' \describe{
+#' \item{1.-}{pour les entreprises ayant une notation comprise entre AAA et A- (de première qualité à qualité moyenne supérieure) ;}
+#' \item{2.-}{pour les entreprises ayant une notation comprise entre BBB+ à BBB- (qualité moyenne inférieure) ;}
+#' \item{3.-}{pour les entreprises ayant une notation comprise inférieure à BBB- (un investisseur achetant des actifs de ces entreprises.}
+#' }                                                                        #'                                                                       devrait les considérées comme spéculatifs ou incorporant un risque de défaut élevé).
+#'
+#' Variables explicatives
+#'
+#' Dans la base de données, nous avons retenu des variables qui sont habituellement liées aux performances des entreprises :
+#' \describe{
+#' \item{•}{`Liquid` : un ratio de liquidité, mesuré par le rapport entre l'actif circulant et l'exigible à court terme. Cette variable capte le risque de liquidité, c'est-à-dire l'incapacité des entreprises à rembourser des dettes exigibles à court terme (moins d'un an).}
+#' \item{•}{`ROE` : le ratio du résultat net sur les capitaux propres. C'est une mesure de la rentabilité des capitaux investis par les actionnaires de l'entreprise.}
+#' \item{•}{`Marge` : la marge bénéficiaire nette en pourcentage, c'est-à-dire la part du chiffre d'affaires que l'entreprise conserve après paiement de ses frais d'exploitation, des remboursements d'intérêt et du paiement de ses impôts.}
+#' \item{•}{`OPM` : la marge opérationnelle définie comme le ratio du résultat d'exploitation et du chiffre d'affaires.}
+#' }
+#' Il s'agit de mesurer la performance économique de l'entreprise et donc sa viabilité à moyen/long terme.
+
+#' En plus de ces variables qui renseignent sur des indicateurs de fonctionnement de l'entreprise, il est important de s'intéresser à des éléments ayant un impact direct sur leurs dettes. Trois indicateurs sont retenus ici :
+#' \describe{
+#' \item{•}{`Benef` : le bénéfice avant intérêt, impôts et amortissement. Cette variable est un indicateur du profit de l'entreprise.}
+#' \item{•}{`Net` : le ratio des dettes financières sur `Benef`. Il s'agit de mesurer la capacité d'une entreprise à rembourser ses dettes en utilisant ses profits.}
+#' \item{•}{`Roul` : le besoin en fonds de roulement. Il s'agit de la somme à mettre de côté pour pouvoir payer ses charges.}
+#' }
+#' C'est un indicateur d'autonomie financière de l'entreprise.
+#'
+#' @name bilan
+#' @docType data
+#' @format A data frame with 1060 observations on the following 14 variables.
+#' \describe{
+#' \item{Entreprise}{a character vector. Nom de l'entreprise.}
+#' \item{id}{a numeric vector. Identifiant de l'entreprise.}
+#' \item{ROE}{a numeric vector. Le ratio du résultat net sur les capitaux propres. C'est une mesure de la rentabilité des capitaux investis par les actionnaires de l'entreprise.}
+#' \item{OPM}{a numeric vector. La marge opérationnelle définie comme le ratio du résultat d'exploitation et du chiffre d'affaires.}
+#' \item{Marge}{a numeric vector. La marge bénéficiaire nette en pourcentage, c'est-à-dire la part du chiffre d'affaires que l'entreprise conserve après paiement de ses frais d'exploitation, des remboursements d'intérêt et du paiement de ses impôts.}
+#' \item{Net}{a numeric vector. Le ratio des dettes financières sur Benef. Il s'agit de mesurer la capacité d'une entreprise à rembourser ses dettes en utilisant ses profits.}
+#' \item{Benef}{a numeric vector. Le bénéfice avant intérêt, impôts et amortissement. Cette variable est un indicateur du profit de l'entreprise.}
+#' \item{Liquid}{a numeric vector. Un ratio de liquidité, mesuré par le rapport entre l'actif circulant et l'exigible à court terme. Cette variable capte le risque de liquidité, c'est-à-dire l'incapacité des entreprises à rembourser des dettes exigibles à court terme (moins d'un an).}
+#' \item{Roul}{a numeric vector. Le besoin en fonds de roulement. Il s'agit de la somme à mettre de côté pour pouvoir payer ses charges. C'est un indicateur d'autonomie financière de l'entreprise.}
+#' \item{SP...10}{a character vector. Notation S&P. }
+#' \item{Risque}{a numeric vector. Risque de défaut transformé en variable binaire.}
+#' \item{Défaut}{a character vector. Risque de défaut.}
+#' \item{Défaut2}{a character vector. Un autre classement des entreprises, en les hiérarchisant des plus performantes aux moins performantes.}
+#' \item{SP...14}{a character vector. Notation S&P.}
+#' }
+#' @source Bloomberg.
+#' @keywords datasets
+#' @examples
+#'
+#' data(bilan)
+#' str(bilan)
+#' plot(bilan)
+#'
+"bilan"
+#> [1] "bilan"

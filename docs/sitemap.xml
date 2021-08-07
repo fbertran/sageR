@@ -73,6 +73,12 @@
     <loc>https://fbertran.github.io/sageR//reference/att_rep_ind.html</loc>
   </url>
   <url>
+    <loc>https://fbertran.github.io/sageR//reference/bilan.html</loc>
+  </url>
+  <url>
+    <loc>https://fbertran.github.io/sageR//reference/bitcoin.html</loc>
+  </url>
+  <url>
     <loc>https://fbertran.github.io/sageR//reference/champignons.html</loc>
   </url>
   <url>
@@ -100,6 +106,9 @@
     <loc>https://fbertran.github.io/sageR//articles/AllLinksExtVignettes.html</loc>
   </url>
   <url>
+    <loc>https://fbertran.github.io/sageR//articles/CodeChap01.html</loc>
+  </url>
+  <url>
     <loc>https://fbertran.github.io/sageR//articles/CodeChap02.html</loc>
   </url>
   <url>
@@ -125,5 +134,11 @@
   </url>
   <url>
     <loc>https://fbertran.github.io/sageR//articles/CodeChap10.html</loc>
+  </url>
+  <url>
+    <loc>https://fbertran.github.io/sageR//articles/CodeChap11.html</loc>
+  </url>
+  <url>
+    <loc>https://fbertran.github.io/sageR//articles/CodeChap12.html</loc>
   </url>
 </urlset>

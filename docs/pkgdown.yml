@@ -3,6 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   AllLinksExtVignettes: AllLinksExtVignettes.html
+  CodeChap01: CodeChap01.html
   CodeChap02: CodeChap02.html
   CodeChap03: CodeChap03.html
   CodeChap04: CodeChap04.html
@@ -12,7 +13,9 @@ articles:
   CodeChap08: CodeChap08.html
   CodeChap09: CodeChap09.html
   CodeChap10: CodeChap10.html
-last_built: 2021-07-27T22:57Z
+  CodeChap11: CodeChap11.html
+  CodeChap12: CodeChap12.html
+last_built: 2021-08-07T14:25Z
 urls:
   reference: https://fbertran.github.io/sageR//reference
   article: https://fbertran.github.io/sageR//articles

@@ -54,13 +54,13 @@ data(champignons)
 
 Sélection des variables de l'étude
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 champ_sel <- champignons[, c("couleur_chapeau","contusions","odeur","espacement_lamelle","habitat")]
 ```
 
 Transformation de la table en modalités codées
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 n=nrow(champ_sel)
 m=18
 DJ <- matrix(0,nrow=n,ncol=m)
@@ -109,17 +109,17 @@ colnames(d_mixte) <- rownames(champignons)
 ```
 
 Application de l’analyse des correspondances multiples 
-```{r, fig.keep='all', cache=TRUE}
+```{r, fig.keep='all', cache=TRUE, eval=LOCAL}
 res.ACM <- FactoMineR::MCA(champ_sel)
 ```
 
 Nombre de composantes principales résumant au moins 80 % de l’inertie
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 eig.val <- res.ACM$eig
 ```
 
 Calcul des distances euclidiennes sur les sept premières composantes principales
-```{r, fig.keep='all', cache=TRUE}
+```{r, fig.keep='all', cache=TRUE, eval=LOCAL}
 res.ACM <- FactoMineR::MCA(champ_sel,ncp=7)
 champ_MCA <- res.ACM$ind$coord
 d.champ_ACM <- dist(champ_MCA)
@@ -162,7 +162,7 @@ air_pollution_std <- data.frame(air_pollution_std)
 ```
 
 Application du critère de Ward sur la matrice des distances euclidiennes à partir des données standadisées
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 d.air_pol <- dist(air_pollution_std)
 cah.ward <- hclust(d.air_pol,method="ward.D2")
 cah.ward$height <- cah.ward$height^2/2
@@ -171,20 +171,20 @@ plot(cah.ward)
 
 Dendrogramme avec matérialisation des groupes
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 plot(cah.ward)
 rect.hclust(cah.ward,k=5)
 ```
 
 Découpage en 5 groupes
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 groupes.cah_ward_DS <- cutree(cah.ward,k=5)
 ```
 
 Application du critère de Ward sur la matrice des distances euclidiennes à partir des composantes principales retenues
 
-```{r, fig.keep='all', cache=TRUE}
+```{r, fig.keep='all', cache=TRUE, eval=LOCAL}
 res.PCA <- FactoMineR::PCA(air_pollution[,-(1:2)],ncp=4)
 air_pol_PCA <- res.PCA$ind$coord
 d.air_pol <- dist(air_pol_PCA)
@@ -192,19 +192,19 @@ cah.ward <- hclust(d.air_pol,method="ward.D2")
 cah.ward$height <- cah.ward$height^2/2
 ```
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 plot(cah.ward)
 ```
 
 Dendrogramme avec matérialisation des groupes
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 plot(cah.ward)
 rect.hclust(cah.ward,k=5)
 ```
 
 Découpage en 5 groupes
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 groupes.cah_ward_PCA <- cutree(cah.ward,k=5)
 ```
 
@@ -213,7 +213,7 @@ groupes.cah_ward_PCA <- cutree(cah.ward,k=5)
 
 Application du critère de Ward sur la matrice de dissimilarités mixtes et choix du nombre de classes adéquat
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 arbre2 <- cluster::agnes(d_mixte, method = "ward")
 cah.ward <- as.hclust(arbre2)
 cah.ward$height <- cah.ward$height^2/2
@@ -222,7 +222,7 @@ plot(cah.ward,labels=FALSE)
 
 Affiche la décroissance de l'inertie expliquée
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 inertie <- sort(cah.ward$height, decreasing = TRUE)
 plot(inertie[1:30], type = "s", xlab = "Nombre de classes", ylab = "Inertie")
 points(c(2, 6, 8), inertie[c(2, 6, 8)], col = c("green3", "red3", "blue3"), cex = 2, lwd = 3)
@@ -230,25 +230,25 @@ points(c(2, 6, 8), inertie[c(2, 6, 8)], col = c("green3", "red3", "blue3"), cex 
 
 Dendrogramme avec matérialisation des groupes
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 plot(cah.ward,labels=FALSE)
 ```
 
 Découpage en 6 groupes
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 plot(cah.ward,labels=FALSE)
 rect.hclust(cah.ward,k=6)
 ```
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 plot(cah.ward,labels=FALSE)
 groupes.cah_ward_d_mixte_6 <- cutree(cah.ward,k=6)
 ```
 
 Découpage en 8 groupes
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 plot(cah.ward,labels=FALSE)
 rect.hclust(cah.ward,k=8)
 groupes.cah_ward_d_mixte_8 <- cutree(cah.ward,k=8)
@@ -256,7 +256,7 @@ groupes.cah_ward_d_mixte_8 <- cutree(cah.ward,k=8)
 
 Application du critère de Ward sur la matrice des distances euclidiennes à partir des composantes principales retenues
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 arbre2 <- cluster::agnes(d.champ_ACM, method = "ward")
 cah.ward_ACM <- as.hclust(arbre2)
 cah.ward_ACM$height <- cah.ward_ACM$height^2/2
@@ -265,7 +265,7 @@ plot(cah.ward_ACM,labels=FALSE)
 
 Affiche la décroissance de l'inertie expliquée
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 inertie <- sort(cah.ward_ACM$height, decreasing = TRUE)
 plot(inertie[1:30], type = "s", xlab = "Nombre de classes", ylab = "Inertie")
 points(c(2, 4, 5, 8), inertie[c(2, 4, 5, 8)], col = c("green3", "red3", "blue3", "orange"), cex = 2, lwd = 3)
@@ -275,7 +275,7 @@ Dendrogramme avec matérialisation des groupes
 
 Découpage en 8 groupes
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 plot(cah.ward_ACM,labels=FALSE)
 rect.hclust(cah.ward_ACM,k=8)
 groupes.cah_ward_d_ACM <- cutree(cah.ward_ACM,k=8)
@@ -286,7 +286,7 @@ Compararaison de partitions (dissim mixte à 6 classes vs distance euclidienne �
 
 Ward ACM vs Ward d_mixte
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 T_C <- table(groupes.cah_ward_d_ACM,groupes.cah_ward_d_mixte_6)
 nij2 <- T_C^2
 ni_2 <- apply(T_C,1,sum,na.rm=TRUE)^2 # apply(T_C,1,sum,na.rm=TRUE)^2
@@ -309,7 +309,7 @@ Compararaison de partitions (dissim mixte à 8 classes vs distance euclidienne �
 
 Ward ACM vs Ward d_mixte
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 T_C <- table(groupes.cah_ward_d_mixte_8,groupes.cah_ward_d_ACM)
 nij2 <- T_C^2
 ni_2 <- apply(T_C,1,sum,na.rm=TRUE)^2 # apply(T_C,1,sum,na.rm=TRUE)^2
@@ -332,7 +332,7 @@ Gamma <- (M*a-m1*m2)/sqrt(m1*m2*(M-m1)*(M-m2))
 
 Critère `Complete`
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 arbre2 <- cluster::agnes(d_mixte, method = "complete")
 cah.complete <- as.hclust(arbre2)
 plot(cah.complete,labels=FALSE)
@@ -340,19 +340,19 @@ plot(cah.complete,labels=FALSE)
 
 Affiche la décroissance de l'inertie expliquée
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 inertie <- sort(cah.complete$height, decreasing = TRUE)
 plot(inertie[1:30], type = "s", xlab = "Nombre de classes", ylab = "Inertie")
 points(c(2, 3, 7, 8), inertie[c(2, 3, 7, 8)], col = c("green3", "red3", "blue3", "orange3"), cex = 2, lwd = 3)
 ```
 
 Dendrogramme avec matérialisation des groupes
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 plot(cah.complete,labels=FALSE)
 ```
 
 Découpage en 7 groupes
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 plot(cah.complete,labels=FALSE)
 rect.hclust(cah.complete,k=7)
 groupes.cah_complete_d_mixte_7 <- cutree(cah.complete,k=7)
@@ -360,7 +360,7 @@ groupes.cah_complete_d_mixte_7 <- cutree(cah.complete,k=7)
 
 Découpage en 8 groupes
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 plot(cah.complete,labels=FALSE)
 rect.hclust(cah.complete,k=8)
 groupes.cah_complete_d_mixte_8 <- cutree(cah.complete,k=8)
@@ -368,7 +368,7 @@ groupes.cah_complete_d_mixte_8 <- cutree(cah.complete,k=8)
 
 Critère Single
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 arbre2 <- cluster::agnes(d_mixte, method = "single")
 cah.single <- as.hclust(arbre2)
 plot(cah.single,labels=FALSE)
@@ -376,7 +376,7 @@ plot(cah.single,labels=FALSE)
 
 Affiche la décroissance de l'inertie expliquée
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 inertie <- sort(cah.single$height, decreasing = TRUE)
 plot(inertie[1:30], type = "s", xlab = "Nombre de classes", ylab = "Inertie")
 points(c(4), inertie[c(4)], col = c("red3"), cex = 2, lwd = 3)
@@ -386,7 +386,7 @@ Dendrogramme avec matérialisation des groupes
 
 Découpage en 4 groupes
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 plot(cah.single,labels=FALSE)
 rect.hclust(cah.single,k=4)
 groupes.cah_single_d_mixte_4 <- cutree(cah.single,k=4)
@@ -394,7 +394,7 @@ groupes.cah_single_d_mixte_4 <- cutree(cah.single,k=4)
 
 Critère `Average`
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 arbre2 <- cluster::agnes(d_mixte, method = "average")
 cah.average <- as.hclust(arbre2)
 plot(cah.average,labels=FALSE)
@@ -402,7 +402,7 @@ plot(cah.average,labels=FALSE)
 
 Affiche la décroissance de l'inertie expliquée
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 inertie <- sort(cah.average$height, decreasing = TRUE)
 plot(inertie[1:30], type = "s", xlab = "Nombre de classes", ylab = "Inertie")
 points(c(2, 3, 6), inertie[c(2, 3, 6)], col = c("green3", "red3", "blue3"), cex = 2, lwd = 3)
@@ -412,7 +412,7 @@ Dendrogramme avec matérialisation des groupes
 
 Découpage en 6 groupes
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 plot(cah.average,labels=FALSE)
 rect.hclust(cah.average,k=6)
 groupes.cah_average_d_mixte_6 <- cutree(cah.average,k=6)
@@ -423,7 +423,7 @@ groupes.cah_average_d_mixte_6 <- cutree(cah.average,k=6)
 Compararaison de partitions (dissim mixte à 8 classes vs distance euclidienne à 8 classes)
 
 Ward PCA vs Ward d_mixte
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 T_C <- table(groupes.cah_ward_DS,groupes.cah_ward_PCA)
 nij2 <- T_C^2
 ni_2 <- apply(T_C,1,sum,na.rm=TRUE)^2 # apply(T_C,1,sum,na.rm=TRUE)^2
@@ -445,7 +445,7 @@ Gamma <- (M*a-m1*m2)/sqrt(m1*m2*(M-m1)*(M-m2))
 
 Application des k-means sur plusieurs nombres de classes
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 groupes.kmeans <- kmeans(air_pol_PCA,centers=2)
 inertie_intra <- groupes.kmeans$tot.withinss
 R2 <- 1-groupes.kmeans$tot.withinss/groupes.kmeans$totss
@@ -465,7 +465,7 @@ plot(deriv)
 
 Choix du nombre de classes : utilisation du graphique précédent
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 groupes.kmeans <- kmeans(air_pol_PCA,centers=6)
 groupes.kmeans_PCA <- groupes.kmeans$cluster
 ```
@@ -473,7 +473,7 @@ groupes.kmeans_PCA <- groupes.kmeans$cluster
 Comparaisons des résultats avec ceux de l'exercice 7.3
 
 Ward PCA vs K-means PCA
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 T_C <- table(groupes.kmeans_PCA,groupes.cah_ward_PCA)
 nij2 <- T_C^2
 ni_2 <- apply(T_C,1,sum,na.rm=TRUE)^2
@@ -493,7 +493,7 @@ Gamma <- (M*a-m1*m2)/sqrt(m1*m2*(M-m1)*(M-m2))
 ```
 
 Ward `d_mixte` vs `k.means` PCA
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 T_C <- table(groupes.kmeans_PCA,groupes.cah_ward_DS)
 nij2 <- T_C^2
 ni_2 <- apply(T_C,1,sum,na.rm=TRUE)^2
@@ -515,7 +515,7 @@ Gamma <- (M*a-m1*m2)/sqrt(m1*m2*(M-m1)*(M-m2))
 
 Application des k-means sur plusieurs nombres de classes
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 groupes.kmeans <- kmeans(champ_MCA,centers=2)
 inertie_intra <- groupes.kmeans$tot.withinss
 R2 <- 1-groupes.kmeans$tot.withinss/groupes.kmeans$totss
@@ -534,7 +534,7 @@ plot(deriv)
 
 Choix du nombre de classes : utilisation du graphique précédent
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 groupes.kmeans <- kmeans(champ_MCA,centers=6)
 groupes.kmeans_MCA <- groupes.kmeans$cluster
 ```
@@ -543,7 +543,7 @@ Comparaisons des résultats avec ceux de l'exercice 7.5
 
 Ward MCA vs K-means MCA
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 T_C <- table(groupes.kmeans_MCA,groupes.cah_ward_d_ACM)
 nij2 <- T_C^2
 ni_2 <- apply(T_C,1,sum,na.rm=TRUE)^2
@@ -564,7 +564,7 @@ Gamma <- (M*a-m1*m2)/sqrt(m1*m2*(M-m1)*(M-m2))
 
 Ward `d_mixte_6` vs K-means MCA
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 T_C <- table(groupes.kmeans_MCA,groupes.cah_ward_d_mixte_6)
 nij2 <- T_C^2
 ni_2 <- apply(T_C,1,sum,na.rm=TRUE)^2
@@ -585,7 +585,7 @@ Gamma <- (M*a-m1*m2)/sqrt(m1*m2*(M-m1)*(M-m2))
 
 Ward `d_mixte_8` vs K-means MCA
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 T_C <- table(groupes.kmeans_MCA,groupes.cah_ward_d_mixte_8)
 nij2 <- T_C^2
 ni_2 <- apply(T_C,1,sum,na.rm=TRUE)^2
@@ -606,7 +606,7 @@ Gamma <- (M*a-m1*m2)/sqrt(m1*m2*(M-m1)*(M-m2))
 
 Complete `d_mixte_7` vs K-means MCA
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 T_C <- table(groupes.kmeans_MCA,groupes.cah_complete_d_mixte_7)
 nij2 <- T_C^2
 ni_2 <- apply(T_C,1,sum,na.rm=TRUE)^2
@@ -627,7 +627,7 @@ Gamma <- (M*a-m1*m2)/sqrt(m1*m2*(M-m1)*(M-m2))
 
 Complete `d_mixte_8` vs K-means MCA
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 T_C <- table(groupes.kmeans_MCA,groupes.cah_complete_d_mixte_8)
 nij2 <- T_C^2
 ni_2 <- apply(T_C,1,sum,na.rm=TRUE)^2
@@ -648,7 +648,7 @@ Gamma <- (M*a-m1*m2)/sqrt(m1*m2*(M-m1)*(M-m2))
 
 Single `d_mixte_4` vs K-means MCA
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 T_C <- table(groupes.kmeans_MCA,groupes.cah_single_d_mixte_4)
 nij2 <- T_C^2
 ni_2 <- apply(T_C,1,sum,na.rm=TRUE)^2
@@ -669,7 +669,7 @@ Gamma <- (M*a-m1*m2)/sqrt(m1*m2*(M-m1)*(M-m2))
 
 Average `d_mixte_6` vs K-means MCA
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 T_C <- table(groupes.kmeans_MCA,groupes.cah_average_d_mixte_6)
 nij2 <- T_C^2
 ni_2 <- apply(T_C,1,sum,na.rm=TRUE)^2
@@ -690,12 +690,12 @@ Gamma <- (M*a-m1*m2)/sqrt(m1*m2*(M-m1)*(M-m2))
 
 # Exercice 7.9 : Interprétation des classes de la typologie
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 air_pollution_std_cluster <- data.frame(air_pollution_std,groupes.cah_ward_PCA)
 ```
 
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 library(dplyr)
 air_pollution_stat_cluster <- air_pollution_std_cluster %>% group_by(groupes.cah_ward_PCA) %>% summarise(SMIN_moy=mean(SMIN),SMEAN_moy=mean(SMEAN),SMAX_moy=mean(SMAX),PMIN_moy=mean(PMIN),PMEAN_moy=mean(PMEAN),PERWH_moy=mean(PERWH),NONPOOR_moy=mean(NONPOOR),GE65_moy=mean(GE65),LPOP_moy=mean(LPOP),l_pm2_moy=mean(l_pm2),l_pmax_moy=mean(l_pmax),n_m=n()) 
 air_pollution_stat_cluster <- data.frame(air_pollution_stat_cluster)

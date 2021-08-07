@@ -64,26 +64,26 @@ champ_sel <- champignons[,c("couleur_chapeau","contusions","odeur","espacement_l
 
 # Exercice 6.2 : Indices d’attraction/répulsion
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 res.ind <- sageR::att_rep_ind(champ_sel)
 ```
 
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 round(res.ind$out_ind,2)
 ```
 
 
 # Exercice 6.3 : parts des inerties expliquées des deux premières composantes principales
 
-```{r, fig.keep='all', cache=TRUE}
+```{r, fig.keep='all', cache=TRUE, eval=LOCAL}
 res.ACM <- FactoMineR::MCA(champ_sel)
 eig.val <- res.ACM$eig
 ```
 
 # Exercice 6.4 : nombre de composantes à sélectionner
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 barplot(eig.val[, 2], 
         names.arg = 1:nrow(eig.val), 
         main = "Inerties expliquées par les dimensions (%)",
@@ -94,33 +94,33 @@ barplot(eig.val[, 2],
 
 # Exercice 6.5 : Associations des modalités sur les deux premiers plans
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 plot(res.ACM, axes = c(1, 2))
 ```
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 plot(res.ACM, axes = c(1, 3))
 ```
 
 # Exercice 6.6 : Contributions et reconstitutions des modalités
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 round(res.ACM$var$contrib[,1:3],2)
 ```
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 round(res.ACM$var$cos2[,1:3],2)
 ```
 
 # Exercice 6.7 : Valeurs-tests des modalités
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 round(res.ACM$var$v.test[,1:3],3)
 ```
 
 # Exercice 6.9 : Valeurs des rapports de corrélations
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 round(res.ACM$var$eta2[,1:3],3)
 ```
 

@@ -22,8 +22,8 @@ A data frame with 50 observations on the following 15 variables.
 \item{SMIN}{a numeric vector. Plus petite valeur des relevés réalisés deux fois par semaine de sulfate (micro-g/m3 multiplié par 10).}
 \item{SMEAN}{a numeric vector. Moyenne arithmétique des relevés réalisés deux fois par semaine de sulfate (micro-g/m3 multiplié par 10).}
 \item{SMAX}{a numeric vector. Plus grande valeur des relevés réalisés deux fois par semaine de sulfate (micro-g/m3 multiplié par 10).}
-\item{PMIN}{a numeric vector. Plus petite valeur des relevés réalisés deux fois par semaine de particules suspendues dans l’air (micro-g/m3 multiplié par 10).}
-\item{PMEAN}{a numeric vector. Moyenne arithmétique des relevés réalisés deux fois par semaine de particules suspendues dans l’air (micro-g/m3 multiplié par 10).}
+\item{PMIN}{a numeric vector. Plus petite valeur des relevés réalisés deux fois par semaine de particules suspendues dans l'air (micro-g/m3 multiplié par 10).}
+\item{PMEAN}{a numeric vector. Moyenne arithmétique des relevés réalisés deux fois par semaine de particules suspendues dans l'air (micro-g/m3 multiplié par 10).}
 \item{PMAX}{a numeric vector. Logarithme de la plus grande valeur des relevés réalisés deux fois par semaine de particules suspendues dans l'air (micro-g/m3 multiplié par 10).}
 \item{PM2}{a numeric vector. Densité de la population par mile carré (multiplié par 0,1).}
 \item{PERWH}{a numeric vector. Pourcentage de population blanche.}

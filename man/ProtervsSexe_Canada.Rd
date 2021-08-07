@@ -3,7 +3,7 @@
 \docType{data}
 \name{ProtervsSexe_Canada}
 \alias{ProtervsSexe_Canada}
-\title{Population du Canada par classes d’âge et provinces et territoires en 2020}
+\title{Population du Canada par classes d'âge et provinces et territoires en 2020}
 \format{
 Un jeu de données avec 13 observations de 2 variables.
 \describe{

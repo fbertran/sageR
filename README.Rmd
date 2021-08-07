@@ -58,7 +58,7 @@ devtools::install_github("fbertran/sageR")
 
 <!-- [Avant-propos.](https://fbertran.github.io/sageR/articles/CodeChap00.html) -->
 
-<!-- 1. [Chapitre 1. Introduction à la statistique et à son petit monde.](https://fbertran.github.io/sageR/articles/CodeChap01.html) -->
+1. [Chapitre 1. Introduction à la statistique et à son petit monde.](https://fbertran.github.io/sageR/articles/CodeChap01.html)
 2. [Chapitre 2. Statistique exploratoire et représentations graphiques de séries univariées.](https://fbertran.github.io/sageR/articles/CodeChap02.html) 
 3. [Chapitre 3. Statistique exploratoire et représentations graphiques de séries bivariées et multivariées.](https://fbertran.github.io/sageR/articles/CodeChap03.html) 
 4. [Chapitre 4. Exploration des données avec l'analyse en composantes principales.](https://fbertran.github.io/sageR/articles/CodeChap04.html)
@@ -68,8 +68,8 @@ devtools::install_github("fbertran/sageR")
 8. [Chapitre 8. Introduction à la théorie des probabilités aux distributions statistiques classiques.](https://fbertran.github.io/sageR/articles/CodeChap08.html)
 9. [Chapitre 9. Théorie de l'estimation, tests à un ou deux échantillons.](https://fbertran.github.io/sageR/articles/CodeChap09.html)
 10. [Chapitre 10. Modèle linéaire gaussien.](https://fbertran.github.io/sageR/articles/CodeChap10.html)
-<!-- 11. [Chapitre 11. Introduction aux séries temporelles.](https://fbertran.github.io/sageR/articles/CodeChap11.html) -->
-<!-- 12. [Chapitre 12. Introduction aux modèles logit et probit.](https://fbertran.github.io/sageR/articles/CodeChap12.html) -->
+11. [Chapitre 11. Introduction aux séries temporelles.](https://fbertran.github.io/sageR/articles/CodeChap11.html)
+12. [Chapitre 12. Introduction aux modèles logit et probit.](https://fbertran.github.io/sageR/articles/CodeChap12.html)
 
 
 # Statistics for Economics and Management (English version)
@@ -96,7 +96,7 @@ devtools::install_github("fbertran/sageR")
 
 <!-- [Foreword.](https://fbertran.github.io/sageR/articles/CodeChap00.html) -->
 
-<!-- 1. [Chapter 1. Introduction to statistics and their world.](https://fbertran.github.io/sageR/articles/CodeChap01.html) -->
+1. [Chapter 1. Introduction to statistics and their world.](https://fbertran.github.io/sageR/articles/CodeChap01.html)
 2. [Chapter 2. Univariate exploratory statistics and graphics.](https://fbertran.github.io/sageR/articles/CodeChap02.html) 
 3. [Chapter 3. Bivariate and multivariate exploratory statistics and graphics.](https://fbertran.github.io/sageR/articles/CodeChap03.html) 
 4. [Chapter 4. Data exploration with Principal Component Analysis.](https://fbertran.github.io/sageR/articles/CodeChap04.html)
@@ -106,7 +106,7 @@ devtools::install_github("fbertran/sageR")
 8. [Chapter 8. Introduction to probability theory and classical probability distributions.](https://fbertran.github.io/sageR/articles/CodeChap08.html)
 9. [Chapter 9. Estimation theory, one-sample and two-sample tests.](https://fbertran.github.io/sageR/articles/CodeChap09.html)
 10. [Chapter 10. Gaussian linear model.](https://fbertran.github.io/sageR/articles/CodeChap10.html)
-<!-- 11. [Chapter 11. Introduction to time series.](https://fbertran.github.io/sageR/articles/CodeChap11.html) -->
-<!-- 12. [Chapter 12. Introduction to probit and logit models.](https://fbertran.github.io/sageR/articles/CodeChap12.html) -->
+11. [Chapter 11. Introduction to time series.](https://fbertran.github.io/sageR/articles/CodeChap11.html)
+12. [Chapter 12. Introduction to probit and logit models.](https://fbertran.github.io/sageR/articles/CodeChap12.html)
 
 

@@ -1,3 +1,7 @@
+# sageR 0.5.0
+
+* Added code for examples and exercises for chapters 1, 11 and 12.
+
 # sageR 0.4.0
 
 * Added code for examples and exercises for chapters 4, 5, 6, 7 and 10.

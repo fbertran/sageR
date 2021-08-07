@@ -3,7 +3,7 @@
 \docType{data}
 \name{AgevsSexe_Canada_full}
 \alias{AgevsSexe_Canada_full}
-\title{Population du Canada par classes d’âge et sexe en 2020}
+\title{Population du Canada par classes d'âge et sexe en 2020}
 \format{
 Un jeu de données avec 21 observations de 2 variables.
 \describe{
@@ -15,7 +15,7 @@ Un jeu de données avec 21 observations de 2 variables.
 AgevsSexe_Canada_full
 }
 \description{
-Répartition en classes d’âge et sexe de la population du Canada en 2020. Statistique Canada. Tableau 17-10-0005-01  Estimations de la population au 1er juillet, par âge et sexe.
+Répartition en classes d'âge et sexe de la population du Canada en 2020. Statistique Canada. Tableau 17-10-0005-01  Estimations de la population au 1er juillet, par âge et sexe.
 }
 \references{
 \doi{10.25318/1710000501-fra}

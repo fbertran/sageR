@@ -64,7 +64,7 @@ data(presid_2012)
 
 Préparation du tableau de contingence et des profils colonnes et lignes
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 somme_lignes <- apply(presid_2012[,2:13],1,sum,na.rm=TRUE)
 presid_2012_tab_cont <- data.frame(presid_2012,somme_lignes)
 somme_colonnes <- apply(presid_2012[,2:13],2,sum,na.rm=TRUE)
@@ -93,7 +93,7 @@ profil_colonnes <- data.frame(profil_colonnes,profil_colonnes_France)
 
 Calcul des profils-lignes Alpes-Maritimes, de la Corrèze, de la Haute-Corse et de la France métropolitaine
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 Alpes_Maritimes <- as.numeric(prop_presid_2012_tab_cont[6,2:13])
 Correze <- as.numeric(prop_presid_2012_tab_cont[19,2:13])
 Haute_Corse <- as.numeric(prop_presid_2012_tab_cont[96,2:13])
@@ -104,13 +104,13 @@ rownames(trois_dept_france) <- names(prop_presid_2012_tab_cont[,2:13])
 
 Affichage des profils-lignes
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 round(trois_dept_france,3)
 ```
 
 Cartographie des profils-lignes
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 z <- t(as.matrix(trois_dept_france))
 x <- seq(1,4,length.out=4)
 y <- seq(1,12,length.out=12)
@@ -127,7 +127,7 @@ par(oldpar)
 
 Profils-colonnes des types de votes avec la France
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 d_chi2_type_vote_France <- matrix(0,nrow=96,ncol=1)
 d_chi2_type_vote_France_all <- matrix(0,nrow=12,ncol=1)
 for (i in 1:12)
@@ -157,7 +157,7 @@ par(oldpar)
 
 # Exercice 5.3 : Analyse des rapports - les indices d’attraction/répulsion
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 attrac_repul <- matrix(0,nrow=12,ncol=3)
 for (i in 1:12)
     {attrac_repul[i,1]=round(trois_dept_france[i,1]/trois_dept_france[i,4],3)
@@ -179,13 +179,13 @@ axis(2, at = y,labels = colnames(z),las=2,cex.axis=0.7)
 
 Calcul de la distance du Chi-2
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 chisq.test(presid_2012[,2:13])
 ```
 
 Calcul des contributions au Chi-2
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 attrac_repul <- matrix(0,nrow=12,ncol=96)
 for (i in 1:12)
     {for (j in 1:96)
@@ -206,7 +206,7 @@ n <- presid_2012_tab_cont[97,14]
 
 Calcul de la statistique du Chi-2
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 d_2 = n*sum(ecart_indep)
 
 contrib_chi_2 <- matrix(0,nrow=96,ncol=12)
@@ -221,20 +221,20 @@ rownames(contrib_chi_2) <- departement[1:96]
 
 Affiche l'ensemble des contributions au Chi-2
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 round(contrib_chi_2,3)
 ```
 
 Calcul le couple (département,type de vote) qui a la plus petite contribution au Chi-2
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 departement[round(which.min(contrib_chi_2)%%96,0)]
 type_vote[round(which.min(contrib_chi_2)/96,0)]
 ```
 
 Calcul le couple (département,type de vote) qui a la plus grande contribution au Chi-2
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 departement[round(which.max(contrib_chi_2)%%96,0)]
 type_vote[round(which.max(contrib_chi_2)/96,0)]
 ```
@@ -244,7 +244,7 @@ type_vote[round(which.max(contrib_chi_2)/96,0)]
 
 Calcul de la distance du Chi-2
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 chi_2 <- chisq.test(presid_2012[,2:13])$statistic
 p=96
 q=12
@@ -256,7 +256,7 @@ V_cramer <- sqrt(chi_2/(n*min(p-1,q-1)))
 
 AFC sur les données avec le package `FactoMineR`
 
-```{r, fig.keep='all', cache=TRUE}
+```{r, fig.keep='all', cache=TRUE, eval=LOCAL}
 res.AFC <- FactoMineR::CA(presid_2012[,2:13])
 ```
 
@@ -265,13 +265,13 @@ res.AFC <- FactoMineR::CA(presid_2012[,2:13])
 
 Contributions des types de votes
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 round(res.AFC$col$contrib,2)
 ```
 
 Reconstitutions des types de votes
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 round(100*res.AFC$col$cos2,2)
 ```
 
@@ -280,7 +280,7 @@ round(100*res.AFC$col$cos2,2)
 
 Histogramme des valeurs propres
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 vp <- as.matrix(res.AFC$eig[,1])
 colnames(vp) <- c("vp")
 num_cp <- 11:1
@@ -289,7 +289,7 @@ histo_vp <- histo_vp[order(histo_vp$vp, decreasing = TRUE), ]
 ```
 
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 library(ggplot2)
 ggplot(data=histo_vp, aes(x=num_cp, y=vp)) +  geom_bar(stat="identity") + coord_flip() + scale_x_discrete(limits=c("11","10","9","8","7","6","5","4","3","2","1"))
 ```
@@ -299,7 +299,7 @@ ggplot(data=histo_vp, aes(x=num_cp, y=vp)) +  geom_bar(stat="identity") + coord_
 
 Plan 1 : coordonnées factorielles
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, eval=LOCAL}
 coord <- res.AFC$row$coord[,1:2]
 modal <- presid_2012$departement
 coord_dept <- data.frame(modal,coord)

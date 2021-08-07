@@ -1,0 +1,550 @@
+---
+title: "Chapitre 12. Introduction aux modèles logit et probit."
+subtitle: "Tout le code avec R."
+author: "Gilles Dufrenot"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapitre 12. Introduction aux modèles logit et probit.}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<table align="center">
+        <tr>
+            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;"/></td>
+            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;"/></td>
+        </tr>
+</table>
+
+```{r, echo=FALSE}
+#file.edit(normalizePath("~/.Renviron"))
+LOCAL <- identical(Sys.getenv("LOCAL"), "TRUE")
+#, eval = LOCAL for skip on CRAN test
+#LOCAL=FALSE
+#knitr::opts_chunk$set(purl = LOCAL, eval=LOCAL)
+knitr::opts_chunk$set(purl = LOCAL)
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "TRUE")
+knitr::opts_chunk$set(purl = NOT_CRAN)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+SAVE_GRAPHS=FALSE
+```
+
+
+# Application pratique. Estimation d'un modèle logit/probit non-ordonné avec R
+
+## Remarques préliminaires
+ 
+1. Ne pas tenir compte des warnings qui n'affectent pas les résultats. 
+2. Si vous rencontrez des problèmes de convergence sur un modèle, alors pensez à modifier votre jeu de variables explicatives
+
+## Que veut-on faire ? 
+
+On souhaite estimer un modèle logit ou probit pour étudier les déterminants du risque de défaut des entreprises à partir d'un échantillon.
+
+La variable endogène est une variable binaire appelée `Defaut` et les variables explicatives sont : 
+
+* le taux de marge : `Marge` ;
+* le bénéfice avant impôt: `Benef` ;
+* le ratio de liquidité: `Liquid`.
+
+# Etape 1 : Lecture des données et statistiques élémentaires
+
+## Lecture des données 
+
+```{r}
+if(!("sageR" %in% installed.packages())){install.packages("sageR")}
+library(sageR)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+data(bilan)
+```
+
+La commande `View` permet de voir ce qu'il y a dans les données : nom des variables, nature des variables, chiffres, caractères, etc.
+
+```{r, eval=FALSE}
+View(bilan)
+```
+
+### Origine des données
+
+Les données de la base sont issues de Bloomberg. On s’intéresse au risque d’insolvabilité de 1 060 entreprises cotées en bourse,  durant l’année 2018, et appartenant à divers secteurs d’activité. Cette problématique est importante pour les investisseurs sur les marchés de capitaux internationaux qui prêtent aux entreprises, notamment en devenant actionnaires. L’information sur les risques financiers des entreprises est généralement fournie par des agences de notation : S&P, Fitch et Moody’s. Dans la base, nous retenons les notations attribuées par S&P aux entreprises 
+
+Elles portent sur une évaluation du risque de défaut (le fait que l’entreprise ayant emprunté des fonds se retrouve un jour en incapacité de rembourser), et les notes vont de AAA à CCC-. La grille de notation est la suivante :
+
+*	AAA est la note la plus élevée et correspond à une sécurité maximale pour un investisseur qui détiendrait des parts dans l’entreprise concernée par la note. Le risque de défaut est quasiment nul. 
+*	AA+, AA et AA- correspondent à une sécurité haute ou bonne (le risque de défaut est faible). 
+*	A+, A et A- correspondent à une qualité moyenne supérieure ; BBB+, BBB et BBB- à une qualité moyenne inférieure.
+*	Puis, nous avons un ensemble de notes classant les actifs des entreprises dans la catégorie spéculative, c’est-à-dire suffisamment risquéede telle sorte que le détenteur des parts de l’entreprise peut s’attendre à un défaut avec une probabilité forte (BB+, BB,…, B-).
+*	Enfin, une dernière catégorie de notes correspond à des actifs pour lesquels le risque de défaut est très élevé : CCC+, CCC, CCC-, D). 
+
+Pour nos entreprises, les notes figurent dans la colonne du tableau 1 intitulée `SP` (dernière colonne). La variable `SP` est qualitative et polytomique (puisqu’elle peut prendre plus de deux modalités). Pour la transformer en une variable quantitative dichotomique, nous allons supposer que les agences de notation veulent envoyer un signal clair 
+aux investisseurs, en différenciant les entreprises qui sont en bonne santé des autres. 
+
+Pour ce faire, chaque fois que la note sera supérieure à BB+, nous attribuons la valeur 1 à l’observation (entreprises en bonne santé présentant un risque de défaut ou de défaillance faible). Et pour toute note inférieure à BB+, nous attribuons la valeur 0 (entreprises en mauvaise santé présentant un risque de défaut élevé). Nous appelons la nouvelle variable Risque. Notons que le critère utilisé ici est arbitraire et un autre découpage pourrait être retenu. Voir les colonnes intitulées `Risque` et `Défaut`. 
+
+La colonne `Défaut2` correspond à un autre classement des entreprises, en les hiérarchisant des plus performantes aux moins performantes:
+
+1. pour les entreprises ayant une notation comprise entre AAA et A- (de première qualité à qualité moyenne supérieure) ;
+2. pour les entreprises ayant une notation comprise entre BBB+ à BBB- (qualité moyenne inférieure) ;
+3. pour les entreprises ayant une notation comprise inférieure à BBB- (un investisseur achetant des actifs de ces entreprises devrait les considérées comme spéculatifs ou incorporant un risque de défaut élevé). 
+
+### Variables explicatives 
+
+Dans la base de données, nous avons retenu des variables qui sont habituellement liées aux performances des entreprises :
+
+* Liquid : un ratio de liquidité, mesuré par le rapport entre l’actif circulant et l’exigible à court terme.  Cette variable capte le risque de liquidité, c’est-à-dire l’incapacité des entreprises à rembourser des dettes exigibles à court terme (moins d’un an).
+* ROE : le ratio du résultat net sur les capitaux propres. C’est une mesure de la rentabilité des capitaux investis par les actionnaires de l’entreprise.
+* Marge : la marge bénéficiaire nette en pourcentage, c’est-à-dire la part du chiffre d’affaires que l’entreprise conserve  après paiement de ses frais d’exploitation, des remboursements d’intérêt et du paiement de ses impôts. 
+* OPM : la marge opérationnelle définie comme le ratio du résultat d’exploitation et du chiffre d’affaires. 
+
+Il s’agit de mesurer la performance économique de l’entreprise et donc sa viabilité à moyen/long terme. 
+
+En plus de ces variables qui renseignent sur des indicateurs de fonctionnement de l’entreprise, il est important de s’intéresser à des éléments ayant un impact direct sur leurs dettes. Trois indicateurs sont retenus ici : 
+
+* Benef : le bénéfice avant intérêt, impôts et amortissement. Cette variable est un indicateur du profit de l’entreprise.
+* Net : le ratio des dettes financières sur Benef. Il s’agit de mesurer la capacité d’une entreprise à rembourser ses dettes en utilisant ses profits. 
+* Roul : le besoin en fonds de roulement. Il s’agit de la somme à mettre de côté pour pouvoir payer ses charges. C’est un indicateur d’autonomie financière de l’entreprise. 
+
+## Statistiques élémentaires 
+
+Quelques statistiques descriptives du fichier de données
+```{r, cache= TRUE, eval=LOCAL}
+summary(bilan)
+```
+
+La variable endogène est une chaîne de caractères, qui est convertie en facteur, puis affichée
+
+```{r, cache= TRUE, eval=LOCAL}
+titi<-factor(bilan$Défaut)   
+levels(titi)
+```
+
+La commande `freq` permet d’afficher la proportion de chaque modalité, i.e. risque de défaut faible et risque de défaut important (fort). 
+
+```{r}
+if(!("questionr" %in% installed.packages())){install.packages("questionr")}
+library(questionr)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+freq(titi)
+```
+
+# Etape 2 : Régression logistique  
+
+```{r, cache= TRUE, eval=LOCAL}
+Y<-cbind(titi)  
+X<-cbind(bilan$Marge, bilan$Benef, bilan$Liquid)
+```
+
+```{r}
+if(!("labelled" %in% installed.packages())){install.packages("labelled")}
+library(labelled)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+var_label(titi) <- "Risque de défaut"
+var_label(bilan$Marge) <- "Taux de marge"
+var_label(bilan$Benef) <- "Bénéfice"
+var_label(bilan$Liquid) <- "Ratio de liquidité"
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+logit <-glm(titi~ Marge + Benef+ Liquid, family=binomial(link="logit"), data=bilan)
+```
+
+Affichage des résultats de la régression logistique
+
+La fonction `stargazer` permet d’afficher les résultats dans un tableau.  Elle peut se substituer à la commande logit écrite à la suite de l’instruction `glm` qui affiche les résultats « bruts ».
+
+```{r}
+if(!("stargazer" %in% installed.packages())){install.packages("stargazer")}
+library(stargazer)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+stargazer(logit, type="text")
+```
+
+Pour des résulats au format `html`.
+```{r, cache= TRUE, eval=LOCAL, results='asis'}
+stargazer(logit, type="html")
+```
+Pour des résulats au format `html` enregistrés dans le fichier `logit.htm`.
+```{r, cache= TRUE, eval=FALSE}
+stargazer(logit, type="html", out="logit.htm")
+```
+
+Coefficients du modèle et intervalles de confiance
+```{r, cache= TRUE, eval=LOCAL}
+exp(cbind(coef(logit), confint(logit)))
+```
+
+Odds ratio 
+```{r}
+if(!("questionr" %in% installed.packages())){install.packages("questionr")}
+library(questionr)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+odds.ratio(logit)
+```
+
+```{r}
+if(!("gtsummary" %in% installed.packages())){install.packages("gtsummary")}
+library(gtsummary)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+tbl_regression(logit, exponentiate = TRUE)
+```
+
+NB : Les commandes précédentes montrent deux manières d’afficher les coefficients et les intervalles de confiance. 
+
+1. Dans un cas on effectue une concaténation de deux tableaux (coefficients et intervalle de confiance). 
+2. La fonction `odds.ratio` permet d’ajouter les $p$-values (niveau de significativité) et donnent des indications sur la significativité des coefficients estimés. 
+3. On peut également afficher le nom des variables. Il faut au préalable déclarer un label pour les variables grâce à la fonction `var_label`. Comme on peut le remarquer au lieu de `Marge`, `Benef`, `Liquid`, le tableau affiche les labels que nous avons déclarés pour chacune de ces variables, i.e. Taux de marge, Bénéfice et Ratio de Liquidité. 
+
+# Etape 3: Calcul des effets marginaux du modèle logit
+
+Les effets marginaux sont obtenus par la fonction `logitmfx`. En plus des effets marginaux eux-mêmes, les $z$-ratios sont affichés ainsi que les $p$-values. 
+
+```{r}
+if(!("mfx" %in% installed.packages())){install.packages("mfx")}
+library(mfx)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+logitmfx(titi ~ Marge + Benef + Liquid, data=bilan)
+```
+
+# Etape 4 : Graphiques des odds ratios 
+
+Il est possible de fournir un graphique des odds ratios en utilisant la fonction `ggplot`. 
+
+```{r}
+if(!("broom" %in% installed.packages())){install.packages("broom")}
+library(broom)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+tidy(logit, conf.int = TRUE, exponentiate = TRUE)
+tmp <- tidy(logit, conf.int = TRUE, exponentiate = TRUE)
+str(tmp)
+```
+
+```{r}
+if(!("ggplot2" %in% installed.packages())){install.packages("ggplot2")}
+library(ggplot2)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+ggplot(tmp) +
+  aes(x = estimate, y = term, xmin = conf.low, xmax = conf.high) +
+  geom_vline(xintercept = 1) +
+  geom_errorbarh() +
+  geom_point() +
+  scale_x_log10()
+```
+
+# Etape 5 : Graphiques du modèle logit  (probabilités en fonction de xbeta)
+
+```{r, cache= TRUE, eval=LOCAL}
+xbeta2 = coef(logit)[1] + coef(logit)[2]*bilan$Marge + coef(logit)[3]*bilan$Benef + coef(logit)[4]*bilan$Liquid
+plogit2 = exp(xbeta2)/(1+exp(xbeta2))
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+plot(x = xbeta2, 
+     y = plogit2,
+     main = "Probabilité de défaut : Modèle Logit",
+     xlab = "Xbeta",
+     ylab = "Risque prédit",
+     pch = 20,
+     ylim = c(-0.4, 1.4),
+     cex.main = 0.85)
+```
+
+On ajoute des lignes horizontales et du texte 
+```{r, cache= TRUE, eval=LOCAL}
+plot(x = xbeta2, 
+     y = plogit2,
+     main = "Probabilité de défaut : Modèle Logit",
+     xlab = "Xbeta",
+     ylab = "Risque prédit",
+     pch = 20,
+     ylim = c(-0.4, 1.4),
+     cex.main = 0.85)
+abline(h = 1, lty = 2, col = "darkred")
+abline(h = 0, lty = 2, col = "darkred")
+text(-5, 0.9, cex = 0.8, "Risque faible")
+text(-5, -0.1, cex= 0.8, "Risque élevé")
+```
+
+Les commandes ci-dessous permettent de représenter l’effet d’une variation de l’une des variables (ici le taux de marge) sur la variable dépendante. 
+
+Comme on le constatera, la probabilité de faire défaut décroît au fur et à mesure que le taux de marge augmente. 
+
+```{r}
+if(!("ggeffects" %in% installed.packages())){install.packages("ggeffects")}
+library(ggeffects)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+ggeffect(logit, "Marge")  
+plot(ggeffect(logit, "Marge")) 
+```
+
+Même principe pour les autres variables
+
+# Que faire en cas de message d'erreur sur l'estimation ?
+## Exemple avec un modèle probit 
+
+Si vous tentez d'estimer la régression par un modèle probit avec les mêmes variables explicatives en tapant la commande suivante, vous aurez un message d'erreur :
+
+```r
+glm.fit : l'algorithme n'a pas convergé 
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+probit <-glm(titi~ Marge + Benef+ Liquid, family=binomial(link="probit"), data=bilan)
+```
+
+Cela signifie que le modèle n'est pas approprié : l'algorithme ne peut trouver de coefficients estimés qui minimisent la somme des carrés des résidus ou qui maximisent la log-vraisemblance pour le jeu de variables explicatives proposé. Le plus souvent, il faut trouver la variable explicative qui pose problème et la remplacer par une autre. 
+
+En effet, le problème de convergence peut indiquer l'existence d'une colinéarité entre certaines variables explicatives. On peut également tout simplement estimer le modèle sans cette variable. Ici, si on remplace la variable `Benef` par une autre variable (`ROE` par exemple) nous n'avons plus de problème de convergence. 
+
+ROE = taux de rendement des actifs
+
+```{r, cache= TRUE, eval=LOCAL}
+probit <-glm(titi~ Marge + ROE+ Liquid, family=binomial(link="probit"), data=bilan)
+```
+
+L'affichage des résultats, le calculs des effets marginaux, les graphiques sont obtenus en suivant les mêmes principes que pour le modèle logit. 
+
+Par exemple, pour avoir le tableau des résultats et le graphique de la fonction de transition, il suffit d'écrire :  
+
+```{r, cache= TRUE, eval=LOCAL}
+stargazer(probit, type="text")
+```
+
+Pour des résulats au format `html`.
+```{r, cache= TRUE, eval=LOCAL, results='asis'}
+stargazer(probit, type="html")
+```
+
+Pour des résulats au format `html` enregistrés dans le fichier `probit.htm`.
+```{r, cache= TRUE, eval=FALSE}
+stargazer(probit, type="html", out="probit.htm")
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+xbeta3 = (coef(probit)[1] + coef(probit)[2]* bilan$Marge + coef(probit)[3]* bilan$ROE + coef(probit)[4]* bilan$Liquid)
+pprobit3 = exp(xbeta3)/(1+exp(xbeta3))
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+plot(x = xbeta3, 
+     y = pprobit3,
+     main = "Probabilité de défaut : Modèle probit",
+     xlab = "Xbeta",
+     ylab = "Risque prédit",
+     pch = 20,
+     ylim = c(-0.4, 1.4),
+     cex.main = 0.85)
+```
+
+On ajoute des lignes horizontales et du texte 
+```{r, cache= TRUE, eval=LOCAL}
+plot(x = xbeta3, 
+     y = pprobit3,
+     main = "Probabilité de défaut : Modèle probit",
+     xlab = "Xbeta",
+     ylab = "Risque prédit",
+     pch = 20,
+     ylim = c(-0.4, 1.4),
+     cex.main = 0.85)
+abline(h = 1, lty = 2, col = "darkred")
+abline(h = 0, lty = 2, col = "darkred")
+text(2.5, 0.9, cex = 0.8, "Risque faible")
+text(2.5, -0.1, cex= 0.8, "Risque élevé")
+```
+
+Dans le tableau des résultats, la variable ROE n'est pas significative. Nous allons réestimer le modèle probit sans cette variable et tracer la nouvelle fonction de transition.
+
+```{r, cache= TRUE, eval=LOCAL}
+probit2 <-glm(titi~ Marge + Liquid, family=binomial(link="probit"), data=bilan)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+stargazer(probit2, type="text")
+```
+
+Pour des résulats au format `html` enregistrés dans le fichier `probit2.htm`.
+```{r, cache= TRUE, eval=LOCAL, results='asis'}
+stargazer(probit2, type="html")
+```
+
+Pour des résulats au format `html` enregistrés dans le fichier `probit2.htm`.
+```{r, cache= TRUE, eval=FALSE}
+stargazer(probit2, type="html", out="probit2.htm")
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+xbeta4 = (coef(probit2)[1] + coef(probit2)[2]* bilan$Marge + coef(probit2)[3]* bilan$Liquid)
+pprobit4 = exp(xbeta4)/(1+exp(xbeta4))
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+plot(x = xbeta4, 
+     y = pprobit4,
+     main = "Probabilité de défaut : Modèle probit",
+     xlab = "Xbeta",
+     ylab = "Risque prédit",
+     pch = 20,
+     ylim = c(-0.4, 1.4),
+     cex.main = 0.85)
+```
+
+On ajoute des lignes horizontales et du texte 
+```{r, cache= TRUE, eval=LOCAL}
+plot(x = xbeta4, 
+     y = pprobit4,
+     main = "Probabilité de défaut : Modèle probit",
+     xlab = "Xbeta",
+     ylab = "Risque prédit",
+     pch = 20,
+     ylim = c(-0.4, 1.4),
+     cex.main = 0.85)
+abline(h = 1, lty = 2, col = "darkred")
+abline(h = 0, lty = 2, col = "darkred")
+text(2.5, 0.9, cex = 0.8, "Risque faible")
+text(2.5, -0.1, cex= 0.8, "Risque élevé")
+```
+
+# Estimation d'un modèle logit/probit ordonné
+## Que veut-on faire ? 
+
+Cette fois-ci, on souhaite estimer un modèle logit ou probit ordonné.
+Pour cela, nous changeons de variable endogène.
+La variable utilisée est "défaut2 "et comporte trois modalités correspondant à un défaut faible, moyen et important les déterminants de ces différents niveaux de défaut sont identiques aux modèles précédents:
+
+- le taux de marge : `Marge` ; 
+- le bénéfice avant impôt : `Benef` ;
+- le ratio de liquidité : `Liquid`.
+
+
+Quelques statistiques sur la répartition des observations de la variable endogène, après conversion en facteurs.
+
+Conversion de `Défaut2` en facteur
+```{r, cache= TRUE, eval=LOCAL}
+tata<-factor(bilan$Défaut2)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+levels(tata)
+```
+
+```{r}
+if(!("questionr" %in% installed.packages())){install.packages("questionr")}
+library(questionr)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+freq(tata)
+```
+
+Le nombre d'entreprises dont le risque de défaut est important est supérieur à 40% de l'échantillon total.
+
+Comme précédemment, on définit les variables endogènes et exogènes et on leur donne un label.
+
+```{r, cache= TRUE, eval=LOCAL}
+Y<-cbind(tata)  
+X<-cbind(bilan$Marge, bilan$Benef, bilan$Liquid)
+```
+
+```{r}
+if(!("labelled" %in% installed.packages())){install.packages("labelled")}
+library(labelled)
+```
+
+```{r, cache= TRUE, eval=LOCAL}
+var_label(tata) <- "Risque de défaut"
+var_label(bilan$Marge) <- "Taux de marge"
+var_label(bilan$Benef) <- "Bénéfice"
+var_label(bilan$Liquid) <- "Ratio de liquidité"
+```
+
+Estimation 
+
+On appelle la librairie `ordinal`. Puis on effectue la régression à l'aide de la fonction `clm`.
+
+```{r}
+if(!("ordinal" %in% installed.packages())){install.packages("ordinal")}
+library(ordinal)
+```
+
+Estimation d’un modèle logit ordonné : les résultats sont dans `m`
+
+```{r, cache= TRUE, eval=LOCAL}
+m <- clm(tata ~ Marge + Benef +Liquid, data = bilan, Hess=TRUE)
+```
+
+Résumé du modèle
+
+```{r, cache= TRUE, eval=LOCAL}
+summary(m)
+```
+
+Le modèle étant ordinal, les seuils permettant de séparer les trois régimes sont également estimés. Ces seuils correspondent à $y_i^*$ dans le chapitre 12 (voir la section "pour aller plus loin").
+
+Les coefficients estimés sont donc ceux de la régressionlatente. 
+
+On peut noter que seule la variable `Benef` est significative, ce qui signifie que c'est la variable déterminante pour la classification des entreprises dans l'un des groupes de défaut.
+
+Résultats présentés dans un tableau
+
+```{r, cache= TRUE, eval=LOCAL}
+ctableau <- coef(summary(m))
+ctableau
+```
+
+Calcul des $p$-values
+
+```{r, cache= TRUE, eval=LOCAL}
+pval <- pnorm(abs(ctableau[, "z value"]), lower.tail = FALSE) * 2
+```
+
+Combinaison des deux tableaux
+
+```{r, cache= TRUE, eval=LOCAL}
+ctableau <- cbind(ctableau, "p value" = pval)
+ctableau
+```
+
+Odds ratios
+
+```{r, cache= TRUE, eval=LOCAL}
+exp(coef(m))
+```
+
+
+Intervalles de confiance 
+
+```{r}
+if(!("gtsummary" %in% installed.packages())){install.packages("gtsummary")}
+library(gtsummary)
+```
+
+
+```{r, cache= TRUE, eval=LOCAL}
+tbl_regression(m, exponentiate = TRUE)
+```
+
+
+

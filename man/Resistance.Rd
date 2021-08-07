@@ -3,7 +3,7 @@
 \docType{data}
 \name{Resistance}
 \alias{Resistance}
-\title{Résistance à l’éclatement}
+\title{Résistance à l'éclatement}
 \format{
 Un vecteur avec 30 observations.
 }
@@ -11,6 +11,6 @@ Un vecteur avec 30 observations.
 Resistance
 }
 \description{
-Résistance à l’éclatement.
+Résistance à l'éclatement.
 }
 \keyword{datasets}
