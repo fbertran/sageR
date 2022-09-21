@@ -1,3 +1,7 @@
+# sageR 0.6.0
+
+* Html code fix as requested by CRAN and updating examples.
+
 # sageR 0.5.0
 
 * Added code for examples and exercises for chapters 1, 11 and 12.

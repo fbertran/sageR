@@ -6,22 +6,9 @@
 \alias{sageR-package}
 \title{sageR: Applied Statistics for Economics and Management with R}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Datasets and functions for the book "Statistiques pour l’économie et la gestion", "Théorie et applications en entreprise", F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy, C. Borsenberger editor, (2021, ISBN:9782807319448, De Boeck Supérieur, Louvain-la-Neuve). 
-    The first chapter of the book is dedicated to an introduction to statistics and their world. 
-    The second chapter deals with univariate exploratory statistics and graphics. 
-    The third chapter deals with bivariate and multivariate exploratory statistics and graphics. 
-    The fourth chapter is dedicated to data exploration with Principal Component Analysis. 
-    The fifth chapter is dedicated to data exploration with Correspondance Analysis.
-    The sixth chapter is dedicated to data exploration with Multiple Correspondance Analysis. 
-    The seventh chapter is dedicated to data exploration with automatic clustering. 
-    The eighth chapter is dedicated to an introduction to probability theory and classical probability distributions.
-    The ninth chapter is dedicated to an estimation theory, one-sample and two-sample tests.
-    The tenth chapter is dedicated to an Gaussian linear model.
-    The eleventh chapter is dedicated to an introduction to time series.
-    The twelfth chapter is dedicated to an introduction to probit and logit models.
-    Various example datasets are shipped with the package as well as some new functions.
+Datasets and functions for the book "Statistiques pour l’économie et la gestion", "Théorie et applications en entreprise", F. Bertrand, Ch. Derquenne, G. Dufrénot, F. Jawadi and M. Maumy, C. Borsenberger editor, (2021, ISBN:9782807319448, De Boeck Supérieur, Louvain-la-Neuve). The first chapter of the book is dedicated to an introduction to statistics and their world. The second chapter deals with univariate exploratory statistics and graphics. The third chapter deals with bivariate and multivariate exploratory statistics and graphics. The fourth chapter is dedicated to data exploration with Principal Component Analysis. The fifth chapter is dedicated to data exploration with Correspondance Analysis. The sixth chapter is dedicated to data exploration with Multiple Correspondance Analysis. The seventh chapter is dedicated to data exploration with automatic clustering. The eighth chapter is dedicated to an introduction to probability theory and classical probability distributions. The ninth chapter is dedicated to an estimation theory, one-sample and two-sample tests. The tenth chapter is dedicated to an Gaussian linear model. The eleventh chapter is dedicated to an introduction to time series. The twelfth chapter is dedicated to an introduction to probit and logit models. Various example datasets are shipped with the package as well as some new functions.
 }
 \seealso{
 Useful links:

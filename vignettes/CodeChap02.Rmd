@@ -1,19 +1,19 @@
 ---
-title: "Chapitre 02. Statistiques descriptives et visualisation des données univariables"
+title: "Chapitre 02. Statistiques descriptives et visualisation des données univariables."
 subtitle: "Tout le code avec R."
 author: "F. Bertrand et M. Maumy"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Chapitre 02. Statistiques descriptives et visualisation des données univariables}
+  %\VignetteIndexEntry{Chapitre 02. Statistiques descriptives et visualisation des données univariables.}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 <table align="center">
         <tr>
-            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;"/></td>
-            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;"/></td>
+            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100 0 0;"/></td>
+            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100;"/></td>
         </tr>
 </table>
 
@@ -89,7 +89,7 @@ library(sageR)
 
 # Effectifs
 
-## Nombre de personnes dans un foyer
+## Nombre de personnes dans un foyer Tableau 2.5
 ```{r, eval=LOCAL}
 data(Personnes_Foyer)
 xi <- Personnes_Foyer$xi
@@ -121,13 +121,13 @@ mad(rrr,constant = 1)
 
 ## Population provinces et territoires Canada
 ```{r, eval=LOCAL}
-data(ProtervsSexe_Canada)
-ProTer <- margin.table(as.matrix(ProtervsSexe_Canada),1)
+data(Proter_Canada)
+ProTer <-Proter_Canada$Population
 
-sort(ProTer)<=1379263
-sum(sort(ProTer)<=1379263)
-sum(sort(ProTer)==1379263)
-sum(sort(ProTer)<=5147712)
+sort(ProTer)<=1379584
+sum(sort(ProTer)<=1379584)
+sum(sort(ProTer)==1379584)
+sum(sort(ProTer)<=5145851)
 length(ProTer)
 ```
 
@@ -136,14 +136,28 @@ length(ProTer)
 ```{r, eval=LOCAL}
 data(AgevsProter_Canada_full)
 Age <- margin.table(as.matrix(AgevsProter_Canada_full),1)
+Age
+```
 
+
+```{r, eval=LOCAL}
+cumsum(Age)
+```
+
+```{r}
+Age/sum(Age)
+```
+
+```{r}
+cumsum(Age)/sum(Age)
+```
+
+```{r, eval=LOCAL}
 njall <- Age
-
 nj <- njall[-length(njall)]
 centres <- c(5*(0:19)+2.5)
 cj <- 5*(0:20)
-
-(x <- actuar::grouped.data(Group = cj, Frequency = nj))
+x <- actuar::grouped.data(Group = cj, Frequency = as.numeric(nj))
 class(x)
 ```
 
@@ -166,7 +180,7 @@ print(cumsum(nj/sum(nj)),digits=3)
 centres
 
 40+(45-40)*(.5-0.4885)/(0.5534-0.4885)
-40.88648
+40.88598
 
 20+(25-20)*(0.2500-0.2142)/(0.2796-0.2142)
 22.74
@@ -664,7 +678,7 @@ dev.off()
 
 
 
-## Nombre de personnes par famille en 
+## Nombre de personnes par famille
 ```{r, eval=LOCAL}
 data(Personnes_Foyer)
 ni <- Personnes_Foyer$ni
@@ -683,7 +697,7 @@ if(!("ggplot2" %in% installed.packages())){install.packages("ggplot2")}
 library(ggplot2)
 ```
 
-
+### Diagramme en bâtons des effectifs
 ```{r, eval=LOCAL, cache=TRUE}
 p1 <- ggplot(Personnes_Foyer) +
   geom_col(aes(y = ni, x = xi),width = .05)+
@@ -700,7 +714,7 @@ Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Sources/"
 colmodel="cmyk"
 ggsave(paste(Chemin,"batoneffnew.pdf",sep=""),
        width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-       title = "Probability or cumulative distribution graphs", 
+       title = "Diagramme en bâtons des effectifs", 
        paper = "special", colormodel = colmodel)
 ```
 
@@ -1183,7 +1197,7 @@ europe <- vector("list",1)
 europe$Durée <- Europe$Salariés
 ```
 
-### BàM
+### Boîte à moustaches
 ```{r, eval=LOCAL, cache=TRUE}
 head(europe)
 str(europe)
@@ -1225,7 +1239,7 @@ dev.off()
 #suppressWarnings(par(oldpar))
 ```
 
-### Stats descp
+### Statistiques descriptives
 ```{r, eval=LOCAL, cache=TRUE}
 mean(europe$Durée)
 quantile(europe$Durée,probs=c(.25,.5,.75),type=6)
@@ -1259,7 +1273,7 @@ europe <- vector("list",1)
 europe$Durée <- Europe$NonSalariés
 ```
 
-### BàM
+### Boîte à moustaches
 ```{r, eval=LOCAL, cache=TRUE}
 head(europe)
 str(europe)
@@ -1300,7 +1314,7 @@ dev.off()
 #suppressWarnings(par(oldpar))
 ```
 
-### Stats descp
+### Statistiques descriptives
 ```{r, eval=LOCAL, cache=TRUE}
 mean(europe$Durée)
 quantile(europe$Durée,probs=c(.25,.5,.75),type=6)
@@ -1346,7 +1360,7 @@ ylimits = c(min(rangePartiel_Ens[1,]),
 max(rangePartiel_Ens[2,]))
 ```
 
-### BàM
+### Boîte à moustaches
 ```{r, eval=LOCAL, cache=TRUE}
 qts <- quantile(europe$Durée,c(.25,.5,.75),type=6)
 ltms <- c(qts[1]-3/2*(qts[3]-qts[1]),qts[3]+3/2*(qts[3]-qts[1]))
@@ -1401,7 +1415,7 @@ points(1,
 dev.off()
 ```
 
-### Stat Desc
+### Statistiques descriptives
 ```{r, eval=LOCAL, cache=TRUE}
 mean(europe$Durée)
 quantile(europe$Durée,probs=c(.25,.5,.75),type=6)
@@ -1439,7 +1453,7 @@ range(europe$Durée)
 sd(europe$Durée)
 ```
 
-### BàM
+### Boîte à moustaches
 ```{r, eval=LOCAL, cache=TRUE}
 qts <- quantile(europe$Durée,c(.25,.5,.75),type=6)
 ltms <- c(qts[1]-3/2*(qts[3]-qts[1]),qts[3]+3/2*(qts[3]-qts[1]))
@@ -1492,7 +1506,7 @@ points(1,
 dev.off()
 ```
 
-### Stat Desc
+### Statistiques descriptives
 ```{r, eval=LOCAL, cache=TRUE}
 mean(europe$Durée)
 quantile(europe$Durée,probs=c(.25,.5,.75),type=6)
@@ -1530,7 +1544,7 @@ range(europe$Durée)
 sd(europe$Durée)
 ```
 
-### BàM
+### Boîte à moustaches
 ```{r, eval=LOCAL, cache=TRUE}
 qts <- quantile(europe$Durée,c(.25,.5,.75),type=6)
 ltms <- c(qts[1]-3/2*(qts[3]-qts[1]),qts[3]+3/2*(qts[3]-qts[1]))
@@ -1586,7 +1600,7 @@ dev.off()
 
 
 
-### Stat Desc
+### Statistiques descriptives
 ```{r, eval=LOCAL, cache=TRUE}
 mean(europe$Durée)
 quantile(europe$Durée,probs=c(.25,.5,.75),type=6)
@@ -1622,7 +1636,7 @@ ni <- as.vector(table(var1))
 data2 <- cbind(xi,ni)
 ```
 
-### batoneffnew
+### Diagramme en bâtons des effectifs
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -1638,13 +1652,13 @@ Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Donnees/"
 colmodel="cmyk"
 pdf(file = paste(Chemin,"batoneffnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 dev.off()
 ```
 
-### batonfrenew
+### Diagramme en bâtons des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -1656,13 +1670,13 @@ plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))   #
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"batonfrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))   #,xaxt="n"
 dev.off()
 ```
 
-### polyeffnew
+### Diagramme en bâtons des effectifs et polygone des effectifs
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -1675,14 +1689,14 @@ segments(xi[-length(xi)],ni[-length(xi)],xi[-1],ni[-1],lwd=2,col="#00FFFF")
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"polyeffnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs et polygone des effectifs", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 segments(xi[-length(xi)],ni[-length(xi)],xi[-1],ni[-1],lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### polyfrenew
+### Diagramme en bâtons des fréquences et polygone des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -1695,14 +1709,14 @@ segments(xi[-length(xi)],ni[-length(xi)]/sum(ni),xi[-1],ni[-1]/sum(ni),lwd=2,col
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"polyfrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des fréquences et polygone des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))
 segments(xi[-length(xi)],ni[-length(xi)]/sum(ni),xi[-1],ni[-1]/sum(ni),lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### polyeffcumnew
+### Diagramme en bâtons des effectifs cumulés et polygone des effectifs cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 nisum <- rep(ni[1],length(ni))
 for (iii in 2:length(ni))
@@ -1721,14 +1735,14 @@ segments(xi[-length(xi)],nisum[-length(xi)],xi[-1],nisum[-1],lwd=2,col="#00FFFF"
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"polyeffcumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs cumulés et polygone des effectifs cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 segments(xi[-length(xi)],nisum[-length(xi)],xi[-1],nisum[-1],lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### frecumnew
+### Diagramme en bâtons des fréquences cumulées
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -1740,13 +1754,13 @@ plot(xi,nisum/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum/sum(ni))
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"frecumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des fréquences cumulées", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,nisum/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum/sum(ni))))  #,xaxt="n"
 dev.off()
 ```
 
-### effcumnew
+### Diagramme en bâtons des effectifs cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -1758,7 +1772,7 @@ plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"effcumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 dev.off()
@@ -1776,7 +1790,7 @@ data3 <- rep((breaks0[-length(breaks0)]+diff(breaks0)/2)
 table(data3)
 ```
 
-### histofrenew
+### Histogramme des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -1790,13 +1804,13 @@ Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Donnees/"
 colmodel="cmyk"
 pdf(file = paste(Chemin,"histofrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
 dev.off()
 ```
 
-### histopolfrenew
+### Histogramme des fréquences et polygone des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -1811,14 +1825,14 @@ Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Donnees/"
 colmodel="cmyk"
 pdf(file = paste(Chemin,"histopolfrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences et polygone des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
 segments(histofre$mids[-(length(breaks0)-1)],histofre$density[-(length(breaks0)-1)],histofre$mids[-1],histofre$density[-1],lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### histofrecumnew
+### Histogramme des fréquences cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 data4 <- rep((breaks0[-length(breaks0)]+diff(breaks0)/2),cumsum(table(cut(var1,breaks0))))
 table(data4)
@@ -1836,14 +1850,14 @@ Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Donnees/"
 colmodel="cmyk"
 pdf(file = paste(Chemin,"histofrecumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd=2)
 dev.off()
 ```
 
-### histopolfrecumnew
+### Histogramme des fréquences cumulées et polygone des fréquences cumulées
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -1857,7 +1871,7 @@ axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histopolfrecumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences cumulées et polygone des fréquences cumulées", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 segments(histofrecum$mids[-(length(breaks0)-1)],histofrecum$density[-(length(breaks0)-1)],histofrecum$mids[-1],histofrecum$density[-1],lwd=2,col="#00FFFF")
@@ -1865,7 +1879,7 @@ axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd
 dev.off()
 ```
 
-### histopoleffcumnew
+### Histogramme des effectifs cumulés et polygone des effectifs cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -1879,7 +1893,7 @@ segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(brea
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histopoleffcumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des effectifs cumulés et polygone des effectifs cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histoeffcum <- hist(data4,breaks=breaks0,main="",freq=T,xlab="",ylab="",lwd=2,density=10)     #,yaxt="n"
 segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(breaks0)-1)],histoeffcum$mids[-1],histoeffcum$counts[-1],lwd=2,col="#00FFFF")
@@ -1900,7 +1914,7 @@ ni <- as.vector(table(var1))
 data2 <- cbind(xi,ni)
 ```
 
-### batoneffnew
+### Diagramme en bâtons des effectifs
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -1916,13 +1930,13 @@ Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Donnees/"
 colmodel="cmyk"
 pdf(file = paste(Chemin,"batoneffnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 dev.off()
 ```
 
-### batonfrenew
+### Diagramme en bâtons des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -1934,13 +1948,13 @@ plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))   #
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"batonfrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))   #,xaxt="n"
 dev.off()
 ```
 
-### polyeffnew
+### Diagramme en bâtons des effectifs et polygone des effectifs
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -1953,14 +1967,14 @@ segments(xi[-length(xi)],ni[-length(xi)],xi[-1],ni[-1],lwd=2,col="#00FFFF")
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"polyeffnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs et polygone des effectifs", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 segments(xi[-length(xi)],ni[-length(xi)],xi[-1],ni[-1],lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### polyfrenew
+### Diagramme en bâtons des fréquences et polygone des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -1973,14 +1987,14 @@ segments(xi[-length(xi)],ni[-length(xi)]/sum(ni),xi[-1],ni[-1]/sum(ni),lwd=2,col
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"polyfrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des fréquences et polygone des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))
 segments(xi[-length(xi)],ni[-length(xi)]/sum(ni),xi[-1],ni[-1]/sum(ni),lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### polyeffcumnew
+### Diagramme en bâtons des effectifs cumulés et polygone des effectifs cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 nisum <- rep(ni[1],length(ni))
 for (iii in 2:length(ni))
@@ -1999,14 +2013,14 @@ segments(xi[-length(xi)],nisum[-length(xi)],xi[-1],nisum[-1],lwd=2,col="#00FFFF"
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"polyeffcumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs cumulés et polygone des effectifs cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 segments(xi[-length(xi)],nisum[-length(xi)],xi[-1],nisum[-1],lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### frecumnew
+### Diagramme en bâtons des fréquences cumulées
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2018,13 +2032,13 @@ plot(xi,nisum/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum/sum(ni))
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"frecumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des fréquences cumulées", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,nisum/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum/sum(ni))))  #,xaxt="n"
 dev.off()
 ```
 
-### effcumnew
+### Diagramme en bâtons des effectifs cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2036,7 +2050,7 @@ plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"effcumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 dev.off()
@@ -2053,7 +2067,7 @@ data3 <- rep((breaks0[-length(breaks0)]+diff(breaks0)/2)
 table(data3)
 ```
 
-### histofrenew
+### Histogramme des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2067,13 +2081,13 @@ Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Donnees/"
 colmodel="cmyk"
 pdf(file = paste(Chemin,"histofrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
 dev.off()
 ```
 
-### histopolfrenew
+### Histogramme des fréquences et polygone des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2086,14 +2100,14 @@ segments(histofre$mids[-(length(breaks0)-1)],histofre$density[-(length(breaks0)-
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histopolfrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences et polygone des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
 segments(histofre$mids[-(length(breaks0)-1)],histofre$density[-(length(breaks0)-1)],histofre$mids[-1],histofre$density[-1],lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### histofrecumnew
+### Histogramme des fréquences cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 data4 <- rep((breaks0[-length(breaks0)]+diff(breaks0)/2)
              ,cumsum(table(cut(var1,breaks0))))
@@ -2112,14 +2126,14 @@ axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histofrecumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd=2)
 dev.off()
 ```
 
-### histopolfrecumnew
+### Histogramme des fréquences cumulées et polygone des fréquences cumulées
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2133,7 +2147,7 @@ axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histopolfrecumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences cumulées et polygone des fréquences cumulées", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 segments(histofrecum$mids[-(length(breaks0)-1)],histofrecum$density[-(length(breaks0)-1)],histofrecum$mids[-1],histofrecum$density[-1],lwd=2,col="#00FFFF")
@@ -2141,7 +2155,7 @@ axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd
 dev.off()
 ```
 
-### histopoleffcumnew
+### Histogramme des effectifs cumulés et polygone des effectifs cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2155,7 +2169,7 @@ segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(brea
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histopoleffcumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des effectifs cumulés et polygone des effectifs cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histoeffcum <- hist(data4,breaks=breaks0,main="",freq=T,xlab="",ylab="",lwd=2,density=10)     #,yaxt="n"
 segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(breaks0)-1)],histoeffcum$mids[-1],histoeffcum$counts[-1],lwd=2,col="#00FFFF")
@@ -2176,7 +2190,7 @@ ni <- as.vector(table(var1))
 data2 <- cbind(xi,ni)
 ```
 
-### batoneffnew
+### Diagramme en bâtons des effectifs
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2192,13 +2206,13 @@ Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Donnees/"
 colmodel="cmyk"
 pdf(file = paste(Chemin,"batoneffnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 dev.off()
 ```
 
-### batonfrenew
+### Diagramme en bâtons des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2210,13 +2224,13 @@ plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))   #
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"batonfrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))   #,xaxt="n"
 dev.off()
 ```
 
-### polyeffnew
+### Diagramme en bâtons des effectifs et polygone des effectifs
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2229,14 +2243,14 @@ segments(xi[-length(xi)],ni[-length(xi)],xi[-1],ni[-1],lwd=2,col="#00FFFF")
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"polyeffnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs et polygone des effectifs", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 segments(xi[-length(xi)],ni[-length(xi)],xi[-1],ni[-1],lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### polyfrenew
+### Diagramme en bâtons des fréquences et polygone des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2249,14 +2263,14 @@ segments(xi[-length(xi)],ni[-length(xi)]/sum(ni),xi[-1],ni[-1]/sum(ni),lwd=2,col
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"polyfrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des fréquences et polygone des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))
 segments(xi[-length(xi)],ni[-length(xi)]/sum(ni),xi[-1],ni[-1]/sum(ni),lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### polyeffcumnew
+### Diagramme en bâtons des effectifs cumulés et polygone des effectifs cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 nisum <- rep(ni[1],length(ni))
 for (iii in 2:length(ni))
@@ -2275,14 +2289,14 @@ segments(xi[-length(xi)],nisum[-length(xi)],xi[-1],nisum[-1],lwd=2,col="#00FFFF"
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"polyeffcumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs cumulés et polygone des effectifs cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 segments(xi[-length(xi)],nisum[-length(xi)],xi[-1],nisum[-1],lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### frecumnew
+### Diagramme en bâtons des fréquences cumulées
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2294,13 +2308,13 @@ plot(xi,nisum/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum/sum(ni))
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"frecumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des fréquences cumulées", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,nisum/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum/sum(ni))))  #,xaxt="n"
 dev.off()
 ```
 
-### effcumnew
+### Diagramme en bâtons des effectifs cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2312,7 +2326,7 @@ plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"effcumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 dev.off()
@@ -2329,7 +2343,7 @@ data3 <- rep((breaks0[-length(breaks0)]+diff(breaks0)/2)
 table(data3)
 ```
 
-### histofrenew
+### Histogramme des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2343,13 +2357,13 @@ Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Donnees/"
 colmodel="cmyk"
 pdf(file = paste(Chemin,"histofrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
 dev.off()
 ```
 
-### histopolfrenew
+### Histogramme des fréquences et polygone des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2362,14 +2376,14 @@ segments(histofre$mids[-(length(breaks0)-1)],histofre$density[-(length(breaks0)-
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histopolfrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences et polygone des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
 segments(histofre$mids[-(length(breaks0)-1)],histofre$density[-(length(breaks0)-1)],histofre$mids[-1],histofre$density[-1],lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### histofrecumnew
+### Histogramme des fréquences cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 data4 <- rep((breaks0[-length(breaks0)]+diff(breaks0)/2)
              ,cumsum(table(cut(var1,breaks0))))
@@ -2386,14 +2400,14 @@ axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histofrecumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd=2)
 dev.off()
 ```
 
-### histopolfrecumnew
+### Histogramme des fréquences cumulées et polygone des fréquences cumulées
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2407,7 +2421,7 @@ axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histopolfrecumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences cumulées et polygone des fréquences cumulées", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 segments(histofrecum$mids[-(length(breaks0)-1)],histofrecum$density[-(length(breaks0)-1)],histofrecum$mids[-1],histofrecum$density[-1],lwd=2,col="#00FFFF")
@@ -2415,7 +2429,7 @@ axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd
 dev.off()
 ```
 
-### histopoleffcumnew
+### Histogramme des effectifs cumulés et polygone des effectifs cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2429,7 +2443,7 @@ segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(brea
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histopoleffcumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des effectifs cumulés et polygone des effectifs cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histoeffcum <- hist(data4,breaks=breaks0,main="",freq=T,xlab="",ylab="",lwd=2,density=10)     #,yaxt="n"
 segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(breaks0)-1)],histoeffcum$mids[-1],histoeffcum$counts[-1],lwd=2,col="#00FFFF")
@@ -2449,7 +2463,7 @@ ni <- as.vector(table(var1))
 data2 <- cbind(xi,ni)
 ```
 
-### batoneffnew
+### Diagramme en bâtons des effectifs
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2465,13 +2479,13 @@ Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Donnees/"
 colmodel="cmyk"
 pdf(file = paste(Chemin,"batoneffnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 dev.off()
 ```
 
-### batonfrenew
+### Diagramme en bâtons des effectifs et polygone des effectifs
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2489,7 +2503,7 @@ plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))   #
 dev.off()
 ```
 
-### polyeffnew
+### Diagramme en bâtons des effectifs et polygone des effectifs
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2502,14 +2516,14 @@ segments(xi[-length(xi)],ni[-length(xi)],xi[-1],ni[-1],lwd=2,col="#00FFFF")
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"polyeffnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs et polygone des effectifs", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 segments(xi[-length(xi)],ni[-length(xi)],xi[-1],ni[-1],lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### polyfrenew
+### Diagramme en bâtons des fréquences et polygone des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2522,14 +2536,14 @@ segments(xi[-length(xi)],ni[-length(xi)]/sum(ni),xi[-1],ni[-1]/sum(ni),lwd=2,col
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"polyfrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des fréquences et polygone des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))
 segments(xi[-length(xi)],ni[-length(xi)]/sum(ni),xi[-1],ni[-1]/sum(ni),lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### polyeffcumnew
+### Diagramme en bâtons des effectifs cumulés et polygone des effectifs cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 nisum <- rep(ni[1],length(ni))
 for (iii in 2:length(ni))
@@ -2548,14 +2562,14 @@ segments(xi[-length(xi)],nisum[-length(xi)],xi[-1],nisum[-1],lwd=2,col="#00FFFF"
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"polyeffcumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs cumulés et polygone des effectifs cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 segments(xi[-length(xi)],nisum[-length(xi)],xi[-1],nisum[-1],lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### frecumnew
+### Diagramme en bâtons des fréquences cumulées
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2567,13 +2581,13 @@ plot(xi,nisum/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum/sum(ni))
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"frecumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des fréquences cumulées", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,nisum/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum/sum(ni))))  #,xaxt="n"
 dev.off()
 ```
 
-### effcumnew
+### Diagramme en bâtons des effectifs cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2585,7 +2599,7 @@ plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"effcumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 dev.off()
@@ -2602,7 +2616,7 @@ data3 <- rep((breaks0[-length(breaks0)]+diff(breaks0)/2)
 table(data3)
 ```
 
-### histofrenew
+### Histogramme des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2616,13 +2630,13 @@ Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Donnees/"
 colmodel="cmyk"
 pdf(file = paste(Chemin,"histofrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
 dev.off()
 ```
 
-### histopolfrenew
+### Histogramme des fréquences et polygone des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2635,14 +2649,14 @@ segments(histofre$mids[-(length(breaks0)-1)],histofre$density[-(length(breaks0)-
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histopolfrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences et polygone des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
 segments(histofre$mids[-(length(breaks0)-1)],histofre$density[-(length(breaks0)-1)],histofre$mids[-1],histofre$density[-1],lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### histofrecumnew
+### Histogramme des fréquences cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 data4 <- rep((breaks0[-length(breaks0)]+diff(breaks0)/2)
              ,cumsum(table(cut(var1,breaks0))))
@@ -2661,14 +2675,14 @@ axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histofrecumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd=2)
 dev.off()
 ```
 
-### histopolfrecumnew
+### Histogramme des fréquences cumulées et polygone des fréquences cumulées
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2681,7 +2695,7 @@ axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histopolfrecumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences cumulées et polygone des fréquences cumulées", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 segments(histofrecum$mids[-(length(breaks0)-1)],histofrecum$density[-(length(breaks0)-1)],histofrecum$mids[-1],histofrecum$density[-1],lwd=2,col="#00FFFF")
@@ -2689,7 +2703,7 @@ axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd
 dev.off()
 ```
 
-### histopoleffcumnew
+### Histogramme des effectifs cumulés et polygone des effectifs cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2702,7 +2716,7 @@ segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(brea
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histopoleffcumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des effectifs cumulés et polygone des effectifs cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histoeffcum <- hist(data4,breaks=breaks0,main="",freq=T,xlab="",ylab="",lwd=2,density=10)     #,yaxt="n"
 segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(breaks0)-1)],histoeffcum$mids[-1],histoeffcum$counts[-1],lwd=2,col="#00FFFF")
@@ -2726,7 +2740,7 @@ ni <- as.vector(table(var1))
 data2 <- cbind(xi,ni)
 ```
 
-### batoneffnew
+### Diagramme en bâtons des effectifs
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2742,13 +2756,13 @@ Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Donnees/"
 colmodel="cmyk"
 pdf(file = paste(Chemin,"batoneffnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 dev.off()
 ```
 
-### batonfrenew
+### Diagramme en bâtons des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2760,13 +2774,13 @@ plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))   #
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"batonfrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))   #,xaxt="n"
 dev.off()
 ```
 
-### polyeffnew
+### Diagramme en bâtons des effectifs et polygone des effectifs
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2779,14 +2793,14 @@ segments(xi[-length(xi)],ni[-length(xi)],xi[-1],ni[-1],lwd=2,col="#00FFFF")
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"polyeffnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs et polygone des effectifs", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni))) #,xaxt="n"
 segments(xi[-length(xi)],ni[-length(xi)],xi[-1],ni[-1],lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### polyfrenew
+### Diagramme en bâtons des fréquences et polygone des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2799,14 +2813,14 @@ segments(xi[-length(xi)],ni[-length(xi)]/sum(ni),xi[-1],ni[-1]/sum(ni),lwd=2,col
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"polyfrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des fréquences et polygone des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,ni/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(ni/sum(ni))))
 segments(xi[-length(xi)],ni[-length(xi)]/sum(ni),xi[-1],ni[-1]/sum(ni),lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### polyeffcumnew
+### Diagramme en bâtons des effectifs cumulés et polygone des effectifs cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 nisum <- rep(ni[1],length(ni))
 for (iii in 2:length(ni))
@@ -2825,14 +2839,14 @@ segments(xi[-length(xi)],nisum[-length(xi)],xi[-1],nisum[-1],lwd=2,col="#00FFFF"
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"polyeffcumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs cumulés et polygone des effectifs cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 segments(xi[-length(xi)],nisum[-length(xi)],xi[-1],nisum[-1],lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### frecumnew
+### Diagramme en bâtons des fréquences cumulées
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2844,13 +2858,13 @@ plot(xi,nisum/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum/sum(ni))
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"frecumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des fréquences cumulées", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,nisum/sum(ni),type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum/sum(ni))))  #,xaxt="n"
 dev.off()
 ```
 
-### effcumnew
+### Diagramme en bâtons des effectifs cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2862,7 +2876,7 @@ plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"effcumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Diagramme en bâtons des effectifs cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 plot(xi,nisum,type='h',xlab="",ylab="",lwd=2,ylim=c(0,max(nisum))) #,xaxt="n"
 dev.off()
@@ -2879,7 +2893,7 @@ data3 <- rep((breaks0[-length(breaks0)]+diff(breaks0)/2)
 table(data3)
 ```
 
-### histofrenew
+### Histogramme des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2893,13 +2907,13 @@ Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Donnees/"
 colmodel="cmyk"
 pdf(file = paste(Chemin,"histofrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
 dev.off()
 ```
 
-### histopolfrenew
+### Histogramme des fréquences et polygone des fréquences
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2912,14 +2926,14 @@ segments(histofre$mids[-(length(breaks0)-1)],histofre$density[-(length(breaks0)-
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histopolfrenew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences et polygone des fréquences", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofre <- hist(data3,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,density=10)
 segments(histofre$mids[-(length(breaks0)-1)],histofre$density[-(length(breaks0)-1)],histofre$mids[-1],histofre$density[-1],lwd=2,col="#00FFFF")
 dev.off()
 ```
 
-### histopoleffcumnew
+### Histogramme des effectifs cumulés et polygone des effectifs cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2933,7 +2947,7 @@ segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(brea
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histopoleffcumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des effectifs cumulés et polygone des effectifs cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histoeffcum <- hist(data4,breaks=breaks0,main="",freq=T,xlab="",ylab="",lwd=2,density=10)     #,yaxt="n"
 segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(breaks0)-1)],histoeffcum$mids[-1],histoeffcum$counts[-1],lwd=2,col="#00FFFF")
@@ -2941,7 +2955,7 @@ segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(brea
 dev.off()
 ```
 
-### histofrecumnew
+### Histogramme des fréquences cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 data4 <- rep((breaks0[-length(breaks0)]+diff(breaks0)/2)
              ,cumsum(table(cut(var1,breaks0))))
@@ -2958,14 +2972,14 @@ axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histofrecumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd=2)
 dev.off()
 ```
 
-### histopolfrecumnew
+### Histogramme des fréquences cumulées et polygone des fréquences cumulées
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -2979,7 +2993,7 @@ axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histopolfrecumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des fréquences cumulées et polygone des fréquences cumulées", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histofrecum <- hist(data4,breaks=breaks0,main="",freq=F,xlab="",ylab="",lwd=2,yaxt="n",density=10)
 segments(histofrecum$mids[-(length(breaks0)-1)],histofrecum$density[-(length(breaks0)-1)],histofrecum$mids[-1],histofrecum$density[-1],lwd=2,col="#00FFFF")
@@ -2987,7 +3001,7 @@ axis(2,at=c(0,.2,.4,.6,.8,1)*max(histofrecum$dens),labels=c(0,.2,.4,.6,.8,1),lwd
 dev.off()
 ```
 
-### histopoleffcumnew
+### Histogramme des effectifs cumulés et polygone des effectifs cumulés
 ```{r, eval=LOCAL, cache=TRUE}
 oldpar <- par()
 par(mar = c(2, 2, 1, 1) + 0.1, mgp=c(2,1,0))
@@ -3001,7 +3015,7 @@ segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(brea
 ```{r, eval=SAVE_GRAPHS, echo=SAVE_GRAPHS}
 pdf(file = paste(Chemin,"histopoleffcumnew",varN,".pdf",sep=""),
     width = 8, height = 7, onefile = TRUE, family = "Helvetica",
-    title = "Probability or cumulative distribution graphs", paper = "special", colormodel = colmodel)
+    title = "Histogramme des effectifs cumulés et polygone des effectifs cumulés", paper = "special", colormodel = colmodel)
 par(mar = c(2, 2, 1, 1) + 0.1, mgp = c(2, 1, 0))
 histoeffcum <- hist(data4,breaks=breaks0,main="",freq=T,xlab="",ylab="",lwd=2,density=10)     #,yaxt="n"
 segments(histoeffcum$mids[-(length(breaks0)-1)],histoeffcum$counts[-(length(breaks0)-1)],histoeffcum$mids[-1],histoeffcum$counts[-1],lwd=2,col="#00FFFF")
@@ -3056,7 +3070,7 @@ dev.off()
 data(Europe)
 ```
 
-### Position
+### Paramètres de position
 ```{r, eval=LOCAL, cache=TRUE}
 format(cbind(Moy=colMeans(Europe[,c(2,3,4,6,5)]), Q1=
                c(quantile(Europe[,2],type=6)[2],quantile(Europe[,3],type=6)[2],quantile(Europe[,4],type=6)[2],quantile(Europe[,6],type=6)[2],quantile(Europe[,5],type=6)[2]), Q2=
@@ -3064,7 +3078,7 @@ format(cbind(Moy=colMeans(Europe[,c(2,3,4,6,5)]), Q1=
                c(quantile(Europe[,2],type=6)[4],quantile(Europe[,3],type=6)[4],quantile(Europe[,4],type=6)[4],quantile(Europe[,6],type=6)[4],quantile(Europe[,5],type=6)[4])),digits=3)
 ```
 
-### Dispersion
+### Paramètres de dispersion
 ```{r, eval=LOCAL, cache=TRUE}
 tab2=cbind(
     sd=c(sqrt(1/length(Europe[,2])*sum((Europe[,2]-mean(Europe[,2]))^2)),
@@ -3097,7 +3111,7 @@ rownames(tab2) <- colnames(Europe)[c(2,3,4,6,5)]
 round(tab2,digits=3)
 ```
 
-### Forme
+### Paramètres de forme
 ```{r, eval=LOCAL, cache=TRUE}
 nn=length(Europe[,2])
 tab5=
@@ -3141,7 +3155,10 @@ tab5=
 ```
 
 ## Analyse du tableau Europe emploi après regroupement des données
-### Création naïve des classes
+
+### Création des groupes
+
+#### Création naïve des classes
 ```{r, eval=LOCAL, cache=TRUE}
 distg1<-table(cut(Europe$Partiel_Ens,c(0,10,20,30,40,50,60,70,80)))
 distg2<-table(cut(Europe$Partiel_H,c(0,10,20,30,40,50,60,70,80)))
@@ -3162,12 +3179,12 @@ distg5
 #Centres des classes
 vald45<-(c(35,40,45,50,55,60)[-6]+c(35,40,45,50,55,60)[-1])/2
 ```
-### Utilisation du package actuar
+
+#### Utilisation du package actuar
 ```{r, eval=LOCAL, cache=TRUE}
 if(!("actuar" %in% installed.packages())){install.packages("actuar")}
 library(actuar)
 ```
-
 
 ```{r, eval=LOCAL, cache=TRUE}
 x1 <- grouped.data(Partiel_Ens=Europe$Partiel_Ens,breaks=c(0,10,20,30,40,50,60,70,80))
@@ -3180,7 +3197,7 @@ cbind(x1,x2,x3)
 cbind(x4,x5)
 ```
 
-
+### Statistiques descriptives groupées
 ```{r, eval=LOCAL, cache=TRUE}
 c(
   weighted.mean(vald123,distg1),
@@ -3215,19 +3232,19 @@ round(tab3,digits=2)
 
 tab4=cbind(
   sigma=c(
-    sqrt(weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^2,x1[,2])-1/12/weighted.mean(diff(x1[,1])^2,x1[,2])),
-    sqrt(weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^2,x2[,2])-1/12/weighted.mean(diff(x2[,1])^2,x2[,2])),
-    sqrt(weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^2,x3[,2])-1/12/weighted.mean(diff(x3[,1])^2,x3[,2])),
-    sqrt(weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^2,x4[,2])-1/12/weighted.mean(diff(x4[,1])^2,x4[,2])),
-    sqrt(weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^2,x5[,2])-1/12/weighted.mean(diff(x5[,1])^2,x5[,2]))
+    sqrt(weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^2,x1[,2])-1/12*weighted.mean(diff(x1[,1])^2,x1[,2])),
+    sqrt(weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^2,x2[,2])-1/12*weighted.mean(diff(x2[,1])^2,x2[,2])),
+    sqrt(weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^2,x3[,2])-1/12*weighted.mean(diff(x3[,1])^2,x3[,2])),
+    sqrt(weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^2,x4[,2])-1/12*weighted.mean(diff(x4[,1])^2,x4[,2])),
+    sqrt(weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^2,x5[,2])-1/12*weighted.mean(diff(x5[,1])^2,x5[,2]))
   ),
   EIQ=t(diff(t(rbind(quantile(x1),quantile(x2),quantile(x3),quantile(x4),quantile(x5))[,c(2,4)]))),
   CV=c(
-    sqrt(weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^2,x1[,2])-1/12/weighted.mean(diff(x1[,1])^2,x1[,2]))/mean(x1)*100,
-    sqrt(weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^2,x2[,2])-1/12/weighted.mean(diff(x2[,1])^2,x2[,2]))/mean(x2)*100,
-    sqrt(weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^2,x3[,2])-1/12/weighted.mean(diff(x3[,1])^2,x3[,2]))/mean(x3)*100,
-    sqrt(weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^2,x4[,2])-1/12/weighted.mean(diff(x4[,1])^2,x4[,2]))/mean(x4)*100,
-    sqrt(weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^2,x5[,2])-1/12/weighted.mean(diff(x5[,1])^2,x5[,2]))/mean(x5)*100
+    sqrt(weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^2,x1[,2])-1/12*weighted.mean(diff(x1[,1])^2,x1[,2]))/mean(x1)*100,
+    sqrt(weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^2,x2[,2])-1/12*weighted.mean(diff(x2[,1])^2,x2[,2]))/mean(x2)*100,
+    sqrt(weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^2,x3[,2])-1/12*weighted.mean(diff(x3[,1])^2,x3[,2]))/mean(x3)*100,
+    sqrt(weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^2,x4[,2])-1/12*weighted.mean(diff(x4[,1])^2,x4[,2]))/mean(x4)*100,
+    sqrt(weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^2,x5[,2])-1/12*weighted.mean(diff(x5[,1])^2,x5[,2]))/mean(x5)*100
   ))
   
 round(tab4[,1],digits=2)
@@ -3237,58 +3254,58 @@ round(tab4[,3],digits=2)
 tab6=cbind(
   asyFis=
     c(
-      weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^3,x1[,2])/sqrt(weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^2,x1[,2])-1/12/weighted.mean(diff(x1[,1])^2,x1[,2]))^3,
-      weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^3,x2[,2])/sqrt(weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^2,x2[,2])-1/12/weighted.mean(diff(x2[,1])^2,x2[,2]))^3,
-      weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^3,x3[,2])/sqrt(weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^2,x3[,2])-1/12/weighted.mean(diff(x3[,1])^2,x3[,2]))^3,
-      weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^3,x4[,2])/sqrt(weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^2,x4[,2])-1/12/weighted.mean(diff(x4[,1])^2,x4[,2]))^3,
-      weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^3,x5[,2])/sqrt(weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^2,x5[,2])-1/12/weighted.mean(diff(x5[,1])^2,x5[,2]))^3
+      weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^3,x1[,2])/sqrt(weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^2,x1[,2])-1/12*weighted.mean(diff(x1[,1])^2,x1[,2]))^3,
+      weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^3,x2[,2])/sqrt(weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^2,x2[,2])-1/12*weighted.mean(diff(x2[,1])^2,x2[,2]))^3,
+      weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^3,x3[,2])/sqrt(weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^2,x3[,2])-1/12*weighted.mean(diff(x3[,1])^2,x3[,2]))^3,
+      weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^3,x4[,2])/sqrt(weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^2,x4[,2])-1/12*weighted.mean(diff(x4[,1])^2,x4[,2]))^3,
+      weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^3,x5[,2])/sqrt(weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^2,x5[,2])-1/12*weighted.mean(diff(x5[,1])^2,x5[,2]))^3
     )
   ,
   asyPea=
     c(
-      weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^3,x1[,2])/sqrt(weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^2,x1[,2])-1/12/weighted.mean(diff(x1[,1])^2,x1[,2]))^3,
-      weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^3,x2[,2])/sqrt(weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^2,x2[,2])-1/12/weighted.mean(diff(x2[,1])^2,x2[,2]))^3,
-      weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^3,x3[,2])/sqrt(weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^2,x3[,2])-1/12/weighted.mean(diff(x3[,1])^2,x3[,2]))^3,
-      weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^3,x4[,2])/sqrt(weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^2,x4[,2])-1/12/weighted.mean(diff(x4[,1])^2,x4[,2]))^3,
-      weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^3,x5[,2])/sqrt(weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^2,x5[,2])-1/12/weighted.mean(diff(x5[,1])^2,x5[,2]))^3
+      weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^3,x1[,2])/sqrt(weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^2,x1[,2])-1/12*weighted.mean(diff(x1[,1])^2,x1[,2]))^3,
+      weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^3,x2[,2])/sqrt(weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^2,x2[,2])-1/12*weighted.mean(diff(x2[,1])^2,x2[,2]))^3,
+      weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^3,x3[,2])/sqrt(weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^2,x3[,2])-1/12*weighted.mean(diff(x3[,1])^2,x3[,2]))^3,
+      weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^3,x4[,2])/sqrt(weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^2,x4[,2])-1/12*weighted.mean(diff(x4[,1])^2,x4[,2]))^3,
+      weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^3,x5[,2])/sqrt(weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^2,x5[,2])-1/12*weighted.mean(diff(x5[,1])^2,x5[,2]))^3
     )^2
   ,
   appFis=
     c(
       (weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^4,x1[,2])
        -10^2/2*weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^2,x1[,2])
-       +7/240*10^4)/sqrt(weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^2,x1[,2])-1/12/weighted.mean(diff(x1[,1])^2,x1[,2]))^4,
+       +7/240*10^4)/sqrt(weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^2,x1[,2])-1/12*weighted.mean(diff(x1[,1])^2,x1[,2]))^4,
       (weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^4,x2[,2])
        -10^2/2*weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^2,x2[,2])
-       +7/240*10^4)/sqrt(weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^2,x2[,2])-1/12/weighted.mean(diff(x2[,1])^2,x2[,2]))^4,
+       +7/240*10^4)/sqrt(weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^2,x2[,2])-1/12*weighted.mean(diff(x2[,1])^2,x2[,2]))^4,
       (weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^4,x3[,2])
        -10^2/2*weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^2,x3[,2])
-       +7/240*10^4)/sqrt(weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^2,x3[,2])-1/12/weighted.mean(diff(x3[,1])^2,x3[,2]))^4,
+       +7/240*10^4)/sqrt(weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^2,x3[,2])-1/12*weighted.mean(diff(x3[,1])^2,x3[,2]))^4,
       (weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^4,x4[,2])
        -10^2/2*weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^2,x4[,2])
-       +7/240*10^4)/sqrt(weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^2,x4[,2])-1/12/weighted.mean(diff(x4[,1])^2,x4[,2]))^4,
+       +7/240*10^4)/sqrt(weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^2,x4[,2])-1/12*weighted.mean(diff(x4[,1])^2,x4[,2]))^4,
       (weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^4,x5[,2])
        -10^2/2*weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^2,x5[,2])
-       +7/240*10^4)/sqrt(weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^2,x5[,2])-1/12/weighted.mean(diff(x5[,1])^2,x5[,2]))^4
+       +7/240*10^4)/sqrt(weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^2,x5[,2])-1/12*weighted.mean(diff(x5[,1])^2,x5[,2]))^4
     )-3
   ,
   appPea=
     c(
       (weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^4,x1[,2])
        -10^2/2*weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^2,x1[,2])
-       +7/240*10^4)/sqrt(weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^2,x1[,2])-1/12/weighted.mean(diff(x1[,1])^2,x1[,2]))^4,
+       +7/240*10^4)/sqrt(weighted.mean(((x1[,1][-1]+x1[,1][-length(x1[,1])])/2-mean(x1))^2,x1[,2])-1/12*weighted.mean(diff(x1[,1])^2,x1[,2]))^4,
       (weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^4,x2[,2])
        -10^2/2*weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^2,x2[,2])
-       +7/240*10^4)/sqrt(weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^2,x2[,2])-1/12/weighted.mean(diff(x2[,1])^2,x2[,2]))^4,
+       +7/240*10^4)/sqrt(weighted.mean(((x2[,1][-1]+x2[,1][-length(x2[,1])])/2-mean(x2))^2,x2[,2])-1/12*weighted.mean(diff(x2[,1])^2,x2[,2]))^4,
       (weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^4,x3[,2])
        -10^2/2*weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^2,x3[,2])
-       +7/240*10^4)/sqrt(weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^2,x3[,2])-1/12/weighted.mean(diff(x3[,1])^2,x3[,2]))^4,
+       +7/240*10^4)/sqrt(weighted.mean(((x3[,1][-1]+x3[,1][-length(x3[,1])])/2-mean(x3))^2,x3[,2])-1/12*weighted.mean(diff(x3[,1])^2,x3[,2]))^4,
       (weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^4,x4[,2])
        -10^2/2*weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^2,x4[,2])
-       +7/240*10^4)/sqrt(weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^2,x4[,2])-1/12/weighted.mean(diff(x4[,1])^2,x4[,2]))^4,
+       +7/240*10^4)/sqrt(weighted.mean(((x4[,1][-1]+x4[,1][-length(x4[,1])])/2-mean(x4))^2,x4[,2])-1/12*weighted.mean(diff(x4[,1])^2,x4[,2]))^4,
       (weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^4,x5[,2])
        -10^2/2*weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^2,x5[,2])
-       +7/240*10^4)/sqrt(weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^2,x5[,2])-1/12/weighted.mean(diff(x5[,1])^2,x5[,2]))^4
+       +7/240*10^4)/sqrt(weighted.mean(((x5[,1][-1]+x5[,1][-length(x5[,1])])/2-mean(x5))^2,x5[,2])-1/12*weighted.mean(diff(x5[,1])^2,x5[,2]))^4
     )
 )
 rownames(tab6) <- colnames(Europe[,-1])

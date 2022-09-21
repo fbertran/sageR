@@ -12,8 +12,8 @@ vignette: >
 
 <table align="center">
         <tr>
-            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;"/></td>
-            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;"/></td>
+            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100 0 0;"/></td>
+            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100;"/></td>
         </tr>
 </table>
 

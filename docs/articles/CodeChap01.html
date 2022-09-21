@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapitre 01. Introduction à la statistique et à son environnement. • sageR</title>
+<title>Chapitre 01. La statistique et la collecte des données. • sageR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Chapitre 01. Introduction à la statistique et à son environnement.">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Chapitre 01. La statistique et la collecte des données.">
 <meta property="og:description" content="sageR">
 <meta property="og:image" content="https://fbertran.github.io/sageR/reference/figures/logo.png">
 <meta property="og:image:alt" content="Statistiques pour l’économie et la gestion">
@@ -30,6 +30,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -42,23 +44,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -68,34 +64,34 @@
       <a href="../articles/AllLinksExtVignettes.html">Liens vers la vignette de chaque chapitre.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap01.html">Chapitre 01. Introduction à la statistique et à son environnement.</a>
+      <a href="../articles/CodeChap01.html">Chapitre 01. La statistique et la collecte des données.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap02.html">Chapitre 02. Statistiques descriptives et visualisation des données univariables</a>
+      <a href="../articles/CodeChap02.html">Chapitre 02. Statistiques descriptives et visualisation des données univariables.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap03.html">Chapitre 03.	Statistiques descriptives et visualisation des données bivariables ou multivariables</a>
+      <a href="../articles/CodeChap03.html">Chapitre 03.	Statistiques descriptives et visualisation des données bivariables ou multivariables.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap04.html">Chapitre 04. Exploration de données avec l'analyse en composantes principales.</a>
+      <a href="../articles/CodeChap04.html">Chapitre 04. Analyse en composantes principales (ACP).</a>
     </li>
     <li>
-      <a href="../articles/CodeChap05.html">Chapitre 05. Exploration de données avec l'analyse factorielle des correspondances.</a>
+      <a href="../articles/CodeChap05.html">Chapitre 05. Analyse factorielle des correspondances (AFC).</a>
     </li>
     <li>
-      <a href="../articles/CodeChap06.html">Chapitre 06. Exploration de données avec l'analyse des correspondances multiples.</a>
+      <a href="../articles/CodeChap06.html">Chapitre 06. Analyse des correspondances multiples (ACM).</a>
     </li>
     <li>
-      <a href="../articles/CodeChap07.html">Chapitre 07. Exploration des données avec une classification automatique.</a>
+      <a href="../articles/CodeChap07.html">Chapitre 07. Classification automatique.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap08.html">Chapitre 08. Introduction à la théorie des probabilités aux distributions statistiques classiques.</a>
+      <a href="../articles/CodeChap08.html">Chapitre 08. Théorie des probabilités.</a>
     </li>
     <li>
       <a href="../articles/CodeChap09.html">Chapitre 09. Inférence statistique.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap10.html">Chapitre 10. Modèle linéaire gaussien.</a>
+      <a href="../articles/CodeChap10.html">Chapitre 10. Modèles gaussiens de régressions linéaires simple et multiple.</a>
     </li>
     <li>
       <a href="../articles/CodeChap11.html">Chapitre 11. Introduction aux séries temporelles.</a>
@@ -111,7 +107,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/fbertran/sageR/">
+  <a href="https://github.com/fbertran/sageR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -126,77 +122,42 @@
 
       
 
-      </header><script src="CodeChap01_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Chapitre 01. Introduction à la statistique et à son environnement.</h1>
-            <h3 class="subtitle">Tout le code avec R.</h3>
-                        <h4 class="author">F. Bertrand et M. Maumy</h4>
+      <h1 data-toc-skip>Chapitre 01. La statistique et la collecte des
+données.</h1>
+            <h3 data-toc-skip class="subtitle">Tout le code avec R.</h3>
+                        <h4 data-toc-skip class="author">F. Bertrand et
+M. Maumy</h4>
             
-            <h4 class="date">2021-08-07</h4>
+            <h4 data-toc-skip class="date">2022-09-21</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/fbertran/sageR/blob/master/vignettes/CodeChap01.Rmd"><code>vignettes/CodeChap01.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/fbertran/sageR/blob/HEAD/vignettes/CodeChap01.Rmd" class="external-link"><code>vignettes/CodeChap01.Rmd</code></a></small>
       <div class="hidden name"><code>CodeChap01.Rmd</code></div>
 
     </div>
 
     
     
-<table class="table"><tr>
+<table align="center" class="table"><tr>
 <td>
-<img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;">
+<img src="../reference/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100 0 0;">
 </td>
 <td>
-<img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;">
+<img src="../reference/figures/logo.png" align="right" width="200" style="margin:0 0 0 100;">
 </td>
 </tr></table>
-<div id="exercice" class="section level1">
-<h1 class="hasAnchor">
-<a href="#exercice" class="anchor"></a>Exercice</h1>
+<div class="section level2">
+<h2 id="exercice-1-1">Exercice 1.1<a class="anchor" aria-label="anchor" href="#exercice-1-1"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"sageR"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"sageR"</span><span class="op">)</span><span class="op">}</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/homepage/">sageR</a></span><span class="op">)</span></code></pre></div>
-<div id="nombre-de-patients-hospitalisés" class="section level2">
-<h2 class="hasAnchor">
-<a href="#nombre-de-patients-hospitalis%C3%A9s" class="anchor"></a>Nombre de patients hospitalisés</h2>
-<div id="lecture-des-données" class="section level3">
-<h3 class="hasAnchor">
-<a href="#lecture-des-donn%C3%A9es" class="anchor"></a>Lecture des données</h3>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">HospitFull</span><span class="op">)</span></code></pre></div>
-<p>La commande <code>View</code> permet de voir ce qu’il y a dans les données : nom des variables, nature des variables, chiffres, caractères, etc.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="va">HospitFull</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">HospitFull</span><span class="op">)</span>
-<span class="co">#&gt;     Région            Tous.âges            X0.9            X10.19      </span>
-<span class="co">#&gt;  Length:19          Min.   :   12.0   Min.   : 0.000   Min.   : 0.000  </span>
-<span class="co">#&gt;  Class :character   1st Qu.:   80.5   1st Qu.: 0.000   1st Qu.: 0.000  </span>
-<span class="co">#&gt;  Mode  :character   Median : 1361.0   Median : 1.000   Median : 3.000  </span>
-<span class="co">#&gt;                     Mean   : 2946.8   Mean   : 4.211   Mean   : 8.105  </span>
-<span class="co">#&gt;                     3rd Qu.: 2739.5   3rd Qu.: 2.500   3rd Qu.: 7.000  </span>
-<span class="co">#&gt;                     Max.   :27995.0   Max.   :40.000   Max.   :77.000  </span>
-<span class="co">#&gt;      X20.29           X30.39           X40.49           X50.59      </span>
-<span class="co">#&gt;  Min.   :  0.00   Min.   :  0.00   Min.   :  0.00   Min.   :   2.0  </span>
-<span class="co">#&gt;  1st Qu.:  4.00   1st Qu.:  5.00   1st Qu.: 10.50   1st Qu.:  12.0  </span>
-<span class="co">#&gt;  Median : 10.00   Median : 16.00   Median : 32.00   Median :  85.0  </span>
-<span class="co">#&gt;  Mean   : 24.11   Mean   : 45.26   Mean   : 83.05   Mean   : 216.6  </span>
-<span class="co">#&gt;  3rd Qu.: 17.50   3rd Qu.: 40.50   3rd Qu.: 75.00   3rd Qu.: 190.0  </span>
-<span class="co">#&gt;  Max.   :229.00   Max.   :430.00   Max.   :789.00   Max.   :2058.0  </span>
-<span class="co">#&gt;      X60.69           X70.79           X80.89            X90.       </span>
-<span class="co">#&gt;  Min.   :   2.0   Min.   :   5.0   Min.   :   1.0   Min.   :   0.0  </span>
-<span class="co">#&gt;  1st Qu.:  16.5   1st Qu.:  14.0   1st Qu.:  13.0   1st Qu.:  11.0  </span>
-<span class="co">#&gt;  Median : 214.0   Median : 315.0   Median : 436.0   Median : 239.0  </span>
-<span class="co">#&gt;  Mean   : 440.1   Mean   : 712.5   Mean   : 936.6   Mean   : 453.4  </span>
-<span class="co">#&gt;  3rd Qu.: 408.0   3rd Qu.: 660.5   3rd Qu.: 897.5   3rd Qu.: 418.0  </span>
-<span class="co">#&gt;  Max.   :4181.0   Max.   :6769.0   Max.   :8898.0   Max.   :4307.0</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">HospitFull</span><span class="op">[</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<p><img src="CodeChap01_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-</div>
-<div id="questions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#questions" class="anchor"></a>Questions :</h3>
+<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"sageR"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"sageR"</span><span class="op">)</span><span class="op">}</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/homepage/" class="external-link">sageR</a></span><span class="op">)</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="questions">Questions :<a class="anchor" aria-label="anchor" href="#questions"></a>
+</h4>
+<p>Pour chaque tableau, répondre aux questions suivantes :</p>
 <ol style="list-style-type: decimal">
 <li>Quelle est la population étudiée ?</li>
 <li>Quels sont les individus ?</li>
@@ -204,58 +165,121 @@
 <li>Quelle est la nature des caractères ?</li>
 </ol>
 </div>
-<div id="réponses" class="section level3">
-<h3 class="hasAnchor">
-<a href="#r%C3%A9ponses" class="anchor"></a>Réponses :</h3>
+<div class="section level3">
+<h3 id="nombre-de-patients-hospitalisés">Nombre de patients hospitalisés<a class="anchor" aria-label="anchor" href="#nombre-de-patients-hospitalis%C3%A9s"></a>
+</h3>
+<p>Le tableau 1.1 représente le nombre de patients testés positifs à la
+Covid-19 et hospitalisés le 8 février 2021, par région et par classe
+d’âge, en valeur absolue.</p>
+<div class="section level4">
+<h4 id="lecture-des-données">Lecture des données<a class="anchor" aria-label="anchor" href="#lecture-des-donn%C3%A9es"></a>
+</h4>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">HospitFull</span><span class="op">)</span></span></code></pre></div>
+<p>La commande <code>View</code> permet de voir ce qu’il y a dans les
+données : nom des variables, nature des variables, chiffres, caractères,
+etc.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/View.html" class="external-link">View</a></span><span class="op">(</span><span class="va">HospitFull</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">HospitFull</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     Région            Tous.âges            X0.9            X10.19      </span></span>
+<span><span class="co">#&gt;  Length:19          Min.   :   12.0   Min.   : 0.000   Min.   : 0.000  </span></span>
+<span><span class="co">#&gt;  Class :character   1st Qu.:   80.5   1st Qu.: 0.000   1st Qu.: 0.000  </span></span>
+<span><span class="co">#&gt;  Mode  :character   Median : 1361.0   Median : 1.000   Median : 3.000  </span></span>
+<span><span class="co">#&gt;                     Mean   : 2946.8   Mean   : 4.211   Mean   : 8.105  </span></span>
+<span><span class="co">#&gt;                     3rd Qu.: 2739.5   3rd Qu.: 2.500   3rd Qu.: 7.000  </span></span>
+<span><span class="co">#&gt;                     Max.   :27995.0   Max.   :40.000   Max.   :77.000  </span></span>
+<span><span class="co">#&gt;      X20.29           X30.39           X40.49           X50.59      </span></span>
+<span><span class="co">#&gt;  Min.   :  0.00   Min.   :  0.00   Min.   :  0.00   Min.   :   2.0  </span></span>
+<span><span class="co">#&gt;  1st Qu.:  4.00   1st Qu.:  5.00   1st Qu.: 10.50   1st Qu.:  12.0  </span></span>
+<span><span class="co">#&gt;  Median : 10.00   Median : 16.00   Median : 32.00   Median :  85.0  </span></span>
+<span><span class="co">#&gt;  Mean   : 24.11   Mean   : 45.26   Mean   : 83.05   Mean   : 216.6  </span></span>
+<span><span class="co">#&gt;  3rd Qu.: 17.50   3rd Qu.: 40.50   3rd Qu.: 75.00   3rd Qu.: 190.0  </span></span>
+<span><span class="co">#&gt;  Max.   :229.00   Max.   :430.00   Max.   :789.00   Max.   :2058.0  </span></span>
+<span><span class="co">#&gt;      X60.69           X70.79           X80.89            X90.       </span></span>
+<span><span class="co">#&gt;  Min.   :   2.0   Min.   :   5.0   Min.   :   1.0   Min.   :   0.0  </span></span>
+<span><span class="co">#&gt;  1st Qu.:  16.5   1st Qu.:  14.0   1st Qu.:  13.0   1st Qu.:  11.0  </span></span>
+<span><span class="co">#&gt;  Median : 214.0   Median : 315.0   Median : 436.0   Median : 239.0  </span></span>
+<span><span class="co">#&gt;  Mean   : 440.1   Mean   : 712.5   Mean   : 936.6   Mean   : 453.4  </span></span>
+<span><span class="co">#&gt;  3rd Qu.: 408.0   3rd Qu.: 660.5   3rd Qu.: 897.5   3rd Qu.: 418.0  </span></span>
+<span><span class="co">#&gt;  Max.   :4181.0   Max.   :6769.0   Max.   :8898.0   Max.   :4307.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">HospitFull</span><span class="op">[</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<p><img src="CodeChap01_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="questions-1">Questions :<a class="anchor" aria-label="anchor" href="#questions-1"></a>
+</h4>
+<p>Pour ce tableau, répondre aux questions suivantes :</p>
 <ol style="list-style-type: decimal">
-<li>La population étudiée est l’ensemble des patients testés positifs à la Covid-19 et hospitalisés le 8 février 2021.</li>
-<li>Les individus sont les patients testés positifs à la Covid-19 et hospitalisés le 8 février 2021.</li>
-<li>Les deux caractères sont la « région d’hospitalisation » et la « classe d’âge » du patient.</li>
+<li>Quelle est la population étudiée ?</li>
+<li>Quels sont les individus ?</li>
+<li>Quels sont les caractères étudiés ?</li>
+<li>Quelle est la nature des caractères ?</li>
+</ol>
+</div>
+<div class="section level4">
+<h4 id="réponses">Réponses :<a class="anchor" aria-label="anchor" href="#r%C3%A9ponses"></a>
+</h4>
+<ol style="list-style-type: decimal">
+<li>La population étudiée est l’ensemble des patients testés positifs à
+la Covid-19 et hospitalisés le 8 février 2021.</li>
+<li>Les individus sont les patients testés positifs à la Covid-19 et
+hospitalisés le 8 février 2021.</li>
+<li>Les deux caractères sont la « région d’hospitalisation » et la «
+classe d’âge » du patient.</li>
 <li>Les deux caractères sont simples et qualitatifs.</li>
 </ol>
 </div>
 </div>
-<div id="nombre-de-patients-en-réanimation-" class="section level2">
-<h2 class="hasAnchor">
-<a href="#nombre-de-patients-en-r%C3%A9animation-" class="anchor"></a>Nombre de patients en réanimation.</h2>
-<div id="lecture-des-données-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#lecture-des-donn%C3%A9es-1" class="anchor"></a>Lecture des données</h3>
+<div class="section level3">
+<h3 id="nombre-de-patients-en-réanimation-">Nombre de patients en réanimation.<a class="anchor" aria-label="anchor" href="#nombre-de-patients-en-r%C3%A9animation-"></a>
+</h3>
+<p>Le tableau 1.2 représente le nombre de patients testés positifs à la
+Covid-19 et placés en réanimation au 8 février 2021, par région et par
+classe d’âge, en valeur absolue.</p>
+<div class="section level4">
+<h4 id="lecture-des-données-1">Lecture des données<a class="anchor" aria-label="anchor" href="#lecture-des-donn%C3%A9es-1"></a>
+</h4>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ReaFull</span><span class="op">)</span></code></pre></div>
-<p>La commande <code>View</code> permet de voir ce qu’il y a dans les données : nom des variables, nature des variables, chiffres, caractères, etc.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ReaFull</span><span class="op">)</span></span></code></pre></div>
+<p>La commande <code>View</code> permet de voir ce qu’il y a dans les
+données : nom des variables, nature des variables, chiffres, caractères,
+etc.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="va">ReaFull</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/View.html" class="external-link">View</a></span><span class="op">(</span><span class="va">ReaFull</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ReaFull</span><span class="op">)</span>
-<span class="co">#&gt;     Région            Tous.âges           X0.9            X10.19      </span>
-<span class="co">#&gt;  Length:19          Min.   :   3.0   Min.   :0.0000   Min.   :0.0000  </span>
-<span class="co">#&gt;  Class :character   1st Qu.:  16.5   1st Qu.:0.0000   1st Qu.:0.0000  </span>
-<span class="co">#&gt;  Mode  :character   Median : 135.0   Median :0.0000   Median :0.0000  </span>
-<span class="co">#&gt;                     Mean   : 352.9   Mean   :0.5263   Mean   :0.9474  </span>
-<span class="co">#&gt;                     3rd Qu.: 314.5   3rd Qu.:0.0000   3rd Qu.:1.0000  </span>
-<span class="co">#&gt;                     Max.   :3353.0   Max.   :5.0000   Max.   :9.0000  </span>
-<span class="co">#&gt;      X20.29           X30.39           X40.49           X50.59      </span>
-<span class="co">#&gt;  Min.   : 0.000   Min.   : 0.000   Min.   :  0.00   Min.   :  0.00  </span>
-<span class="co">#&gt;  1st Qu.: 0.000   1st Qu.: 0.500   1st Qu.:  2.50   1st Qu.:  3.50  </span>
-<span class="co">#&gt;  Median : 1.000   Median : 3.000   Median :  6.00   Median : 16.00  </span>
-<span class="co">#&gt;  Mean   : 3.684   Mean   : 7.474   Mean   : 17.58   Mean   : 50.63  </span>
-<span class="co">#&gt;  3rd Qu.: 2.500   3rd Qu.: 6.500   3rd Qu.: 16.50   3rd Qu.: 41.00  </span>
-<span class="co">#&gt;  Max.   :35.000   Max.   :71.000   Max.   :167.00   Max.   :481.00  </span>
-<span class="co">#&gt;      X60.69           X70.79           X80.89            X90.       </span>
-<span class="co">#&gt;  Min.   :   0.0   Min.   :   0.0   Min.   :  0.00   Min.   : 0.000  </span>
-<span class="co">#&gt;  1st Qu.:   4.0   1st Qu.:   3.0   1st Qu.:  1.00   1st Qu.: 0.000  </span>
-<span class="co">#&gt;  Median :  41.0   Median :  54.0   Median : 12.00   Median : 1.000  </span>
-<span class="co">#&gt;  Mean   : 108.1   Mean   : 123.2   Mean   : 33.47   Mean   : 3.789  </span>
-<span class="co">#&gt;  3rd Qu.: 107.0   3rd Qu.: 104.5   3rd Qu.: 32.50   3rd Qu.: 3.500  </span>
-<span class="co">#&gt;  Max.   :1027.0   Max.   :1170.0   Max.   :318.00   Max.   :36.000</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ReaFull</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     Région            Tous.âges           X0.9            X10.19      </span></span>
+<span><span class="co">#&gt;  Length:19          Min.   :   3.0   Min.   :0.0000   Min.   :0.0000  </span></span>
+<span><span class="co">#&gt;  Class :character   1st Qu.:  16.5   1st Qu.:0.0000   1st Qu.:0.0000  </span></span>
+<span><span class="co">#&gt;  Mode  :character   Median : 135.0   Median :0.0000   Median :0.0000  </span></span>
+<span><span class="co">#&gt;                     Mean   : 352.9   Mean   :0.5263   Mean   :0.9474  </span></span>
+<span><span class="co">#&gt;                     3rd Qu.: 314.5   3rd Qu.:0.0000   3rd Qu.:1.0000  </span></span>
+<span><span class="co">#&gt;                     Max.   :3353.0   Max.   :5.0000   Max.   :9.0000  </span></span>
+<span><span class="co">#&gt;      X20.29           X30.39           X40.49           X50.59      </span></span>
+<span><span class="co">#&gt;  Min.   : 0.000   Min.   : 0.000   Min.   :  0.00   Min.   :  0.00  </span></span>
+<span><span class="co">#&gt;  1st Qu.: 0.000   1st Qu.: 0.500   1st Qu.:  2.50   1st Qu.:  3.50  </span></span>
+<span><span class="co">#&gt;  Median : 1.000   Median : 3.000   Median :  6.00   Median : 16.00  </span></span>
+<span><span class="co">#&gt;  Mean   : 3.684   Mean   : 7.474   Mean   : 17.58   Mean   : 50.63  </span></span>
+<span><span class="co">#&gt;  3rd Qu.: 2.500   3rd Qu.: 6.500   3rd Qu.: 16.50   3rd Qu.: 41.00  </span></span>
+<span><span class="co">#&gt;  Max.   :35.000   Max.   :71.000   Max.   :167.00   Max.   :481.00  </span></span>
+<span><span class="co">#&gt;      X60.69           X70.79           X80.89            X90.       </span></span>
+<span><span class="co">#&gt;  Min.   :   0.0   Min.   :   0.0   Min.   :  0.00   Min.   : 0.000  </span></span>
+<span><span class="co">#&gt;  1st Qu.:   4.0   1st Qu.:   3.0   1st Qu.:  1.00   1st Qu.: 0.000  </span></span>
+<span><span class="co">#&gt;  Median :  41.0   Median :  54.0   Median : 12.00   Median : 1.000  </span></span>
+<span><span class="co">#&gt;  Mean   : 108.1   Mean   : 123.2   Mean   : 33.47   Mean   : 3.789  </span></span>
+<span><span class="co">#&gt;  3rd Qu.: 107.0   3rd Qu.: 104.5   3rd Qu.: 32.50   3rd Qu.: 3.500  </span></span>
+<span><span class="co">#&gt;  Max.   :1027.0   Max.   :1170.0   Max.   :318.00   Max.   :36.000</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">ReaFull</span><span class="op">[</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ReaFull</span><span class="op">[</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CodeChap01_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
-<div id="questions-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#questions-1" class="anchor"></a>Questions :</h3>
+<div class="section level4">
+<h4 id="questions-2">Questions :<a class="anchor" aria-label="anchor" href="#questions-2"></a>
+</h4>
+<p>Pour ce tableau, répondre aux questions suivantes :</p>
 <ol style="list-style-type: decimal">
 <li>Quelle est la population étudiée ?</li>
 <li>Quels sont les individus ?</li>
@@ -263,13 +287,16 @@
 <li>Quelle est la nature des caractères ?</li>
 </ol>
 </div>
-<div id="réponses-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#r%C3%A9ponses-1" class="anchor"></a>Réponses :</h3>
+<div class="section level4">
+<h4 id="réponses-1">Réponses :<a class="anchor" aria-label="anchor" href="#r%C3%A9ponses-1"></a>
+</h4>
 <ol style="list-style-type: decimal">
-<li>La population étudiée est l’ensemble des patients testés positifs à la Covid-19 et placés en réanimation le 8 février 2021.</li>
-<li>Les individus sont des patients testés positifs à la Covid-19 et placés en réanimation le 8 février 2021.</li>
-<li>Les deux caractères sont la « région d’hospitalisation » et la « classe d’âge » du patient.</li>
+<li>La population étudiée est l’ensemble des patients testés positifs à
+la Covid-19 et placés en réanimation le 8 février 2021.</li>
+<li>Les individus sont des patients testés positifs à la Covid-19 et
+placés en réanimation le 8 février 2021.</li>
+<li>Les deux caractères sont la « région d’hospitalisation » et la «
+classe d’âge » du patient.</li>
 <li>Les deux caractères sont simples et qualitatifs.</li>
 </ol>
 </div>
@@ -288,11 +315,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Frederic Bertrand, Myriam Maumy-Bertrand.</p>
+  <p></p>
+<p>Developed by Frederic Bertrand, Myriam Maumy-Bertrand.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -300,6 +329,8 @@
 
   
 
+
+  
 
   </body>
 </html>

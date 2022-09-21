@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapitre 04. Exploration de données avec l'analyse en composantes principales. • sageR</title>
+<title>Chapitre 04. Analyse en composantes principales (ACP). • sageR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Chapitre 04. Exploration de données avec l'analyse en composantes principales.">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Chapitre 04. Analyse en composantes principales (ACP).">
 <meta property="og:description" content="sageR">
 <meta property="og:image" content="https://fbertran.github.io/sageR/reference/figures/logo.png">
 <meta property="og:image:alt" content="Statistiques pour l’économie et la gestion">
@@ -30,6 +30,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -42,23 +44,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -68,34 +64,34 @@
       <a href="../articles/AllLinksExtVignettes.html">Liens vers la vignette de chaque chapitre.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap01.html">Chapitre 01. Introduction à la statistique et à son environnement.</a>
+      <a href="../articles/CodeChap01.html">Chapitre 01. La statistique et la collecte des données.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap02.html">Chapitre 02. Statistiques descriptives et visualisation des données univariables</a>
+      <a href="../articles/CodeChap02.html">Chapitre 02. Statistiques descriptives et visualisation des données univariables.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap03.html">Chapitre 03.	Statistiques descriptives et visualisation des données bivariables ou multivariables</a>
+      <a href="../articles/CodeChap03.html">Chapitre 03.	Statistiques descriptives et visualisation des données bivariables ou multivariables.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap04.html">Chapitre 04. Exploration de données avec l'analyse en composantes principales.</a>
+      <a href="../articles/CodeChap04.html">Chapitre 04. Analyse en composantes principales (ACP).</a>
     </li>
     <li>
-      <a href="../articles/CodeChap05.html">Chapitre 05. Exploration de données avec l'analyse factorielle des correspondances.</a>
+      <a href="../articles/CodeChap05.html">Chapitre 05. Analyse factorielle des correspondances (AFC).</a>
     </li>
     <li>
-      <a href="../articles/CodeChap06.html">Chapitre 06. Exploration de données avec l'analyse des correspondances multiples.</a>
+      <a href="../articles/CodeChap06.html">Chapitre 06. Analyse des correspondances multiples (ACM).</a>
     </li>
     <li>
-      <a href="../articles/CodeChap07.html">Chapitre 07. Exploration des données avec une classification automatique.</a>
+      <a href="../articles/CodeChap07.html">Chapitre 07. Classification automatique.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap08.html">Chapitre 08. Introduction à la théorie des probabilités aux distributions statistiques classiques.</a>
+      <a href="../articles/CodeChap08.html">Chapitre 08. Théorie des probabilités.</a>
     </li>
     <li>
       <a href="../articles/CodeChap09.html">Chapitre 09. Inférence statistique.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap10.html">Chapitre 10. Modèle linéaire gaussien.</a>
+      <a href="../articles/CodeChap10.html">Chapitre 10. Modèles gaussiens de régressions linéaires simple et multiple.</a>
     </li>
     <li>
       <a href="../articles/CodeChap11.html">Chapitre 11. Introduction aux séries temporelles.</a>
@@ -111,7 +107,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/fbertran/sageR/">
+  <a href="https://github.com/fbertran/sageR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -126,226 +122,246 @@
 
       
 
-      </header><script src="CodeChap04_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Chapitre 04. Exploration de données avec l’analyse en composantes principales.</h1>
-            <h3 class="subtitle">Tout le code avec R.</h3>
-                        <h4 class="author">Christian Derquenne</h4>
+      <h1 data-toc-skip>Chapitre 04. Analyse en composantes principales
+(ACP).</h1>
+            <h3 data-toc-skip class="subtitle">Tout le code avec R.</h3>
+                        <h4 data-toc-skip class="author">Christian
+Derquenne</h4>
             
-            <h4 class="date">2021-08-07</h4>
+            <h4 data-toc-skip class="date">2022-09-21</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/fbertran/sageR/blob/master/vignettes/CodeChap04.Rmd"><code>vignettes/CodeChap04.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/fbertran/sageR/blob/HEAD/vignettes/CodeChap04.Rmd" class="external-link"><code>vignettes/CodeChap04.Rmd</code></a></small>
       <div class="hidden name"><code>CodeChap04.Rmd</code></div>
 
     </div>
 
     
     
-<table class="table"><tr>
+<table align="center" class="table"><tr>
 <td>
-<img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;">
+<img src="../reference/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100 0 0;">
 </td>
 <td>
-<img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;">
+<img src="../reference/figures/logo.png" align="right" width="200" style="margin:0 0 0 100;">
 </td>
 </tr></table>
-<div id="description-des-données" class="section level1">
-<h1 class="hasAnchor">
-<a href="#description-des-donn%C3%A9es" class="anchor"></a>Description des données</h1>
-<p>Échantillon de 50 villes (individus) tirées aléatoirement sur la pollution de l’air aux États-Unis en 1960</p>
+<div class="section level2">
+<h2 id="description-des-données">Description des données<a class="anchor" aria-label="anchor" href="#description-des-donn%C3%A9es"></a>
+</h2>
+<p>Échantillon de 50 villes (individus) tirées aléatoirement sur la
+pollution de l’air aux États-Unis en 1960</p>
 <ul>
 <li>
 <code>TMR</code> : taux de mortalité exprimé en 1/10000</li>
 <li>
-<code>GE65</code> : pourcentage (multiplié par 10) de la population des 65 ans et plus</li>
+<code>GE65</code> : pourcentage (multiplié par 10) de la population
+des 65 ans et plus</li>
 <li>
-<code>LPOP</code> : logarithme (en base 10 et multiplié par 10) de la population</li>
+<code>LPOP</code> : logarithme (en base 10 et multiplié par 10) de
+la population</li>
 <li>
-<code>NONPOOR</code> : pourcentage de ménages avec un revenu au dessus du seuil de pauvreté</li>
+<code>NONPOOR</code> : pourcentage de ménages avec un revenu au
+dessus du seuil de pauvreté</li>
 <li>
 <code>PERWH</code> : pourcentage de population blanche</li>
 <li>
-<code>PMEAN</code> : moyenne arithmétique des relevés réalisés deux fois par semaine de particules suspendues dans l’air (micro-g/m3 multiplié par 10)</li>
+<code>PMEAN</code> : moyenne arithmétique des relevés réalisés deux
+fois par semaine de particules suspendues dans l’air (micro-g/m3
+multiplié par 10)</li>
 <li>
-<code>PMIN</code> : plus petite valeur des relevés réalisés deux fois par semaine de particules suspendues dans l’air (micro-g/m3 multiplié par 10)</li>
+<code>PMIN</code> : plus petite valeur des relevés réalisés deux
+fois par semaine de particules suspendues dans l’air (micro-g/m3
+multiplié par 10)</li>
 <li>
-<code>LPMAX</code> : logarithme de la plus grande valeur des relevés réalisés deux fois par semaine de particules suspendues dans l’air (micro-g/m3 multiplié par 10)</li>
+<code>LPMAX</code> : logarithme de la plus grande valeur des relevés
+réalisés deux fois par semaine de particules suspendues dans l’air
+(micro-g/m3 multiplié par 10)</li>
 <li>
-<code>SMEAN</code> : moyenne arithmétique des relevés réalisés deux fois par semaine de sulfate (micro-g/m3 multiplié par 10)</li>
+<code>SMEAN</code> : moyenne arithmétique des relevés réalisés deux
+fois par semaine de sulfate (micro-g/m3 multiplié par 10)</li>
 <li>
-<code>SMIN</code> : plus petite valeur des relevés réalisés deux fois par semaine de sulfate (micro-g/m3 multiplié par 10)</li>
+<code>SMIN</code> : plus petite valeur des relevés réalisés deux
+fois par semaine de sulfate (micro-g/m3 multiplié par 10)</li>
 <li>
-<code>SMAX</code> : plus grande valeur des relevés réalisés deux fois par semaine de sulfate (micro-g/m3 multiplié par 10)</li>
+<code>SMAX</code> : plus grande valeur des relevés réalisés deux
+fois par semaine de sulfate (micro-g/m3 multiplié par 10)</li>
 <li>
-<code>LPM2</code> : logarithme de la densité de la population par mile carré (multiplié par 0,1)</li>
+<code>LPM2</code> : logarithme de la densité de la population par
+mile carré (multiplié par 0,1)</li>
 </ul>
 <p>Lecture des données</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/homepage/">sageR</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">air_pollution</span><span class="op">)</span></code></pre></div>
-<p>Élimine les variables <code>PM2</code> et <code>PMAX</code> qui sont transformées en logarithme dans les variables <code>l_pm2</code> et <code>l_pmax</code>.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/homepage/" class="external-link">sageR</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">air_pollution</span><span class="op">)</span></span></code></pre></div>
+<p>Élimine les variables <code>PM2</code> et <code>PMAX</code> qui sont
+transformées en logarithme dans les variables <code>l_pm2</code> et
+<code>l_pmax</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">air_pollution</span> <span class="op">&lt;-</span> <span class="va">air_pollution</span><span class="op">[</span>,<span class="op">-</span><span class="op">(</span><span class="fl">8</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">air_pollution</span> <span class="op">&lt;-</span> <span class="va">air_pollution</span><span class="op">[</span>,<span class="op">-</span><span class="op">(</span><span class="fl">8</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <p>Quelques statistiques descriptives du fichier de données</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">air_pollution</span><span class="op">)</span>
-<span class="co">#&gt;        CITY         TMR              SMIN            SMEAN       </span>
-<span class="co">#&gt;  JACKSON : 2   Min.   : 618.0   Min.   :  1.00   Min.   : 27.00  </span>
-<span class="co">#&gt;  AUGUSTA : 1   1st Qu.: 806.5   1st Qu.: 27.25   1st Qu.: 62.25  </span>
-<span class="co">#&gt;  AUSTIN  : 1   Median : 882.5   Median : 43.50   Median : 79.50  </span>
-<span class="co">#&gt;  BEAUMONT: 1   Mean   : 893.9   Mean   : 47.36   Mean   : 98.18  </span>
-<span class="co">#&gt;  BOSTON  : 1   3rd Qu.: 955.2   3rd Qu.: 62.00   3rd Qu.:132.50  </span>
-<span class="co">#&gt;  BRIDGEPO: 1   Max.   :1199.0   Max.   :155.00   Max.   :283.00  </span>
-<span class="co">#&gt;  (Other) :43                                                     </span>
-<span class="co">#&gt;       SMAX            PMIN           PMEAN            PERWH      </span>
-<span class="co">#&gt;  Min.   : 58.0   Min.   :10.00   Min.   : 54.00   Min.   :60.00  </span>
-<span class="co">#&gt;  1st Qu.:139.5   1st Qu.:29.75   1st Qu.: 90.25   1st Qu.:83.03  </span>
-<span class="co">#&gt;  Median :194.5   Median :46.00   Median :121.00   Median :90.65  </span>
-<span class="co">#&gt;  Mean   :220.0   Mean   :46.86   Mean   :122.48   Mean   :87.50  </span>
-<span class="co">#&gt;  3rd Qu.:265.2   3rd Qu.:57.50   3rd Qu.:147.00   3rd Qu.:95.08  </span>
-<span class="co">#&gt;  Max.   :940.0   Max.   :98.00   Max.   :247.00   Max.   :99.30  </span>
-<span class="co">#&gt;                                                                  </span>
-<span class="co">#&gt;     NONPOOR           GE65             LPOP           l_pm2      </span>
-<span class="co">#&gt;  Min.   :67.80   Min.   : 45.00   Min.   :4.937   Min.   :1.808  </span>
-<span class="co">#&gt;  1st Qu.:76.58   1st Qu.: 70.25   1st Qu.:5.384   1st Qu.:3.251  </span>
-<span class="co">#&gt;  Median :82.65   Median : 81.50   Median :5.570   Median :3.637  </span>
-<span class="co">#&gt;  Mean   :81.57   Mean   : 81.32   Mean   :5.639   Mean   :3.814  </span>
-<span class="co">#&gt;  3rd Qu.:87.10   3rd Qu.: 93.75   3rd Qu.:5.831   3rd Qu.:4.398  </span>
-<span class="co">#&gt;  Max.   :90.70   Max.   :116.00   Max.   :6.794   Max.   :7.213  </span>
-<span class="co">#&gt;                                                                  </span>
-<span class="co">#&gt;      l_pmax     </span>
-<span class="co">#&gt;  Min.   :4.820  </span>
-<span class="co">#&gt;  1st Qu.:5.247  </span>
-<span class="co">#&gt;  Median :5.489  </span>
-<span class="co">#&gt;  Mean   :5.521  </span>
-<span class="co">#&gt;  3rd Qu.:5.777  </span>
-<span class="co">#&gt;  Max.   :6.865  </span>
-<span class="co">#&gt; </span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">air_pollution</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        CITY         TMR              SMIN            SMEAN       </span></span>
+<span><span class="co">#&gt;  JACKSON : 2   Min.   : 618.0   Min.   :  1.00   Min.   : 27.00  </span></span>
+<span><span class="co">#&gt;  AUGUSTA : 1   1st Qu.: 806.5   1st Qu.: 27.25   1st Qu.: 62.25  </span></span>
+<span><span class="co">#&gt;  AUSTIN  : 1   Median : 882.5   Median : 43.50   Median : 79.50  </span></span>
+<span><span class="co">#&gt;  BEAUMONT: 1   Mean   : 893.9   Mean   : 47.36   Mean   : 98.18  </span></span>
+<span><span class="co">#&gt;  BOSTON  : 1   3rd Qu.: 955.2   3rd Qu.: 62.00   3rd Qu.:132.50  </span></span>
+<span><span class="co">#&gt;  BRIDGEPO: 1   Max.   :1199.0   Max.   :155.00   Max.   :283.00  </span></span>
+<span><span class="co">#&gt;  (Other) :43                                                     </span></span>
+<span><span class="co">#&gt;       SMAX            PMIN           PMEAN            PERWH      </span></span>
+<span><span class="co">#&gt;  Min.   : 58.0   Min.   :10.00   Min.   : 54.00   Min.   :60.00  </span></span>
+<span><span class="co">#&gt;  1st Qu.:139.5   1st Qu.:29.75   1st Qu.: 90.25   1st Qu.:83.03  </span></span>
+<span><span class="co">#&gt;  Median :194.5   Median :46.00   Median :121.00   Median :90.65  </span></span>
+<span><span class="co">#&gt;  Mean   :220.0   Mean   :46.86   Mean   :122.48   Mean   :87.50  </span></span>
+<span><span class="co">#&gt;  3rd Qu.:265.2   3rd Qu.:57.50   3rd Qu.:147.00   3rd Qu.:95.08  </span></span>
+<span><span class="co">#&gt;  Max.   :940.0   Max.   :98.00   Max.   :247.00   Max.   :99.30  </span></span>
+<span><span class="co">#&gt;                                                                  </span></span>
+<span><span class="co">#&gt;     NONPOOR           GE65             LPOP           l_pm2      </span></span>
+<span><span class="co">#&gt;  Min.   :67.80   Min.   : 45.00   Min.   :4.937   Min.   :1.808  </span></span>
+<span><span class="co">#&gt;  1st Qu.:76.58   1st Qu.: 70.25   1st Qu.:5.384   1st Qu.:3.251  </span></span>
+<span><span class="co">#&gt;  Median :82.65   Median : 81.50   Median :5.570   Median :3.637  </span></span>
+<span><span class="co">#&gt;  Mean   :81.57   Mean   : 81.32   Mean   :5.639   Mean   :3.814  </span></span>
+<span><span class="co">#&gt;  3rd Qu.:87.10   3rd Qu.: 93.75   3rd Qu.:5.831   3rd Qu.:4.398  </span></span>
+<span><span class="co">#&gt;  Max.   :90.70   Max.   :116.00   Max.   :6.794   Max.   :7.213  </span></span>
+<span><span class="co">#&gt;                                                                  </span></span>
+<span><span class="co">#&gt;      l_pmax     </span></span>
+<span><span class="co">#&gt;  Min.   :4.820  </span></span>
+<span><span class="co">#&gt;  1st Qu.:5.247  </span></span>
+<span><span class="co">#&gt;  Median :5.489  </span></span>
+<span><span class="co">#&gt;  Mean   :5.521  </span></span>
+<span><span class="co">#&gt;  3rd Qu.:5.777  </span></span>
+<span><span class="co">#&gt;  Max.   :6.865  </span></span>
+<span><span class="co">#&gt; </span></span></code></pre></div>
 </div>
-<div id="exercice-4-1-analyse-visuelle-des-données" class="section level1">
-<h1 class="hasAnchor">
-<a href="#exercice-4-1-analyse-visuelle-des-donn%C3%A9es" class="anchor"></a>Exercice 4.1 : Analyse visuelle des données</h1>
+<div class="section level2">
+<h2 id="exercice-4-1-analyse-visuelle-des-données">Exercice 4.1 : Analyse visuelle des données<a class="anchor" aria-label="anchor" href="#exercice-4-1-analyse-visuelle-des-donn%C3%A9es"></a>
+</h2>
 <p>Standardisation des données.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">air_pollution_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">air_pollution</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<p>Affichage graphique du tableau de données sans la variable <code>CITY</code> qui est en première colonne.</p>
+<code class="sourceCode R"><span><span class="va">air_pollution_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">air_pollution</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<p>Affichage graphique du tableau de données sans la variable
+<code>CITY</code> qui est en première colonne.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">air_pollution_std</span><span class="op">)</span><span class="op">)</span>
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">12</span>,length.out<span class="op">=</span><span class="fl">12</span><span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">50</span>,length.out<span class="op">=</span><span class="fl">50</span><span class="op">)</span>
-<span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TMR"</span>,<span class="st">"SMIN"</span>,<span class="st">"SMEAN"</span>,<span class="st">"SMAX"</span>,<span class="st">"PMIN"</span>,<span class="st">"PMEAN"</span>,<span class="st">"PERWH"</span>,<span class="st">"NONPOOR"</span>,<span class="st">"GE65"</span>,<span class="st">"LPOP"</span>,<span class="st">"l_pm2"</span>,<span class="st">"l_pmax"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">air_pollution</span><span class="op">$</span><span class="va">CITY</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/image.html">image</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span>,<span class="va">z</span>,xlab<span class="op">=</span><span class="st">"Variables"</span>,ylab<span class="op">=</span><span class="st">"Villes"</span>,main<span class="op">=</span><span class="st">"Représentation des données standardisées -  Air Pollution"</span>,axes<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">1</span>, at <span class="op">=</span> <span class="va">x</span>,labels <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span>,las<span class="op">=</span><span class="fl">1</span>,cex.axis<span class="op">=</span><span class="fl">1</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">2</span>, at <span class="op">=</span> <span class="va">y</span>,labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span>,las<span class="op">=</span><span class="fl">2</span>,cex.axis<span class="op">=</span><span class="fl">0.4</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">air_pollution_std</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">12</span>,length.out<span class="op">=</span><span class="fl">12</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">50</span>,length.out<span class="op">=</span><span class="fl">50</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TMR"</span>,<span class="st">"SMIN"</span>,<span class="st">"SMEAN"</span>,<span class="st">"SMAX"</span>,<span class="st">"PMIN"</span>,<span class="st">"PMEAN"</span>,<span class="st">"PERWH"</span>,<span class="st">"NONPOOR"</span>,<span class="st">"GE65"</span>,<span class="st">"LPOP"</span>,<span class="st">"l_pm2"</span>,<span class="st">"l_pmax"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">air_pollution</span><span class="op">$</span><span class="va">CITY</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span>,<span class="va">z</span>,xlab<span class="op">=</span><span class="st">"Variables"</span>,ylab<span class="op">=</span><span class="st">"Villes"</span>,main<span class="op">=</span><span class="st">"Représentation des données standardisées -  Air Pollution"</span>,axes<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span><span class="fl">1</span>, at <span class="op">=</span> <span class="va">x</span>,labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span>,las<span class="op">=</span><span class="fl">1</span>,cex.axis<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span><span class="fl">2</span>, at <span class="op">=</span> <span class="va">y</span>,labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span>,las<span class="op">=</span><span class="fl">2</span>,cex.axis<span class="op">=</span><span class="fl">0.4</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CodeChap04_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
-<div id="exercice-4-2-analyse-des-corrélations-entre-les-variables" class="section level1">
-<h1 class="hasAnchor">
-<a href="#exercice-4-2-analyse-des-corr%C3%A9lations-entre-les-variables" class="anchor"></a>Exercice 4.2 : Analyse des corrélations entre les variables</h1>
+<div class="section level2">
+<h2 id="exercice-4-2-analyse-des-corrélations-entre-les-variables">Exercice 4.2 : Analyse des corrélations entre les variables<a class="anchor" aria-label="anchor" href="#exercice-4-2-analyse-des-corr%C3%A9lations-entre-les-variables"></a>
+</h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">GGally</span><span class="fu">::</span><span class="fu"><a href="https://ggobi.github.io/ggally/reference/ggpairs.html">ggpairs</a></span><span class="op">(</span><span class="va">air_pollution</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>, progress<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'GGally':</span>
-<span class="co">#&gt;   method from   </span>
-<span class="co">#&gt;   +.gg   ggplot2</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">GGally</span><span class="fu">::</span><span class="fu"><a href="https://ggobi.github.io/ggally/reference/ggpairs.html" class="external-link">ggpairs</a></span><span class="op">(</span><span class="va">air_pollution</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>, progress<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Registered S3 method overwritten by 'GGally':</span></span>
+<span><span class="co">#&gt;   method from   </span></span>
+<span><span class="co">#&gt;   +.gg   ggplot2</span></span></code></pre></div>
 <p><img src="CodeChap04_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cor_pollution</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">air_pollution</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
-<span class="va">col1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#7F0000"</span>, <span class="st">"red"</span>, <span class="st">"#FF7F00"</span>, <span class="st">"yellow"</span>, <span class="st">"white"</span>, <span class="st">"cyan"</span>, <span class="st">"#007FFF"</span>, <span class="st">"blue"</span>, <span class="st">"#00007F"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">col2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#67001F"</span>, <span class="st">"#B2182B"</span>, <span class="st">"#D6604D"</span>, <span class="st">"#F4A582"</span>, <span class="st">"#FDDBC7"</span>, <span class="st">"#FFFFFF"</span>, <span class="st">"#D1E5F0"</span>, <span class="st">"#92C5DE"</span>, <span class="st">"#4393C3"</span>, <span class="st">"#2166AC"</span>, <span class="st">"#053061"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">col3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"white"</span>, <span class="st">"blue"</span><span class="op">)</span><span class="op">)</span> 
-<span class="va">col4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#7F0000"</span>, <span class="st">"red"</span>, <span class="st">"#FF7F00"</span>, <span class="st">"yellow"</span>, <span class="st">"#7FFF7F"</span>, <span class="st">"cyan"</span>, <span class="st">"#007FFF"</span>, <span class="st">"blue"</span>, <span class="st">"#00007F"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">whiteblack</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"black"</span><span class="op">)</span>
-<span class="fu">corrplot</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/corrplot/man/corrplot.html">corrplot</a></span><span class="op">(</span><span class="va">cor_pollution</span>, method <span class="op">=</span> <span class="st">"color"</span>, addrect <span class="op">=</span> <span class="fl">2</span>, col <span class="op">=</span> <span class="fu">col1</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cor_pollution</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">air_pollution</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">col1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#7F0000"</span>, <span class="st">"red"</span>, <span class="st">"#FF7F00"</span>, <span class="st">"yellow"</span>, <span class="st">"white"</span>, <span class="st">"cyan"</span>, <span class="st">"#007FFF"</span>, <span class="st">"blue"</span>, <span class="st">"#00007F"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">col2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#67001F"</span>, <span class="st">"#B2182B"</span>, <span class="st">"#D6604D"</span>, <span class="st">"#F4A582"</span>, <span class="st">"#FDDBC7"</span>, <span class="st">"#FFFFFF"</span>, <span class="st">"#D1E5F0"</span>, <span class="st">"#92C5DE"</span>, <span class="st">"#4393C3"</span>, <span class="st">"#2166AC"</span>, <span class="st">"#053061"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">col3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"white"</span>, <span class="st">"blue"</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">col4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#7F0000"</span>, <span class="st">"red"</span>, <span class="st">"#FF7F00"</span>, <span class="st">"yellow"</span>, <span class="st">"#7FFF7F"</span>, <span class="st">"cyan"</span>, <span class="st">"#007FFF"</span>, <span class="st">"blue"</span>, <span class="st">"#00007F"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">whiteblack</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"black"</span><span class="op">)</span></span>
+<span><span class="fu">corrplot</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/corrplot/man/corrplot.html" class="external-link">corrplot</a></span><span class="op">(</span><span class="va">cor_pollution</span>, method <span class="op">=</span> <span class="st">"color"</span>, addrect <span class="op">=</span> <span class="fl">2</span>, col <span class="op">=</span> <span class="fu">col1</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CodeChap04_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
-<div id="exercice-4-3-analyse-des-inerties-expliquées-et-résiduelles" class="section level1">
-<h1 class="hasAnchor">
-<a href="#exercice-4-3-analyse-des-inerties-expliqu%C3%A9es-et-r%C3%A9siduelles" class="anchor"></a>Exercice 4.3 : Analyse des inerties expliquées et résiduelles</h1>
+<div class="section level2">
+<h2 id="exercice-4-3-analyse-des-inerties-expliquées-et-résiduelles">Exercice 4.3 : Analyse des inerties expliquées et résiduelles<a class="anchor" aria-label="anchor" href="#exercice-4-3-analyse-des-inerties-expliqu%C3%A9es-et-r%C3%A9siduelles"></a>
+</h2>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://factominer.free.fr">FactoMineR</a></span><span class="op">)</span>
-<span class="va">res.PCA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/FactoMineR/man/PCA.html">PCA</a></span><span class="op">(</span><span class="va">air_pollution</span><span class="op">[</span>,<span class="op">-</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://factominer.free.fr" class="external-link">FactoMineR</a></span><span class="op">)</span></span>
+<span><span class="va">res.PCA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/FactoMineR/man/PCA.html" class="external-link">PCA</a></span><span class="op">(</span><span class="va">air_pollution</span><span class="op">[</span>,<span class="op">-</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CodeChap04_files/figure-html/unnamed-chunk-9-1.png" width="700"><img src="CodeChap04_files/figure-html/unnamed-chunk-9-2.png" width="700"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">res.PCA</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; PCA(X = air_pollution[, -(1:2)]) </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Eigenvalues</span>
-<span class="co">#&gt;                        Dim.1   Dim.2   Dim.3   Dim.4   Dim.5   Dim.6   Dim.7</span>
-<span class="co">#&gt; Variance               4.194   2.139   1.509   1.159   0.629   0.433   0.386</span>
-<span class="co">#&gt; % of var.             38.128  19.448  13.715  10.532   5.718   3.933   3.508</span>
-<span class="co">#&gt; Cumulative % of var.  38.128  57.576  71.292  81.823  87.542  91.475  94.983</span>
-<span class="co">#&gt;                        Dim.8   Dim.9  Dim.10  Dim.11</span>
-<span class="co">#&gt; Variance               0.287   0.144   0.064   0.057</span>
-<span class="co">#&gt; % of var.              2.606   1.310   0.586   0.516</span>
-<span class="co">#&gt; Cumulative % of var.  97.589  98.898  99.484 100.000</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Individuals (the 10 first)</span>
-<span class="co">#&gt;             Dist    Dim.1    ctr   cos2    Dim.2    ctr   cos2    Dim.3    ctr</span>
-<span class="co">#&gt; 1       |  2.847 |  1.926  1.768  0.458 |  1.036  1.003  0.132 |  0.569  0.430</span>
-<span class="co">#&gt; 2       |  4.398 | -3.580  6.113  0.663 | -0.609  0.347  0.019 | -1.863  4.601</span>
-<span class="co">#&gt; 3       |  3.483 |  1.289  0.792  0.137 | -1.136  1.206  0.106 |  1.368  2.481</span>
-<span class="co">#&gt; 4       |  5.875 |  4.463  9.499  0.577 |  2.080  4.044  0.125 | -2.075  5.709</span>
-<span class="co">#&gt; 5       |  2.344 | -0.760  0.276  0.105 | -0.013  0.000  0.000 |  1.041  1.435</span>
-<span class="co">#&gt; 6       |  2.458 |  1.098  0.575  0.200 | -0.353  0.116  0.021 |  1.566  3.251</span>
-<span class="co">#&gt; 7       |  2.296 | -0.097  0.004  0.002 |  0.172  0.028  0.006 |  1.163  1.793</span>
-<span class="co">#&gt; 8       |  2.422 |  0.261  0.032  0.012 |  1.317  1.622  0.296 |  1.796  4.274</span>
-<span class="co">#&gt; 9       |  2.073 |  0.920  0.403  0.197 |  1.460  1.993  0.496 | -0.137  0.025</span>
-<span class="co">#&gt; 10      |  2.702 | -1.447  0.999  0.287 | -0.963  0.867  0.127 |  1.748  4.052</span>
-<span class="co">#&gt;           cos2  </span>
-<span class="co">#&gt; 1        0.040 |</span>
-<span class="co">#&gt; 2        0.179 |</span>
-<span class="co">#&gt; 3        0.154 |</span>
-<span class="co">#&gt; 4        0.125 |</span>
-<span class="co">#&gt; 5        0.197 |</span>
-<span class="co">#&gt; 6        0.406 |</span>
-<span class="co">#&gt; 7        0.257 |</span>
-<span class="co">#&gt; 8        0.549 |</span>
-<span class="co">#&gt; 9        0.004 |</span>
-<span class="co">#&gt; 10       0.419 |</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Variables (the 10 first)</span>
-<span class="co">#&gt;            Dim.1    ctr   cos2    Dim.2    ctr   cos2    Dim.3    ctr   cos2  </span>
-<span class="co">#&gt; SMIN    |  0.489  5.694  0.239 |  0.363  6.159  0.132 | -0.334  7.387  0.111 |</span>
-<span class="co">#&gt; SMEAN   |  0.865 17.836  0.748 | -0.065  0.196  0.004 | -0.212  2.968  0.045 |</span>
-<span class="co">#&gt; SMAX    |  0.725 12.545  0.526 | -0.324  4.911  0.105 |  0.040  0.107  0.002 |</span>
-<span class="co">#&gt; PMIN    |  0.644  9.888  0.415 | -0.310  4.493  0.096 | -0.117  0.913  0.014 |</span>
-<span class="co">#&gt; PMEAN   |  0.716 12.225  0.513 | -0.601 16.865  0.361 |  0.155  1.599  0.024 |</span>
-<span class="co">#&gt; PERWH   |  0.494  5.813  0.244 |  0.321  4.824  0.103 |  0.746 36.855  0.556 |</span>
-<span class="co">#&gt; NONPOOR |  0.621  9.195  0.386 |  0.504 11.878  0.254 |  0.239  3.793  0.057 |</span>
-<span class="co">#&gt; GE65    |  0.434  4.481  0.188 |  0.594 16.484  0.353 |  0.461 14.092  0.213 |</span>
-<span class="co">#&gt; LPOP    |  0.564  7.578  0.318 |  0.223  2.333  0.050 | -0.325  7.008  0.106 |</span>
-<span class="co">#&gt; l_pm2   |  0.615  9.015  0.378 |  0.396  7.331  0.157 | -0.580 22.270  0.336 |</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res.PCA</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; PCA(X = air_pollution[, -(1:2)]) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Eigenvalues</span></span>
+<span><span class="co">#&gt;                        Dim.1   Dim.2   Dim.3   Dim.4   Dim.5   Dim.6   Dim.7</span></span>
+<span><span class="co">#&gt; Variance               4.194   2.139   1.509   1.159   0.629   0.433   0.386</span></span>
+<span><span class="co">#&gt; % of var.             38.128  19.448  13.715  10.532   5.718   3.933   3.508</span></span>
+<span><span class="co">#&gt; Cumulative % of var.  38.128  57.576  71.292  81.823  87.542  91.475  94.983</span></span>
+<span><span class="co">#&gt;                        Dim.8   Dim.9  Dim.10  Dim.11</span></span>
+<span><span class="co">#&gt; Variance               0.287   0.144   0.064   0.057</span></span>
+<span><span class="co">#&gt; % of var.              2.606   1.310   0.586   0.516</span></span>
+<span><span class="co">#&gt; Cumulative % of var.  97.589  98.898  99.484 100.000</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Individuals (the 10 first)</span></span>
+<span><span class="co">#&gt;             Dist    Dim.1    ctr   cos2    Dim.2    ctr   cos2    Dim.3    ctr</span></span>
+<span><span class="co">#&gt; 1       |  2.847 |  1.926  1.768  0.458 |  1.036  1.003  0.132 |  0.569  0.430</span></span>
+<span><span class="co">#&gt; 2       |  4.398 | -3.580  6.113  0.663 | -0.609  0.347  0.019 | -1.863  4.601</span></span>
+<span><span class="co">#&gt; 3       |  3.483 |  1.289  0.792  0.137 | -1.136  1.206  0.106 |  1.368  2.481</span></span>
+<span><span class="co">#&gt; 4       |  5.875 |  4.463  9.499  0.577 |  2.080  4.044  0.125 | -2.075  5.709</span></span>
+<span><span class="co">#&gt; 5       |  2.344 | -0.760  0.276  0.105 | -0.013  0.000  0.000 |  1.041  1.435</span></span>
+<span><span class="co">#&gt; 6       |  2.458 |  1.098  0.575  0.200 | -0.353  0.116  0.021 |  1.566  3.251</span></span>
+<span><span class="co">#&gt; 7       |  2.296 | -0.097  0.004  0.002 |  0.172  0.028  0.006 |  1.163  1.793</span></span>
+<span><span class="co">#&gt; 8       |  2.422 |  0.261  0.032  0.012 |  1.317  1.622  0.296 |  1.796  4.274</span></span>
+<span><span class="co">#&gt; 9       |  2.073 |  0.920  0.403  0.197 |  1.460  1.993  0.496 | -0.137  0.025</span></span>
+<span><span class="co">#&gt; 10      |  2.702 | -1.447  0.999  0.287 | -0.963  0.867  0.127 |  1.748  4.052</span></span>
+<span><span class="co">#&gt;           cos2  </span></span>
+<span><span class="co">#&gt; 1        0.040 |</span></span>
+<span><span class="co">#&gt; 2        0.179 |</span></span>
+<span><span class="co">#&gt; 3        0.154 |</span></span>
+<span><span class="co">#&gt; 4        0.125 |</span></span>
+<span><span class="co">#&gt; 5        0.197 |</span></span>
+<span><span class="co">#&gt; 6        0.406 |</span></span>
+<span><span class="co">#&gt; 7        0.257 |</span></span>
+<span><span class="co">#&gt; 8        0.549 |</span></span>
+<span><span class="co">#&gt; 9        0.004 |</span></span>
+<span><span class="co">#&gt; 10       0.419 |</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Variables (the 10 first)</span></span>
+<span><span class="co">#&gt;            Dim.1    ctr   cos2    Dim.2    ctr   cos2    Dim.3    ctr   cos2  </span></span>
+<span><span class="co">#&gt; SMIN    |  0.489  5.694  0.239 |  0.363  6.159  0.132 | -0.334  7.387  0.111 |</span></span>
+<span><span class="co">#&gt; SMEAN   |  0.865 17.836  0.748 | -0.065  0.196  0.004 | -0.212  2.968  0.045 |</span></span>
+<span><span class="co">#&gt; SMAX    |  0.725 12.545  0.526 | -0.324  4.911  0.105 |  0.040  0.107  0.002 |</span></span>
+<span><span class="co">#&gt; PMIN    |  0.644  9.888  0.415 | -0.310  4.493  0.096 | -0.117  0.913  0.014 |</span></span>
+<span><span class="co">#&gt; PMEAN   |  0.716 12.225  0.513 | -0.601 16.865  0.361 |  0.155  1.599  0.024 |</span></span>
+<span><span class="co">#&gt; PERWH   |  0.494  5.813  0.244 |  0.321  4.824  0.103 |  0.746 36.855  0.556 |</span></span>
+<span><span class="co">#&gt; NONPOOR |  0.621  9.195  0.386 |  0.504 11.878  0.254 |  0.239  3.793  0.057 |</span></span>
+<span><span class="co">#&gt; GE65    |  0.434  4.481  0.188 |  0.594 16.484  0.353 |  0.461 14.092  0.213 |</span></span>
+<span><span class="co">#&gt; LPOP    |  0.564  7.578  0.318 |  0.223  2.333  0.050 | -0.325  7.008  0.106 |</span></span>
+<span><span class="co">#&gt; l_pm2   |  0.615  9.015  0.378 |  0.396  7.331  0.157 | -0.580 22.270  0.336 |</span></span></code></pre></div>
 </div>
-<div id="exercice-4-4-contributions-et-reconstitutions-des-variables-sur-la-première-composante-principale" class="section level1">
-<h1 class="hasAnchor">
-<a href="#exercice-4-4-contributions-et-reconstitutions-des-variables-sur-la-premi%C3%A8re-composante-principale" class="anchor"></a>Exercice 4.4 : Contributions et reconstitutions des variables sur la première composante principale</h1>
+<div class="section level2">
+<h2 id="exercice-4-4-contributions-et-reconstitutions-des-variables-sur-la-première-composante-principale">Exercice 4.4 : Contributions et reconstitutions des variables sur la
+première composante principale<a class="anchor" aria-label="anchor" href="#exercice-4-4-contributions-et-reconstitutions-des-variables-sur-la-premi%C3%A8re-composante-principale"></a>
+</h2>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">res.PCA</span> 
-<span class="co">#&gt; **Results for the Principal Component Analysis (PCA)**</span>
-<span class="co">#&gt; The analysis was performed on 50 individuals, described by 11 variables</span>
-<span class="co">#&gt; *The results are available in the following objects:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;    name               description                          </span>
-<span class="co">#&gt; 1  "$eig"             "eigenvalues"                        </span>
-<span class="co">#&gt; 2  "$var"             "results for the variables"          </span>
-<span class="co">#&gt; 3  "$var$coord"       "coord. for the variables"           </span>
-<span class="co">#&gt; 4  "$var$cor"         "correlations variables - dimensions"</span>
-<span class="co">#&gt; 5  "$var$cos2"        "cos2 for the variables"             </span>
-<span class="co">#&gt; 6  "$var$contrib"     "contributions of the variables"     </span>
-<span class="co">#&gt; 7  "$ind"             "results for the individuals"        </span>
-<span class="co">#&gt; 8  "$ind$coord"       "coord. for the individuals"         </span>
-<span class="co">#&gt; 9  "$ind$cos2"        "cos2 for the individuals"           </span>
-<span class="co">#&gt; 10 "$ind$contrib"     "contributions of the individuals"   </span>
-<span class="co">#&gt; 11 "$call"            "summary statistics"                 </span>
-<span class="co">#&gt; 12 "$call$centre"     "mean of the variables"              </span>
-<span class="co">#&gt; 13 "$call$ecart.type" "standard error of the variables"    </span>
-<span class="co">#&gt; 14 "$call$row.w"      "weights for the individuals"        </span>
-<span class="co">#&gt; 15 "$call$col.w"      "weights for the variables"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">res.PCA</span> </span>
+<span><span class="co">#&gt; **Results for the Principal Component Analysis (PCA)**</span></span>
+<span><span class="co">#&gt; The analysis was performed on 50 individuals, described by 11 variables</span></span>
+<span><span class="co">#&gt; *The results are available in the following objects:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;    name               description                          </span></span>
+<span><span class="co">#&gt; 1  "$eig"             "eigenvalues"                        </span></span>
+<span><span class="co">#&gt; 2  "$var"             "results for the variables"          </span></span>
+<span><span class="co">#&gt; 3  "$var$coord"       "coord. for the variables"           </span></span>
+<span><span class="co">#&gt; 4  "$var$cor"         "correlations variables - dimensions"</span></span>
+<span><span class="co">#&gt; 5  "$var$cos2"        "cos2 for the variables"             </span></span>
+<span><span class="co">#&gt; 6  "$var$contrib"     "contributions of the variables"     </span></span>
+<span><span class="co">#&gt; 7  "$ind"             "results for the individuals"        </span></span>
+<span><span class="co">#&gt; 8  "$ind$coord"       "coord. for the individuals"         </span></span>
+<span><span class="co">#&gt; 9  "$ind$cos2"        "cos2 for the individuals"           </span></span>
+<span><span class="co">#&gt; 10 "$ind$contrib"     "contributions of the individuals"   </span></span>
+<span><span class="co">#&gt; 11 "$call"            "summary statistics"                 </span></span>
+<span><span class="co">#&gt; 12 "$call$centre"     "mean of the variables"              </span></span>
+<span><span class="co">#&gt; 13 "$call$ecart.type" "standard error of the variables"    </span></span>
+<span><span class="co">#&gt; 14 "$call$row.w"      "weights for the individuals"        </span></span>
+<span><span class="co">#&gt; 15 "$call$col.w"      "weights for the variables"</span></span></code></pre></div>
 <p>fournit la liste des informations disponibles.</p>
 <ul>
 <li>name description<br>
@@ -354,143 +370,155 @@
 </li>
 <li>“$var” “results for the variables”<br>
 </li>
-<li>“<span class="math inline">\(var\)</span>coord” “coord. for the variables”<br>
+<li>“<span class="math inline">\(var\)</span>coord” “coord. for the
+variables”<br>
 </li>
-<li>“<span class="math inline">\(var\)</span>cor” “correlations variables - dimensions”</li>
-<li>“<span class="math inline">\(var\)</span>cos2” “cos2 for the variables”<br>
+<li>“<span class="math inline">\(var\)</span>cor” “correlations
+variables - dimensions”</li>
+<li>“<span class="math inline">\(var\)</span>cos2” “cos2 for the
+variables”<br>
 </li>
-<li>“<span class="math inline">\(var\)</span>contrib” “contributions of the variables”<br>
+<li>“<span class="math inline">\(var\)</span>contrib” “contributions of
+the variables”<br>
 </li>
 <li>“$ind” “results for the individuals”<br>
 </li>
-<li>“<span class="math inline">\(ind\)</span>coord” “coord. for the individuals”<br>
+<li>“<span class="math inline">\(ind\)</span>coord” “coord. for the
+individuals”<br>
 </li>
-<li>“<span class="math inline">\(ind\)</span>cos2” “cos2 for the individuals”<br>
+<li>“<span class="math inline">\(ind\)</span>cos2” “cos2 for the
+individuals”<br>
 </li>
-<li>“<span class="math inline">\(ind\)</span>contrib” “contributions of the individuals”</li>
+<li>“<span class="math inline">\(ind\)</span>contrib” “contributions of
+the individuals”</li>
 <li>“$call” “summary statistics”</li>
-<li>“<span class="math inline">\(call\)</span>centre” “mean of the variables”<br>
+<li>“<span class="math inline">\(call\)</span>centre” “mean of the
+variables”<br>
 </li>
-<li>“<span class="math inline">\(call\)</span>ecart.type” “standard error of the variables”<br>
+<li>“<span class="math inline">\(call\)</span>ecart.type” “standard
+error of the variables”<br>
 </li>
-<li>“<span class="math inline">\(call\)</span>row.w” “weights for the individuals”<br>
+<li>“<span class="math inline">\(call\)</span>row.w” “weights for the
+individuals”<br>
 </li>
-<li>“<span class="math inline">\(call\)</span>col.w” “weights for the variables”</li>
+<li>“<span class="math inline">\(call\)</span>col.w” “weights for the
+variables”</li>
 </ul>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">contrib_dim_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res.PCA</span><span class="op">$</span><span class="va">var</span><span class="op">$</span><span class="va">contrib</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="fl">2</span><span class="op">)</span>
-<span class="va">cos2_dim_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res.PCA</span><span class="op">$</span><span class="va">var</span><span class="op">$</span><span class="va">cos2</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">*</span><span class="fl">100</span>,<span class="fl">2</span><span class="op">)</span>
-<span class="va">contrib_cos2_var_dim_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">contrib_dim_1</span>,<span class="va">cos2_dim_1</span><span class="op">)</span>
-<span class="va">contrib_cos2_var_dim_1</span>
-<span class="co">#&gt;         contrib_dim_1 cos2_dim_1</span>
-<span class="co">#&gt; SMIN             5.69      23.88</span>
-<span class="co">#&gt; SMEAN           17.84      74.81</span>
-<span class="co">#&gt; SMAX            12.54      52.61</span>
-<span class="co">#&gt; PMIN             9.89      41.47</span>
-<span class="co">#&gt; PMEAN           12.23      51.27</span>
-<span class="co">#&gt; PERWH            5.81      24.38</span>
-<span class="co">#&gt; NONPOOR          9.20      38.57</span>
-<span class="co">#&gt; GE65             4.48      18.79</span>
-<span class="co">#&gt; LPOP             7.58      31.78</span>
-<span class="co">#&gt; l_pm2            9.01      37.81</span>
-<span class="co">#&gt; l_pmax           5.73      24.03</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">contrib_dim_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">res.PCA</span><span class="op">$</span><span class="va">var</span><span class="op">$</span><span class="va">contrib</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">cos2_dim_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">res.PCA</span><span class="op">$</span><span class="va">var</span><span class="op">$</span><span class="va">cos2</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">*</span><span class="fl">100</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">contrib_cos2_var_dim_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">contrib_dim_1</span>,<span class="va">cos2_dim_1</span><span class="op">)</span></span>
+<span><span class="va">contrib_cos2_var_dim_1</span></span>
+<span><span class="co">#&gt;         contrib_dim_1 cos2_dim_1</span></span>
+<span><span class="co">#&gt; SMIN             5.69      23.88</span></span>
+<span><span class="co">#&gt; SMEAN           17.84      74.81</span></span>
+<span><span class="co">#&gt; SMAX            12.54      52.61</span></span>
+<span><span class="co">#&gt; PMIN             9.89      41.47</span></span>
+<span><span class="co">#&gt; PMEAN           12.23      51.27</span></span>
+<span><span class="co">#&gt; PERWH            5.81      24.38</span></span>
+<span><span class="co">#&gt; NONPOOR          9.20      38.57</span></span>
+<span><span class="co">#&gt; GE65             4.48      18.79</span></span>
+<span><span class="co">#&gt; LPOP             7.58      31.78</span></span>
+<span><span class="co">#&gt; l_pm2            9.01      37.81</span></span>
+<span><span class="co">#&gt; l_pmax           5.73      24.03</span></span></code></pre></div>
 </div>
-<div id="exercice-4-5-équation-de-la-première-composante-principale" class="section level1">
-<h1 class="hasAnchor">
-<a href="#exercice-4-5-%C3%A9quation-de-la-premi%C3%A8re-composante-principale" class="anchor"></a>Exercice 4.5 : Équation de la première composante principale</h1>
+<div class="section level2">
+<h2 id="exercice-4-5-équation-de-la-première-composante-principale">Exercice 4.5 : Équation de la première composante principale<a class="anchor" aria-label="anchor" href="#exercice-4-5-%C3%A9quation-de-la-premi%C3%A8re-composante-principale"></a>
+</h2>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">res.PCA</span><span class="op">$</span><span class="va">var</span><span class="op">$</span><span class="va">coord</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>
-<span class="co">#&gt;      SMIN     SMEAN      SMAX      PMIN     PMEAN     PERWH   NONPOOR      GE65 </span>
-<span class="co">#&gt; 0.4886781 0.8649000 0.7253509 0.6439964 0.7160517 0.4937540 0.6210111 0.4335012 </span>
-<span class="co">#&gt;      LPOP     l_pm2    l_pmax </span>
-<span class="co">#&gt; 0.5637713 0.6148864 0.4902501</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">res.PCA</span><span class="op">$</span><span class="va">var</span><span class="op">$</span><span class="va">coord</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
+<span><span class="co">#&gt;      SMIN     SMEAN      SMAX      PMIN     PMEAN     PERWH   NONPOOR      GE65 </span></span>
+<span><span class="co">#&gt; 0.4886781 0.8649000 0.7253509 0.6439964 0.7160517 0.4937540 0.6210111 0.4335012 </span></span>
+<span><span class="co">#&gt;      LPOP     l_pm2    l_pmax </span></span>
+<span><span class="co">#&gt; 0.5637713 0.6148864 0.4902501</span></span></code></pre></div>
 </div>
-<div id="exercice-4-6-contributions-et-reconstitutions-des-individus-sur-la-première-composante-principale" class="section level1">
-<h1 class="hasAnchor">
-<a href="#exercice-4-6-contributions-et-reconstitutions-des-individus-sur-la-premi%C3%A8re-composante-principale" class="anchor"></a>Exercice 4.6 : Contributions et reconstitutions des individus sur la première composante principale</h1>
+<div class="section level2">
+<h2 id="exercice-4-6-contributions-et-reconstitutions-des-individus-sur-la-première-composante-principale">Exercice 4.6 : Contributions et reconstitutions des individus sur la
+première composante principale<a class="anchor" aria-label="anchor" href="#exercice-4-6-contributions-et-reconstitutions-des-individus-sur-la-premi%C3%A8re-composante-principale"></a>
+</h2>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">CITY</span> <span class="op">&lt;-</span> <span class="va">air_pollution</span><span class="op">$</span><span class="va">CITY</span>
-<span class="va">contrib_dim_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res.PCA</span><span class="op">$</span><span class="va">ind</span><span class="op">$</span><span class="va">contrib</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="fl">2</span><span class="op">)</span>
-<span class="va">cos2_dim_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res.PCA</span><span class="op">$</span><span class="va">ind</span><span class="op">$</span><span class="va">cos2</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">*</span><span class="fl">100</span>,<span class="fl">2</span><span class="op">)</span>
-<span class="va">contrib_cos2_ind_dim_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">CITY</span>,<span class="va">contrib_dim_1</span>,<span class="va">cos2_dim_1</span><span class="op">)</span>
-<span class="va">contrib_cos2_ind_dim_1</span>
-<span class="co">#&gt;        CITY contrib_dim_1 cos2_dim_1</span>
-<span class="co">#&gt; 1  PROVIDEN          1.77      45.75</span>
-<span class="co">#&gt; 2   JACKSON          6.11      66.26</span>
-<span class="co">#&gt; 3  JOHNSTOW          0.79      13.69</span>
-<span class="co">#&gt; 4  JERSEY_C          9.50      57.71</span>
-<span class="co">#&gt; 5  HUNTINGT          0.28      10.52</span>
-<span class="co">#&gt; 6  DES_MOIN          0.57      19.96</span>
-<span class="co">#&gt; 7    DENVER          0.00       0.18</span>
-<span class="co">#&gt; 8   READING          0.03       1.16</span>
-<span class="co">#&gt; 9    TOLEDO          0.40      19.68</span>
-<span class="co">#&gt; 10   FRESNO          1.00      28.67</span>
-<span class="co">#&gt; 11  MEMPHIS          1.87      35.49</span>
-<span class="co">#&gt; 12     YORK          2.21      29.03</span>
-<span class="co">#&gt; 13 MILWAUKE          2.28      69.49</span>
-<span class="co">#&gt; 14 SAVANNAH          2.79      54.48</span>
-<span class="co">#&gt; 15    OMAHA          0.16      10.36</span>
-<span class="co">#&gt; 16   TOPEKA          0.99      26.13</span>
-<span class="co">#&gt; 17 COLUMBUS          1.76      46.47</span>
-<span class="co">#&gt; 18 BEAUMONT          2.35      76.59</span>
-<span class="co">#&gt; 19  WINSTON          0.35      10.28</span>
-<span class="co">#&gt; 20  DETROIT          1.77      34.98</span>
-<span class="co">#&gt; 21  EL_PASO          0.04       1.18</span>
-<span class="co">#&gt; 22    MACON          2.54      29.45</span>
-<span class="co">#&gt; 23 ROCKFORD          0.36      13.29</span>
-<span class="co">#&gt; 24  JACKSON          1.31      30.36</span>
-<span class="co">#&gt; 25 FALL_RIV          0.00       0.00</span>
-<span class="co">#&gt; 26   BOSTON          4.36      62.60</span>
-<span class="co">#&gt; 27   DAYTON          0.17      13.41</span>
-<span class="co">#&gt; 28 CHARLOTT          0.43      18.39</span>
-<span class="co">#&gt; 29    MIAMI          1.38      28.68</span>
-<span class="co">#&gt; 30 BRIDGEPO          2.37      27.38</span>
-<span class="co">#&gt; 31 SIOUX_FA          1.23      22.45</span>
-<span class="co">#&gt; 32  CHICAGO          7.27      67.69</span>
-<span class="co">#&gt; 33 SOUTH_BE          0.04       1.69</span>
-<span class="co">#&gt; 34  NORFOLK          0.64      16.92</span>
-<span class="co">#&gt; 35 CLEVELAN          5.54      75.80</span>
-<span class="co">#&gt; 36   AUSTIN          4.13      82.38</span>
-<span class="co">#&gt; 37 KNOXVILL          0.47      22.04</span>
-<span class="co">#&gt; 38 INDIANAP          3.08      59.90</span>
-<span class="co">#&gt; 39  NASHVIL          0.27      13.83</span>
-<span class="co">#&gt; 40  SEATTLE          0.48       9.08</span>
-<span class="co">#&gt; 41   DALLAS          0.72      32.85</span>
-<span class="co">#&gt; 42   MOBILE          1.42      33.65</span>
-<span class="co">#&gt; 43  PHOENIX          1.32      11.12</span>
-<span class="co">#&gt; 44  AUGUSTA          6.43      79.60</span>
-<span class="co">#&gt; 45 YOUNGSTO          1.56      77.36</span>
-<span class="co">#&gt; 46 CHATTANO          0.00       0.03</span>
-<span class="co">#&gt; 47 GALVESTO          3.96      68.37</span>
-<span class="co">#&gt; 48 FORT_WOR          2.33      62.38</span>
-<span class="co">#&gt; 49    FLINT          0.14       5.91</span>
-<span class="co">#&gt; 50 CHARLEST          9.00      32.58</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">CITY</span> <span class="op">&lt;-</span> <span class="va">air_pollution</span><span class="op">$</span><span class="va">CITY</span></span>
+<span><span class="va">contrib_dim_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">res.PCA</span><span class="op">$</span><span class="va">ind</span><span class="op">$</span><span class="va">contrib</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">cos2_dim_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">res.PCA</span><span class="op">$</span><span class="va">ind</span><span class="op">$</span><span class="va">cos2</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">*</span><span class="fl">100</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">contrib_cos2_ind_dim_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">CITY</span>,<span class="va">contrib_dim_1</span>,<span class="va">cos2_dim_1</span><span class="op">)</span></span>
+<span><span class="va">contrib_cos2_ind_dim_1</span></span>
+<span><span class="co">#&gt;        CITY contrib_dim_1 cos2_dim_1</span></span>
+<span><span class="co">#&gt; 1  PROVIDEN          1.77      45.75</span></span>
+<span><span class="co">#&gt; 2   JACKSON          6.11      66.26</span></span>
+<span><span class="co">#&gt; 3  JOHNSTOW          0.79      13.69</span></span>
+<span><span class="co">#&gt; 4  JERSEY_C          9.50      57.71</span></span>
+<span><span class="co">#&gt; 5  HUNTINGT          0.28      10.52</span></span>
+<span><span class="co">#&gt; 6  DES_MOIN          0.57      19.96</span></span>
+<span><span class="co">#&gt; 7    DENVER          0.00       0.18</span></span>
+<span><span class="co">#&gt; 8   READING          0.03       1.16</span></span>
+<span><span class="co">#&gt; 9    TOLEDO          0.40      19.68</span></span>
+<span><span class="co">#&gt; 10   FRESNO          1.00      28.67</span></span>
+<span><span class="co">#&gt; 11  MEMPHIS          1.87      35.49</span></span>
+<span><span class="co">#&gt; 12     YORK          2.21      29.03</span></span>
+<span><span class="co">#&gt; 13 MILWAUKE          2.28      69.49</span></span>
+<span><span class="co">#&gt; 14 SAVANNAH          2.79      54.48</span></span>
+<span><span class="co">#&gt; 15    OMAHA          0.16      10.36</span></span>
+<span><span class="co">#&gt; 16   TOPEKA          0.99      26.13</span></span>
+<span><span class="co">#&gt; 17 COLUMBUS          1.76      46.47</span></span>
+<span><span class="co">#&gt; 18 BEAUMONT          2.35      76.59</span></span>
+<span><span class="co">#&gt; 19  WINSTON          0.35      10.28</span></span>
+<span><span class="co">#&gt; 20  DETROIT          1.77      34.98</span></span>
+<span><span class="co">#&gt; 21  EL_PASO          0.04       1.18</span></span>
+<span><span class="co">#&gt; 22    MACON          2.54      29.45</span></span>
+<span><span class="co">#&gt; 23 ROCKFORD          0.36      13.29</span></span>
+<span><span class="co">#&gt; 24  JACKSON          1.31      30.36</span></span>
+<span><span class="co">#&gt; 25 FALL_RIV          0.00       0.00</span></span>
+<span><span class="co">#&gt; 26   BOSTON          4.36      62.60</span></span>
+<span><span class="co">#&gt; 27   DAYTON          0.17      13.41</span></span>
+<span><span class="co">#&gt; 28 CHARLOTT          0.43      18.39</span></span>
+<span><span class="co">#&gt; 29    MIAMI          1.38      28.68</span></span>
+<span><span class="co">#&gt; 30 BRIDGEPO          2.37      27.38</span></span>
+<span><span class="co">#&gt; 31 SIOUX_FA          1.23      22.45</span></span>
+<span><span class="co">#&gt; 32  CHICAGO          7.27      67.69</span></span>
+<span><span class="co">#&gt; 33 SOUTH_BE          0.04       1.69</span></span>
+<span><span class="co">#&gt; 34  NORFOLK          0.64      16.92</span></span>
+<span><span class="co">#&gt; 35 CLEVELAN          5.54      75.80</span></span>
+<span><span class="co">#&gt; 36   AUSTIN          4.13      82.38</span></span>
+<span><span class="co">#&gt; 37 KNOXVILL          0.47      22.04</span></span>
+<span><span class="co">#&gt; 38 INDIANAP          3.08      59.90</span></span>
+<span><span class="co">#&gt; 39  NASHVIL          0.27      13.83</span></span>
+<span><span class="co">#&gt; 40  SEATTLE          0.48       9.08</span></span>
+<span><span class="co">#&gt; 41   DALLAS          0.72      32.85</span></span>
+<span><span class="co">#&gt; 42   MOBILE          1.42      33.65</span></span>
+<span><span class="co">#&gt; 43  PHOENIX          1.32      11.12</span></span>
+<span><span class="co">#&gt; 44  AUGUSTA          6.43      79.60</span></span>
+<span><span class="co">#&gt; 45 YOUNGSTO          1.56      77.36</span></span>
+<span><span class="co">#&gt; 46 CHATTANO          0.00       0.03</span></span>
+<span><span class="co">#&gt; 47 GALVESTO          3.96      68.37</span></span>
+<span><span class="co">#&gt; 48 FORT_WOR          2.33      62.38</span></span>
+<span><span class="co">#&gt; 49    FLINT          0.14       5.91</span></span>
+<span><span class="co">#&gt; 50 CHARLEST          9.00      32.58</span></span></code></pre></div>
 </div>
-<div id="exercice-4-7-cercle-des-corrélations" class="section level1">
-<h1 class="hasAnchor">
-<a href="#exercice-4-7-cercle-des-corr%C3%A9lations" class="anchor"></a>Exercice 4.7 : Cercle des corrélations</h1>
+<div class="section level2">
+<h2 id="exercice-4-7-cercle-des-corrélations">Exercice 4.7 : Cercle des corrélations<a class="anchor" aria-label="anchor" href="#exercice-4-7-cercle-des-corr%C3%A9lations"></a>
+</h2>
 <p>Le cercle des corrélations se situe dans la fenêtre graphique.</p>
 </div>
-<div id="exercice-4-8-analyse-de-la-deuxième-dimension" class="section level1">
-<h1 class="hasAnchor">
-<a href="#exercice-4-8-analyse-de-la-deuxi%C3%A8me-dimension" class="anchor"></a>Exercice 4.8 : Analyse de la deuxième dimension</h1>
+<div class="section level2">
+<h2 id="exercice-4-8-analyse-de-la-deuxième-dimension">Exercice 4.8 : Analyse de la deuxième dimension<a class="anchor" aria-label="anchor" href="#exercice-4-8-analyse-de-la-deuxi%C3%A8me-dimension"></a>
+</h2>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">contrib_dim_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res.PCA</span><span class="op">$</span><span class="va">var</span><span class="op">$</span><span class="va">contrib</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>,<span class="fl">2</span><span class="op">)</span>
-<span class="va">cos2_dim_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res.PCA</span><span class="op">$</span><span class="va">var</span><span class="op">$</span><span class="va">cos2</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">*</span><span class="fl">100</span>,<span class="fl">2</span><span class="op">)</span>
-<span class="va">contrib_cos2_var_dim_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">contrib_dim_2</span>,<span class="va">cos2_dim_2</span><span class="op">)</span>
-<span class="va">contrib_cos2_var_dim_2</span>
-<span class="co">#&gt;         contrib_dim_2 cos2_dim_2</span>
-<span class="co">#&gt; SMIN             6.16      13.18</span>
-<span class="co">#&gt; SMEAN            0.20       0.42</span>
-<span class="co">#&gt; SMAX             4.91      10.51</span>
-<span class="co">#&gt; PMIN             4.49       9.61</span>
-<span class="co">#&gt; PMEAN           16.87      36.08</span>
-<span class="co">#&gt; PERWH            4.82      10.32</span>
-<span class="co">#&gt; NONPOOR         11.88      25.41</span>
-<span class="co">#&gt; GE65            16.48      35.26</span>
-<span class="co">#&gt; LPOP             2.33       4.99</span>
-<span class="co">#&gt; l_pm2            7.33      15.68</span>
-<span class="co">#&gt; l_pmax          24.53      52.47</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">contrib_dim_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">res.PCA</span><span class="op">$</span><span class="va">var</span><span class="op">$</span><span class="va">contrib</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">cos2_dim_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">res.PCA</span><span class="op">$</span><span class="va">var</span><span class="op">$</span><span class="va">cos2</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">*</span><span class="fl">100</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">contrib_cos2_var_dim_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">contrib_dim_2</span>,<span class="va">cos2_dim_2</span><span class="op">)</span></span>
+<span><span class="va">contrib_cos2_var_dim_2</span></span>
+<span><span class="co">#&gt;         contrib_dim_2 cos2_dim_2</span></span>
+<span><span class="co">#&gt; SMIN             6.16      13.18</span></span>
+<span><span class="co">#&gt; SMEAN            0.20       0.42</span></span>
+<span><span class="co">#&gt; SMAX             4.91      10.51</span></span>
+<span><span class="co">#&gt; PMIN             4.49       9.61</span></span>
+<span><span class="co">#&gt; PMEAN           16.87      36.08</span></span>
+<span><span class="co">#&gt; PERWH            4.82      10.32</span></span>
+<span><span class="co">#&gt; NONPOOR         11.88      25.41</span></span>
+<span><span class="co">#&gt; GE65            16.48      35.26</span></span>
+<span><span class="co">#&gt; LPOP             2.33       4.99</span></span>
+<span><span class="co">#&gt; l_pm2            7.33      15.68</span></span>
+<span><span class="co">#&gt; l_pmax          24.53      52.47</span></span></code></pre></div>
 </div>
   </div>
 
@@ -505,11 +533,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Frederic Bertrand, Myriam Maumy-Bertrand.</p>
+  <p></p>
+<p>Developed by Frederic Bertrand, Myriam Maumy-Bertrand.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -517,6 +547,8 @@
 
   
 
+
+  
 
   </body>
 </html>

@@ -12,8 +12,8 @@ vignette: >
 
 <table align="center">
         <tr>
-            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;"/></td>
-            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;"/></td>
+            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100 0 0;"/></td>
+            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100;"/></td>
         </tr>
 </table>
 
@@ -278,7 +278,8 @@ On peut le vérifier en demandant à `R` de trouver le meilleur modèle AR.
 Il faut d’abord installer le package suivant : 
 
 ```{r}
-if(!("fArma" %in% installed.packages())){install.packages("fArma", repos="https://R-Forge.R-project.org")}
+if(!("remotes" %in% installed.packages())){remotes::install.packages("remotes")}
+if(!("fArma" %in% installed.packages())){remotes::install_github("cran/fArma")}
 library(fArma)
 ```
 

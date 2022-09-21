@@ -1,19 +1,19 @@
 ---
-title: "Chapitre 05. Exploration de données avec l'analyse factorielle des correspondances."
+title: "Chapitre 05. Analyse factorielle des correspondances (AFC)."
 subtitle: "Tout le code avec R."
 author: "Christian Derquenne"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Chapitre 05. Exploration de données avec l'analyse factorielle des correspondances.}
+  %\VignetteIndexEntry{Chapitre 05. Analyse factorielle des correspondances (AFC).}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 <table align="center">
         <tr>
-            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;"/></td>
-            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;"/></td>
+            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100 0 0;"/></td>
+            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100;"/></td>
         </tr>
 </table>
 

@@ -1,3 +1,63 @@
+#' Population du Canada par provinces et territoires en 2020
+#'
+#' Répartition de la population des provinces et des territoires du Canada en 2020. Statistique Canada. Tableau 17-10-0005-01  Estimations de la population au 1er juillet, par âge et sexe.
+#'
+#' @name Proter_Canada
+#' @docType data
+#' @format A data frame with 13 observations on the following 2 variables.
+#' \describe{
+#' \item{ProTer}{a character vector}
+#' \item{Population}{a numeric vector}
+#' }
+#' @references \doi{10.25318/1710000501-fra}
+#' @keywords datasets
+#' @examples
+#'
+#' data(Proter_Canada)
+#' str(Proter_Canada)
+#' barplot(Proter_Canada$Population, names.arg=Proter_Canada$ProTer, las=2)
+#'
+"Proter_Canada"
+#> [1] "Proter_Canada"
+
+#' @title Emploi par niveau d’études et taux d’emploi par groupe d’âge
+#'
+#' @description Les colonnes 2, 3 et 4 du tableau 2.8 contiennent les taux d’emploi, au troisième trimestre 2020, selon le
+#' niveau d’études : premier cycle du second degré (PCSD), deuxième cycle du second degré (DCSD), supérieur
+#' (SUP). Le taux d’emploi est le pourcentage d’actifs occupés dans la population en âge de travailler.
+#' Les actifs occupés sont les personnes qui travaillent au moins une heure par semaine en tant que salarié ou à
+#' titre lucratif, ou qui ont un emploi, mais sont temporairement absentes de leur travail pour maladie, congé ou
+#' conflit social. Cet indicateur donne le pourcentage des actifs occupés âgés de 25 à 64 ans dans la population
+#' des individus âgés de 25 à 64 ans. Les trois dernières colonnes du tableau 2.8 contiennent le taux d’emploi,
+#' au troisième trimestre 2020, d’une classe d’âge. Cet indicateur se mesure en fonction du nombre des actifs
+#' occupés d’un âge donné rapporté à l’effectif total de cette classe d’âge. Les actifs occupés sont les personnes
+#' de 15 ans et plus qui, durant la semaine de référence, déclarent avoir effectué un travail rémunéré pendant
+#' une heure au moins ou avoir occupé un emploi dont elles étaient absentes. Les taux d’emploi sont présentés
+#' pour trois classes d’âge : les personnes âgées de 15 à 24 ans sont celles qui font leur entrée sur le marché
+#' du travail à l’issue de leur scolarité, les personnes âgées de 25 à 54 ans sont celles qui sont au plus fort de
+#' leur activité professionnelle, et les personnes âgées de 55 à 64 ans sont celles qui ont dépassé le pic de leur
+#' carrière professionnelle et approchent de l’âge de la retraite. Cet indicateur est désaisonnalisé et est mesuré
+#' en pourcentage de l’effectif total de la classe d’âge.
+#'
+#' @name Emploi_Etude_Age
+#' @docType data
+#' @format A data frame with 37 observations on the following 6 variables.
+#' \describe{ \item{DCSD}{a numeric vector} \item{PCSD}{a
+#' numeric vector} \item{SUP}{a numeric vector} \item{15_24}{a
+#' numeric vector} \item{25_54}{a numeric vector}
+#' \item{55_64}{a numeric vector} }
+#' @references \doi{10.1787/6e3d44f3-fr}, \doi{10.1787/b01db125-fr}.
+#' @keywords datasets
+#' @examples
+#'
+#' data(Emploi_Etude_Age)
+#' str(Emploi_Etude_Age)
+#' plot(Emploi_Etude_Age)
+#'
+"Emploi_Etude_Age"
+#> [1] "Emploi_Etude_Age"
+
+
 #' Correction de copies
 #'
 #' Notes de deux correcteurs (A et B) pour les mêmes trente copies.

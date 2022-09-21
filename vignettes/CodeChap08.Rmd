@@ -1,19 +1,19 @@
 ---
-title: "Chapitre 08. Introduction à la théorie des probabilités aux distributions statistiques classiques."
+title: "Chapitre 08. Théorie des probabilités."
 subtitle: "Tout le code avec R."
 author: "F. Bertrand et M. Maumy"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Chapitre 08. Introduction à la théorie des probabilités aux distributions statistiques classiques.}
+  %\VignetteIndexEntry{Chapitre 08. Théorie des probabilités.}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 <table align="center">
         <tr>
-            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;"/></td>
-            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;"/></td>
+            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100 0 0;"/></td>
+            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100;"/></td>
         </tr>
 </table>
 
@@ -39,7 +39,7 @@ if(!("sageR" %in% installed.packages())){install.packages("sageR")}
 library(sageR)
 ```
 
-# Exemple fonction de probabilité et fonction de répartition d'une v.a. discrète finie
+# Exemple de fonction de probabilité et de fonction de répartition d'une v.a. discrète finie
 
 
 ```{r, eval=LOCAL, cache=TRUE, message=FALSE, warning=FALSE}
@@ -49,7 +49,6 @@ if(!("ggplot2" %in% installed.packages())){install.packages("ggplot2")}
 library(ggplot2)
 source("https://raw.githubusercontent.com/NicolasWoloszko/stat_ecdf_weighted/master/stat_ecdf_weighted.R")
 ```
-
 
 ```{r, eval=LOCAL, cache=TRUE}
 xp <- data.frame(cbind(x=c(1,7/3,4,13/2),p=c(1/6,1/6,1/6,1/2),sp=c(1/6,1/3,1/2,1)))
@@ -75,8 +74,9 @@ ggsave(filename = paste(Chemin,"exemple_probas_2.pdf",sep=""),
 
 
 
-# Exemple fonction de probabilité et fonction de répartition d'une v.a. continue
+# Exemple de fonction de densité de probabilité et de fonction de répartition d'une v.a. continue
 
+## Fonction de densité de probabilité
 
 ```{r, eval=LOCAL, cache=TRUE}
 library(ggplot2)
@@ -101,6 +101,7 @@ ggsave(filename = paste(Chemin,"exemple_probas_dens_cont_2.pdf",sep=""),
 
 
 
+## Fonction de densité de répartition
 
 ```{r, eval=LOCAL, cache=TRUE}
 library(ggplot2)
@@ -144,8 +145,10 @@ Chemin <- "~/Documents/Recherche/DeBoeck/Graphes/Fichiers/LoisCouleur/"
 ```
 
 
-# Discrètes
-## discunif
+# Représentations graphiques de lois discrètes
+
+## Loi uniforme discrète
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "discunif"
 infx=0;supx=7;
@@ -184,7 +187,8 @@ legend("topright", leg.txt, pch = c(22, 21, 24), col = c(colmagentas[1],colmagen
 dev.off()
 ```
 
-## bernoulli
+## Loi de Bernoulli
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "bernoulli"
 infx=0;supx=1;
@@ -220,7 +224,8 @@ legend("top", leg.txt, pch = c(22, 21, 24), col = c(colmagentas[1],colmagentas[2
 dev.off()
 ```
 
-## binomiale_sym
+## Loi binomiale (cas symétrique)
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "binomiale_sym"
 infx=0;supx=20;
@@ -258,7 +263,8 @@ dev.off()
 
 ```
 
-## binomiale_asym
+## Loi binomiale (cas asymétrique)
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "binomiale_asym"
 infx=0;supx=20;
@@ -296,7 +302,8 @@ dev.off()
 
 ```
 
-## geom
+## Loi géométrique
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "geom"
 infx=0;supx=10;
@@ -334,7 +341,8 @@ dev.off()
 
 ```
 
-## neg_binomiale_sym
+## Loi négative binomiale (cas symétrique)
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "neg_binomiale_sym"
 infx=0;supx=20;
@@ -372,7 +380,8 @@ dev.off()
 
 ```
 
-## neg_binomiale_asym
+## Loi négative binomiale (cas asymétrique)
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "neg_binomiale_asym"
 infx=0;supx=20;
@@ -410,7 +419,8 @@ dev.off()
 
 ```
 
-## pascal_sym
+## Loi de Pascal (cas symétrique)
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "pascal_sym"
 infx=0;supx=20;
@@ -450,7 +460,8 @@ dev.off()
 
 ```
 
-## pascal_asym
+## Loi de Pascal (cas asymétrique)
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "pascal_asym"
 infx=0;supx=20;
@@ -490,7 +501,8 @@ dev.off()
 
 ```
 
-## hyper_N
+## Loi hypergéométrique (en fonction de $N$)
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "hyper_N"
 infx=0;supx=10;
@@ -534,7 +546,8 @@ dev.off()
 
 ```
 
-## hyper_nn
+## Loi hypergéométrique (en fonction de $n$)
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "hyper_nn"
 infx=0;supx=15;
@@ -573,7 +586,8 @@ legend("topright", leg.txt, title = expression(paste(italic(N), " = 20 et ", ita
 dev.off()
 ```
 
-## hyper_p
+## Loi hypergéométrique (en fonction de $p$)
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "hyper_p"
 infx=0;supx=10;
@@ -613,7 +627,8 @@ dev.off()
 
 ```
 
-## arret_fini_N
+## Loi d'un temps d'arrêt (en fonction de $N$)
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "arret_fini_N"
 infx=0;supx=10;
@@ -654,7 +669,8 @@ dev.off()
 
 ```
 
-## arret_fini_p
+## Loi d'un temps d'arrêt (en fonction de $p$)
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "arret_fini_p"
 infx=0;supx=10;
@@ -695,7 +711,8 @@ dev.off()
 
 ```
 
-## poisson
+## Loi de Poisson
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "poisson"
 infx=0;supx=10;
@@ -735,8 +752,12 @@ dev.off()
 ```
 
 
-# Continue
-## unif
+# Représentations graphiques de lois continues
+
+## Loi uniforme continue
+
+### Fonction de densité de probabilité 
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "unif"
 fdunif <- function(x) {dunif(x,-2,2)}
@@ -760,7 +781,9 @@ curve(fdunif,from=2.00000001,to=3,add=TRUE,lty=1,lwd=3)
 dev.off()
 ```
 
-Œ
+
+### Fonction de répartition
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 frunif <- function(x) {punif(x,-2,2)}
 curve(frunif,from=-3,to=3,ylab="",xlab="",lty=1,lwd=3,cex.axis=2)
@@ -779,7 +802,10 @@ dev.off()
 
 ```
 
-## exp
+## Loi exponentielle
+
+### Fonction de densité de probabilité 
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "exp"
 infx=-1;supx=3;
@@ -824,6 +850,7 @@ legend("topright", leg.txt, lty = c(1, 2, 4), lwd=3, col = c(colmagentas[3],colm
 dev.off()
 ```
 
+### Fonction de répartition
 
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-1;supx=3;
@@ -868,7 +895,10 @@ legend("bottomright", leg.txt, lty = c(1, 2, 4), lwd=3, col = c(colmagentas[3],c
 dev.off()
 ```
 
-## gamma_r
+## Loi gamma (en fonction de $r$)
+
+### Fonction de densité de probabilité 
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "gamma_r"
 infx=-1;supx=3;
@@ -917,6 +947,7 @@ legend("topright", leg.txt, title = expression(paste(lambda," = 1",sep="")), lty
 dev.off()
 ```
 
+### Fonction de répartition
 
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-1;supx=3;
@@ -966,7 +997,10 @@ dev.off()
 
 ```
 
-## gamma_lambda
+## Loi gamma (en fonction de $lambda$)
+
+### Fonction de densité de probabilité 
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "gamma_lambda"
 infx=-1;supx=3;
@@ -1015,6 +1049,7 @@ legend("topright", leg.txt, title = expression(paste(italic(r)," = 3/2",sep=""))
 dev.off()
 ```
 
+### Fonction de répartition
 
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-1;supx=3;
@@ -1064,7 +1099,10 @@ dev.off()
 
 ```
 
-## beta_pic
+## Loi bêta (cas uniforme et avec un pic)
+
+### Fonction de densité de probabilité 
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "beta_pic"
 infx=-0.25;supx=1.25;
@@ -1121,6 +1159,7 @@ legend("topright", leg.txt, title = expression(paste("(",italic(n),";",italic(p)
 dev.off()
 ```
 
+### Fonction de répartition
 
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-0.25;supx=1.25;
@@ -1177,7 +1216,10 @@ dev.off()
 
 ```
 
-## beta_asym
+## Loi bêta (cas asymétrique)
+
+### Fonction de densité de probabilité 
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "beta_asym"
 infx=-0.25;supx=1.25;
@@ -1234,6 +1276,7 @@ legend("topleft", leg.txt, title = expression(paste("(",italic(n),";",italic(p),
 dev.off()
 ```
 
+### Fonction de répartition
 
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-0.25;supx=1.25;
@@ -1290,7 +1333,10 @@ dev.off()
 
 ```
 
-## normal_mu
+## Loi de Gauss ou loi normale (en fonction de $\mu$)
+
+### Fonction de densité de probabilité
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "normal_mu"
 infx=-6;supx=7;
@@ -1325,6 +1371,7 @@ legend("topleft", leg.txt, title = expression(paste(sigma," = 1",sep="")), lty =
 dev.off()
 ```
 
+### Fonction de répartition
 
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-6;supx=7;
@@ -1360,7 +1407,10 @@ dev.off()
 
 ```
 
-## normal_sigma
+## Loi de Gauss ou loi normale (en fonction de $\sigma$)
+
+### Fonction de densité de probabilité
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "normal_sigma"
 infx=-6;supx=6;
@@ -1395,6 +1445,7 @@ legend("topleft", leg.txt, title = expression(paste(mu, " = 0", sep="")), lty = 
 dev.off()
 ```
 
+### Fonction de répartition
 
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-6;supx=6;
@@ -1430,7 +1481,10 @@ dev.off()
 
 ```
 
-## chisqr
+## Loi du chi-deux (en fonction de $r$)
+
+### Fonction de densité de probabilité
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "chisqr"
 infx=-1;supx=9;
@@ -1479,6 +1533,7 @@ legend("topright", leg.txt, lty = c(5, 2, 4,1), lwd=3, col = c(colmagentas[1],co
 dev.off()
 ```
 
+### Fonction de répartition
 
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-1;supx=9;
@@ -1528,7 +1583,10 @@ dev.off()
 
 ```
 
-## fisher_sym
+## Loi de Fisher (cas symétrique)
+
+### Fonction de densité de probabilité
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "fisher_sym"
 infx=-0.25;supx=2;
@@ -1577,6 +1635,7 @@ legend("topright", leg.txt, title=expression(paste("(",italic(numdf),";",italic(
 dev.off()
 ```
 
+### Fonction de répartition
 
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-1;supx=5;
@@ -1626,7 +1685,10 @@ dev.off()
 
 ```
 
-## fisher_asyme
+## Loi de Fisher (cas asymétrique)
+
+### Fonction de densité de probabilité
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "fisher_asyme"
 infx=-0.5;supx=3;
@@ -1675,6 +1737,7 @@ legend("topright", leg.txt, title=expression(paste("(",italic(numdf),";",italic(
 dev.off()
 ```
 
+### Fonction de répartition
 
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-1;supx=5;
@@ -1724,7 +1787,10 @@ dev.off()
 
 ```
 
-## student
+## Loi de student (en fonction de $n$)
+
+### Fonction de densité de probabilité
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "student"
 infx=-4;supx=4;
@@ -1767,6 +1833,7 @@ legend("topleft", leg.txt, lty = c(1, 2, 4,5), lwd=3, col = c(colmagentas[2],col
 dev.off()
 ```
 
+### Fonction de répartition
 
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-4;supx=4;
@@ -1806,7 +1873,10 @@ dev.off()
 
 ```
 
-## cauchy_x
+## Loi de Cauchy (en fonction de $x$)
+
+### Fonction de densité de probabilité
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "cau_x"
 infx=-3;supx=6;
@@ -1847,6 +1917,7 @@ legend("topright", leg.txt, title = expression(paste(a," = 1",sep="")), lty = c(
 dev.off()
 ```
 
+### Fonction de répartition
 
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-3;supx=6;
@@ -1888,7 +1959,10 @@ dev.off()
 
 ```
 
-## cauchy_a
+## Loi de Cauchy (en fonction de $a$)
+
+### Fonction de densité de probabilité
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "cau_a"
 infx=-4;supx=4;
@@ -1929,6 +2003,7 @@ legend("topright", leg.txt, title = expression(paste(italic(x[0])," = 0",sep="")
 dev.off()
 ```
 
+### Fonction de répartition
 
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=-4;supx=4;
@@ -1969,7 +2044,10 @@ legend("bottomright", leg.txt, title = expression(paste(italic(x[0])," = 0",sep=
 dev.off()
 ```
 
-## pareto_xm
+## Loi de Pareto (en fonction de $x_m$)
+
+### Fonction de densité de probabilité
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 library(VGAM)
 LOI <- "par_xm"
@@ -2011,6 +2089,7 @@ legend("topright", leg.txt, title = expression(paste(alpha," = 1",sep="")), lty 
 dev.off()
 ```
 
+### Fonction de répartition
 
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=0;supx=5;
@@ -2052,7 +2131,10 @@ dev.off()
 
 ```
 
-## pareto_alpha
+## Loi de Pareto (en fonction de $\alpha$)
+
+### Fonction de densité de probabilité 
+
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 LOI <- "par_alpha"
 infx=0;supx=5;
@@ -2093,6 +2175,7 @@ legend("topright", leg.txt, title = expression(paste(italic(x[m])," = 1",sep="")
 dev.off()
 ```
 
+### Fonction de répartition
 
 ```{r, eval=LOCAL, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 infx=0;supx=5;

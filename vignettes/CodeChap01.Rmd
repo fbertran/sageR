@@ -1,19 +1,19 @@
 ---
-title: "Chapitre 01. Introduction à la statistique et à son environnement."
+title: "Chapitre 01. La statistique et la collecte des données."
 subtitle: "Tout le code avec R."
 author: "F. Bertrand et M. Maumy"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Chapitre 01. Introduction à la statistique et à son environnement.}
+  %\VignetteIndexEntry{Chapitre 01. La statistique et la collecte des données.}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 <table align="center">
         <tr>
-            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;"/></td>
-            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;"/></td>
+            <td><img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100 0 0;"/></td>
+            <td><img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100;"/></td>
         </tr>
 </table>
 
@@ -33,13 +33,25 @@ knitr::opts_chunk$set(
 SAVE_GRAPHS=FALSE
 ```
 
-# Exercice
+# Exercice 1.1
 ```{r}
 if(!("sageR" %in% installed.packages())){install.packages("sageR")}
 library(sageR)
 ```
 
+### Questions :
+
+Pour chaque tableau, répondre aux questions suivantes :
+
+1. Quelle est la population étudiée ?
+2. Quels sont les individus ?
+3. Quels sont les caractères étudiés ?
+4. Quelle est la nature des caractères ?
+
 ## Nombre de patients hospitalisés
+
+Le tableau 1.1 représente le nombre de patients testés positifs à la Covid-19 et hospitalisés le 8 février 2021,
+par région et par classe d’âge, en valeur absolue.
 
 ### Lecture des données
 
@@ -63,6 +75,8 @@ plot(HospitFull[,3:6])
 
 ### Questions :
 
+Pour ce tableau, répondre aux questions suivantes :
+
 1. Quelle est la population étudiée ?
 2. Quels sont les individus ?
 3. Quels sont les caractères étudiés ?
@@ -76,6 +90,9 @@ plot(HospitFull[,3:6])
 4. Les deux caractères sont simples et qualitatifs.
 
 ## Nombre de patients en réanimation.
+
+Le tableau 1.2 représente le nombre de patients testés positifs à la Covid-19 et placés en réanimation
+au 8 février 2021, par région et par classe d’âge, en valeur absolue.
 
 ### Lecture des données
 
@@ -98,6 +115,8 @@ plot(ReaFull[,3:6])
 ```
 
 ### Questions :
+
+Pour ce tableau, répondre aux questions suivantes :
 
 1. Quelle est la population étudiée ?
 2. Quels sont les individus ?

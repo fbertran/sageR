@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapitre 08. Introduction à la théorie des probabilités aux distributions statistiques classiques. • sageR</title>
+<title>Chapitre 08. Théorie des probabilités. • sageR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Chapitre 08. Introduction à la théorie des probabilités aux distributions statistiques classiques.">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Chapitre 08. Théorie des probabilités.">
 <meta property="og:description" content="sageR">
 <meta property="og:image" content="https://fbertran.github.io/sageR/reference/figures/logo.png">
 <meta property="og:image:alt" content="Statistiques pour l’économie et la gestion">
@@ -30,6 +30,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -42,23 +44,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -68,34 +64,34 @@
       <a href="../articles/AllLinksExtVignettes.html">Liens vers la vignette de chaque chapitre.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap01.html">Chapitre 01. Introduction à la statistique et à son environnement.</a>
+      <a href="../articles/CodeChap01.html">Chapitre 01. La statistique et la collecte des données.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap02.html">Chapitre 02. Statistiques descriptives et visualisation des données univariables</a>
+      <a href="../articles/CodeChap02.html">Chapitre 02. Statistiques descriptives et visualisation des données univariables.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap03.html">Chapitre 03.	Statistiques descriptives et visualisation des données bivariables ou multivariables</a>
+      <a href="../articles/CodeChap03.html">Chapitre 03.	Statistiques descriptives et visualisation des données bivariables ou multivariables.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap04.html">Chapitre 04. Exploration de données avec l'analyse en composantes principales.</a>
+      <a href="../articles/CodeChap04.html">Chapitre 04. Analyse en composantes principales (ACP).</a>
     </li>
     <li>
-      <a href="../articles/CodeChap05.html">Chapitre 05. Exploration de données avec l'analyse factorielle des correspondances.</a>
+      <a href="../articles/CodeChap05.html">Chapitre 05. Analyse factorielle des correspondances (AFC).</a>
     </li>
     <li>
-      <a href="../articles/CodeChap06.html">Chapitre 06. Exploration de données avec l'analyse des correspondances multiples.</a>
+      <a href="../articles/CodeChap06.html">Chapitre 06. Analyse des correspondances multiples (ACM).</a>
     </li>
     <li>
-      <a href="../articles/CodeChap07.html">Chapitre 07. Exploration des données avec une classification automatique.</a>
+      <a href="../articles/CodeChap07.html">Chapitre 07. Classification automatique.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap08.html">Chapitre 08. Introduction à la théorie des probabilités aux distributions statistiques classiques.</a>
+      <a href="../articles/CodeChap08.html">Chapitre 08. Théorie des probabilités.</a>
     </li>
     <li>
       <a href="../articles/CodeChap09.html">Chapitre 09. Inférence statistique.</a>
     </li>
     <li>
-      <a href="../articles/CodeChap10.html">Chapitre 10. Modèle linéaire gaussien.</a>
+      <a href="../articles/CodeChap10.html">Chapitre 10. Modèles gaussiens de régressions linéaires simple et multiple.</a>
     </li>
     <li>
       <a href="../articles/CodeChap11.html">Chapitre 11. Introduction aux séries temporelles.</a>
@@ -111,7 +107,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/fbertran/sageR/">
+  <a href="https://github.com/fbertran/sageR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -126,243 +122,382 @@
 
       
 
-      </header><script src="CodeChap08_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Chapitre 08. Introduction à la théorie des probabilités aux distributions statistiques classiques.</h1>
-            <h3 class="subtitle">Tout le code avec R.</h3>
-                        <h4 class="author">F. Bertrand et M. Maumy</h4>
+      <h1 data-toc-skip>Chapitre 08. Théorie des probabilités.</h1>
+            <h3 data-toc-skip class="subtitle">Tout le code avec R.</h3>
+                        <h4 data-toc-skip class="author">F. Bertrand et
+M. Maumy</h4>
             
-            <h4 class="date">2021-08-07</h4>
+            <h4 data-toc-skip class="date">2022-09-21</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/fbertran/sageR/blob/master/vignettes/CodeChap08.Rmd"><code>vignettes/CodeChap08.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/fbertran/sageR/blob/HEAD/vignettes/CodeChap08.Rmd" class="external-link"><code>vignettes/CodeChap08.Rmd</code></a></small>
       <div class="hidden name"><code>CodeChap08.Rmd</code></div>
 
     </div>
 
     
     
-<table class="table"><tr>
+<table align="center" class="table"><tr>
 <td>
-<img src="../man/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100px 0 0;">
+<img src="../reference/figures/9782807319448-g.jpg" align="left" width="300" style="margin:0 100 0 0;">
 </td>
 <td>
-<img src="../man/figures/logo.png" align="right" width="200" style="margin:0 0 0 100px;">
+<img src="../reference/figures/logo.png" align="right" width="200" style="margin:0 0 0 100;">
 </td>
 </tr></table>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"sageR"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"sageR"</span><span class="op">)</span><span class="op">}</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/homepage/">sageR</a></span><span class="op">)</span></code></pre></div>
-<div id="exemple-fonction-de-probabilité-et-fonction-de-répartition-dune-v-a--discrète-finie" class="section level1">
-<h1 class="hasAnchor">
-<a href="#exemple-fonction-de-probabilit%C3%A9-et-fonction-de-r%C3%A9partition-dune-v-a--discr%C3%A8te-finie" class="anchor"></a>Exemple fonction de probabilité et fonction de répartition d’une v.a. discrète finie</h1>
+<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"sageR"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"sageR"</span><span class="op">)</span><span class="op">}</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/homepage/" class="external-link">sageR</a></span><span class="op">)</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="exemple-de-fonction-de-probabilité-et-de-fonction-de-répartition-dune-v-a--discrète-finie">Exemple de fonction de probabilité et de fonction de répartition
+d’une v.a. discrète finie<a class="anchor" aria-label="anchor" href="#exemple-de-fonction-de-probabilit%C3%A9-et-de-fonction-de-r%C3%A9partition-dune-v-a--discr%C3%A8te-finie"></a>
+</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"spatstat"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"spatstat"</span><span class="op">)</span><span class="op">}</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.spatstat.org">spatstat</a></span><span class="op">)</span>
-<span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"ggplot2"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ggplot2"</span><span class="op">)</span><span class="op">}</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/NicolasWoloszko/stat_ecdf_weighted/master/stat_ecdf_weighted.R"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"spatstat"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"spatstat"</span><span class="op">)</span><span class="op">}</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://spatstat.org/" class="external-link">spatstat</a></span><span class="op">)</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"ggplot2"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ggplot2"</span><span class="op">)</span><span class="op">}</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/NicolasWoloszko/stat_ecdf_weighted/master/stat_ecdf_weighted.R"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">xp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">7</span><span class="op">/</span><span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">13</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,p<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">6</span>,<span class="fl">1</span><span class="op">/</span><span class="fl">6</span>,<span class="fl">1</span><span class="op">/</span><span class="fl">6</span>,<span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,sp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">6</span>,<span class="fl">1</span><span class="op">/</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">/</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">x</span><span class="op">)</span>,data <span class="op">=</span> <span class="va">xp</span><span class="op">)</span>  <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">sp</span><span class="op">)</span>,data <span class="op">=</span> <span class="va">xp</span>,col<span class="op">=</span><span class="st">"#00FFFF"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">p</span><span class="op">)</span>, width<span class="op">=</span><span class="fl">.025</span>, stat<span class="op">=</span><span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">8</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Probabilité"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_ecdf.html">stat_ecdf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">x</span>,weight<span class="op">=</span><span class="va">p</span><span class="op">)</span>,geom <span class="op">=</span> <span class="st">"step"</span>,col<span class="op">=</span><span class="st">"#00FFFF"</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">p</span><span class="op">)</span>,data <span class="op">=</span> <span class="va">xp</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">.5</span>, y <span class="op">=</span> <span class="fl">.95</span>,
-  label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">p</span><span class="op">[</span><span class="va">X</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,
-  parse<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">.5</span>, y <span class="op">=</span> <span class="fl">.875</span>,
-  label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="cn">F</span><span class="op">[</span><span class="va">X</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,
-  parse<span class="op">=</span><span class="cn">TRUE</span>,col<span class="op">=</span><span class="st">"#00FFFF"</span><span class="op">)</span> <span class="op">+</span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">.95</span>, xend <span class="op">=</span> <span class="fl">.3</span>, yend <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">xp</span><span class="op">)</span>  <span class="op">+</span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">.90</span>, xend <span class="op">=</span> <span class="fl">.3</span>, yend <span class="op">=</span> <span class="fl">.90</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">xp</span>, col<span class="op">=</span><span class="st">"#00FFFF"</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span> 
-<span class="co">#&gt; Warning: Ignoring unknown aesthetics: weight</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">xp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">7</span><span class="op">/</span><span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">13</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,p<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">6</span>,<span class="fl">1</span><span class="op">/</span><span class="fl">6</span>,<span class="fl">1</span><span class="op">/</span><span class="fl">6</span>,<span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,sp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">6</span>,<span class="fl">1</span><span class="op">/</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">/</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">x</span><span class="op">)</span>,data <span class="op">=</span> <span class="va">xp</span><span class="op">)</span>  <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">sp</span><span class="op">)</span>,data <span class="op">=</span> <span class="va">xp</span>,col<span class="op">=</span><span class="st">"#00FFFF"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">p</span><span class="op">)</span>, width<span class="op">=</span><span class="fl">.025</span>, stat<span class="op">=</span><span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">xlim</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">8</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Probabilité"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_ecdf.html" class="external-link">stat_ecdf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">x</span>,weight<span class="op">=</span><span class="va">p</span><span class="op">)</span>,geom <span class="op">=</span> <span class="st">"step"</span>,col<span class="op">=</span><span class="st">"#00FFFF"</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">p</span><span class="op">)</span>,data <span class="op">=</span> <span class="va">xp</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html" class="external-link">annotate</a></span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">.5</span>, y <span class="op">=</span> <span class="fl">.95</span>,</span>
+<span>  label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">p</span><span class="op">[</span><span class="va">X</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  parse<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html" class="external-link">annotate</a></span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">.5</span>, y <span class="op">=</span> <span class="fl">.875</span>,</span>
+<span>  label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="cn">F</span><span class="op">[</span><span class="va">X</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  parse<span class="op">=</span><span class="cn">TRUE</span>,col<span class="op">=</span><span class="st">"#00FFFF"</span><span class="op">)</span> <span class="op">+</span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html" class="external-link">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">.95</span>, xend <span class="op">=</span> <span class="fl">.3</span>, yend <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">xp</span><span class="op">)</span>  <span class="op">+</span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html" class="external-link">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">.90</span>, xend <span class="op">=</span> <span class="fl">.3</span>, yend <span class="op">=</span> <span class="fl">.90</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">xp</span>, col<span class="op">=</span><span class="st">"#00FFFF"</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; Warning: Ignoring unknown aesthetics: weight</span></span></code></pre></div>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
-<div id="exemple-fonction-de-probabilité-et-fonction-de-répartition-dune-v-a--continue" class="section level1">
-<h1 class="hasAnchor">
-<a href="#exemple-fonction-de-probabilit%C3%A9-et-fonction-de-r%C3%A9partition-dune-v-a--continue" class="anchor"></a>Exemple fonction de probabilité et fonction de répartition d’une v.a. continue</h1>
+<div class="section level2">
+<h2 id="exemple-de-fonction-de-densité-de-probabilité-et-de-fonction-de-répartition-dune-v-a--continue">Exemple de fonction de densité de probabilité et de fonction de
+répartition d’une v.a. continue<a class="anchor" aria-label="anchor" href="#exemple-de-fonction-de-densit%C3%A9-de-probabilit%C3%A9-et-de-fonction-de-r%C3%A9partition-dune-v-a--continue"></a>
+</h2>
+<div class="section level3">
+<h3 id="fonction-de-densité-de-probabilité">Fonction de densité de probabilité<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-probabilit%C3%A9"></a>
+</h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="va">densx</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span><span class="op">&gt;=</span><span class="fl">0</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="va">x</span><span class="op">&lt;=</span><span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">2</span><span class="op">*</span><span class="va">x</span><span class="op">)</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.5</span>, <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">geom_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="va">densx</span>, n<span class="op">=</span><span class="fl">10</span><span class="op">^</span><span class="fl">4</span>, lwd<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Densité de probabilité"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="va">densx</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span><span class="op">&gt;=</span><span class="fl">0</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="va">x</span><span class="op">&lt;=</span><span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">2</span><span class="op">*</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">xlim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.5</span>, <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">ylim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html" class="external-link">geom_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="va">densx</span>, n<span class="op">=</span><span class="fl">10</span><span class="op">^</span><span class="fl">4</span>, lwd<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Densité de probabilité"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+</div>
+<div class="section level3">
+<h3 id="fonction-de-densité-de-répartition">Fonction de densité de répartition<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-r%C3%A9partition"></a>
+</h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="va">Frepx</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span><span class="op">&gt;=</span><span class="fl">0</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="va">x</span><span class="op">&lt;=</span><span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">+</span><span class="op">(</span><span class="va">x</span><span class="op">&gt;=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.5</span>, <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">geom_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="va">Frepx</span>, n<span class="op">=</span><span class="fl">10</span><span class="op">^</span><span class="fl">4</span>, lwd<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Probabilité cumulée"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="va">Frepx</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span><span class="op">&gt;=</span><span class="fl">0</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="va">x</span><span class="op">&lt;=</span><span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">+</span><span class="op">(</span><span class="va">x</span><span class="op">&gt;=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">xlim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.5</span>, <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">ylim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html" class="external-link">geom_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="va">Frepx</span>, n<span class="op">=</span><span class="fl">10</span><span class="op">^</span><span class="fl">4</span>, lwd<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Probabilité cumulée"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
-<div id="discrètes" class="section level1">
-<h1 class="hasAnchor">
-<a href="#discr%C3%A8tes" class="anchor"></a>Discrètes</h1>
-<div id="discunif" class="section level2">
-<h2 class="hasAnchor">
-<a href="#discunif" class="anchor"></a>discunif</h2>
+</div>
+<div class="section level2">
+<h2 id="représentations-graphiques-de-lois-discrètes">Représentations graphiques de lois discrètes<a class="anchor" aria-label="anchor" href="#repr%C3%A9sentations-graphiques-de-lois-discr%C3%A8tes"></a>
+</h2>
+<div class="section level3">
+<h3 id="loi-uniforme-discrète">Loi uniforme discrète<a class="anchor" aria-label="anchor" href="#loi-uniforme-discr%C3%A8te"></a>
+</h3>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
-<div id="bernoulli" class="section level2">
-<h2 class="hasAnchor">
-<a href="#bernoulli" class="anchor"></a>bernoulli</h2>
+<div class="section level3">
+<h3 id="loi-de-bernoulli">Loi de Bernoulli<a class="anchor" aria-label="anchor" href="#loi-de-bernoulli"></a>
+</h3>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 </div>
-<div id="binomiale_sym" class="section level2">
-<h2 class="hasAnchor">
-<a href="#binomiale_sym" class="anchor"></a>binomiale_sym</h2>
+<div class="section level3">
+<h3 id="loi-binomiale-cas-symétrique">Loi binomiale (cas symétrique)<a class="anchor" aria-label="anchor" href="#loi-binomiale-cas-sym%C3%A9trique"></a>
+</h3>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 </div>
-<div id="binomiale_asym" class="section level2">
-<h2 class="hasAnchor">
-<a href="#binomiale_asym" class="anchor"></a>binomiale_asym</h2>
+<div class="section level3">
+<h3 id="loi-binomiale-cas-asymétrique">Loi binomiale (cas asymétrique)<a class="anchor" aria-label="anchor" href="#loi-binomiale-cas-asym%C3%A9trique"></a>
+</h3>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
 </div>
-<div id="geom" class="section level2">
-<h2 class="hasAnchor">
-<a href="#geom" class="anchor"></a>geom</h2>
+<div class="section level3">
+<h3 id="loi-géométrique">Loi géométrique<a class="anchor" aria-label="anchor" href="#loi-g%C3%A9om%C3%A9trique"></a>
+</h3>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
 </div>
-<div id="neg_binomiale_sym" class="section level2">
-<h2 class="hasAnchor">
-<a href="#neg_binomiale_sym" class="anchor"></a>neg_binomiale_sym</h2>
+<div class="section level3">
+<h3 id="loi-négative-binomiale-cas-symétrique">Loi négative binomiale (cas symétrique)<a class="anchor" aria-label="anchor" href="#loi-n%C3%A9gative-binomiale-cas-sym%C3%A9trique"></a>
+</h3>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
 </div>
-<div id="neg_binomiale_asym" class="section level2">
-<h2 class="hasAnchor">
-<a href="#neg_binomiale_asym" class="anchor"></a>neg_binomiale_asym</h2>
+<div class="section level3">
+<h3 id="loi-négative-binomiale-cas-asymétrique">Loi négative binomiale (cas asymétrique)<a class="anchor" aria-label="anchor" href="#loi-n%C3%A9gative-binomiale-cas-asym%C3%A9trique"></a>
+</h3>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-23-1.png" width="700"></p>
 </div>
-<div id="pascal_sym" class="section level2">
-<h2 class="hasAnchor">
-<a href="#pascal_sym" class="anchor"></a>pascal_sym</h2>
+<div class="section level3">
+<h3 id="loi-de-pascal-cas-symétrique">Loi de Pascal (cas symétrique)<a class="anchor" aria-label="anchor" href="#loi-de-pascal-cas-sym%C3%A9trique"></a>
+</h3>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-25-1.png" width="700"></p>
 </div>
-<div id="pascal_asym" class="section level2">
-<h2 class="hasAnchor">
-<a href="#pascal_asym" class="anchor"></a>pascal_asym</h2>
+<div class="section level3">
+<h3 id="loi-de-pascal-cas-asymétrique">Loi de Pascal (cas asymétrique)<a class="anchor" aria-label="anchor" href="#loi-de-pascal-cas-asym%C3%A9trique"></a>
+</h3>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-27-1.png" width="700"></p>
 </div>
-<div id="hyper_n" class="section level2">
-<h2 class="hasAnchor">
-<a href="#hyper_n" class="anchor"></a>hyper_N</h2>
+<div class="section level3">
+<h3 id="loi-hypergéométrique-en-fonction-de-n">Loi hypergéométrique (en fonction de <span class="math inline">\(N\)</span>)<a class="anchor" aria-label="anchor" href="#loi-hyperg%C3%A9om%C3%A9trique-en-fonction-de-n"></a>
+</h3>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-29-1.png" width="700"></p>
 </div>
-<div id="hyper_nn" class="section level2">
-<h2 class="hasAnchor">
-<a href="#hyper_nn" class="anchor"></a>hyper_nn</h2>
+<div class="section level3">
+<h3 id="loi-hypergéométrique-en-fonction-de-n-1">Loi hypergéométrique (en fonction de <span class="math inline">\(n\)</span>)<a class="anchor" aria-label="anchor" href="#loi-hyperg%C3%A9om%C3%A9trique-en-fonction-de-n-1"></a>
+</h3>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-31-1.png" width="700"></p>
 </div>
-<div id="hyper_p" class="section level2">
-<h2 class="hasAnchor">
-<a href="#hyper_p" class="anchor"></a>hyper_p</h2>
+<div class="section level3">
+<h3 id="loi-hypergéométrique-en-fonction-de-p">Loi hypergéométrique (en fonction de <span class="math inline">\(p\)</span>)<a class="anchor" aria-label="anchor" href="#loi-hyperg%C3%A9om%C3%A9trique-en-fonction-de-p"></a>
+</h3>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-33-1.png" width="700"></p>
 </div>
-<div id="arret_fini_n" class="section level2">
-<h2 class="hasAnchor">
-<a href="#arret_fini_n" class="anchor"></a>arret_fini_N</h2>
+<div class="section level3">
+<h3 id="loi-dun-temps-darrêt-en-fonction-de-n">Loi d’un temps d’arrêt (en fonction de <span class="math inline">\(N\)</span>)<a class="anchor" aria-label="anchor" href="#loi-dun-temps-darr%C3%AAt-en-fonction-de-n"></a>
+</h3>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-35-1.png" width="700"></p>
 </div>
-<div id="arret_fini_p" class="section level2">
-<h2 class="hasAnchor">
-<a href="#arret_fini_p" class="anchor"></a>arret_fini_p</h2>
+<div class="section level3">
+<h3 id="loi-dun-temps-darrêt-en-fonction-de-p">Loi d’un temps d’arrêt (en fonction de <span class="math inline">\(p\)</span>)<a class="anchor" aria-label="anchor" href="#loi-dun-temps-darr%C3%AAt-en-fonction-de-p"></a>
+</h3>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-37-1.png" width="700"></p>
 </div>
-<div id="poisson" class="section level2">
-<h2 class="hasAnchor">
-<a href="#poisson" class="anchor"></a>poisson</h2>
+<div class="section level3">
+<h3 id="loi-de-poisson">Loi de Poisson<a class="anchor" aria-label="anchor" href="#loi-de-poisson"></a>
+</h3>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-39-1.png" width="700"></p>
 </div>
 </div>
-<div id="continue" class="section level1">
-<h1 class="hasAnchor">
-<a href="#continue" class="anchor"></a>Continue</h1>
-<div id="unif" class="section level2">
-<h2 class="hasAnchor">
-<a href="#unif" class="anchor"></a>unif</h2>
+<div class="section level2">
+<h2 id="représentations-graphiques-de-lois-continues">Représentations graphiques de lois continues<a class="anchor" aria-label="anchor" href="#repr%C3%A9sentations-graphiques-de-lois-continues"></a>
+</h2>
+<div class="section level3">
+<h3 id="loi-uniforme-continue">Loi uniforme continue<a class="anchor" aria-label="anchor" href="#loi-uniforme-continue"></a>
+</h3>
+<div class="section level4">
+<h4 id="fonction-de-densité-de-probabilité-1">Fonction de densité de probabilité<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-probabilit%C3%A9-1"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-41-1.png" width="700"></p>
-<p>Œ <img src="CodeChap08_files/figure-html/unnamed-chunk-43-1.png" width="700"></p>
 </div>
-<div id="exp" class="section level2">
-<h2 class="hasAnchor">
-<a href="#exp" class="anchor"></a>exp</h2>
+<div class="section level4">
+<h4 id="fonction-de-répartition">Fonction de répartition<a class="anchor" aria-label="anchor" href="#fonction-de-r%C3%A9partition"></a>
+</h4>
+<p><img src="CodeChap08_files/figure-html/unnamed-chunk-43-1.png" width="700"></p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="loi-exponentielle">Loi exponentielle<a class="anchor" aria-label="anchor" href="#loi-exponentielle"></a>
+</h3>
+<div class="section level4">
+<h4 id="fonction-de-densité-de-probabilité-2">Fonction de densité de probabilité<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-probabilit%C3%A9-2"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-45-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="fonction-de-répartition-1">Fonction de répartition<a class="anchor" aria-label="anchor" href="#fonction-de-r%C3%A9partition-1"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-47-1.png" width="700"></p>
 </div>
-<div id="gamma_r" class="section level2">
-<h2 class="hasAnchor">
-<a href="#gamma_r" class="anchor"></a>gamma_r</h2>
+</div>
+<div class="section level3">
+<h3 id="loi-gamma-en-fonction-de-r">Loi gamma (en fonction de <span class="math inline">\(r\)</span>)<a class="anchor" aria-label="anchor" href="#loi-gamma-en-fonction-de-r"></a>
+</h3>
+<div class="section level4">
+<h4 id="fonction-de-densité-de-probabilité-3">Fonction de densité de probabilité<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-probabilit%C3%A9-3"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-49-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="fonction-de-répartition-2">Fonction de répartition<a class="anchor" aria-label="anchor" href="#fonction-de-r%C3%A9partition-2"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-51-1.png" width="700"></p>
 </div>
-<div id="gamma_lambda" class="section level2">
-<h2 class="hasAnchor">
-<a href="#gamma_lambda" class="anchor"></a>gamma_lambda</h2>
+</div>
+<div class="section level3">
+<h3 id="loi-gamma-en-fonction-de-lambda">Loi gamma (en fonction de <span class="math inline">\(lambda\)</span>)<a class="anchor" aria-label="anchor" href="#loi-gamma-en-fonction-de-lambda"></a>
+</h3>
+<div class="section level4">
+<h4 id="fonction-de-densité-de-probabilité-4">Fonction de densité de probabilité<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-probabilit%C3%A9-4"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-53-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="fonction-de-répartition-3">Fonction de répartition<a class="anchor" aria-label="anchor" href="#fonction-de-r%C3%A9partition-3"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-55-1.png" width="700"></p>
 </div>
-<div id="beta_pic" class="section level2">
-<h2 class="hasAnchor">
-<a href="#beta_pic" class="anchor"></a>beta_pic</h2>
+</div>
+<div class="section level3">
+<h3 id="loi-bêta-cas-uniforme-et-avec-un-pic">Loi bêta (cas uniforme et avec un pic)<a class="anchor" aria-label="anchor" href="#loi-b%C3%AAta-cas-uniforme-et-avec-un-pic"></a>
+</h3>
+<div class="section level4">
+<h4 id="fonction-de-densité-de-probabilité-5">Fonction de densité de probabilité<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-probabilit%C3%A9-5"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-57-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="fonction-de-répartition-4">Fonction de répartition<a class="anchor" aria-label="anchor" href="#fonction-de-r%C3%A9partition-4"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-59-1.png" width="700"></p>
 </div>
-<div id="beta_asym" class="section level2">
-<h2 class="hasAnchor">
-<a href="#beta_asym" class="anchor"></a>beta_asym</h2>
+</div>
+<div class="section level3">
+<h3 id="loi-bêta-cas-asymétrique">Loi bêta (cas asymétrique)<a class="anchor" aria-label="anchor" href="#loi-b%C3%AAta-cas-asym%C3%A9trique"></a>
+</h3>
+<div class="section level4">
+<h4 id="fonction-de-densité-de-probabilité-6">Fonction de densité de probabilité<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-probabilit%C3%A9-6"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-61-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="fonction-de-répartition-5">Fonction de répartition<a class="anchor" aria-label="anchor" href="#fonction-de-r%C3%A9partition-5"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-63-1.png" width="700"></p>
 </div>
-<div id="normal_mu" class="section level2">
-<h2 class="hasAnchor">
-<a href="#normal_mu" class="anchor"></a>normal_mu</h2>
+</div>
+<div class="section level3">
+<h3 id="loi-de-gauss-ou-loi-normale-en-fonction-de-mu">Loi de Gauss ou loi normale (en fonction de <span class="math inline">\(\mu\)</span>)<a class="anchor" aria-label="anchor" href="#loi-de-gauss-ou-loi-normale-en-fonction-de-mu"></a>
+</h3>
+<div class="section level4">
+<h4 id="fonction-de-densité-de-probabilité-7">Fonction de densité de probabilité<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-probabilit%C3%A9-7"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-65-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="fonction-de-répartition-6">Fonction de répartition<a class="anchor" aria-label="anchor" href="#fonction-de-r%C3%A9partition-6"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-67-1.png" width="700"></p>
 </div>
-<div id="normal_sigma" class="section level2">
-<h2 class="hasAnchor">
-<a href="#normal_sigma" class="anchor"></a>normal_sigma</h2>
+</div>
+<div class="section level3">
+<h3 id="loi-de-gauss-ou-loi-normale-en-fonction-de-sigma">Loi de Gauss ou loi normale (en fonction de <span class="math inline">\(\sigma\)</span>)<a class="anchor" aria-label="anchor" href="#loi-de-gauss-ou-loi-normale-en-fonction-de-sigma"></a>
+</h3>
+<div class="section level4">
+<h4 id="fonction-de-densité-de-probabilité-8">Fonction de densité de probabilité<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-probabilit%C3%A9-8"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-69-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="fonction-de-répartition-7">Fonction de répartition<a class="anchor" aria-label="anchor" href="#fonction-de-r%C3%A9partition-7"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-71-1.png" width="700"></p>
 </div>
-<div id="chisqr" class="section level2">
-<h2 class="hasAnchor">
-<a href="#chisqr" class="anchor"></a>chisqr</h2>
+</div>
+<div class="section level3">
+<h3 id="loi-du-chi-deux-en-fonction-de-r">Loi du chi-deux (en fonction de <span class="math inline">\(r\)</span>)<a class="anchor" aria-label="anchor" href="#loi-du-chi-deux-en-fonction-de-r"></a>
+</h3>
+<div class="section level4">
+<h4 id="fonction-de-densité-de-probabilité-9">Fonction de densité de probabilité<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-probabilit%C3%A9-9"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-73-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="fonction-de-répartition-8">Fonction de répartition<a class="anchor" aria-label="anchor" href="#fonction-de-r%C3%A9partition-8"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-75-1.png" width="700"></p>
 </div>
-<div id="fisher_sym" class="section level2">
-<h2 class="hasAnchor">
-<a href="#fisher_sym" class="anchor"></a>fisher_sym</h2>
+</div>
+<div class="section level3">
+<h3 id="loi-de-fisher-cas-symétrique">Loi de Fisher (cas symétrique)<a class="anchor" aria-label="anchor" href="#loi-de-fisher-cas-sym%C3%A9trique"></a>
+</h3>
+<div class="section level4">
+<h4 id="fonction-de-densité-de-probabilité-10">Fonction de densité de probabilité<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-probabilit%C3%A9-10"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-77-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="fonction-de-répartition-9">Fonction de répartition<a class="anchor" aria-label="anchor" href="#fonction-de-r%C3%A9partition-9"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-79-1.png" width="700"></p>
 </div>
-<div id="fisher_asyme" class="section level2">
-<h2 class="hasAnchor">
-<a href="#fisher_asyme" class="anchor"></a>fisher_asyme</h2>
+</div>
+<div class="section level3">
+<h3 id="loi-de-fisher-cas-asymétrique">Loi de Fisher (cas asymétrique)<a class="anchor" aria-label="anchor" href="#loi-de-fisher-cas-asym%C3%A9trique"></a>
+</h3>
+<div class="section level4">
+<h4 id="fonction-de-densité-de-probabilité-11">Fonction de densité de probabilité<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-probabilit%C3%A9-11"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-81-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="fonction-de-répartition-10">Fonction de répartition<a class="anchor" aria-label="anchor" href="#fonction-de-r%C3%A9partition-10"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-83-1.png" width="700"></p>
 </div>
-<div id="student" class="section level2">
-<h2 class="hasAnchor">
-<a href="#student" class="anchor"></a>student</h2>
+</div>
+<div class="section level3">
+<h3 id="loi-de-student-en-fonction-de-n">Loi de student (en fonction de <span class="math inline">\(n\)</span>)<a class="anchor" aria-label="anchor" href="#loi-de-student-en-fonction-de-n"></a>
+</h3>
+<div class="section level4">
+<h4 id="fonction-de-densité-de-probabilité-12">Fonction de densité de probabilité<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-probabilit%C3%A9-12"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-85-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="fonction-de-répartition-11">Fonction de répartition<a class="anchor" aria-label="anchor" href="#fonction-de-r%C3%A9partition-11"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-87-1.png" width="700"></p>
 </div>
-<div id="cauchy_x" class="section level2">
-<h2 class="hasAnchor">
-<a href="#cauchy_x" class="anchor"></a>cauchy_x</h2>
+</div>
+<div class="section level3">
+<h3 id="loi-de-cauchy-en-fonction-de-x">Loi de Cauchy (en fonction de <span class="math inline">\(x\)</span>)<a class="anchor" aria-label="anchor" href="#loi-de-cauchy-en-fonction-de-x"></a>
+</h3>
+<div class="section level4">
+<h4 id="fonction-de-densité-de-probabilité-13">Fonction de densité de probabilité<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-probabilit%C3%A9-13"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-89-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="fonction-de-répartition-12">Fonction de répartition<a class="anchor" aria-label="anchor" href="#fonction-de-r%C3%A9partition-12"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-91-1.png" width="700"></p>
 </div>
-<div id="cauchy_a" class="section level2">
-<h2 class="hasAnchor">
-<a href="#cauchy_a" class="anchor"></a>cauchy_a</h2>
+</div>
+<div class="section level3">
+<h3 id="loi-de-cauchy-en-fonction-de-a">Loi de Cauchy (en fonction de <span class="math inline">\(a\)</span>)<a class="anchor" aria-label="anchor" href="#loi-de-cauchy-en-fonction-de-a"></a>
+</h3>
+<div class="section level4">
+<h4 id="fonction-de-densité-de-probabilité-14">Fonction de densité de probabilité<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-probabilit%C3%A9-14"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-93-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="fonction-de-répartition-13">Fonction de répartition<a class="anchor" aria-label="anchor" href="#fonction-de-r%C3%A9partition-13"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-95-1.png" width="700"></p>
 </div>
-<div id="pareto_xm" class="section level2">
-<h2 class="hasAnchor">
-<a href="#pareto_xm" class="anchor"></a>pareto_xm</h2>
+</div>
+<div class="section level3">
+<h3 id="loi-de-pareto-en-fonction-de-x_m">Loi de Pareto (en fonction de <span class="math inline">\(x_m\)</span>)<a class="anchor" aria-label="anchor" href="#loi-de-pareto-en-fonction-de-x_m"></a>
+</h3>
+<div class="section level4">
+<h4 id="fonction-de-densité-de-probabilité-15">Fonction de densité de probabilité<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-probabilit%C3%A9-15"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-97-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="fonction-de-répartition-14">Fonction de répartition<a class="anchor" aria-label="anchor" href="#fonction-de-r%C3%A9partition-14"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-99-1.png" width="700"></p>
 </div>
-<div id="pareto_alpha" class="section level2">
-<h2 class="hasAnchor">
-<a href="#pareto_alpha" class="anchor"></a>pareto_alpha</h2>
+</div>
+<div class="section level3">
+<h3 id="loi-de-pareto-en-fonction-de-alpha">Loi de Pareto (en fonction de <span class="math inline">\(\alpha\)</span>)<a class="anchor" aria-label="anchor" href="#loi-de-pareto-en-fonction-de-alpha"></a>
+</h3>
+<div class="section level4">
+<h4 id="fonction-de-densité-de-probabilité-16">Fonction de densité de probabilité<a class="anchor" aria-label="anchor" href="#fonction-de-densit%C3%A9-de-probabilit%C3%A9-16"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-101-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="fonction-de-répartition-15">Fonction de répartition<a class="anchor" aria-label="anchor" href="#fonction-de-r%C3%A9partition-15"></a>
+</h4>
 <p><img src="CodeChap08_files/figure-html/unnamed-chunk-103-1.png" width="700"></p>
+</div>
 </div>
 </div>
   </div>
@@ -378,11 +513,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Frederic Bertrand, Myriam Maumy-Bertrand.</p>
+  <p></p>
+<p>Developed by Frederic Bertrand, Myriam Maumy-Bertrand.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -390,6 +527,8 @@
 
   
 
+
+  
 
   </body>
 </html>

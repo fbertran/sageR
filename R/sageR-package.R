@@ -1,5 +1,6 @@
 #' @importFrom grDevices colorRampPalette gray
 #' @importFrom graphics abline axis box image mtext par persp plot.new plot.window points strwidth title
+#' @importFrom stats weighted.mean
 #' @import ggplot2
 
 #' @keywords internal
